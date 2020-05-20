@@ -1,0 +1,6 @@
+RELEASING
+
+Update version number
+Release mode = true
+Run compile_desktop to get jar
+Zip up and upload to Itch
