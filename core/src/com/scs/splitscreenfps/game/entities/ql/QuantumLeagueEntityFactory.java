@@ -45,9 +45,9 @@ public class QuantumLeagueEntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		MovementData md = new MovementData();
-		md.must_move_x_and_z = true;
-		e.addComponent(md);
+		//MovementData md = new MovementData();
+		//md.must_move_x_and_z = true;
+		//e.addComponent(md);
 
 		e.addComponent(new AutoMoveComponent(offset));
 

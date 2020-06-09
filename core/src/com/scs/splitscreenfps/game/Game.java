@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
@@ -27,6 +28,7 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
+import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
@@ -159,7 +161,13 @@ public class Game implements IModule {
 		// Set start position of players
 		for (int idx=0 ; idx<players.length  ; idx++) {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
-			GridPoint2Static start_pos = currentLevel.getPlayerStartMap(idx); 
+			GridPoint2Static start_pos = currentLevel.getPlayerStartMap(idx);
+			
+			MovementData md = (MovementData)this.players[idx].getComponent(MovementData.class);
+			Matrix4 mat = new Matrix4();
+			mat.setTranslation(start_pos.x + 0.5f, 10, start_pos.y + 0.5f);
+			md.characterController.setWorldTransform(mat);
+			
 			posData.position.set(start_pos.x + 0.5f, Settings.PLAYER_HEIGHT/2, start_pos.y + 0.5f); // Start in middle of square
 			players[idx].update();
 

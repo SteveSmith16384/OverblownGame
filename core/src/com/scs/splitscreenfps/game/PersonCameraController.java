@@ -44,9 +44,7 @@ public class PersonCameraController {
 				camera.rotate(Vector3.Y, -cursorSpeed  * rx);
 			}
 		} else if (input instanceof NoInputMethod) {
-			// Look at player 1
-			//PositionComponent posData = (PositionComponent)game.players[0].getComponent(PositionComponent.class);
-			//camera.lookAt(posData.position);
+			// DO nothing
 		} else {
 			//Rotation
 			float dt = Gdx.graphics.getDeltaTime();

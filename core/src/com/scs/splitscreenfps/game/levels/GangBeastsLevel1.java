@@ -42,26 +42,19 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	public static Properties prop;
 
 	public IScoreSystem scoreSystem;
-
 	private btCollisionShape groundShape;
 	btCollisionShape ballShape;
 	btRigidBody groundObject;
 	btRigidBody ballObject;
 
 	private ModelInstance ground, ball;
-	
+
 	public GangBeastsLevel1(Game _game) {
 		super(_game);
 
 		scoreSystem = new LastPlayerOnPointScoreSystem(game);
 
 		prop = new Properties();
-		/*try {
-			prop.load(new FileInputStream("quantumleague/ql_config.txt"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-
 	}
 
 
@@ -105,7 +98,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
 
 		ballShape = new btSphereShape(0.5f);
-		groundShape = new btBoxShape(new Vector3(2.5f, 0.5f, 2.5f));
+		groundShape = new btBoxShape(new Vector3(5f, 0.5f, 5f));
 
 		groundObject = new btRigidBody(0f, null, groundShape);
 		groundObject.setRestitution(.9f);
@@ -125,7 +118,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 		game.dynamicsWorld.addRigidBody(groundObject);
 		game.dynamicsWorld.addRigidBody(ballObject);
-		
+
 		//this.startPositions.add(new GridPoint2Static(2, 2));
 		//this.startPositions.add(new GridPoint2Static(-2, -2));
 
@@ -163,10 +156,10 @@ public class GangBeastsLevel1 extends AbstractLevel {
 						} else if (token.equals("C")) { // Chasm
 							game.mapData.map[col][row].blocked = true;
 						} else if (token.equals("F")) { // Floor
-							if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
+							/*if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
 								Floor floor = new Floor(game.ecs, "Floor", "textures/floor006.png", col, row, 4, 4);
-								//game.ecs.addEntity(floor);
-							}
+								game.ecs.addEntity(floor);
+							}*/
 						} else if (token.equals("G")) { // Goal point
 							Floor floor = new Floor(game.ecs, "Centre", "textures/centre.png", col, .01f, row, 1, 1);
 							game.ecs.addEntity(floor);
@@ -270,17 +263,17 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 	}
 
-
+/*
 	static class MyMotionState extends btMotionState {
-	    Matrix4 transform;
-	    @Override
-	    public void getWorldTransform (Matrix4 worldTrans) {
-	        worldTrans.set(transform);
-	    }
-	    @Override
-	    public void setWorldTransform (Matrix4 worldTrans) {
-	        transform.set(worldTrans);
-	    }
+		Matrix4 transform;
+		@Override
+		public void getWorldTransform (Matrix4 worldTrans) {
+			worldTrans.set(transform);
+		}
+		@Override
+		public void setWorldTransform (Matrix4 worldTrans) {
+			transform.set(worldTrans);
+		}
 	}
-
+*/
 }

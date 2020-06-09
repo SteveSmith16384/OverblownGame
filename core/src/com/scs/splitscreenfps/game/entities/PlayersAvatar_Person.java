@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
@@ -20,6 +22,7 @@ import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 
 import ssmith.libgdx.ModelFunctions;
 
+// This also moves the camera
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 	private static final float MOVE_SPEED = 1.5f;
@@ -34,7 +37,14 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		game = _game;
 		inputMethod = _inputMethod;
 
-		this.addComponent(new MovementData());
+		MovementData md = new MovementData();
+		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, .4f);
+		btRigidBody characterController = new btRigidBody(1f, null, capsuleShape);
+		characterController.setFriction(0);
+		game.dynamicsWorld.addRigidBody(characterController);
+		md.characterController = characterController;
+		
+		this.addComponent(md);
 		this.addComponent(new PositionComponent());
 		//this.addComponent(new CanCarryComponent(playerIdx));
 
