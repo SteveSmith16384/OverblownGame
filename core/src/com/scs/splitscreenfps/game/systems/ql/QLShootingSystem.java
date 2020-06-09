@@ -11,15 +11,15 @@ import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.ql.QuantumLeagueEntityFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
-import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
+import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 import com.scs.splitscreenfps.game.systems.ql.recorddata.BulletFiredRecordData;
 
 public class QLShootingSystem extends AbstractSystem {
 
 	private Game game;
-	private QuantumLeagueLevel level;
+	private GangBeastsLevel1 level;
 
-	public QLShootingSystem(BasicECS ecs, Game _game, QuantumLeagueLevel _level) {
+	public QLShootingSystem(BasicECS ecs, Game _game, GangBeastsLevel1 _level) {
 		super(ecs, QLCanShoot.class);
 
 		game = _game;

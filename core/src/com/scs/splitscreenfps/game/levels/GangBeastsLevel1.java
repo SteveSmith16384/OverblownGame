@@ -9,6 +9,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
+import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
+import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
@@ -28,14 +35,22 @@ import com.scs.splitscreenfps.game.systems.ql.QLBulletSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLShootingSystem;
 
 import ssmith.libgdx.GridPoint2Static;
+import ssmith.libgdx.ShapeHelper;
 
-public class QuantumLeagueLevel extends AbstractLevel {
+public class GangBeastsLevel1 extends AbstractLevel {
 
 	public static Properties prop;
 
 	public IScoreSystem scoreSystem;
 
-	public QuantumLeagueLevel(Game _game) {
+	private btCollisionShape groundShape;
+	btCollisionShape ballShape;
+	btRigidBody groundObject;
+	btRigidBody ballObject;
+
+	private ModelInstance ground, ball;
+	
+	public GangBeastsLevel1(Game _game) {
 		super(_game);
 
 		scoreSystem = new LastPlayerOnPointScoreSystem(game);
@@ -86,11 +101,34 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
+		ground = ShapeHelper.createCube("colours/red.png", 5, 5, 10, 1);
+		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
+
+		ballShape = new btSphereShape(0.5f);
+		groundShape = new btBoxShape(new Vector3(2.5f, 0.5f, 2.5f));
+
+		groundObject = new btRigidBody(0f, null, groundShape);
+		groundObject.setCollisionShape(groundShape);
+		groundObject.setWorldTransform(ground.transform);
+
+		ballObject = new btRigidBody(1f, null, ballShape);
+		//ballObject.activate();
+		//ballObject.applyGravity();
+		ballObject.setCollisionShape(ballShape);
+		ballObject.setWorldTransform(ball.transform);
+
 		if (Settings.SMALL_MAP) {
 			loadMapFromFile("map_small.csv");
 		} else {
 			loadMapFromFile("map1.csv");
 		}
+
+		game.dynamicsWorld.addRigidBody(groundObject);
+		game.dynamicsWorld.addRigidBody(ballObject);
+		
+		//this.startPositions.add(new GridPoint2Static(2, 2));
+		//this.startPositions.add(new GridPoint2Static(-2, -2));
+
 	}
 
 
@@ -127,7 +165,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 						} else if (token.equals("F")) { // Floor
 							if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
 								Floor floor = new Floor(game.ecs, "Floor", "textures/floor006.png", col, row, 4, 4);
-								game.ecs.addEntity(floor);
+								//game.ecs.addEntity(floor);
 							}
 						} else if (token.equals("G")) { // Goal point
 							Floor floor = new Floor(game.ecs, "Centre", "textures/centre.png", col, .01f, row, 1, 1);
@@ -232,5 +270,17 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 	}
 
+
+	static class MyMotionState extends btMotionState {
+	    Matrix4 transform;
+	    @Override
+	    public void getWorldTransform (Matrix4 worldTrans) {
+	        worldTrans.set(transform);
+	    }
+	    @Override
+	    public void setWorldTransform (Matrix4 worldTrans) {
+	        transform.set(worldTrans);
+	    }
+	}
 
 }

@@ -12,6 +12,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.DebugDrawer;
+import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
+import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
+import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
+import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
+import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -24,7 +32,7 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
+import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -65,6 +73,12 @@ public class Game implements IModule {
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
+	private DebugDrawer debugDrawer;
+	private btBroadphaseInterface broadphase;
+    //private btCollisionWorld collisionWorld;
+	private btCollisionDispatcher dispatcher;
+	public btDiscreteDynamicsWorld dynamicsWorld;
+
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
 		inputs = _inputs;
@@ -79,8 +93,18 @@ public class Game implements IModule {
 			this.viewports[i] = new ViewportData(i, false, players.length);
 		}
 
-
-		currentLevel = new QuantumLeagueLevel(this);
+		btDefaultCollisionConfiguration collisionConfig = new btDefaultCollisionConfiguration();
+        dispatcher = new btCollisionDispatcher(collisionConfig);
+        broadphase = new btDbvtBroadphase();
+        //collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
+        btSequentialImpulseConstraintSolver constraintSolver = new btSequentialImpulseConstraintSolver();
+        dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+        dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
+        debugDrawer = new DebugDrawer();
+        debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
+        dynamicsWorld.setDebugDrawer(debugDrawer);
+        
+		currentLevel = new GangBeastsLevel1(this);
 
 		currentLevel.loadAvatars();
 		loadLevel();
@@ -148,12 +172,7 @@ public class Game implements IModule {
 
 
 	@Override
-	public void render() {   // this.players
-		if (Settings.DEBUG_START_POS) {
-			PositionComponent posData = (PositionComponent)players[0].getComponent(PositionComponent.class);
-			Settings.p("Pos=" + posData.position);
-		}
-		
+	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			if (Settings.AUTO_START) {
 				System.exit(0);
@@ -170,7 +189,10 @@ public class Game implements IModule {
 			}
 		}
 
-		this.ecs.events.clear();
+		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+        dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+        
+        this.ecs.events.clear();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
@@ -193,6 +215,10 @@ public class Game implements IModule {
 
 			this.drawModelSystem.process(viewportData.camera);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
+			
+			debugDrawer.begin(viewportData.camera);
+			dynamicsWorld.debugDrawWorld();
+		    debugDrawer.end();
 
 			batch2d.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();

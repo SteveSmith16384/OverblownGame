@@ -16,7 +16,7 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
-import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
+import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 
 import ssmith.libgdx.ModelFunctions;
 
@@ -46,7 +46,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		camera = _viewportData.camera;
 		cameraController = new PersonCameraController(camera, inputMethod);
 		
-		QuantumLeagueLevel.setAvatarColour(this, true);
+		GangBeastsLevel1.setAvatarColour(this, true);
 	}
 
 

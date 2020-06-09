@@ -14,7 +14,7 @@ import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ql.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
-import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
+import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 
 public class QLBulletSystem extends AbstractSystem {
 
@@ -72,7 +72,7 @@ public class QLBulletSystem extends AbstractSystem {
 							}
 
 							if (playerHitData.health <= 0) {
-								QuantumLeagueLevel.setAvatarColour(ents[1], false);
+								GangBeastsLevel1.setAvatarColour(ents[1], false);
 
 								BillBoardFPS_Main.audio.play("sfx/qubodup-PowerDrain.ogg");
 							}
