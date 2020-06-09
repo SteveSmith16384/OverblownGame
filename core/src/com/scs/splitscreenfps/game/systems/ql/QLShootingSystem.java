@@ -73,7 +73,7 @@ public class QLShootingSystem extends AbstractSystem {
 
 
 	private boolean isShootPressed(IInputMethod input) {
-		return input.isR2Pressed();
+		return input.isShootPressed();
 	}
 
 }

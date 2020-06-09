@@ -28,7 +28,7 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.MovementData;
+import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
@@ -44,7 +44,7 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
-import com.scs.splitscreenfps.game.systems.MovementSystem;
+import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
@@ -144,7 +144,7 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
-		ecs.addSystem(new MovementSystem(this, ecs));
+		ecs.addSystem(new PlayerMovementSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, this, batch2d));
 		ecs.addSystem(new AnimationSystem(ecs));
@@ -163,7 +163,7 @@ public class Game implements IModule {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			GridPoint2Static start_pos = currentLevel.getPlayerStartMap(idx);
 			
-			MovementData md = (MovementData)this.players[idx].getComponent(MovementData.class);
+			PlayerMovementData md = (PlayerMovementData)this.players[idx].getComponent(PlayerMovementData.class);
 			Matrix4 mat = new Matrix4();
 			mat.setTranslation(start_pos.x + 0.5f, 10, start_pos.y + 0.5f);
 			md.characterController.setWorldTransform(mat);
@@ -204,7 +204,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
-		this.ecs.getSystem(MovementSystem.class).process();
+		this.ecs.getSystem(PlayerMovementSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();

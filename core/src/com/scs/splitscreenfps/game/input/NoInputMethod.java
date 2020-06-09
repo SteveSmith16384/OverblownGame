@@ -26,7 +26,12 @@ public class NoInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isCirclePressed() {
+	public boolean isJumpPressed() {
+		return false;
+	}
+
+	@Override
+	public boolean isShootPressed() {
 		return false;
 	}
 
@@ -54,7 +59,7 @@ public class NoInputMethod implements IInputMethod {
 	public float getLookDown() {
 		return 0;
 	}
-
+/*
 	@Override
 	public boolean isCrossPressed() {
 		return false;
@@ -96,4 +101,6 @@ public class NoInputMethod implements IInputMethod {
 	public boolean isR2Pressed() {
 		return false;
 	}
+	
+	*/
 }

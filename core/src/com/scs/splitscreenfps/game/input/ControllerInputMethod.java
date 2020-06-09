@@ -56,6 +56,28 @@ public class ControllerInputMethod implements IInputMethod {
 	}
 
 	@Override
+	public boolean isJumpPressed() {
+		return this.controller.getButton(1); // todo - check	
+	}
+
+
+	@Override
+	public boolean isShootPressed() {
+		/*
+		// Code for testing buttons
+		for (int i=0 ; i<16 ; i++) {
+			if (this.controller.getButton(i)) {
+				Settings.p("Pressed! " + i);
+			}
+		}*/
+
+		//Settings.p("Pressed! " + this.controller.getAxis(5));
+
+		return this.controller.getAxis(5) > 0.5f;
+	}
+
+	/*
+	@Override
 	public boolean isCrossPressed() {
 		return this.controller.getButton(0); // todo - check	
 	}
@@ -80,8 +102,8 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(10); // todo - check	
 	}
 
-
-	@Override
+	 */
+	/*	@Override
 	public boolean isR2Pressed() {
 		/*
 		// Code for testing buttons
@@ -90,11 +112,12 @@ public class ControllerInputMethod implements IInputMethod {
 				Settings.p("Pressed! " + i);
 			}
 		}
-		*/
-		//Settings.p("Pressed! " + this.controller.getAxis(5));
-		return this.controller.getAxis(5) > 0.5f;
+	 */
+	//Settings.p("Pressed! " + this.controller.getAxis(5));
+	/*		return this.controller.getAxis(5) > 0.5f;
 	}
 
+	/*
 
 	@Override
 	public boolean isKeyJustPressed(int key) {
@@ -110,5 +133,6 @@ public class ControllerInputMethod implements IInputMethod {
 	public boolean isKeyPressed(int key) {
 		return false;
 	}
+	 */
 
 }

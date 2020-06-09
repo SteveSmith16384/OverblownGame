@@ -30,7 +30,7 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isCirclePressed() {
+	public boolean isJumpPressed() {
 		return Gdx.input.isKeyPressed(Keys.SPACE);
 	}
 
@@ -62,7 +62,7 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		// Not used in this implementation
 		return 0;
 	}
-
+/*
 	@Override
 	public boolean isCrossPressed() {
 		return false;
@@ -99,9 +99,9 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 	public boolean isSquarePressed() {
 		return false;
 	}
-
+*/
 	@Override
-	public boolean isR2Pressed() {
+	public boolean isShootPressed() {
 		return Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 	}
 

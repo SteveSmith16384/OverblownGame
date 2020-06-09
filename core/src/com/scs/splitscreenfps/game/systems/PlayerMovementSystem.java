@@ -11,15 +11,15 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AutoMoveComponent;
-import com.scs.splitscreenfps.game.components.MovementData;
+import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
-public class MovementSystem extends AbstractSystem {
+public class PlayerMovementSystem extends AbstractSystem {
 
 	private Game game;
 
-	public MovementSystem(Game _game, BasicECS ecs) {
-		super(ecs, MovementData.class);
+	public PlayerMovementSystem(Game _game, BasicECS ecs) {
+		super(ecs, PlayerMovementData.class);
 
 		game = _game;
 	}
@@ -35,7 +35,7 @@ public class MovementSystem extends AbstractSystem {
 			}
 		}*/
 
-		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
+		PlayerMovementData movementData = (PlayerMovementData)entity.getComponent(PlayerMovementData.class);
 
 		// Set position based on physics object
 		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
@@ -59,7 +59,17 @@ public class MovementSystem extends AbstractSystem {
 				}*/
 				movementData.characterController.activate();
 				movementData.characterController.applyCentralForce(movementData.offset);
+				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
 			}
+		} else {
+			Vector3 vel = movementData.characterController.getLinearVelocity();
+			vel.y = 0;
+			movementData.characterController.applyCentralForce(vel.scl(-10));
+		}
+		
+		if (movementData.jumpPressed) {
+			movementData.jumpPressed = false;
+			movementData.characterController.applyCentralForce(new Vector3(0, 40, 0));
 		}
 
 		// Animate

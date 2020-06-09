@@ -20,6 +20,7 @@ public interface IInputMethod {
 
 	float getLookDown();
 
+	/*
 	boolean isCirclePressed();
 	
 	boolean isCrossPressed();
@@ -37,5 +38,9 @@ public interface IInputMethod {
 	boolean isKeyJustPressed(int key);
 
 	boolean isKeyPressed(int key);
+	*/
+	
+	boolean isJumpPressed();
 
+	boolean isShootPressed();
 }

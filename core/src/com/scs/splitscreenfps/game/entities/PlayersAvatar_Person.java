@@ -15,7 +15,7 @@ import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
-import com.scs.splitscreenfps.game.components.MovementData;
+import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
@@ -37,7 +37,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		game = _game;
 		inputMethod = _inputMethod;
 
-		MovementData md = new MovementData();
+		PlayerMovementData md = new PlayerMovementData();
 		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, .4f);
 		btRigidBody characterController = new btRigidBody(1f, null, capsuleShape);
 		characterController.setFriction(0);
@@ -136,7 +136,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 
 	private void checkMovementInput() {
-		MovementData movementData = (MovementData)this.getComponent(MovementData.class);
+		PlayerMovementData movementData = (PlayerMovementData)this.getComponent(PlayerMovementData.class);
 
 		if (this.inputMethod.getForwards() > Settings.MIN_AXIS) {
 			//Settings.p("Fwd:" + this.inputMethod.isForwardsPressed());
@@ -159,6 +159,10 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED * this.inputMethod.getStrafeRight()));
 		}
 
+		if (this.inputMethod.isJumpPressed()) {
+			movementData.jumpPressed = true;
+		}
+		
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 

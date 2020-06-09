@@ -7,7 +7,7 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.components.AutoMoveComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
-import com.scs.splitscreenfps.game.components.MovementData;
+import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
