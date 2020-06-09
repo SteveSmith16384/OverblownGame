@@ -108,12 +108,12 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		groundShape = new btBoxShape(new Vector3(2.5f, 0.5f, 2.5f));
 
 		groundObject = new btRigidBody(0f, null, groundShape);
+		groundObject.setRestitution(.9f);
 		groundObject.setCollisionShape(groundShape);
 		groundObject.setWorldTransform(ground.transform);
 
 		ballObject = new btRigidBody(1f, null, ballShape);
-		//ballObject.activate();
-		//ballObject.applyGravity();
+		ballObject.setRestitution(.9f);
 		ballObject.setCollisionShape(ballShape);
 		ballObject.setWorldTransform(ball.transform);
 
