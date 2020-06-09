@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.levels;
 
-import java.util.Iterator;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -18,21 +17,15 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.ql.IsRecordable;
 import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
 import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
-import com.scs.splitscreenfps.game.components.ql.RemoveAtEndOfPhase;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
-import com.scs.splitscreenfps.game.entities.ql.QuantumLeagueEntityFactory;
 import com.scs.splitscreenfps.game.gamemodes.IScoreSystem;
 import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLBulletSystem;
-import com.scs.splitscreenfps.game.systems.ql.QLPhaseSystem;
-import com.scs.splitscreenfps.game.systems.ql.QLRecordAndPlaySystem;
 import com.scs.splitscreenfps.game.systems.ql.QLShootingSystem;
-import com.scs.splitscreenfps.game.systems.ql.StandOnPointSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -40,10 +33,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	public static Properties prop;
 
-	public QLPhaseSystem qlPhaseSystem;
-	public QLRecordAndPlaySystem qlRecordAndPlaySystem;
-	private final AbstractEntity[][] shadows; // Player, phase
-	public GridPoint2Static centre_spot;
 	public IScoreSystem scoreSystem;
 
 	public QuantumLeagueLevel(Game _game) {
@@ -58,15 +47,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			e.printStackTrace();
 		}*/
 
-		this.shadows = new AbstractEntity[game.players.length][2];
-
-		this.qlPhaseSystem = new QLPhaseSystem(this);
-		this.qlRecordAndPlaySystem = new QLRecordAndPlaySystem(game.ecs, this);
-	}
-
-
-	public AbstractEntity getShadow(int playerIdx, int phase) {
-		return this.shadows[playerIdx][phase];
 	}
 
 
@@ -87,14 +67,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		game.players[playerIdx].addComponent(hgsc);
 		 */
 
-		// Create shadows ready for phase
-		GridPoint2Static start = this.startPositions.get(playerIdx);
-		for (int phase=0 ; phase<2 ; phase++) {
-			AbstractEntity shadow = QuantumLeagueEntityFactory.createShadow(game.ecs, playerIdx, phase, start.x, start.y);
-			this.shadows[playerIdx][phase] = shadow;
-		}
-
-		player.addComponent(new IsRecordable(playerIdx));//"Player " + playerIdx + "_recordable", this.shadows[playerIdx][0]));
 		player.addComponent(new QLCanShoot());
 	}
 
@@ -112,17 +84,12 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	}
 
 
-	public float getCurrentPhaseTime() {
-		return this.qlPhaseSystem.getCurrentPhaseTime();
-	}
-
-
 	@Override
 	public void load() {
 		if (Settings.SMALL_MAP) {
-			loadMapFromFile("quantumleague/map_small.csv");
+			loadMapFromFile("map_small.csv");
 		} else {
-			loadMapFromFile("quantumleague/map1.csv");
+			loadMapFromFile("map1.csv");
 		}
 	}
 
@@ -153,22 +120,21 @@ public class QuantumLeagueLevel extends AbstractLevel {
 							//game.ecs.addEntity(floor);
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "quantumleague/textures/set3_example_1.png", col, 0, row, false);
+							Wall wall = new Wall(game.ecs, "textures/set3_example_1.png", col, 0, row, false);
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 							game.mapData.map[col][row].blocked = true;
 						} else if (token.equals("F")) { // Floor
 							if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
-								Floor floor = new Floor(game.ecs, "Floor", "quantumleague/textures/floor006.png", col, row, 4, 4);
+								Floor floor = new Floor(game.ecs, "Floor", "textures/floor006.png", col, row, 4, 4);
 								game.ecs.addEntity(floor);
 							}
 						} else if (token.equals("G")) { // Goal point
-							Floor floor = new Floor(game.ecs, "Centre", "quantumleague/textures/centre.png", col, .01f, row, 1, 1);
+							Floor floor = new Floor(game.ecs, "Centre", "textures/centre.png", col, .01f, row, 1, 1);
 							game.ecs.addEntity(floor);
-							centre_spot = new GridPoint2Static(col, row);
 						} else if (token.equals("B")) { // Border
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "quantumleague/textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, false);
+							Wall wall = new Wall(game.ecs, "textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, false);
 							game.ecs.addEntity(wall);
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
@@ -198,7 +164,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void addSystems(BasicECS ecs) {
 		ecs.addSystem(new QLBulletSystem(ecs, game));
 		ecs.addSystem(new QLShootingSystem(ecs, game, this));
-		ecs.addSystem(new StandOnPointSystem(ecs, this));
 
 	}
 
@@ -207,10 +172,6 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void update() {
 		game.ecs.processSystem(QLBulletSystem.class);
 		game.ecs.processSystem(QLShootingSystem.class);
-		game.ecs.processSystem(StandOnPointSystem.class);
-
-		qlRecordAndPlaySystem.process(); // Must be before phase system!
-		this.qlPhaseSystem.process();
 	}
 
 
@@ -218,37 +179,10 @@ public class QuantumLeagueLevel extends AbstractLevel {
 		float yOff = game.font_med.getLineHeight() * 1.2f;
 
 		game.font_med.setColor(1, 1, 1, 1);
-		//game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.isGamePhase(), 10, (yOff*2));
-		game.font_med.draw(batch2d, "Time: " + (int)(this.getCurrentPhaseTime()), 10, (yOff*2));
-		game.font_med.draw(batch2d, "Phase: " + (int)(this.qlPhaseSystem.getPhaseNum012()), 10, (yOff*3));
 
 		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
 		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
 		game.font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
-	}
-
-
-	public boolean isGamePhase() {
-		return this.qlPhaseSystem.isGamePhase();
-	}
-
-
-	public void startRewindPhase() {
-		// Remove relevant entities
-		Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
-		while (it.hasNext()) {
-			AbstractEntity e = it.next();
-			if (e.getComponent(RemoveAtEndOfPhase.class) != null) {
-				e.remove();
-			}
-		}
-
-		this.qlRecordAndPlaySystem.startRewind();
-
-		BillBoardFPS_Main.audio.stopMusic();
-
-		BillBoardFPS_Main.audio.startMusic("sfx/Replenish.wav");
-
 	}
 
 
@@ -273,27 +207,14 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 
-		this.qlRecordAndPlaySystem.loadNewRecordData();
-		this.qlPhaseSystem.startGamePhase();
+		//this.qlRecordAndPlaySystem.loadNewRecordData();
+		//this.qlPhaseSystem.startGamePhase();
 
 		for (int playerIdx=0 ; playerIdx<game.players.length ; playerIdx++) {
 			// Reset all health
 			QLPlayerData playerData = (QLPlayerData)game.players[playerIdx].getComponent(QLPlayerData.class);
 			playerData.health = 100;
 			setAvatarColour(game.players[playerIdx], true);
-
-			for (int phase = 0 ; phase<2 ; phase++) {
-				playerData = (QLPlayerData)this.shadows[playerIdx][phase].getComponent(QLPlayerData.class);
-				playerData.health = 100;
-				setAvatarColour(this.shadows[playerIdx][phase], true);
-			}
-
-
-			// Add shadow avatars to ECS
-			if (this.qlPhaseSystem.getPhaseNum012() > 0) {
-				AbstractEntity shadow = this.shadows[playerIdx][this.qlPhaseSystem.getPhaseNum012()-1];
-				game.ecs.addEntity(shadow);
-			}
 
 			// Move players avatars back to start
 			GridPoint2Static start = this.startPositions.get(playerIdx);
@@ -304,25 +225,9 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	}
 
 
-	public void allPhasesOver() {
-		this.game.ecs.removeSystem(QLPhaseSystem.class);
-		this.game.ecs.removeSystem(QLRecordAndPlaySystem.class);
-
-		int winning_side = this.scoreSystem.getWinningPlayer(); 
-		AbstractEntity player = null;
-		if (winning_side >= 0) {
-			player = game.players[winning_side];
-		}
-		game.playerHasWon(player);
-
-	}
-
-
 	@Override
 	public void startGame() {
-		this.qlPhaseSystem.startGamePhase();
-
-		BillBoardFPS_Main.audio.play("sfx/AirHorn.wav");
+		//BillBoardFPS_Main.audio.play("sfx/AirHorn.wav");
 
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 	}

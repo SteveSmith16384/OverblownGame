@@ -90,7 +90,7 @@ public class EntityFactory {
 		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
 		entity.addComponent(posData);
 
-		TextureRegion[][] trs = GraphicsHelper.createSheet("shared/Explosion21.png", 4, 4);
+		TextureRegion[][] trs = GraphicsHelper.createSheet("Explosion21.png", 4, 4);
 
 		HasDecal hasDecal = new HasDecal();
 		TextureRegion tr = trs[0][0];
@@ -123,7 +123,7 @@ public class EntityFactory {
 		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
 		entity.addComponent(posData);
 
-		TextureRegion[][] trs = GraphicsHelper.createSheet("shared/Effect95.png", 4, 4);
+		TextureRegion[][] trs = GraphicsHelper.createSheet("Effect95.png", 4, 4);
 
 		HasDecal hasDecal = new HasDecal();
 		TextureRegion tr = trs[0][0];

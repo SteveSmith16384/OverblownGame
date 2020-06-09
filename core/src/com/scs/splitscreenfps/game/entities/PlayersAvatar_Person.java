@@ -56,9 +56,9 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		switch (modelType) {
 		case 0:
 		{
-			am.load("shared/models/quaternius/Smooth_Male_Shirt.g3db", Model.class);
+			am.load("models/quaternius/Smooth_Male_Shirt.g3db", Model.class);
 			am.finishLoading();
-			Model model = am.get("shared/models/quaternius/Smooth_Male_Shirt.g3db");
+			Model model = am.get("models/quaternius/Smooth_Male_Shirt.g3db");
 			ModelInstance instance = new ModelInstance(model);
 			
 			HasModelComponent hasModel = new HasModelComponent("SmoothMale", instance, -.3f, 90, 0.0016f);

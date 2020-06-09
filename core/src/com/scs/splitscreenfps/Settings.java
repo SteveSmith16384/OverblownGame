@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Settings {
 	
-	public static final boolean RELEASE_MODE = true || new File("../../debug_mode.tmp").exists() == false;
+	public static final boolean RELEASE_MODE = false || new File("../../debug_mode.tmp").exists() == false;
 
 	public static final String VERSION = "1.01";
 	
@@ -20,13 +20,13 @@ public class Settings {
 	public static final boolean STRICT = !RELEASE_MODE && true;
 
 	// Game settings
-	public static final long GAME_PHASE_DURATION = 15;
+	//public static final long GAME_PHASE_DURATION = 15;
 
 	// Other settings
 	public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
 	public static final float PLAYER_HEIGHT = 0.52f;
 	public static final float CAM_OFFSET = 0.14f;
-	public static final String TITLE = "Chrono Cup";
+	public static final String TITLE = "Gang Beasts FSP";
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 

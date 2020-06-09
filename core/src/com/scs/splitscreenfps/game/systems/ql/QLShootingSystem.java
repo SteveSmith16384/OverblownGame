@@ -29,10 +29,6 @@ public class QLShootingSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		if (level.isGamePhase() == false) {
-			return;
-		}
-
 		QLCanShoot cc = (QLCanShoot)entity.getComponent(QLCanShoot.class);
 		long interval = 300;
 		if (cc.ammo == 0) {
@@ -71,7 +67,7 @@ public class QLShootingSystem extends AbstractSystem {
 			game.ecs.addEntity(bullet);
 
 			//level.qlRecordAndPlaySystem.addEvent(new BulletFiredRecordData(this.level.qlPhaseSystem.getPhaseNum012(), this.level.getCurrentPhaseTime(), player, startPos, tmpBulletOffset));
-			level.qlRecordAndPlaySystem.addEvent(new BulletFiredRecordData(this.level.qlPhaseSystem.getPhaseNum012(), this.level.getCurrentPhaseTime(), player.playerIdx, startPos, tmpBulletOffset));
+			//level.qlRecordAndPlaySystem.addEvent(new BulletFiredRecordData(this.level.qlPhaseSystem.getPhaseNum012(), this.level.getCurrentPhaseTime(), player.playerIdx, startPos, tmpBulletOffset));
 		}
 	}
 

@@ -85,11 +85,11 @@ public class PreGameScreen implements IModule {
 		font_large = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-		Texture logoTex = new Texture(Gdx.files.internal("logo1.png"));		
+		/*Texture logoTex = new Texture(Gdx.files.internal("logo1.png"));		
 		logo = new Sprite(logoTex);
 		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 		logo.setColor(0.4f, 0.4f, 0.4f, 1);
-
+*/
 	}
 
 
