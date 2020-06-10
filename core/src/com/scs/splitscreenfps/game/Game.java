@@ -15,8 +15,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
+import com.badlogic.gdx.physics.bullet.collision.ContactListener;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
@@ -44,8 +46,8 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
-import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
+import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
@@ -77,9 +79,9 @@ public class Game implements IModule {
 
 	private DebugDrawer debugDrawer;
 	private btBroadphaseInterface broadphase;
-    //private btCollisionWorld collisionWorld;
 	private btCollisionDispatcher dispatcher;
 	public btDiscreteDynamicsWorld dynamicsWorld;
+	private MyContactListener contactListener;
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
@@ -96,16 +98,18 @@ public class Game implements IModule {
 		}
 
 		btDefaultCollisionConfiguration collisionConfig = new btDefaultCollisionConfiguration();
-        dispatcher = new btCollisionDispatcher(collisionConfig);
-        broadphase = new btDbvtBroadphase();
-        //collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
-        btSequentialImpulseConstraintSolver constraintSolver = new btSequentialImpulseConstraintSolver();
-        dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-        dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
-        debugDrawer = new DebugDrawer();
-        debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
-        dynamicsWorld.setDebugDrawer(debugDrawer);
-        
+		dispatcher = new btCollisionDispatcher(collisionConfig);
+		broadphase = new btDbvtBroadphase();
+		//collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
+		btSequentialImpulseConstraintSolver constraintSolver = new btSequentialImpulseConstraintSolver();
+		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
+		debugDrawer = new DebugDrawer();
+		debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
+		dynamicsWorld.setDebugDrawer(debugDrawer);
+
+		contactListener = new MyContactListener();
+
 		currentLevel = new GangBeastsLevel1(this);
 
 		currentLevel.loadAvatars();
@@ -117,11 +121,11 @@ public class Game implements IModule {
 		for (int i=0 ; i<players.length ; i++) {
 			this.currentLevel.setupAvatars(this.players[i], i);
 		}
-		
+
 		currentLevel.startGame();
 	}
 
-	
+
 	private void loadAssetsForRescale() {
 		this.currentLevel.loadAssets();
 		DrawGuiSpritesSystem sys = (DrawGuiSpritesSystem)this.ecs.getSystem(DrawGuiSpritesSystem.class);
@@ -162,12 +166,12 @@ public class Game implements IModule {
 		for (int idx=0 ; idx<players.length  ; idx++) {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			GridPoint2Static start_pos = currentLevel.getPlayerStartMap(idx);
-			
+
 			PlayerMovementData md = (PlayerMovementData)this.players[idx].getComponent(PlayerMovementData.class);
 			Matrix4 mat = new Matrix4();
 			mat.setTranslation(start_pos.x + 0.5f, 10, start_pos.y + 0.5f);
 			md.characterController.setWorldTransform(mat);
-			
+
 			posData.position.set(start_pos.x + 0.5f, Settings.PLAYER_HEIGHT/2, start_pos.y + 0.5f); // Start in middle of square
 			players[idx].update();
 
@@ -198,9 +202,9 @@ public class Game implements IModule {
 		}
 
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
-        dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
-        
-        this.ecs.events.clear();
+		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+
+		this.ecs.events.clear();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
@@ -223,10 +227,10 @@ public class Game implements IModule {
 
 			this.drawModelSystem.process(viewportData.camera);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
-			
+
 			debugDrawer.begin(viewportData.camera);
 			dynamicsWorld.debugDrawWorld();
-		    debugDrawer.end();
+			debugDrawer.end();
 
 			batch2d.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
@@ -390,6 +394,26 @@ public class Game implements IModule {
 			return empty;
 		}
 		return false;
+	}
+
+
+	class MyContactListener extends ContactListener {
+		@Override
+		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
+			/*if (userValue0 != 0)
+                ((ColorAttribute)instances.get(userValue0).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
+            if (userValue1 != 0)
+                ((ColorAttribute)instances.get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);*/
+			return true;
+		}
+		@Override
+		public void onContactStarted (btCollisionObject colObj0, btCollisionObject colObj1) {
+			//Settings.p("Here");
+		}
+		@Override
+		public void onContactProcessed (int userValue0, int userValue1) {
+			//Settings.p("Here");
+		}
 	}
 
 }
