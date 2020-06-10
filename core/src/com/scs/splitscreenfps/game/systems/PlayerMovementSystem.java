@@ -57,14 +57,16 @@ public class PlayerMovementSystem extends AbstractSystem {
 				} else {
 					this.tryMoveXOrZ(entity, game.mapData, movementData.offset, cc.rad*2);
 				}*/
-				movementData.characterController.activate();
-				movementData.characterController.applyCentralForce(movementData.offset);
+				//movementData.characterController.activate();
+				movementData.characterController.applyCentralForce(movementData.offset.scl(20));
 				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
 			}
 		} else {
+			/*
 			Vector3 vel = movementData.characterController.getLinearVelocity();
 			vel.y = 0;
 			movementData.characterController.applyCentralForce(vel.scl(-10));
+			*/
 		}
 		
 		if (movementData.jumpPressed) {

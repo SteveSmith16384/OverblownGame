@@ -95,6 +95,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	@Override
 	public void load() {
 		ground = ShapeHelper.createCube("colours/red.png", 5, 5, 10, 1);
+		//ground.transform.rotate(Vector3.X, 20);
 		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
 
 		ballShape = new btSphereShape(0.5f);

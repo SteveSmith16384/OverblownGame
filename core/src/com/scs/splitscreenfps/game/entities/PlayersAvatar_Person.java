@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
+import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
@@ -38,11 +40,17 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		inputMethod = _inputMethod;
 
 		PlayerMovementData md = new PlayerMovementData();
-		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, .4f);
-		btRigidBody characterController = new btRigidBody(1f, null, capsuleShape);
-		characterController.setFriction(0);
-		game.dynamicsWorld.addRigidBody(characterController);
-		md.characterController = characterController;
+		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, .8f);
+		final Vector3 inertia = new Vector3(0, 0, 0);
+		capsuleShape.calculateLocalInertia(1.0f, inertia);
+
+		btDefaultMotionState motionState = new btDefaultMotionState();
+		btRigidBody player_body = new btRigidBody(2f, motionState, capsuleShape, inertia);
+		player_body.setDamping(0.8f, 0.8f);
+		player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
+		//characterController.setFriction(1);
+		game.dynamicsWorld.addRigidBody(player_body);
+		md.characterController = player_body;
 		
 		this.addComponent(md);
 		this.addComponent(new PositionComponent());
