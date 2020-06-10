@@ -41,9 +41,6 @@ public class RespawnSystem implements ISystem {
 				PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 				posData.position.set(wrc.respawnPoint);
 
-				//CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
-				//cc.bb_dirty = true;
-
 				// check area clear
 				//if (game.collCheckSystem.collided(e, 0, 0, false)) {
 				if (game.isAreaEmpty(e)) {

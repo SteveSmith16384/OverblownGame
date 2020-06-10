@@ -1,26 +1,25 @@
-package com.scs.splitscreenfps.game.systems.ql;
+package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
-import com.scs.splitscreenfps.game.entities.ql.QuantumLeagueEntityFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
-import com.scs.splitscreenfps.game.systems.ql.recorddata.BulletFiredRecordData;
 
-public class QLShootingSystem extends AbstractSystem {
+public class ShootingSystem extends AbstractSystem {
 
 	private Game game;
 	private GangBeastsLevel1 level;
 
-	public QLShootingSystem(BasicECS ecs, Game _game, GangBeastsLevel1 _level) {
-		super(ecs, QLCanShoot.class);
+	public ShootingSystem(BasicECS ecs, Game _game, GangBeastsLevel1 _level) {
+		super(ecs, CanShoot.class);
 
 		game = _game;
 		level = _level;
@@ -29,7 +28,7 @@ public class QLShootingSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		QLCanShoot cc = (QLCanShoot)entity.getComponent(QLCanShoot.class);
+		CanShoot cc = (CanShoot)entity.getComponent(CanShoot.class);
 		long interval = 300;
 		if (cc.ammo == 0) {
 			interval = 1500;
@@ -63,7 +62,7 @@ public class QLShootingSystem extends AbstractSystem {
 			tmpBulletOffset.set((float)Math.sin(Math.toRadians(posData.angle_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs+90)));
 			tmpBulletOffset.nor();
 			tmpBulletOffset.scl(16);
-			AbstractEntity bullet = QuantumLeagueEntityFactory.createBullet(ecs, player, startPos, tmpBulletOffset);
+			AbstractEntity bullet = EntityFactory.createBullet(ecs, player, startPos, tmpBulletOffset);
 			game.ecs.addEntity(bullet);
 
 			//level.qlRecordAndPlaySystem.addEvent(new BulletFiredRecordData(this.level.qlPhaseSystem.getPhaseNum012(), this.level.getCurrentPhaseTime(), player, startPos, tmpBulletOffset));

@@ -22,17 +22,17 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.ql.QLCanShoot;
-import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.IScoreSystem;
 import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
-import com.scs.splitscreenfps.game.systems.ql.QLBulletSystem;
-import com.scs.splitscreenfps.game.systems.ql.QLShootingSystem;
+import com.scs.splitscreenfps.game.systems.BulletSystem;
+import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 import ssmith.libgdx.ShapeHelper;
@@ -60,7 +60,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 	@Override
 	public void setupAvatars(AbstractEntity player, int playerIdx) {
-		player.addComponent(new QLPlayerData(playerIdx));
+		player.addComponent(new PlayerData(playerIdx));
 
 		// Todo - move to where we know size of the map
 		Camera cam = game.players[playerIdx].camera;
@@ -75,7 +75,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		game.players[playerIdx].addComponent(hgsc);
 		 */
 
-		player.addComponent(new QLCanShoot());
+		player.addComponent(new CanShoot());
 	}
 
 
@@ -194,16 +194,16 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new QLBulletSystem(ecs, game));
-		ecs.addSystem(new QLShootingSystem(ecs, game, this));
+		ecs.addSystem(new BulletSystem(ecs, game));
+		ecs.addSystem(new ShootingSystem(ecs, game, this));
 
 	}
 
 
 	@Override
 	public void update() {
-		game.ecs.processSystem(QLBulletSystem.class);
-		game.ecs.processSystem(QLShootingSystem.class);
+		game.ecs.processSystem(BulletSystem.class);
+		game.ecs.processSystem(ShootingSystem.class);
 	}
 
 
@@ -212,7 +212,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 		game.font_med.setColor(1, 1, 1, 1);
 
-		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
+		PlayerData playerData = (PlayerData)game.players[viewIndex].getComponent(PlayerData.class);
 		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
 		game.font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
 	}
@@ -244,7 +244,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 		for (int playerIdx=0 ; playerIdx<game.players.length ; playerIdx++) {
 			// Reset all health
-			QLPlayerData playerData = (QLPlayerData)game.players[playerIdx].getComponent(QLPlayerData.class);
+			PlayerData playerData = (PlayerData)game.players[playerIdx].getComponent(PlayerData.class);
 			playerData.health = 100;
 			setAvatarColour(game.players[playerIdx], true);
 

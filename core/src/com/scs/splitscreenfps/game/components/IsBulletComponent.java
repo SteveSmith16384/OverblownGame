@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.components.ql;
+package com.scs.splitscreenfps.game.components;
 
 import com.scs.basicecs.AbstractEntity;
 

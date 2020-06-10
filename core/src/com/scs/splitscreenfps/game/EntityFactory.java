@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.entities.ql;
+package com.scs.splitscreenfps.game;
 
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
@@ -7,14 +7,14 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.components.AutoMoveComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
+import com.scs.splitscreenfps.game.components.IsBulletComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.ql.IsBulletComponent;
-import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
 
 import ssmith.libgdx.GraphicsHelper;
 
-public class QuantumLeagueEntityFactory {
+public class EntityFactory {
 
 	public static AbstractEntity createBullet(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 offset) {
 		AbstractEntity e = new AbstractEntity(ecs, "Bullet");
@@ -22,7 +22,7 @@ public class QuantumLeagueEntityFactory {
 		PositionComponent pos = new PositionComponent(start);
 		e.addComponent(pos);
 
-		QLPlayerData playerData = (QLPlayerData)shooter.getComponent(QLPlayerData.class);
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {

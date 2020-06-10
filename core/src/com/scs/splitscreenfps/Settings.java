@@ -26,7 +26,7 @@ public class Settings {
 	public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
 	public static final float PLAYER_HEIGHT = 0.52f;
 	public static final float CAM_OFFSET = 0.14f;
-	public static final String TITLE = "Gang Beasts FSP";
+	public static final String TITLE = "Gang Beasts FPS";
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
