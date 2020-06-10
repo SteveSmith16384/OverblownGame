@@ -14,14 +14,12 @@ public class PlayerInputSystem implements ISystem {
 
 	@Override
 	public void process() {
-		//QuantumLeagueLevel level = (QuantumLeagueLevel)game.currentLevel;
-		//if (level.qlPhaseSystem.isGamePhase()) { stops rewind working if added?
-			for (int i=0 ; i<game.players.length ; i++) {
-				if (game.players[i] != null) {
-					game.players[i].update();
-				}
+		for (int i=0 ; i<game.players.length ; i++) {
+			if (game.players[i] != null) {
+				game.players[i].update();
 			}
-		//}
+		}
+
 	}
 
 }

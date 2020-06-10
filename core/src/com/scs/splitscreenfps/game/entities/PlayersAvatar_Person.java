@@ -46,6 +46,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody player_body = new btRigidBody(2f, motionState, capsuleShape, inertia);
+		player_body.userData = this;
 		player_body.setDamping(0.8f, 0.8f);
 		player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		//characterController.setFriction(1);

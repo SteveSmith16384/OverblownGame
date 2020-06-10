@@ -408,7 +408,7 @@ public class Game implements IModule {
 		}
 		@Override
 		public void onContactStarted (btCollisionObject colObj0, btCollisionObject colObj1) {
-			//Settings.p("Here");
+			Settings.p(colObj0.userData + " collided with " + colObj1.userData);
 		}
 		@Override
 		public void onContactProcessed (int userValue0, int userValue1) {
