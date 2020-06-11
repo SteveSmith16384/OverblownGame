@@ -209,6 +209,7 @@ public class Game implements IModule {
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
+		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
@@ -389,22 +390,22 @@ public class Game implements IModule {
 */
 
 	class MyContactListener extends ContactListener {
+		
 		@Override
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
-			/*if (userValue0 != 0)
-                ((ColorAttribute)instances.get(userValue0).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
-            if (userValue1 != 0)
-                ((ColorAttribute)instances.get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);*/
 			return true;
 		}
+		
 		@Override
 		public void onContactStarted (btCollisionObject colObj0, btCollisionObject colObj1) {
 			Settings.p(colObj0.userData + " collided with " + colObj1.userData);
 		}
+		
 		@Override
 		public void onContactProcessed (int userValue0, int userValue1) {
 			//Settings.p("Here");
 		}
+		
 	}
 
 }

@@ -41,7 +41,7 @@ public class ShootingSystem extends AbstractSystem {
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
-		if (isShootPressed(player.inputMethod)) {
+		if (player.inputMethod.isShootPressed()) {
 			if (cc.ammo == 0) {
 				BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");			
 				//Settings.p("Reloading");
@@ -54,14 +54,17 @@ public class ShootingSystem extends AbstractSystem {
 
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 
-			Vector3 startPos = new Vector3();
-			startPos.set(posData.position);
-			startPos.y -= .3f;
-
+			
 			Vector3 tmpBulletOffset = new Vector3();
 			tmpBulletOffset.set((float)Math.sin(Math.toRadians(posData.angle_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs+90)));
 			tmpBulletOffset.nor();
-			tmpBulletOffset.scl(16);
+			tmpBulletOffset.scl(8);
+
+			Vector3 startPos = new Vector3();
+			startPos.set(posData.position);
+			startPos.add(tmpBulletOffset.nor().scl(2));
+			startPos.y += .3f;
+
 			AbstractEntity bullet = EntityFactory.createBullet(ecs, player, startPos, tmpBulletOffset);
 			game.ecs.addEntity(bullet);
 
@@ -70,9 +73,5 @@ public class ShootingSystem extends AbstractSystem {
 		}
 	}
 
-
-	private boolean isShootPressed(IInputMethod input) {
-		return input.isShootPressed();
-	}
 
 }
