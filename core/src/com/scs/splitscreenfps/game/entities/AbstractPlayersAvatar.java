@@ -20,6 +20,6 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 	}
 
 	
-	public abstract void update();
+	public abstract void process();
 	
 }

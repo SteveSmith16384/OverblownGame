@@ -18,12 +18,12 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.HasModelCycle;
 
 public class Floor extends AbstractEntity {
-
+/*
 	public Floor(BasicECS ecs, String tex_filename, int mapX, int mapZ, int map_width, int map_height, boolean tile) {
 		this(ecs, tex_filename, null, mapX, mapZ, map_width, map_height, tile);
 	}
 
-
+/*
 	public Floor(BasicECS ecs, String tex_filename1, String tex_filename2, int mapX, int mapZ, int map_width, int map_depth, boolean tile) {
 		super(ecs, Floor.class.getSimpleName());
 
@@ -89,7 +89,7 @@ public class Floor extends AbstractEntity {
 		}
 
 	}
-
+*/
 
 	public Floor(BasicECS ecs, String name, String tex_filename1, float x, float y, float z, float w, float d) {
 		super(ecs, name);
@@ -119,7 +119,7 @@ public class Floor extends AbstractEntity {
 		this.addComponent(model);
 	}
 
-
+/*
 	public Floor(BasicECS ecs, String name, String tex_filename1, float x, float z, float w, float d) {
 		super(ecs, name);
 
@@ -176,5 +176,5 @@ public class Floor extends AbstractEntity {
 		HasModelComponent model = new HasModelComponent("Floor", instance);
 		this.addComponent(model);
 	}
-	
+	*/
 }

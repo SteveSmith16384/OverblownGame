@@ -153,7 +153,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 							//game.ecs.addEntity(floor);
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "textures/set3_example_1.png", col, 0, row, false);
+							Wall wall = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1, true);
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 							game.mapData.map[col][row].blocked = true;
@@ -167,7 +167,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 							game.ecs.addEntity(floor);
 						} else if (token.equals("B")) { // Border
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, false);
+							Wall wall = new Wall(game.ecs, "BorderWall", "textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, 1, 1, 1, true);
 							game.ecs.addEntity(wall);
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);

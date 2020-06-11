@@ -53,6 +53,10 @@ import com.scs.splitscreenfps.pregame.PreGameScreen;
 
 import ssmith.libgdx.GridPoint2Static;
 
+/**
+ * This is the main game, where the players move about n'stuff.
+ *
+ */
 public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
@@ -173,7 +177,7 @@ public class Game implements IModule {
 			md.characterController.setWorldTransform(mat);
 
 			posData.position.set(start_pos.x + 0.5f, Settings.PLAYER_HEIGHT/2, start_pos.y + 0.5f); // Start in middle of square
-			players[idx].update();
+			players[idx].process();
 
 			// Look down the z-axis
 			this.viewports[idx].camera.direction.x = 0;
@@ -373,19 +377,10 @@ public class Game implements IModule {
 		return list;
 	}
 
-
+/*
 	public boolean isAreaEmpty(AbstractEntity e) {
 		//float diameter = 1;
-		/*MovementData md = (MovementData)e.getComponent(MovementData.class);
-		if (md != null) {
-			diameter = md.diameter;
-		}*/
 		CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
-		/*boolean addedCollidesComponent = cc == null;
-		if (cc == null) {
-			cc = new CollidesComponent(false, .5f);
-			e.addComponent(cc);
-		}*/
 		float diameter = cc.rad * 2f;
 		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 		if (this.mapData.rectangleFree(posData.position.x, posData.position.z, diameter, diameter)) {
@@ -395,7 +390,7 @@ public class Game implements IModule {
 		}
 		return false;
 	}
-
+*/
 
 	class MyContactListener extends ContactListener {
 		@Override

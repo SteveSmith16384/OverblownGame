@@ -16,7 +16,7 @@ import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class Wall extends AbstractEntity {
-
+/*
 	public Wall(BasicECS ecs, String tex_filename, int mapPosX, float yPos, int mapPosZ, boolean add_collision) {
 		super(ecs, Wall.class.getSimpleName() + "_" + mapPosX + "_" + mapPosZ);
 		
@@ -64,7 +64,7 @@ public class Wall extends AbstractEntity {
 		}
 	}
 
-
+*/
 	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, boolean add_collision) {
 		super(ecs, name);
 		

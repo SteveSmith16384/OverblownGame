@@ -41,16 +41,10 @@ public class RespawnSystem implements ISystem {
 				PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 				posData.position.set(wrc.respawnPoint);
 
-				// check area clear
-				//if (game.collCheckSystem.collided(e, 0, 0, false)) {
-				if (game.isAreaEmpty(e)) {
-					Settings.p("Area not clear - trying again...");
-					wrc.respawn_time = System.currentTimeMillis() + 3000;
-				} else {
-					e.removeComponent(WillRespawnComponent.class);
-					ecs.addEntity(e);
-					this.entities.remove(i);
-				}
+
+				e.removeComponent(WillRespawnComponent.class);
+				ecs.addEntity(e);
+				this.entities.remove(i);
 			}
 		}
 	}

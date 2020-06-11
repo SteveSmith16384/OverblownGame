@@ -16,7 +16,7 @@ public class PlayerInputSystem implements ISystem {
 	public void process() {
 		for (int i=0 ; i<game.players.length ; i++) {
 			if (game.players[i] != null) {
-				game.players[i].update();
+				game.players[i].process();
 			}
 		}
 

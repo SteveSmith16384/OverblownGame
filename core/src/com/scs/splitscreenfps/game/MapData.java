@@ -27,7 +27,7 @@ public class MapData {
 		}
 	}
 
-
+/*
 	public boolean rectangleFree(float center_x, float center_z, float width, float depth) {
 		try {
 			//Upper left

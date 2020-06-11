@@ -129,7 +129,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	}
 
 
-	public void update() {
+	public void process() {
 		checkMovementInput();
 		cameraController.update();
 

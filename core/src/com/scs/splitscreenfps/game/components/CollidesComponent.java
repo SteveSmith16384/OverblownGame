@@ -8,8 +8,8 @@ import com.scs.splitscreenfps.Settings;
 public class CollidesComponent {
 
 	public AbstractEntity dont_collide_with; // We don't collide with shooter
-	public boolean blocksMovement = true;
-	public float rad;
+	public boolean blocksMovement = true; // todo - remove
+	public float rad; // todo - remove
 
 	public CollidesComponent(boolean _blocks, float _rad) {
 		this.blocksMovement = _blocks;
