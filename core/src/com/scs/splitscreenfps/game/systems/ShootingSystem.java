@@ -58,11 +58,11 @@ public class ShootingSystem extends AbstractSystem {
 			Vector3 tmpBulletOffset = new Vector3();
 			tmpBulletOffset.set((float)Math.sin(Math.toRadians(posData.angle_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs+90)));
 			tmpBulletOffset.nor();
-			tmpBulletOffset.scl(8);
+			//tmpBulletOffset.scl(8);
 
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
-			startPos.add(tmpBulletOffset.nor().scl(2));
+			startPos.add(tmpBulletOffset);//.nor().scl(2));
 			startPos.y += .3f;
 
 			AbstractEntity bullet = EntityFactory.createBullet(ecs, player, startPos, tmpBulletOffset);

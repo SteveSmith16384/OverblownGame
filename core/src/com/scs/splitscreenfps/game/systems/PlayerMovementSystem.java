@@ -1,16 +1,12 @@
 package com.scs.splitscreenfps.game.systems;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.AutoMoveComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
@@ -33,11 +29,6 @@ public class PlayerMovementSystem extends AbstractSystem {
 		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 		Matrix4 mat = movementData.characterController.getWorldTransform();
 		mat.getTranslation(pos.position);
-		
-		AutoMoveComponent auto = (AutoMoveComponent)entity.getComponent(AutoMoveComponent.class);
-		if (auto != null) {
-			movementData.offset.set(auto.dir);
-		}
 		
 		//movementData.offset.scl(Gdx.graphics.getDeltaTime());
 

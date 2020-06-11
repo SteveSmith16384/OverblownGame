@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
-import com.scs.splitscreenfps.game.components.AutoMoveComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
@@ -19,7 +18,7 @@ import ssmith.libgdx.GraphicsHelper;
 
 public class EntityFactory {
 
-	public static AbstractEntity createBullet(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 offset) {
+	public static AbstractEntity createBullet(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Bullet");
 
 		PositionComponent pos = new PositionComponent(start);
@@ -48,12 +47,6 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		//MovementData md = new MovementData();
-		//md.must_move_x_and_z = true;
-		//e.addComponent(md);
-
-		e.addComponent(new AutoMoveComponent(offset));
-
 		CollidesComponent cc = new CollidesComponent(false, .1f);
 		cc.dont_collide_with = shooter;
 		e.addComponent(cc);
@@ -75,7 +68,7 @@ public class EntityFactory {
 		//body.setGravity(new Vector3());
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
-		pc.force = offset.scl(1f);
+		pc.force = dir.scl(1f);
 		e.addComponent(pc);
 		
 		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");

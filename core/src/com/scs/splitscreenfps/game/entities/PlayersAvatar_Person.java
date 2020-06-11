@@ -99,7 +99,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		}
 		case 1:
 		{
-			ModelInstance instance = ModelFunctions.loadModel("quantumleague/models/Alien.g3db", false);
+			ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false);
 			float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 			instance.transform.scl(scale);		
 			Vector3 offset = ModelFunctions.getOrigin(instance);

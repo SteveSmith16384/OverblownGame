@@ -29,6 +29,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -83,7 +84,6 @@ public class Game implements IModule {
 	private btBroadphaseInterface broadphase;
 	private btCollisionDispatcher dispatcher;
 	public btDiscreteDynamicsWorld dynamicsWorld;
-	//private MyContactListener contactListener;
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
@@ -105,10 +105,11 @@ public class Game implements IModule {
 		btSequentialImpulseConstraintSolver constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
-		debugDrawer = new DebugDrawer();
-		debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
-		dynamicsWorld.setDebugDrawer(debugDrawer);
-
+		if (Settings.DEBUG_START_POS) {
+			debugDrawer = new DebugDrawer();
+			debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
+			dynamicsWorld.setDebugDrawer(debugDrawer);
+		}
 		MyContactListener contactListener = new MyContactListener();
 
 		currentLevel = new GangBeastsLevel1(this);
@@ -229,9 +230,11 @@ public class Game implements IModule {
 			this.drawModelSystem.process(viewportData.camera);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
 
-			debugDrawer.begin(viewportData.camera);
-			dynamicsWorld.debugDrawWorld();
-			debugDrawer.end();
+			if (Settings.DEBUG_START_POS) {
+				debugDrawer.begin(viewportData.camera);
+				dynamicsWorld.debugDrawWorld();
+				debugDrawer.end();
+			}
 
 			batch2d.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
@@ -374,7 +377,12 @@ public class Game implements IModule {
 		return list;
 	}
 
-/*
+
+	public void explosion(Vector3 pos) {
+		// todo
+	}
+
+	/*
 	public boolean isAreaEmpty(AbstractEntity e) {
 		//float diameter = 1;
 		CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
@@ -387,25 +395,35 @@ public class Game implements IModule {
 		}
 		return false;
 	}
-*/
+	 */
 
 	class MyContactListener extends ContactListener {
-		
+
 		@Override
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			return true;
 		}
-		
+
 		@Override
-		public void onContactStarted (btCollisionObject colObj0, btCollisionObject colObj1) {
-			Settings.p(colObj0.userData + " collided with " + colObj1.userData);
+		public void onContactStarted (btCollisionObject ob1, btCollisionObject ob2) {
+			Settings.p(ob1.userData + " collided with " + ob2.userData);
+
+			// todo - raise event
+			if (ob2.userData instanceof AbstractEntity) {
+				// Remove bullets
+				AbstractEntity e1 = (AbstractEntity)ob2.userData;
+				IsBulletComponent bullet = (IsBulletComponent)e1.getComponent(IsBulletComponent.class);
+				if (bullet != null) {
+					e1.remove();
+				}
+			}
 		}
-		
+
 		@Override
 		public void onContactProcessed (int userValue0, int userValue1) {
 			//Settings.p("Here");
 		}
-		
+
 	}
 
 }
