@@ -38,15 +38,15 @@ public class EntityFactory {
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {
 			if (playerData.health > 0) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.1f);
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
 			} else {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red_desync.png", 0.1f);
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red_desync.png", 0.2f);
 			}
 		} else if (playerData.side == 1) {
 			if (playerData.health > 0) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.1f);
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
 			} else {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue_desync.png", 0.1f);
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue_desync.png", 0.2f);
 			}
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.side);
@@ -103,13 +103,12 @@ public class EntityFactory {
 		CollidesComponent cc = new CollidesComponent(true, instance);
 		crate.addComponent(cc);
 
-		btBoxShape groundShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
-		btRigidBody groundObject = new btRigidBody(.5f, null, groundShape);
+		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
+		btRigidBody groundObject = new btRigidBody(.7f, null, boxShape);
 		groundObject.userData = crate;
-		groundObject.setRestitution(.9f);
-		groundObject.setCollisionShape(groundShape);
+		groundObject.setRestitution(.5f);
+		groundObject.setCollisionShape(boxShape);
 		groundObject.setWorldTransform(instance.transform);
-		//game.dynamicsWorld.addRigidBody(groundObject);
 		crate.addComponent(new PhysicsComponent(groundObject));
 		
 		crate.addComponent(new AffectedByExplosionComponent());

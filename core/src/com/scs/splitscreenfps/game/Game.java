@@ -76,7 +76,7 @@ public class Game implements IModule {
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
-
+	private PhysicsSystem physicsSystem;
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
@@ -105,12 +105,12 @@ public class Game implements IModule {
 		btSequentialImpulseConstraintSolver constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
-		if (Settings.DEBUG_START_POS) {
+		if (Settings.DEBUG_PHYSICS) {
 			debugDrawer = new DebugDrawer();
 			debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
 			dynamicsWorld.setDebugDrawer(debugDrawer);
 		}
-		MyContactListener contactListener = new MyContactListener();
+		new MyContactListener(this);
 
 		currentLevel = new GangBeastsLevel1(this);
 
@@ -156,7 +156,8 @@ public class Game implements IModule {
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
-		ecs.addSystem(new PhysicsSystem(this, ecs));
+		physicsSystem = new PhysicsSystem(this, ecs);
+		ecs.addSystem(physicsSystem);
 	}
 
 
@@ -230,7 +231,7 @@ public class Game implements IModule {
 			this.drawModelSystem.process(viewportData.camera);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
 
-			if (Settings.DEBUG_START_POS) {
+			if (Settings.DEBUG_PHYSICS) {
 				debugDrawer.begin(viewportData.camera);
 				dynamicsWorld.debugDrawWorld();
 				debugDrawer.end();
@@ -395,6 +396,12 @@ public class Game implements IModule {
 
 	class MyContactListener extends ContactListener {
 
+		private Game game;
+		
+		public MyContactListener(Game _game) {
+			game = _game;
+		}
+		
 		@Override
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			return true;
@@ -402,7 +409,7 @@ public class Game implements IModule {
 
 		@Override
 		public void onContactStarted (btCollisionObject ob1, btCollisionObject ob2) {
-			Settings.p(ob1.userData + " collided with " + ob2.userData);
+			//Settings.p(ob1.userData + " collided with " + ob2.userData);
 
 			// todo - raise event
 			if (ob2.userData instanceof AbstractEntity) {
@@ -411,6 +418,8 @@ public class Game implements IModule {
 				IsBulletComponent bullet = (IsBulletComponent)e1.getComponent(IsBulletComponent.class);
 				if (bullet != null) {
 					e1.remove();
+					Vector3 pos = new Vector3();
+					game.physicsSystem.explosion(ob2.getWorldTransform().getTranslation(pos), 4f);
 				}
 			}
 		}

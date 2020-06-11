@@ -67,7 +67,7 @@ public class Wall extends AbstractEntity {
 	}
 
 */
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, boolean add_collision) {
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d) {
 		super(ecs, name);
 		
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
@@ -81,7 +81,7 @@ public class Wall extends AbstractEntity {
 		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 		
-		if (add_collision) {
+		//if (add_collision) {
 			CollidesComponent cc = new CollidesComponent(true, instance);
 			this.addComponent(cc);
 			
@@ -94,7 +94,7 @@ public class Wall extends AbstractEntity {
 			//game.dynamicsWorld.addRigidBody(groundObject);
 			this.addComponent(new PhysicsComponent(groundObject));
 
-		}
+		//}
 	}
 
 }

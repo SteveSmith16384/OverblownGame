@@ -31,6 +31,7 @@ import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
+import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
 import ssmith.libgdx.ShapeHelper;
 
@@ -102,11 +103,11 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		groundObject.setCollisionShape(groundShape);
 		groundObject.setWorldTransform(ground.transform);
 		game.dynamicsWorld.addRigidBody(groundObject);
-*/
-		
+		 */
+
 		//Floor floor = new Floor(game, game.ecs, "Floor", "textures/floor006.png", 5, 0, 5, 8, 8);
 		//game.ecs.addEntity(floor);
-/*
+		/*
 		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
 		ballShape = new btSphereShape(0.5f);
 		ballObject = new btRigidBody(1f, null, ballShape);
@@ -116,8 +117,17 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		ballObject.setWorldTransform(ball.transform);
 
 		game.dynamicsWorld.addRigidBody(ballObject);
-*/
-		
+		 */
+
+		// Random crates
+		for (int i=0 ; i<30 ; i++) {
+			int col = NumberFunctions.rnd(1,  10);
+			int row = NumberFunctions.rnd(1,  10);
+			AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, 3, row, .3f, .3f, .3f);
+			game.ecs.addEntity(crate);
+		}
+
+
 		// Add crates
 		if (Settings.SMALL_MAP) {
 			loadMapFromFile("map_small.csv");
@@ -154,9 +164,9 @@ public class GangBeastsLevel1 extends AbstractLevel {
 							//game.ecs.addEntity(floor);
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1, true);
+							Wall wall = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1);
 							game.ecs.addEntity(wall);
-							
+
 							AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, 3, row, .3f, .3f, .3f);
 							game.ecs.addEntity(crate);
 						} else if (token.equals("C")) { // Chasm
@@ -181,7 +191,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 				row++;
 			}
 		}
-/*
+		/*
 		float thickness = .1f;
 		// White lines
 		Floor floor1 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, this.map_width-3, thickness);
@@ -194,7 +204,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		game.ecs.addEntity(floor4);
 		Floor floor5 = new Floor(game.ecs, "Floor", "colours/white.png",  this.map_width-1.5f, .001f, 1.5f, thickness, this.map_height - 3f);
 		game.ecs.addEntity(floor5);
-		*/
+		 */
 	}
 
 
@@ -270,7 +280,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 	}
 
-/*
+	/*
 	static class MyMotionState extends btMotionState {
 		Matrix4 transform;
 		@Override
@@ -282,5 +292,5 @@ public class GangBeastsLevel1 extends AbstractLevel {
 			transform.set(worldTrans);
 		}
 	}
-*/
+	 */
 }

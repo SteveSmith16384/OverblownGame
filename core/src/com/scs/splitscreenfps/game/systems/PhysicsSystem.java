@@ -1,29 +1,28 @@
 package com.scs.splitscreenfps.game.systems;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
 public class PhysicsSystem extends AbstractSystem {
-	
+
 	// Flags
 	public static final short COLL_PLAYER = 8;
 	public static final short COLL_PLAYERS_BULLET = 9;
 	public static final short COLL_ALL = -1;
-	
-	
+
+
 	private Game game;
-	
+
 	public PhysicsSystem(Game _game, BasicECS ecs) {
 		super(ecs, PhysicsComponent.class);
-		
+
 		game = _game;
 	}
 
@@ -32,7 +31,7 @@ public class PhysicsSystem extends AbstractSystem {
 	public void process() {
 		// Do nothing!
 	}
-	
+
 	/*
 	@Override
 	public void processEntity(AbstractEntity e) {
@@ -44,15 +43,15 @@ public class PhysicsSystem extends AbstractSystem {
 
 		}
 	}
-*/
-	
+	 */
+
 	@Override
 	public void addEntity(AbstractEntity e) {
 		super.addEntity(e);
-		
+
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 		game.dynamicsWorld.addRigidBody(pc.body);
-		
+
 		if (pc.disable_gravity) {
 			pc.body.setGravity(new Vector3());
 		}
@@ -64,18 +63,19 @@ public class PhysicsSystem extends AbstractSystem {
 
 	}
 
-	
+
 	@Override
 	public void removeEntity(AbstractEntity e) {
 		super.removeEntity(e);
-		
+
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 		game.dynamicsWorld.removeRigidBody(pc.body);
 		pc.body.dispose();
 	}
-	
-	
+
+
 	public void explosion(Vector3 pos, float range) {
+		Settings.p("Explosion at " + pos);
 		// Loop through ents
 		Matrix4 mat = new Matrix4();
 		Vector3 vec = new Vector3();
@@ -86,11 +86,11 @@ public class PhysicsSystem extends AbstractSystem {
 				pc.body.getWorldTransform(mat);
 				mat.getTranslation(vec);
 				float distance = vec.dst(pos);
-				if (distance <= range) {
-					pc.body.applyCentralImpulse(pos.sub(vec).nor().scl(10));
-				}
-				// todo
-				
+				//if (distance <= range) {
+					pc.body.activate();
+					pc.body.applyCentralImpulse(pos.sub(vec).nor().scl(3));
+					Settings.p("Moving " + e.name);
+				//}
 			}
 		}
 	}
