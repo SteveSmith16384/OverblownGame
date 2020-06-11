@@ -40,7 +40,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		inputMethod = _inputMethod;
 
 		PlayerMovementData md = new PlayerMovementData();
-		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, .8f);
+		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, .5f);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
 

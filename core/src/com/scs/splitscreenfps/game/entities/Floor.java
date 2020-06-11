@@ -115,12 +115,13 @@ public class Floor extends AbstractEntity {
 		HasModelComponent model = new HasModelComponent("Floor", instance);
 		this.addComponent(model);
 		
-		btBoxShape groundShape = new btBoxShape(new Vector3(w/2, 0.5f, d/2));
+		btBoxShape groundShape = new btBoxShape(new Vector3(w/2, 0.5f, d/2)); // todo - use infinite plane
 		btRigidBody groundObject = new btRigidBody(0f, null, groundShape);
 		groundObject.userData = this;
 		groundObject.setRestitution(.9f);
 		groundObject.setCollisionShape(groundShape);
 		groundObject.setWorldTransform(instance.transform);
+		groundObject.translate(new Vector3(0, -.5f, 0));
 		game.dynamicsWorld.addRigidBody(groundObject);
 
 	}
