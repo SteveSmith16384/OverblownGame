@@ -71,7 +71,6 @@ public class DrawDecalSystem extends AbstractSystem {
 		if (pc != null) {
 			pc.body.getWorldTransform().getTranslation(tmp);
 			hasDecal.decal.setPosition(tmp);
-			//hasDecal.decal.translateY(.1f);
 		} else {
 			hasDecal.decal.setPosition(pos.position);
 			hasDecal.decal.translateY(.5f);

@@ -16,6 +16,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.CanShoot;
@@ -38,9 +39,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	public static Properties prop;
 
 	public IScoreSystem scoreSystem;
-	//private btCollisionShape groundShape;
 	private btCollisionShape ballShape;
-	//private btRigidBody groundObject;
 	private btRigidBody ballObject;
 
 	private ModelInstance ground, ball;
@@ -107,7 +106,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		
 		//Floor floor = new Floor(game, game.ecs, "Floor", "textures/floor006.png", 5, 0, 5, 8, 8);
 		//game.ecs.addEntity(floor);
-
+/*
 		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
 		ballShape = new btSphereShape(0.5f);
 		ballObject = new btRigidBody(1f, null, ballShape);
@@ -117,7 +116,9 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		ballObject.setWorldTransform(ball.transform);
 
 		game.dynamicsWorld.addRigidBody(ballObject);
-
+*/
+		
+		// Add crates
 		if (Settings.SMALL_MAP) {
 			loadMapFromFile("map_small.csv");
 		} else {
@@ -155,6 +156,9 @@ public class GangBeastsLevel1 extends AbstractLevel {
 							game.mapData.map[col][row].blocked = true;
 							Wall wall = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1, true);
 							game.ecs.addEntity(wall);
+							
+							AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, 3, row, .3f, .3f, .3f);
+							game.ecs.addEntity(crate);
 						} else if (token.equals("C")) { // Chasm
 							game.mapData.map[col][row].blocked = true;
 						} else if (token.equals("F")) { // Floor

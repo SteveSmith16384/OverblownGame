@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.scs.basicecs.AbstractEntity;
@@ -14,6 +15,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class DrawModelSystem extends AbstractSystem {
@@ -62,29 +64,38 @@ public class DrawModelSystem extends AbstractSystem {
 				return;
 			}
 		}
-		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
-		if (posData != null) {
-			// Only draw if in frustum 
-			if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
-				return;
-			}
 
-			Vector3 position = posData.position;
-			tmpOffset.set(position);
-			tmpOffset.add(model.offset);
-			model.model.transform.setToTranslation(tmpOffset);
-			model.model.transform.scl(model.scale);
-			model.model.transform.rotate(Vector3.Y, posData.angle_degs+model.angleOffset);
+		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		if (pc != null) {
+			Matrix4 mat = new Matrix4();
+			//Vector3 tmp = new Vector3();
+			pc.body.getWorldTransform(mat);//.getTranslation(tmp);
+			model.model.transform.set(mat);
 		} else {
-			if (model.always_draw == false) {
+			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
+			if (posData != null) {
 				// Only draw if in frustum 
-				if (model.bb == null) {
-					model.bb = new BoundingBox();
-					model.model.calculateBoundingBox(model.bb);
-					model.bb.mul(model.model.transform);
-				}
-				if (!camera.frustum.boundsInFrustum(model.bb)) {
+				if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
 					return;
+				}
+
+				Vector3 position = posData.position;
+				tmpOffset.set(position);
+				tmpOffset.add(model.offset);
+				model.model.transform.setToTranslation(tmpOffset);
+				model.model.transform.scl(model.scale);
+				model.model.transform.rotate(Vector3.Y, posData.angle_degs+model.angleOffset);
+			} else {
+				if (model.always_draw == false) {
+					// Only draw if in frustum 
+					if (model.bb == null) {
+						model.bb = new BoundingBox();
+						model.model.calculateBoundingBox(model.bb);
+						model.bb.mul(model.model.transform);
+					}
+					if (!camera.frustum.boundsInFrustum(model.bb)) {
+						return;
+					}
 				}
 			}
 		}

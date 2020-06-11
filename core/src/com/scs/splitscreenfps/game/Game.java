@@ -378,10 +378,6 @@ public class Game implements IModule {
 	}
 
 
-	public void explosion(Vector3 pos) {
-		// todo
-	}
-
 	/*
 	public boolean isAreaEmpty(AbstractEntity e) {
 		//float diameter = 1;

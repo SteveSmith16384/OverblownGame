@@ -1,10 +1,14 @@
 package com.scs.splitscreenfps.game.systems;
 
+import java.util.Iterator;
+
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
 public class PhysicsSystem extends AbstractSystem {
@@ -70,4 +74,26 @@ public class PhysicsSystem extends AbstractSystem {
 		pc.body.dispose();
 	}
 	
+	
+	public void explosion(Vector3 pos, float range) {
+		// Loop through ents
+		Matrix4 mat = new Matrix4();
+		Vector3 vec = new Vector3();
+		for(AbstractEntity e : this.entities) {
+			AffectedByExplosionComponent aff = (AffectedByExplosionComponent)e.getComponent(AffectedByExplosionComponent.class);
+			if (aff != null) {
+				PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+				pc.body.getWorldTransform(mat);
+				mat.getTranslation(vec);
+				float distance = vec.dst(pos);
+				if (distance <= range) {
+					pc.body.applyCentralImpulse(pos.sub(vec).nor().scl(10));
+				}
+				// todo
+				
+			}
+		}
+	}
+
+
 }
