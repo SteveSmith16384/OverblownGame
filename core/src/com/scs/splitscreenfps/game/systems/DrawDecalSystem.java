@@ -10,6 +10,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class DrawDecalSystem extends AbstractSystem {
@@ -44,7 +45,7 @@ public class DrawDecalSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity, Camera camera, DecalBatch batch) {
 		HasDecal hasDecal = (HasDecal)entity.getComponent(HasDecal.class);
 		PositionComponent hasPosition = (PositionComponent)entity.getComponent(PositionComponent.class);
-		updateTransform(camera, hasDecal, hasPosition);
+		updateTransform(entity, camera, hasDecal, hasPosition);
 
 		if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
 			return;
@@ -54,7 +55,7 @@ public class DrawDecalSystem extends AbstractSystem {
 	}
 
 
-	private void updateTransform(Camera cam, HasDecal hasDecal, PositionComponent pos) {
+	private void updateTransform(AbstractEntity entity, Camera cam, HasDecal hasDecal, PositionComponent pos) {
 		if (hasDecal.faceCamera) {
 			tmp.set(cam.direction).scl(-1);
 			if(!hasDecal.dontLockYAxis) {
@@ -66,8 +67,15 @@ public class DrawDecalSystem extends AbstractSystem {
 			hasDecal.decal.setRotationY(hasDecal.rotation);
 		}
 
-		hasDecal.decal.setPosition(pos.position);
-		hasDecal.decal.translateY(.5f);
+		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		if (pc != null) {
+			pc.body.getWorldTransform().getTranslation(tmp);
+			hasDecal.decal.setPosition(tmp);
+			//hasDecal.decal.translateY(.1f);
+		} else {
+			hasDecal.decal.setPosition(pos.position);
+			hasDecal.decal.translateY(.5f);
+		}
 
 	}
 

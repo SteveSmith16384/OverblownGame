@@ -23,26 +23,24 @@ public class PhysicsSystem extends AbstractSystem {
 		game = _game;
 	}
 
-	/*
+
 	@Override
 	public void process() {
 		// Do nothing!
-	}*/
+	}
 	
-	
+	/*
 	@Override
 	public void processEntity(AbstractEntity e) {
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-		if (e.name == "Bullet") {
-			//pc.body.applyCentralForce(new Vector3(0, 2, 0));
-		}
 		if (pc.force != null) {
-			//pc.body.applyCentralForce(pc.force);
+			//pc.body.applyCentralForce(pc.force.scl(1));
 			pc.body.applyCentralImpulse(pc.force);
-			pc.force = null;			
+			pc.force = null;
+
 		}
 	}
-
+*/
 	
 	@Override
 	public void addEntity(AbstractEntity e) {
@@ -50,6 +48,16 @@ public class PhysicsSystem extends AbstractSystem {
 		
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 		game.dynamicsWorld.addRigidBody(pc.body);
+		
+		if (pc.disable_gravity) {
+			pc.body.setGravity(new Vector3());
+		}
+		if (pc.force != null) {
+			//pc.body.applyCentralForce(pc.force.scl(1));
+			pc.body.applyCentralImpulse(pc.force);
+			//pc.force = null;
+		}
+
 	}
 
 	

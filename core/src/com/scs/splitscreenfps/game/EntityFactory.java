@@ -72,8 +72,9 @@ public class EntityFactory {
 		body.setWorldTransform(mat);
 		//body.applyCentralForce(offset.scl(100));
 		//body.applyCentralImpulse(offset.scl(10));
-		body.setGravity(new Vector3());
+		//body.setGravity(new Vector3());
 		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.disable_gravity = true;
 		pc.force = offset.scl(1f);
 		e.addComponent(pc);
 		
