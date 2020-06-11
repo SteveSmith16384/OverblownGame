@@ -29,7 +29,6 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -38,7 +37,6 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
-import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
@@ -68,14 +66,13 @@ public class Game implements IModule {
 	public List<IInputMethod> inputs;
 	public MapData mapData;
 	public BasicECS ecs;
-	public AbstractLevel currentLevel;
+	public AbstractLevel currentLevel; // todo - use ILevelInterface
 
 	private int game_stage;
 	private long restartTime;
 	private List<AbstractEntity> losers = new ArrayList<AbstractEntity>();
 
 	// Specific systems 
-	public CollisionCheckSystem collCheckSystem;
 	private DrawModelSystem drawModelSystem;
 
 	public int currentViewId;
@@ -147,8 +144,6 @@ public class Game implements IModule {
 	private void createECS() {
 		ecs = new BasicECS();
 		ecs.addSystem(new PlayerInputSystem(this));
-		collCheckSystem = new CollisionCheckSystem(ecs); 
-		ecs.addSystem(collCheckSystem);
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));

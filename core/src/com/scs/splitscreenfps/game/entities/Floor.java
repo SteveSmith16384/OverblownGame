@@ -1,21 +1,15 @@
 package com.scs.splitscreenfps.game.entities;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.math.Matrix3;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
-import com.scs.splitscreenfps.game.components.HasModelCycle;
+
+import ssmith.libgdx.ShapeHelper;
 
 public class Floor extends AbstractEntity {
 /*
@@ -91,9 +85,10 @@ public class Floor extends AbstractEntity {
 	}
 */
 
-	public Floor(BasicECS ecs, String name, String tex_filename1, float x, float y, float z, float w, float d) {
+	public Floor(Game game, BasicECS ecs, String name, String tex_filename1, float x, float y, float z, float w, float d) {
 		super(ecs, name);
 
+		/*
 		Texture tex = new Texture(tex_filename1);
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
@@ -112,11 +107,22 @@ public class Floor extends AbstractEntity {
 		floor.meshes.get(0).transformUV(mat);
 
 		ModelInstance instance = new ModelInstance(floor, new Vector3(x, y, z));
-		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
-		//instance.calculateTransforms();
-
+*/
+		
+		ModelInstance instance = ShapeHelper.createRect(tex_filename1, w, d);
+		instance.transform.setTranslation(x, y, z);
+		
 		HasModelComponent model = new HasModelComponent("Floor", instance);
 		this.addComponent(model);
+		
+		btBoxShape groundShape = new btBoxShape(new Vector3(w/2, 0.5f, d/2));
+		btRigidBody groundObject = new btRigidBody(0f, null, groundShape);
+		groundObject.userData = this;
+		groundObject.setRestitution(.9f);
+		groundObject.setCollisionShape(groundShape);
+		groundObject.setWorldTransform(instance.transform);
+		game.dynamicsWorld.addRigidBody(groundObject);
+
 	}
 
 /*

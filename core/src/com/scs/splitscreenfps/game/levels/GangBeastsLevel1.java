@@ -40,10 +40,10 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	public static Properties prop;
 
 	public IScoreSystem scoreSystem;
-	private btCollisionShape groundShape;
-	btCollisionShape ballShape;
-	btRigidBody groundObject;
-	btRigidBody ballObject;
+	//private btCollisionShape groundShape;
+	private btCollisionShape ballShape;
+	//private btRigidBody groundObject;
+	private btRigidBody ballObject;
 
 	private ModelInstance ground, ball;
 
@@ -92,37 +92,39 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 	@Override
 	public void load() {
+		/*
 		ground = ShapeHelper.createCube("colours/red.png", 5, 5, 10, 1);
-		ground.transform.rotate(Vector3.X, 20);
-		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
+		//ground.transform.rotate(Vector3.X, 20);
 
-		ballShape = new btSphereShape(0.5f);
-		groundShape = new btBoxShape(new Vector3(5f, 0.5f, 5f));
+		btBoxShape groundShape = new btBoxShape(new Vector3(5f, 0.5f, 5f));
 
-		groundObject = new btRigidBody(0f, null, groundShape);
+		btRigidBody groundObject = new btRigidBody(0f, null, groundShape);
 		groundObject.userData = "Ground";
 		//groundObject.setCollisionFlags(flags);
 		groundObject.setRestitution(.9f);
 		groundObject.setCollisionShape(groundShape);
 		groundObject.setWorldTransform(ground.transform);
+		game.dynamicsWorld.addRigidBody(groundObject);
+*/
+		
+		Floor floor = new Floor(game, game.ecs, "Floor", "textures/floor006.png", 5, 0, 5, 8, 8);
+		game.ecs.addEntity(floor);
 
+		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
+		ballShape = new btSphereShape(0.5f);
 		ballObject = new btRigidBody(1f, null, ballShape);
 		ballObject.userData = "Ball";
 		ballObject.setRestitution(.9f);
 		ballObject.setCollisionShape(ballShape);
 		ballObject.setWorldTransform(ball.transform);
 
+		game.dynamicsWorld.addRigidBody(ballObject);
+
 		if (Settings.SMALL_MAP) {
 			loadMapFromFile("map_small.csv");
 		} else {
 			loadMapFromFile("map1.csv");
 		}
-
-		game.dynamicsWorld.addRigidBody(groundObject);
-		game.dynamicsWorld.addRigidBody(ballObject);
-
-		//this.startPositions.add(new GridPoint2Static(2, 2));
-		//this.startPositions.add(new GridPoint2Static(-2, -2));
 
 	}
 
@@ -153,22 +155,22 @@ public class GangBeastsLevel1 extends AbstractLevel {
 							//game.ecs.addEntity(floor);
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1, true);
+							Wall wall = new Wall(game, game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1, true);
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 							game.mapData.map[col][row].blocked = true;
 						} else if (token.equals("F")) { // Floor
 							/*if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
-								Floor floor = new Floor(game.ecs, "Floor", "textures/floor006.png", col, row, 4, 4);
+								Floor floor = new Floor(game, game.ecs, "Floor", "textures/floor006.png", col, 0, row, 4, 4);
 								game.ecs.addEntity(floor);
 							}*/
 						} else if (token.equals("G")) { // Goal point
-							Floor floor = new Floor(game.ecs, "Centre", "textures/centre.png", col, .01f, row, 1, 1);
-							game.ecs.addEntity(floor);
+							//Floor floor = new Floor(game.ecs, "Centre", "textures/centre.png", col, .01f, row, 1, 1);
+							//game.ecs.addEntity(floor);
 						} else if (token.equals("B")) { // Border
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "BorderWall", "textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, 1, 1, 1, true);
-							game.ecs.addEntity(wall);
+							//Wall wall = new Wall(game.ecs, "BorderWall", "textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, 1, 1, 1, true);
+							//game.ecs.addEntity(wall);
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
 						}
@@ -177,7 +179,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 				row++;
 			}
 		}
-
+/*
 		float thickness = .1f;
 		// White lines
 		Floor floor1 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, this.map_width-3, thickness);
@@ -190,6 +192,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		game.ecs.addEntity(floor4);
 		Floor floor5 = new Floor(game.ecs, "Floor", "colours/white.png",  this.map_width-1.5f, .001f, 1.5f, thickness, this.map_height - 3f);
 		game.ecs.addEntity(floor5);
+		*/
 	}
 
 

@@ -1,17 +1,18 @@
 package com.scs.splitscreenfps.game.entities;
 
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 
@@ -65,7 +66,7 @@ public class Wall extends AbstractEntity {
 	}
 
 */
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, boolean add_collision) {
+	public Wall(Game game, BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, boolean add_collision) {
 		super(ecs, name);
 		
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
@@ -82,6 +83,15 @@ public class Wall extends AbstractEntity {
 		if (add_collision) {
 			CollidesComponent cc = new CollidesComponent(true, instance);
 			this.addComponent(cc);
+			
+			btBoxShape groundShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
+			btRigidBody groundObject = new btRigidBody(0f, null, groundShape);
+			groundObject.userData = this;
+			groundObject.setRestitution(.9f);
+			groundObject.setCollisionShape(groundShape);
+			groundObject.setWorldTransform(instance.transform);
+			game.dynamicsWorld.addRigidBody(groundObject);
+
 		}
 	}
 

@@ -14,7 +14,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 
 import ssmith.libgdx.GridPoint2Static;
 
-public abstract class AbstractLevel {
+public abstract class AbstractLevel implements ILevelInterface {
 
 	public Game game;
 	protected int map_width;
