@@ -6,8 +6,8 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
 import ssmith.libgdx.ShapeHelper;
 
@@ -85,7 +85,7 @@ public class Floor extends AbstractEntity {
 	}
 */
 
-	public Floor(Game game, BasicECS ecs, String name, String tex_filename1, float x, float y, float z, float w, float d) {
+	public Floor(BasicECS ecs, String name, String tex_filename1, float x, float y, float z, float w, float d) {
 		super(ecs, name);
 
 		/*
@@ -122,7 +122,8 @@ public class Floor extends AbstractEntity {
 		groundObject.setCollisionShape(groundShape);
 		groundObject.setWorldTransform(instance.transform);
 		groundObject.translate(new Vector3(0, -.5f, 0));
-		game.dynamicsWorld.addRigidBody(groundObject);
+		//game.dynamicsWorld.addRigidBody(groundObject);
+		this.addComponent(new PhysicsComponent(groundObject));
 
 	}
 

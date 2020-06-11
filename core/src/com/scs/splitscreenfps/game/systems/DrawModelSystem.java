@@ -25,7 +25,7 @@ public class DrawModelSystem extends AbstractSystem {
 	private Vector3 tmpOffset = new Vector3();
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
-		super(ecs);
+		super(ecs, HasModelComponent.class);
 		game = _game;
 
 		this.modelBatch = new ModelBatch();
@@ -34,12 +34,6 @@ public class DrawModelSystem extends AbstractSystem {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
 		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return HasModelComponent.class;
 	}
 
 

@@ -107,8 +107,8 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		game.dynamicsWorld.addRigidBody(groundObject);
 */
 		
-		Floor floor = new Floor(game, game.ecs, "Floor", "textures/floor006.png", 5, 0, 5, 8, 8);
-		game.ecs.addEntity(floor);
+		//Floor floor = new Floor(game, game.ecs, "Floor", "textures/floor006.png", 5, 0, 5, 8, 8);
+		//game.ecs.addEntity(floor);
 
 		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
 		ballShape = new btSphereShape(0.5f);
@@ -155,15 +155,15 @@ public class GangBeastsLevel1 extends AbstractLevel {
 							//game.ecs.addEntity(floor);
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game, game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1, true);
+							Wall wall = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1, true);
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 							game.mapData.map[col][row].blocked = true;
 						} else if (token.equals("F")) { // Floor
-							/*if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
-								Floor floor = new Floor(game, game.ecs, "Floor", "textures/floor006.png", col, 0, row, 4, 4);
+							if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
+								Floor floor = new Floor(game.ecs, "Floor", "textures/floor006.png", col, 0, row, 4, 4);
 								game.ecs.addEntity(floor);
-							}*/
+							}
 						} else if (token.equals("G")) { // Goal point
 							//Floor floor = new Floor(game.ecs, "Centre", "textures/centre.png", col, .01f, row, 1, 1);
 							//game.ecs.addEntity(floor);

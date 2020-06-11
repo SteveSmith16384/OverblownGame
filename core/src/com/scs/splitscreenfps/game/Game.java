@@ -44,6 +44,7 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
+import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
@@ -82,7 +83,7 @@ public class Game implements IModule {
 	private btBroadphaseInterface broadphase;
 	private btCollisionDispatcher dispatcher;
 	public btDiscreteDynamicsWorld dynamicsWorld;
-	private MyContactListener contactListener;
+	//private MyContactListener contactListener;
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
@@ -101,7 +102,6 @@ public class Game implements IModule {
 		btDefaultCollisionConfiguration collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
-		//collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
 		btSequentialImpulseConstraintSolver constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
@@ -109,7 +109,7 @@ public class Game implements IModule {
 		debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
 		dynamicsWorld.setDebugDrawer(debugDrawer);
 
-		contactListener = new MyContactListener();
+		MyContactListener contactListener = new MyContactListener();
 
 		currentLevel = new GangBeastsLevel1(this);
 
@@ -155,6 +155,7 @@ public class Game implements IModule {
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
+		ecs.addSystem(new PhysicsSystem(this, ecs));
 	}
 
 

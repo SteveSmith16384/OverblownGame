@@ -59,6 +59,11 @@ public abstract class AbstractSystem implements ISystem {
 	}
 
 
+	public void removeEntity(AbstractEntity e) {
+		this.entities.remove(e);
+	}
+	
+	
 	public void process() {
 		if (this.entities == null) {
 			Iterator<AbstractEntity> it = ecs.getEntityIterator();

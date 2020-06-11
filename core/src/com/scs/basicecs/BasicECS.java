@@ -83,11 +83,9 @@ public class BasicECS {
 	public void addAndRemoveEntities() {
 		// Remove any entities
 		Iterator<AbstractEntity> it = this.getEntityIterator();
-		//for (int i = this.entities.size()-1 ; i >= 0; i--) {
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();// this.entities.get(i);
 			if (entity.isMarkedForRemoval()) {
-				//this.entities.remove(entity);
 				it.remove();
 
 				// Remove from systems
@@ -97,7 +95,8 @@ public class BasicECS {
 						Class<?> clazz = system.getComponentClass();
 						if (clazz != null) {
 							if (entity.getComponents().containsKey(clazz)) {
-								system.entities.remove(entity);
+								//system.entities.remove(entity);
+								system.removeEntity(entity);
 							}
 						}
 					}
