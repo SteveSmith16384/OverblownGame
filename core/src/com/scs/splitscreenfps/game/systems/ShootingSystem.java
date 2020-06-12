@@ -52,14 +52,15 @@ public class ShootingSystem extends AbstractSystem {
 			cc.lastShotTime = System.currentTimeMillis();
 			cc.ammo--;
 
-			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-
-			
 			Vector3 tmpBulletOffset = new Vector3();
-			tmpBulletOffset.set((float)Math.sin(Math.toRadians(posData.angle_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs+90)));
+			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+			if (cc.shootInCameraDirection) {
+				tmpBulletOffset.set(player.camera.direction);
+			} else {
+				tmpBulletOffset.set((float)Math.sin(Math.toRadians(posData.angle_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs+90)));
+			}
 			tmpBulletOffset.nor();
 			//tmpBulletOffset.scl(8);
-
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
 			startPos.add(tmpBulletOffset);//.nor().scl(2));
@@ -67,9 +68,6 @@ public class ShootingSystem extends AbstractSystem {
 
 			AbstractEntity bullet = EntityFactory.createBullet(ecs, player, startPos, tmpBulletOffset);
 			game.ecs.addEntity(bullet);
-
-			//level.qlRecordAndPlaySystem.addEvent(new BulletFiredRecordData(this.level.qlPhaseSystem.getPhaseNum012(), this.level.getCurrentPhaseTime(), player, startPos, tmpBulletOffset));
-			//level.qlRecordAndPlaySystem.addEvent(new BulletFiredRecordData(this.level.qlPhaseSystem.getPhaseNum012(), this.level.getCurrentPhaseTime(), player.playerIdx, startPos, tmpBulletOffset));
 		}
 	}
 

@@ -419,7 +419,7 @@ public class Game implements IModule {
 				if (bullet != null) {
 					e1.remove();
 					Vector3 pos = new Vector3();
-					game.physicsSystem.explosion(ob2.getWorldTransform().getTranslation(pos), 4f);
+					game.physicsSystem.explosion(ob2.getWorldTransform().getTranslation(pos), 2f);
 				}
 			}
 		}

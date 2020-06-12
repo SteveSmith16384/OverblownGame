@@ -86,11 +86,12 @@ public class PhysicsSystem extends AbstractSystem {
 				pc.body.getWorldTransform(mat);
 				mat.getTranslation(vec);
 				float distance = vec.dst(pos);
-				//if (distance <= range) {
+				if (distance <= range) {
+					// Todo - check the explision can see the target?
 					pc.body.activate();
-					pc.body.applyCentralImpulse(pos.sub(vec).nor().scl(3));
+					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(3));
 					Settings.p("Moving " + e.name);
-				//}
+				}
 			}
 		}
 	}

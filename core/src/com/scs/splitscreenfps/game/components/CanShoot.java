@@ -4,5 +4,6 @@ public class CanShoot {
 
 	public long lastShotTime;
 	public long ammo;
+	public boolean shootInCameraDirection = true;
 	
 }
