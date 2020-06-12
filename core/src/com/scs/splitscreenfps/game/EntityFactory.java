@@ -104,7 +104,9 @@ public class EntityFactory {
 		crate.addComponent(cc);
 
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
-		btRigidBody groundObject = new btRigidBody(.7f, null, boxShape);
+		Vector3 local_inertia = new Vector3();
+		boxShape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody groundObject = new btRigidBody(.7f, null, boxShape, local_inertia);
 		groundObject.userData = crate;
 		groundObject.setRestitution(.5f);
 		groundObject.setCollisionShape(boxShape);
