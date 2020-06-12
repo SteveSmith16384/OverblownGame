@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
@@ -25,9 +24,6 @@ public class GenericModel extends AbstractEntity {
 		HasModelComponent hasModel = new HasModelComponent(name = "_model", instance, offset, 0, scale);
 		this.addComponent(hasModel);
 
-		CollidesComponent cc = new CollidesComponent(true, instance);
-		this.addComponent(cc);
-		
 		PositionComponent pos = new PositionComponent(posX, posY, posZ);
 		this.addComponent(pos);
 	}

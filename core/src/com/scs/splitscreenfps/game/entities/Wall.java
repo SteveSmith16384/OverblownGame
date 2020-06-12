@@ -12,19 +12,17 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
 public class Wall extends AbstractEntity {
-/*
+	/*
 	public Wall(BasicECS ecs, String tex_filename, int mapPosX, float yPos, int mapPosZ, boolean add_collision) {
 		super(ecs, Wall.class.getSimpleName() + "_" + mapPosX + "_" + mapPosZ);
-		
+
 		BlendingAttribute blendingAttribute = new BlendingAttribute();
 		blendingAttribute.opacity = 1f;
-		
+
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)), blendingAttribute);
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(1f, 1f, 1f, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
@@ -34,7 +32,7 @@ public class Wall extends AbstractEntity {
 
 		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
-		
+
 		if (add_collision) {
 			CollidesComponent cc = new CollidesComponent(true, instance);
 			this.addComponent(cc);
@@ -46,7 +44,7 @@ public class Wall extends AbstractEntity {
 
 	public Wall(BasicECS ecs, Pixmap pixmap, int mapPosX, int mapPosZ, boolean add_collision) {
 		super(ecs, Wall.class.getSimpleName());
-		
+
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(pixmap)));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(1f, 1f, 1f, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
@@ -57,7 +55,7 @@ public class Wall extends AbstractEntity {
 
 		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
-		
+
 		if (add_collision) {
 			CollidesComponent cc = new CollidesComponent(true, instance);
 			this.addComponent(cc);
@@ -66,10 +64,10 @@ public class Wall extends AbstractEntity {
 		}
 	}
 
-*/
+	 */
 	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d) {
 		super(ecs, name);
-		
+
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
@@ -80,21 +78,15 @@ public class Wall extends AbstractEntity {
 
 		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
-		
-		//if (add_collision) {
-			CollidesComponent cc = new CollidesComponent(true, instance);
-			this.addComponent(cc);
-			
-			btBoxShape groundShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
-			btRigidBody groundObject = new btRigidBody(0f, null, groundShape);
-			groundObject.userData = this;
-			groundObject.setRestitution(.9f);
-			groundObject.setCollisionShape(groundShape);
-			groundObject.setWorldTransform(instance.transform);
-			//game.dynamicsWorld.addRigidBody(groundObject);
-			this.addComponent(new PhysicsComponent(groundObject));
 
-		//}
+		btBoxShape groundShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
+		btRigidBody groundObject = new btRigidBody(0f, null, groundShape);
+		groundObject.userData = this;
+		groundObject.setRestitution(.9f);
+		groundObject.setCollisionShape(groundShape);
+		groundObject.setWorldTransform(instance.transform);
+		//game.dynamicsWorld.addRigidBody(groundObject);
+		this.addComponent(new PhysicsComponent(groundObject));
 	}
 
 }

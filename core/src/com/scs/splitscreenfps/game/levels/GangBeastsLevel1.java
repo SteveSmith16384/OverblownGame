@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
@@ -19,7 +18,6 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
-import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -31,9 +29,7 @@ import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
-import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
-import ssmith.libgdx.ShapeHelper;
 
 public class GangBeastsLevel1 extends AbstractLevel {
 
@@ -70,8 +66,6 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
 		game.players[playerIdx].addComponent(hgsc);
 		 */
-
-		player.addComponent(new CanShoot());
 	}
 
 

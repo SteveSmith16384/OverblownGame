@@ -9,8 +9,8 @@ import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
-import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 
 public class ShootingSystem extends AbstractSystem {
@@ -29,10 +29,11 @@ public class ShootingSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		CanShoot cc = (CanShoot)entity.getComponent(CanShoot.class);
-		long interval = 300;
+		WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
+
+		long interval = weapon.shot_interval;//300;
 		if (cc.ammo == 0) {
-			interval = 1500;
-			//cc.ammo = 6;
+			interval = weapon.reload_interval;//1500;
 		}
 		if (cc.lastShotTime + interval > System.currentTimeMillis()) {
 			//Settings.p("Too soon");
@@ -42,34 +43,45 @@ public class ShootingSystem extends AbstractSystem {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
 		if (player.inputMethod.isShootPressed()) {
+			//Settings.p("Shoot!");
 			if (cc.ammo == 0) {
 				BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");			
 				//Settings.p("Reloading");
-				cc.ammo = 6;
+				cc.ammo = weapon.max_ammo;
 			}
-			//Settings.p("Shot!");
 
 			cc.lastShotTime = System.currentTimeMillis();
 			cc.ammo--;
 
-			Vector3 tmpBulletOffset = new Vector3();
+			Vector3 dir = new Vector3();
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 			if (cc.shootInCameraDirection) {
-				tmpBulletOffset.set(player.camera.direction);
+				dir.set(player.camera.direction);
 			} else {
-				tmpBulletOffset.set((float)Math.sin(Math.toRadians(posData.angle_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs+90)));
+				dir.set((float)Math.sin(Math.toRadians(posData.angle_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs+90)));
 			}
-			tmpBulletOffset.nor();
-			//tmpBulletOffset.scl(8);
+			dir.nor();
+
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
-			startPos.add(tmpBulletOffset);//.nor().scl(2));
+			startPos.add(dir);//.nor().scl(2));
 			startPos.y += .3f;
 
-			AbstractEntity bullet = EntityFactory.createBullet(ecs, player, startPos, tmpBulletOffset);
-			game.ecs.addEntity(bullet);
+			switch (weapon.weapon_type) {
+			case WeaponSettingsComponent.WEAPON_BULLET:
+				AbstractEntity bullet = EntityFactory.createBullet(ecs, player, startPos, dir);
+				game.ecs.addEntity(bullet);
+				break;
+
+			case WeaponSettingsComponent.WEAPON_GRENADE:
+				AbstractEntity g = EntityFactory.createGrenade(ecs, player, startPos, dir);
+				game.ecs.addEntity(g);
+				break;
+
+			default:
+				throw new RuntimeException("Todo");
+			}
 		}
 	}
-
 
 }

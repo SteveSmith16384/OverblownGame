@@ -416,10 +416,10 @@ public class Game implements IModule {
 				// Remove bullets
 				AbstractEntity e1 = (AbstractEntity)ob2.userData;
 				IsBulletComponent bullet = (IsBulletComponent)e1.getComponent(IsBulletComponent.class);
-				if (bullet != null) {
+				if (bullet != null && bullet.removeOnContact) {
 					e1.remove();
-					Vector3 pos = new Vector3();
-					game.physicsSystem.explosion(ob2.getWorldTransform().getTranslation(pos), 2f);
+					//Vector3 pos = new Vector3();
+					//game.physicsSystem.explosion(ob2.getWorldTransform().getTranslation(pos), 2f);
 				}
 			}
 		}

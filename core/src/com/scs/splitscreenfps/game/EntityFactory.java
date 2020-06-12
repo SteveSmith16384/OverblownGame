@@ -15,7 +15,6 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
@@ -56,11 +55,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		CollidesComponent cc = new CollidesComponent(false, .1f);
-		cc.dont_collide_with = shooter;
-		e.addComponent(cc);
-
-		e.addComponent(new IsBulletComponent(shooter, playerData.side));
+		e.addComponent(new IsBulletComponent(shooter, playerData.side, true));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -86,6 +81,61 @@ public class EntityFactory {
 	}
 
 
+	public static AbstractEntity createGrenade(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(ecs, "Grenade");
+
+		PositionComponent pos = new PositionComponent(start);
+		e.addComponent(pos);
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+
+		HasDecal hasDecal = new HasDecal();
+		if (playerData.side == 0) {
+			if (playerData.health > 0) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			} else {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red_desync.png", 0.2f);
+			}
+		} else if (playerData.side == 1) {
+			if (playerData.health > 0) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
+			} else {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue_desync.png", 0.2f);
+			}
+		} else {
+			throw new RuntimeException("Invalid side: " + playerData.side);
+		}
+		hasDecal.decal.setPosition(pos.position);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = false;
+		e.addComponent(hasDecal);
+
+		e.addComponent(new IsBulletComponent(shooter, playerData.side, false));
+
+		// Add physics
+		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
+		btRigidBody body = new btRigidBody(.1f, null, shape);
+		body.userData = e;
+		body.setFriction(0);
+		//body.setRestitution(.9f);
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		//body.applyCentralForce(offset.scl(100));
+		//body.applyCentralImpulse(offset.scl(10));
+		//body.setGravity(new Vector3());
+		PhysicsComponent pc = new PhysicsComponent(body);
+		//pc.disable_gravity = true;
+		pc.force = dir.scl(1f);
+		e.addComponent(pc);
+
+		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+
+		return e;
+	}
+
+
 	public static AbstractEntity createCrate(BasicECS ecs, String tex_filename, float posX, float posY, float posZ, float w, float h, float d) {
 		AbstractEntity crate = new AbstractEntity(ecs, "Crate");
 
@@ -99,9 +149,6 @@ public class EntityFactory {
 
 		HasModelComponent model = new HasModelComponent("Crate", instance);
 		crate.addComponent(model);
-
-		CollidesComponent cc = new CollidesComponent(true, instance);
-		crate.addComponent(cc);
 
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
 		Vector3 local_inertia = new Vector3();
