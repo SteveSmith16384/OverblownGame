@@ -114,7 +114,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		 */
 
 		// Random crates
-		for (int i=0 ; i<10 ; i++) {
+		for (int i=0 ; i<1 ; i++) {
 			int col = 5;//NumberFunctions.rnd(1,  10);
 			int row = 5;//NumberFunctions.rnd(1,  10);
 			AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, i+3, row, .4f, .4f, .4f);

@@ -13,9 +13,11 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
 import com.scs.splitscreenfps.game.ViewportData;
+import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
@@ -56,7 +58,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		
 		this.addComponent(md);
 		this.addComponent(new PositionComponent());
-		//this.addComponent(new CanCarryComponent(playerIdx));
 
 		// Model stuff
 		this.addModel(playerIdx, modelType);
@@ -66,6 +67,9 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		
 		addComponent(new CanShoot());
 		
+		addComponent(new PhysicsComponent(player_body));
+		addComponent(new AffectedByExplosionComponent());
+
 		WeaponSettingsComponent weapon = new WeaponSettingsComponent();
 		weapon.shot_interval = 300;
 		weapon.max_ammo = 6;
