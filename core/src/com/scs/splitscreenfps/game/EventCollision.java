@@ -5,8 +5,8 @@ import com.scs.basicecs.AbstractEvent;
 
 public class EventCollision extends AbstractEvent {
 
-	public AbstractEntity movingEntity;
-	public AbstractEntity hitEntity; // if null, it has hit a wall
+	public AbstractEntity movingEntity; // todo - rename
+	public AbstractEntity hitEntity; // todo - rename
 
 	public EventCollision(AbstractEntity _movingEntity, AbstractEntity _hitEntity) {
 		movingEntity = _movingEntity;

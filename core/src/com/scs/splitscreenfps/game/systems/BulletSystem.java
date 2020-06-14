@@ -2,20 +2,26 @@ package com.scs.splitscreenfps.game.systems;
 
 import java.util.List;
 
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
-import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 
+/**
+ * Handles bullets, grenades and rockets
+ *
+ */
 public class BulletSystem extends AbstractSystem {
 
 	private Game game;
@@ -35,57 +41,40 @@ public class BulletSystem extends AbstractSystem {
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
 
-			if (coll.hitEntity == null) { // Hit wall
-				//Settings.p("Bullet removed after hitting wall");
-				entity.remove();
-				AbstractEntity expl = EntityFactory.createBlueExplosion(ecs, pos.position);
-				ecs.addEntity(expl);
-				BillBoardFPS_Main.audio.play("sfx/explosion_dull.wav");
-				continue;
-			}
-
 			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, PlayerData.class);
 			if (ents != null) {
 				IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
-				// Check if shooter is alive
-				PlayerData shooterData = (PlayerData)bullet.shooter.getComponent(PlayerData.class);
-				if (shooterData.health > 0) {
-					PlayerData playerHitData = (PlayerData)ents[1].getComponent(PlayerData.class);
-					// Check if target is alive
-					if (playerHitData.health > 0) {
-						if (playerHitData.side != bullet.side) {
-							ents[0].remove(); // Remove bullet
-							playerHitData.health -= 50;
+				// PlayerData shooterData = (PlayerData)bullet.shooter.getComponent(PlayerData.class);
+				PlayerData playerHitData = (PlayerData)ents[1].getComponent(PlayerData.class);
+				// Check if target is alive
+				if (playerHitData.health > 0) {
+					if (playerHitData.side != bullet.side) {
+						//ents[0].remove(); // Remove bullet
+						playerHitData.health -= 50; // Todo - bullet power						
 
-							for (int id = 0 ; id<game.players.length ; id++) {
-								if (ents[1] == game.players[id]) {
-									if (playerHitData.health <= 0) {
-										AbstractEntity whitefilter = EntityFactory.createWhiteFilter(game.ecs, id);
-										ecs.addEntity(whitefilter);
-									} else {
-										AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
-										redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
-										ecs.addEntity(redfilter);
-									}
-									break;
+						for (int id = 0 ; id<game.players.length ; id++) {
+							if (ents[1] == game.players[id]) {
+								if (playerHitData.health <= 0) {
+									AbstractEntity whitefilter = EntityFactory.createWhiteFilter(game.ecs, id);
+									ecs.addEntity(whitefilter);
+								} else {
+									AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
+									redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
+									ecs.addEntity(redfilter);
 								}
+								break;
 							}
-
-							if (playerHitData.health <= 0) {
-								GangBeastsLevel1.setAvatarColour(ents[1], false);
-
-								BillBoardFPS_Main.audio.play("sfx/qubodup-PowerDrain.ogg");
-							}
-
-							AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
-							ecs.addEntity(expl);
-
-							return;
 						}
+
+						AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
+						ecs.addEntity(expl);
+
+						return;
 					}
 				}
 			}
 		}
+
 	}
 
 }

@@ -29,9 +29,12 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.components.IsBulletComponent;
+import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
+import com.scs.splitscreenfps.game.components.ExplodeOnContactSystem;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
@@ -48,6 +51,7 @@ import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
+import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
@@ -79,6 +83,7 @@ public class Game implements IModule {
 	private PhysicsSystem physicsSystem;
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
+	private ProcessCollisionSystem coll;
 
 	private DebugDrawer debugDrawer;
 	private btBroadphaseInterface broadphase;
@@ -110,7 +115,8 @@ public class Game implements IModule {
 			debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
 			dynamicsWorld.setDebugDrawer(debugDrawer);
 		}
-		new MyContactListener(this);
+		coll = new ProcessCollisionSystem(this);
+		new MyContactListener(coll);
 
 		currentLevel = new GangBeastsLevel1(this);
 
@@ -203,9 +209,6 @@ public class Game implements IModule {
 			}
 		}
 
-		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
-		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
-
 		this.ecs.events.clear();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
@@ -215,6 +218,9 @@ public class Game implements IModule {
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
+
+		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 
 		currentLevel.update();
 
@@ -394,14 +400,41 @@ public class Game implements IModule {
 	}
 	 */
 
+	public void explosion(Vector3 pos, float range, float force) {
+		Settings.p("Explosion at " + pos);
+		// Loop through ents
+		Matrix4 mat = new Matrix4();
+		Vector3 vec = new Vector3();
+		Iterator<AbstractEntity> it = this.physicsSystem.getEntityIterator();
+		while (it.hasNext()) {
+			AbstractEntity e = it.next();
+			AffectedByExplosionComponent aff = (AffectedByExplosionComponent)e.getComponent(AffectedByExplosionComponent.class);
+			if (aff != null) {
+				PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+				pc.body.getWorldTransform(mat);
+				mat.getTranslation(vec);
+				float distance = vec.dst(pos);
+				if (distance <= range) {
+					// Todo - check the explosion can see the target?
+					pc.body.activate();
+					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(force));
+					Settings.p("Moving " + e.name);
+				}
+			}
+		}
+	}
+
+
+
+
 	class MyContactListener extends ContactListener {
 
-		private Game game;
-		
-		public MyContactListener(Game _game) {
-			game = _game;
+		private ProcessCollisionSystem coll;
+
+		public MyContactListener(ProcessCollisionSystem _coll) {
+			coll = _coll;
 		}
-		
+
 		@Override
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			return true;
@@ -409,18 +442,14 @@ public class Game implements IModule {
 
 		@Override
 		public void onContactStarted (btCollisionObject ob1, btCollisionObject ob2) {
-			//Settings.p(ob1.userData + " collided with " + ob2.userData);
+			try {
+				//Settings.p(ob1.userData + " collided with " + ob2.userData);
+				AbstractEntity e1 = (AbstractEntity)ob1.userData;
+				AbstractEntity e2 = (AbstractEntity)ob2.userData;
 
-			// todo - raise event
-			if (ob2.userData instanceof AbstractEntity) {
-				// Remove bullets
-				AbstractEntity e1 = (AbstractEntity)ob2.userData;
-				IsBulletComponent bullet = (IsBulletComponent)e1.getComponent(IsBulletComponent.class);
-				if (bullet != null && bullet.removeOnContact) {
-					e1.remove();
-					//Vector3 pos = new Vector3();
-					//game.physicsSystem.explosion(ob2.getWorldTransform().getTranslation(pos), 2f);
-				}
+				coll.processCollision(e1, e2);
+			} catch (Exception ex) {
+				Settings.pe(ex.getMessage());
 			}
 		}
 

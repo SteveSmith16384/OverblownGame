@@ -74,27 +74,4 @@ public class PhysicsSystem extends AbstractSystem {
 	}
 
 
-	public void explosion(Vector3 pos, float range) {
-		Settings.p("Explosion at " + pos);
-		// Loop through ents
-		Matrix4 mat = new Matrix4();
-		Vector3 vec = new Vector3();
-		for(AbstractEntity e : this.entities) {
-			AffectedByExplosionComponent aff = (AffectedByExplosionComponent)e.getComponent(AffectedByExplosionComponent.class);
-			if (aff != null) {
-				PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-				pc.body.getWorldTransform(mat);
-				mat.getTranslation(vec);
-				float distance = vec.dst(pos);
-				if (distance <= range) {
-					// Todo - check the explision can see the target?
-					pc.body.activate();
-					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(3));
-					Settings.p("Moving " + e.name);
-				}
-			}
-		}
-	}
-
-
 }

@@ -68,7 +68,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		WeaponSettingsComponent weapon = new WeaponSettingsComponent();
 		weapon.shot_interval = 300;
 		weapon.max_ammo = 6;
-		weapon.weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
+		weapon.weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
 		addComponent(weapon);
 
 		GangBeastsLevel1.setAvatarColour(this, true);	

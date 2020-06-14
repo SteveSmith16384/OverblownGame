@@ -1,5 +1,5 @@
 package com.scs.splitscreenfps.game.components;
 
-public class ExplodeAfterTimeSystem { // todo
+public class RemoveOnContactComponent {
 
 }

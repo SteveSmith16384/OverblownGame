@@ -15,12 +15,14 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
+import com.scs.splitscreenfps.game.components.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 
 import ssmith.libgdx.GraphicsHelper;
 
@@ -55,13 +57,72 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side, true));
+		e.addComponent(new RemoveOnContactComponent());
+
+		e.addComponent(new IsBulletComponent(shooter, playerData.side));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
 		btRigidBody body = new btRigidBody(.1f, null, shape);
 		body.userData = e;
-		body.setFriction(0);
+		//body.setFriction(0);
+		//body.setRestitution(.9f);
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		//body.applyCentralForce(offset.scl(100));
+		//body.applyCentralImpulse(offset.scl(10));
+		//body.setGravity(new Vector3());
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.disable_gravity = true;
+		pc.force = dir.scl(1.5f);
+		e.addComponent(pc);
+
+		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+
+		return e;
+	}
+
+
+	public static AbstractEntity createRocket(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(ecs, "Rocket");
+
+		PositionComponent pos = new PositionComponent(start);
+		e.addComponent(pos);
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+
+		HasDecal hasDecal = new HasDecal();
+		if (playerData.side == 0) {
+			if (playerData.health > 0) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			} else {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red_desync.png", 0.2f);
+			}
+		} else if (playerData.side == 1) {
+			if (playerData.health > 0) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
+			} else {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue_desync.png", 0.2f);
+			}
+		} else {
+			throw new RuntimeException("Invalid side: " + playerData.side);
+		}
+		hasDecal.decal.setPosition(pos.position);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = false;
+		e.addComponent(hasDecal);
+
+		e.addComponent(new IsBulletComponent(shooter, playerData.side));
+		e.addComponent(new RemoveOnContactComponent());
+		e.addComponent(new ExplodeOnContactSystem());
+		
+		// Add physics
+		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
+		btRigidBody body = new btRigidBody(.1f, null, shape);
+		body.userData = e;
+		//body.setFriction(0);
 		//body.setRestitution(.9f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
@@ -105,12 +166,13 @@ public class EntityFactory {
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.side);
 		}
+		
 		hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side, false));
+		e.addComponent(new IsBulletComponent(shooter, playerData.side));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));

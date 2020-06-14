@@ -78,6 +78,11 @@ public class ShootingSystem extends AbstractSystem {
 				game.ecs.addEntity(g);
 				break;
 
+			case WeaponSettingsComponent.WEAPON_ROCKET:
+				AbstractEntity r = EntityFactory.createRocket(ecs, player, startPos, dir);
+				game.ecs.addEntity(r);
+				break;
+
 			default:
 				throw new RuntimeException("Todo");
 			}

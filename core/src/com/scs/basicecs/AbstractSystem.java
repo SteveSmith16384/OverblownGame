@@ -92,6 +92,11 @@ public abstract class AbstractSystem implements ISystem {
 	}
 
 	
+	public Iterator<AbstractEntity> getEntityIterator() {
+		return this.entities.iterator();
+	}
+
+	
 	public String toString() {
 		return name;
 	}
