@@ -11,18 +11,15 @@ import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
-import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 
 public class ShootingSystem extends AbstractSystem {
 
 	private Game game;
-	//private GangBeastsLevel1 level;
 
-	public ShootingSystem(BasicECS ecs, Game _game, GangBeastsLevel1 _level) {
+	public ShootingSystem(BasicECS ecs, Game _game) {
 		super(ecs, CanShoot.class);
 
 		game = _game;
-		//level = _level;
 	}
 
 
@@ -64,7 +61,7 @@ public class ShootingSystem extends AbstractSystem {
 
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
-			startPos.add(dir);//.nor().scl(2));
+			startPos.add(dir);
 			startPos.y += .3f;
 
 			switch (weapon.weapon_type) {

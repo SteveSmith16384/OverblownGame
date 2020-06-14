@@ -55,7 +55,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		//characterController.setFriction(1);
 		game.dynamicsWorld.addRigidBody(player_body);
 		md.characterController = player_body;
-		
+
 		this.addComponent(md);
 		this.addComponent(new PositionComponent());
 
@@ -64,20 +64,42 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		camera = _viewportData.camera;
 		cameraController = new PersonCameraController(camera, inputMethod);
-		
+
 		addComponent(new CanShoot());
-		
+
 		addComponent(new PhysicsComponent(player_body));
 		addComponent(new AffectedByExplosionComponent());
 
 		WeaponSettingsComponent weapon = new WeaponSettingsComponent();
-		weapon.shot_interval = 300;
-		weapon.max_ammo = 6;
-		weapon.weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
+
+		int weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
+		switch (weapon_type) {
+		case WeaponSettingsComponent.WEAPON_BULLET:
+			weapon.shot_interval = 300;
+			weapon.max_ammo = 20;
+			weapon.weapon_type = WeaponSettingsComponent.WEAPON_BULLET;
+			break;
+			
+		case WeaponSettingsComponent.WEAPON_GRENADE:
+			weapon.shot_interval = 600;
+			weapon.max_ammo = 12;
+			weapon.weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
+			break;
+			
+		case WeaponSettingsComponent.WEAPON_ROCKET:
+			weapon.shot_interval = 900;
+			weapon.max_ammo = 6;
+			weapon.weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
+			break;
+			
+		default:
+			throw new RuntimeException("Todo");
+		}
+
 		addComponent(weapon);
 
 		GangBeastsLevel1.setAvatarColour(this, true);	
-		
+
 	}
 
 
@@ -91,7 +113,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			am.finishLoading();
 			Model model = am.get("models/quaternius/Smooth_Male_Shirt.g3db");
 			ModelInstance instance = new ModelInstance(model);
-			
+
 			HasModelComponent hasModel = new HasModelComponent("SmoothMale", instance, -.3f, 90, 0.0016f);
 			hasModel.dontDrawInViewId = playerIdx;
 			this.addComponent(hasModel);
@@ -106,7 +128,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
 				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
 			}
-			*/
+			 */
 			return instance;
 		}
 		case 1:
@@ -125,7 +147,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
 			anim.animationController = animation;
 			this.addComponent(anim);
-			
+
 			/*
 			QuantumLeagueLevel.setAvatarColour(e, alive);
 
@@ -133,7 +155,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
 				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
 			}
-			*/
+			 */
 			return instance;
 		}
 		}
@@ -183,7 +205,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		if (this.inputMethod.isJumpPressed()) {
 			movementData.jumpPressed = true;
 		}
-		
+
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 

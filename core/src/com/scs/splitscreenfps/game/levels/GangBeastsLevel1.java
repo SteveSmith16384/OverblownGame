@@ -9,25 +9,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.IScoreSystem;
 import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
-import com.scs.splitscreenfps.game.systems.BulletSystem;
-import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -36,10 +29,6 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	public static Properties prop;
 
 	public IScoreSystem scoreSystem;
-	private btCollisionShape ballShape;
-	private btRigidBody ballObject;
-
-	private ModelInstance ground, ball;
 
 	public GangBeastsLevel1(Game _game) {
 		super(_game);
@@ -84,43 +73,13 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 	@Override
 	public void load() {
-		/*
-		ground = ShapeHelper.createCube("colours/red.png", 5, 5, 10, 1);
-		//ground.transform.rotate(Vector3.X, 20);
-
-		btBoxShape groundShape = new btBoxShape(new Vector3(5f, 0.5f, 5f));
-
-		btRigidBody groundObject = new btRigidBody(0f, null, groundShape);
-		groundObject.userData = "Ground";
-		//groundObject.setCollisionFlags(flags);
-		groundObject.setRestitution(.9f);
-		groundObject.setCollisionShape(groundShape);
-		groundObject.setWorldTransform(ground.transform);
-		game.dynamicsWorld.addRigidBody(groundObject);
-		 */
-
-		//Floor floor = new Floor(game, game.ecs, "Floor", "textures/floor006.png", 5, 0, 5, 8, 8);
-		//game.ecs.addEntity(floor);
-		/*
-		ball = ShapeHelper.createSphere("colours/cyan.png", 5, 5, 5, 1);
-		ballShape = new btSphereShape(0.5f);
-		ballObject = new btRigidBody(1f, null, ballShape);
-		ballObject.userData = "Ball";
-		ballObject.setRestitution(.9f);
-		ballObject.setCollisionShape(ballShape);
-		ballObject.setWorldTransform(ball.transform);
-
-		game.dynamicsWorld.addRigidBody(ballObject);
-		 */
-
 		// Random crates
-		for (int i=0 ; i<1 ; i++) {
+		for (int i=0 ; i<10 ; i++) {
 			int col = 5;//NumberFunctions.rnd(1,  10);
 			int row = 5;//NumberFunctions.rnd(1,  10);
 			AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, i+3, row, .4f, .4f, .4f);
 			game.ecs.addEntity(crate);
 		}
-
 
 		loadMapFromFile("map1.csv");
 		
@@ -192,35 +151,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 				row++;
 			}
 		}
-		/*
-		float thickness = .1f;
-		// White lines
-		Floor floor1 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, this.map_width-3, thickness);
-		game.ecs.addEntity(floor1);
-		Floor floor2 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, (this.map_height/2)+.5f, this.map_width-3, thickness);
-		game.ecs.addEntity(floor2);
-		Floor floor3 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, this.map_height-1.5f, this.map_width-3, thickness);
-		game.ecs.addEntity(floor3);
-		Floor floor4 = new Floor(game.ecs, "Floor", "colours/white.png", 1.5f, .001f, 1.5f, thickness, this.map_height - 3f);
-		game.ecs.addEntity(floor4);
-		Floor floor5 = new Floor(game.ecs, "Floor", "colours/white.png",  this.map_width-1.5f, .001f, 1.5f, thickness, this.map_height - 3f);
-		game.ecs.addEntity(floor5);
-		 */
-	}
 
-
-	@Override
-	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new BulletSystem(ecs, game));
-		ecs.addSystem(new ShootingSystem(ecs, game, this));
-
-	}
-
-
-	@Override
-	public void update() {
-		game.ecs.processSystem(BulletSystem.class);
-		game.ecs.processSystem(ShootingSystem.class);
 	}
 
 
@@ -251,29 +182,6 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	}
 
 
-	public void nextGamePhase() {
-		BillBoardFPS_Main.audio.play("sfx/AirHorn.wav");
-
-		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
-
-		//this.qlRecordAndPlaySystem.loadNewRecordData();
-		//this.qlPhaseSystem.startGamePhase();
-
-		for (int playerIdx=0 ; playerIdx<game.players.length ; playerIdx++) {
-			// Reset all health
-			PlayerData playerData = (PlayerData)game.players[playerIdx].getComponent(PlayerData.class);
-			playerData.health = 100;
-			setAvatarColour(game.players[playerIdx], true);
-
-			// Move players avatars back to start
-			GridPoint2Static start = this.startPositions.get(playerIdx);
-			PositionComponent posData = (PositionComponent)game.players[playerIdx].getComponent(PositionComponent.class);
-			posData.position.x = start.x + 0.5f;
-			posData.position.z = start.y + 0.5f;
-		}
-	}
-
-
 	@Override
 	public void startGame() {
 		//BillBoardFPS_Main.audio.play("sfx/AirHorn.wav");
@@ -281,17 +189,4 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 	}
 
-	/*
-	static class MyMotionState extends btMotionState {
-		Matrix4 transform;
-		@Override
-		public void getWorldTransform (Matrix4 worldTrans) {
-			worldTrans.set(transform);
-		}
-		@Override
-		public void setWorldTransform (Matrix4 worldTrans) {
-			transform.set(worldTrans);
-		}
-	}
-	 */
 }

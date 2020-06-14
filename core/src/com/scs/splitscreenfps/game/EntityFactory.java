@@ -10,11 +10,13 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
+import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
+import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
@@ -174,12 +176,14 @@ public class EntityFactory {
 
 		e.addComponent(new IsBulletComponent(shooter, playerData.side));
 
+		e.addComponent(new ExplodeAfterTimeComponent(3000));
+
 		// Add physics
-		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
+		btSphereShape shape = new btSphereShape(.1f);//new Vector3(.1f, .1f, .1f));
 		btRigidBody body = new btRigidBody(.1f, null, shape);
 		body.userData = e;
-		body.setFriction(0);
-		//body.setRestitution(.9f);
+		body.setFriction(0.9f);
+		body.setRestitution(.6f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);

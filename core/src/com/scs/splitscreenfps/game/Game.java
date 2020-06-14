@@ -31,6 +31,7 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
+import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -40,6 +41,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
+import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
@@ -52,6 +54,7 @@ import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
+import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
 import ssmith.libgdx.GridPoint2Static;
@@ -92,6 +95,8 @@ public class Game implements IModule {
 	private btCollisionDispatcher dispatcher;
 	public btDiscreteDynamicsWorld dynamicsWorld;
 
+	private long startPhysicsTime;
+
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
 		inputs = _inputs;
@@ -126,13 +131,13 @@ public class Game implements IModule {
 		loadLevel();
 		this.loadAssetsForRescale(); // Need this to load font
 
-		this.currentLevel.addSystems(ecs);
-
 		for (int i=0 ; i<players.length ; i++) {
 			this.currentLevel.setupAvatars(this.players[i], i);
 		}
 
 		currentLevel.startGame();
+
+		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
 	}
 
 
@@ -161,6 +166,9 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawTextSystem(ecs, this, batch2d));
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
+		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
+		ecs.addSystem(new BulletSystem(ecs, this));
+		ecs.addSystem(new ShootingSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
@@ -220,11 +228,14 @@ public class Game implements IModule {
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
+		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
+		this.ecs.processSystem(BulletSystem.class);
+		this.ecs.processSystem(ShootingSystem.class);
 
-		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
-		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
-
-		currentLevel.update();
+		if (System.currentTimeMillis() > startPhysicsTime) {
+			final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+			dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+		}
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
@@ -412,6 +423,9 @@ public class Game implements IModule {
 		Iterator<AbstractEntity> it = this.physicsSystem.getEntityIterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
+			if (e.isMarkedForRemoval()) {
+				continue;
+			}
 			AffectedByExplosionComponent aff = (AffectedByExplosionComponent)e.getComponent(AffectedByExplosionComponent.class);
 			if (aff != null) {
 				PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
@@ -422,7 +436,7 @@ public class Game implements IModule {
 					// Todo - check the explosion can see the target?
 					pc.body.activate();
 					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(force));
-					Settings.p("Moving " + e.name);
+					//Settings.p("Moving " + e.name);
 				}
 			}
 		}
@@ -431,28 +445,28 @@ public class Game implements IModule {
 
 	//private final ClosestRayResultCallback callback = new ClosestRayResultCallback(rayFrom, rayTo);
 	public btCollisionObject rayTestByDir(Vector3 ray_from, Vector3 dir, float range) {
-	    Vector3 ray_to = new Vector3(ray_from).mulAdd(dir, range);
+		Vector3 ray_to = new Vector3(ray_from).mulAdd(dir, range);
 
-	    callback.setCollisionObject(null);
-	    callback.setClosestHitFraction(1f);
-	    
-	    Vector3 v1 = new Vector3();
-	    callback.getRayFromWorld(v1);
-	    v1.set(ray_from);
-	    
-	    Vector3 v2 = new Vector3();
-	    callback.getRayToWorld(v2);
-	    v2.set(ray_to);
-	    
+		callback.setCollisionObject(null);
+		callback.setClosestHitFraction(1f);
+
+		Vector3 v1 = new Vector3();
+		callback.getRayFromWorld(v1);
+		v1.set(ray_from);
+
+		Vector3 v2 = new Vector3();
+		callback.getRayToWorld(v2);
+		v2.set(ray_to);
+
 		this.dynamicsWorld.rayTest(ray_from, ray_to, callback);
-	    if (callback.hasHit()) {
-	        return callback.getCollisionObject();
-	    }
+		if (callback.hasHit()) {
+			return callback.getCollisionObject();
+		}
 
-	    return null;
+		return null;
 	}
 
-	
+
 	class MyContactListener extends ContactListener {
 
 		private ProcessCollisionSystem coll;

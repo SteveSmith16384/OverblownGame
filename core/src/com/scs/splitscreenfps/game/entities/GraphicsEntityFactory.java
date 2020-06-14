@@ -2,15 +2,10 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
@@ -25,9 +20,9 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
 
-public class EntityFactory {
+public class GraphicsEntityFactory {
 
-	private EntityFactory() {
+	private GraphicsEntityFactory() {
 	}
 
 
@@ -149,7 +144,7 @@ public class EntityFactory {
 
 	}
 
-
+/*
 	public static AbstractEntity createDebugSphere(BasicECS ecs, float x, float y, float z, float diam) {
 		AbstractEntity e = new AbstractEntity(ecs, "LowWall");
 
@@ -170,4 +165,5 @@ public class EntityFactory {
 
 		return e;
 	}
+	*/
 }

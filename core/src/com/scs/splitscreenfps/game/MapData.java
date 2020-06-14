@@ -3,9 +3,6 @@ package com.scs.splitscreenfps.game;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.data.MapSquare;
 
-import ssmith.lang.NumberFunctions;
-import ssmith.libgdx.GridPoint2Static;
-
 public class MapData { // todo - delete this
 
 	//private static final MapSquare BLOCKED_WALL = new MapSquare(true);

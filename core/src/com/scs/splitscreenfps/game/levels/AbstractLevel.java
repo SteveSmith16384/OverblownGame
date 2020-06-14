@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 
@@ -68,10 +67,6 @@ public abstract class AbstractLevel implements ILevelInterface {
 	public abstract void startGame();
 	
 	public void setupAvatars(AbstractEntity player, int playerIdx) {}
-	
-	public abstract void addSystems(BasicECS ecs); // todo - remove this
-
-	public abstract void update();
 	
 	public void renderUI(SpriteBatch batch, int viewIndex) {}
 

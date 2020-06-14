@@ -2,21 +2,17 @@ package com.scs.splitscreenfps.game.systems;
 
 import java.util.List;
 
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
-import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
+import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 
 /**
  * Handles bullets, grenades and rockets
@@ -55,10 +51,10 @@ public class BulletSystem extends AbstractSystem {
 						for (int id = 0 ; id<game.players.length ; id++) {
 							if (ents[1] == game.players[id]) {
 								if (playerHitData.health <= 0) {
-									AbstractEntity whitefilter = EntityFactory.createWhiteFilter(game.ecs, id);
+									AbstractEntity whitefilter = GraphicsEntityFactory.createWhiteFilter(game.ecs, id);
 									ecs.addEntity(whitefilter);
 								} else {
-									AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
+									AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(game.ecs, id);
 									redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
 									ecs.addEntity(redfilter);
 								}
@@ -66,7 +62,7 @@ public class BulletSystem extends AbstractSystem {
 							}
 						}
 
-						AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
+						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos.position);
 						ecs.addEntity(expl);
 
 						return;
