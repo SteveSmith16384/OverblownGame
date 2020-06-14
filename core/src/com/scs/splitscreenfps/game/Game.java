@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
+import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
@@ -30,11 +31,9 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
-import com.scs.splitscreenfps.game.components.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
@@ -84,6 +83,9 @@ public class Game implements IModule {
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 	private ProcessCollisionSystem coll;
+	private btDefaultCollisionConfiguration collisionConfig;
+	private btSequentialImpulseConstraintSolver constraintSolver;
+	private final ClosestRayResultCallback callback = new ClosestRayResultCallback(new Vector3(), new Vector3());
 
 	private DebugDrawer debugDrawer;
 	private btBroadphaseInterface broadphase;
@@ -104,10 +106,10 @@ public class Game implements IModule {
 			this.viewports[i] = new ViewportData(i, false, players.length);
 		}
 
-		btDefaultCollisionConfiguration collisionConfig = new btDefaultCollisionConfiguration();
+		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
-		btSequentialImpulseConstraintSolver constraintSolver = new btSequentialImpulseConstraintSolver();
+		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
 		if (Settings.DEBUG_PHYSICS) {
@@ -401,10 +403,12 @@ public class Game implements IModule {
 	 */
 
 	public void explosion(Vector3 pos, float range, float force) {
-		Settings.p("Explosion at " + pos);
-		// Loop through ents
+		//Settings.p("Explosion at " + pos);
+
+		// Temp vars
 		Matrix4 mat = new Matrix4();
 		Vector3 vec = new Vector3();
+
 		Iterator<AbstractEntity> it = this.physicsSystem.getEntityIterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
@@ -425,8 +429,30 @@ public class Game implements IModule {
 	}
 
 
+	//private final ClosestRayResultCallback callback = new ClosestRayResultCallback(rayFrom, rayTo);
+	public btCollisionObject rayTestByDir(Vector3 ray_from, Vector3 dir, float range) {
+	    Vector3 ray_to = new Vector3(ray_from).mulAdd(dir, range);
 
+	    callback.setCollisionObject(null);
+	    callback.setClosestHitFraction(1f);
+	    
+	    Vector3 v1 = new Vector3();
+	    callback.getRayFromWorld(v1);
+	    v1.set(ray_from);
+	    
+	    Vector3 v2 = new Vector3();
+	    callback.getRayToWorld(v2);
+	    v2.set(ray_to);
+	    
+		this.dynamicsWorld.rayTest(ray_from, ray_to, callback);
+	    if (callback.hasHit()) {
+	        return callback.getCollisionObject();
+	    }
 
+	    return null;
+	}
+
+	
 	class MyContactListener extends ContactListener {
 
 		private ProcessCollisionSystem coll;

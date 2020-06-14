@@ -27,6 +27,7 @@ import ssmith.libgdx.ModelFunctions;
 // This also moves the camera
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
+	public static final float PLAYER_HEIGHT = 0.5f;
 	private static final float MOVE_SPEED = 1.5f;
 
 	public PersonCameraController cameraController;
@@ -40,7 +41,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		inputMethod = _inputMethod;
 
 		PlayerMovementData md = new PlayerMovementData();
-		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, .5f);
+		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
 

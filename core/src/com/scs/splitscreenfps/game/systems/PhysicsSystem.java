@@ -1,13 +1,11 @@
 package com.scs.splitscreenfps.game.systems;
 
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
 public class PhysicsSystem extends AbstractSystem {
@@ -27,23 +25,30 @@ public class PhysicsSystem extends AbstractSystem {
 	}
 
 
-	@Override
+	// todo - re-add
+/*	@Override
 	public void process() {
 		// Do nothing!
 	}
+*/
 
-	/*
 	@Override
 	public void processEntity(AbstractEntity e) {
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-		if (pc.force != null) {
+		if (pc.body.isDisposed()) {
+			Settings.pe("Body disposed for " + e);
+		}
+		if (pc.body.getCollisionShape().isDisposed()) {
+			Settings.pe("Shapedisposed for " + e);
+		}
+/*		if (pc.force != null) {
 			//pc.body.applyCentralForce(pc.force.scl(1));
 			pc.body.applyCentralImpulse(pc.force);
 			pc.force = null;
 
-		}
+		}*/
 	}
-	 */
+
 
 	@Override
 	public void addEntity(AbstractEntity e) {
