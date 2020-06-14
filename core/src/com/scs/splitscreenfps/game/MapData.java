@@ -6,19 +6,19 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
 
-public class MapData {
+public class MapData { // todo - delete this
 
-	private static final MapSquare BLOCKED_WALL = new MapSquare(true);
+	//private static final MapSquare BLOCKED_WALL = new MapSquare(true);
 
 	public MapSquare map[][];
-	private Vector3 tmpCurrentPos = new Vector3();
-	private Vector3 tmpDir = new Vector3();
+	//private Vector3 tmpCurrentPos = new Vector3();
+	//private Vector3 tmpDir = new Vector3();
 
 	public MapData(int w, int h) {
 		map = new MapSquare[w][h];
 	}
 
-
+/*
 	public MapSquare getMapSquareAt(int x, int y) {
 		try {
 			return map[x][y];
@@ -107,7 +107,7 @@ public class MapData {
 	}
 	 */
 
-	public boolean canSee(Vector3 startPos, Vector3 endPos) {
+/*	public boolean canSee(Vector3 startPos, Vector3 endPos) {
 		tmpCurrentPos.set(startPos);
 
 		tmpDir.set(endPos).sub(startPos);
@@ -122,7 +122,7 @@ public class MapData {
 		}
 		return true;
 	}
-
+*/
 
 	private MapSquare getMapSquareAt(float x, float y) {
 		return getMapSquareAt((int)(x), (int)(y));
@@ -134,7 +134,7 @@ public class MapData {
 	}
 
 
-	public GridPoint2Static getRandomFloorPos() {
+/*	public GridPoint2Static getRandomFloorPos() {
 		while (true) {
 			int x = NumberFunctions.rnd(0,  this.getMapWidth()-1);
 			int y = NumberFunctions.rnd(0,  this.getMapHeight()-1);
@@ -143,7 +143,7 @@ public class MapData {
 			}
 		}
 	}
-
+*/
 
 	public int getMapWidth() {
 		return map.length;

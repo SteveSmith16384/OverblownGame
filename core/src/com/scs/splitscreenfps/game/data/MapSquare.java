@@ -5,7 +5,7 @@ import com.scs.basicecs.BasicECS;
 
 public class MapSquare {
 
-	public boolean blocked = false;
+	//public boolean blocked = false;
 	public boolean spawn_point = false;
 	public AbstractEntity entity;
 	
@@ -13,11 +13,11 @@ public class MapSquare {
 
 	}
 
-
+/*
 	public MapSquare(boolean _blocked) {
 		blocked = _blocked;
 	}
-
+*/
 
 	/**
 	 * Call this constructor if you're planning to add components to the mapsquares.

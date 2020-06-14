@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
@@ -65,28 +66,35 @@ public class Wall extends AbstractEntity {
 	}
 
 	 */
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d) {
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass) {
 		super(ecs, name);
 
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX+(w/2), posY+(h/2), posZ+(d/2)));
+		//ModelInstance instance = new ModelInstance(box_model, new Vector3(posX+(w/2), posY+(h/2), posZ+(d/2)));
+		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		//ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		//instance.transform.rotate(Vector3.Z, 90); // Position textures upright
 
 		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 
-		btBoxShape groundShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
-		btRigidBody groundObject = new btRigidBody(0f, null, groundShape);
+		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
+		Vector3 local_inertia = new Vector3();
+		boxShape.calculateLocalInertia(mass, local_inertia);
+		btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);
 		groundObject.userData = this;
-		groundObject.setRestitution(.9f);
-		groundObject.setCollisionShape(groundShape);
+		groundObject.setRestitution(.2f);
+		groundObject.setCollisionShape(boxShape);
 		groundObject.setWorldTransform(instance.transform);
 		//game.dynamicsWorld.addRigidBody(groundObject);
 		this.addComponent(new PhysicsComponent(groundObject));
+		
+		this.addComponent(new AffectedByExplosionComponent());
+		
+
 	}
 
 }

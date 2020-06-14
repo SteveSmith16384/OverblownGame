@@ -16,13 +16,13 @@ import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 public class ShootingSystem extends AbstractSystem {
 
 	private Game game;
-	private GangBeastsLevel1 level;
+	//private GangBeastsLevel1 level;
 
 	public ShootingSystem(BasicECS ecs, Game _game, GangBeastsLevel1 _level) {
 		super(ecs, CanShoot.class);
 
 		game = _game;
-		level = _level;
+		//level = _level;
 	}
 
 
