@@ -209,7 +209,7 @@ public class EntityFactory {
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX+(w/2), posY+(h/2), posZ+(d/2)));
+		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		//ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		//instance.transform.rotate(Vector3.Z, 90); // Position textures upright
 
@@ -230,5 +230,37 @@ public class EntityFactory {
 		
 		return crate;
 	}
+
+	
+	public static AbstractEntity createBall(BasicECS ecs, String tex_filename, float posX, float posY, float posZ, float diam, float mass_pre) {
+		AbstractEntity ball = new AbstractEntity(ecs, "Ball");
+
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
+
+		HasModelComponent model = new HasModelComponent(instance);
+		ball.addComponent(model);
+
+		float mass = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
+		
+		btSphereShape sphere_shape = new btSphereShape(diam/2);
+		Vector3 local_inertia = new Vector3();
+		sphere_shape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody groundObject = new btRigidBody(mass, null, sphere_shape, local_inertia);
+		groundObject.userData = ball;
+		groundObject.setRestitution(.5f);
+		groundObject.setCollisionShape(sphere_shape);
+		groundObject.setWorldTransform(instance.transform);
+		ball.addComponent(new PhysicsComponent(groundObject));
+		
+		ball.addComponent(new AffectedByExplosionComponent());
+		
+		return ball;
+	}
+
+	
 
 }
