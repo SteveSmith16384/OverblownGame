@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.ExplodeOnContactSystem;
+import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 
@@ -38,7 +38,7 @@ public class ProcessCollisionSystem {
 	
 	
 	private void checkExplosion(AbstractEntity entity) {
-		ExplodeOnContactSystem explodes = (ExplodeOnContactSystem)entity.getComponent(ExplodeOnContactSystem.class);
+		ExplodeOnContactComponent explodes = (ExplodeOnContactComponent)entity.getComponent(ExplodeOnContactComponent.class);
 		if (explodes != null) {
 			PhysicsComponent phys = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 			phys.body.getWorldTransform(mat);

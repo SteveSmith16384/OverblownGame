@@ -17,7 +17,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
-import com.scs.splitscreenfps.game.components.ExplodeOnContactSystem;
+import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
@@ -118,7 +118,7 @@ public class EntityFactory {
 
 		e.addComponent(new IsBulletComponent(shooter, playerData.side));
 		e.addComponent(new RemoveOnContactComponent());
-		e.addComponent(new ExplodeOnContactSystem());
+		e.addComponent(new ExplodeOnContactComponent());
 		
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));

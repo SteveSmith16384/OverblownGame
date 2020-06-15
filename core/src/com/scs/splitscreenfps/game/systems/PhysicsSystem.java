@@ -25,13 +25,6 @@ public class PhysicsSystem extends AbstractSystem {
 	}
 
 
-	// todo - re-add
-/*	@Override
-	public void process() {
-		// Do nothing!
-	}
-*/
-
 	@Override
 	public void processEntity(AbstractEntity e) {
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
@@ -70,7 +63,6 @@ public class PhysicsSystem extends AbstractSystem {
 			//pc.body.applyCentralForce(pc.force.scl(1));
 			pc.body.applyCentralImpulse(pc.force);
 		}
-
 	}
 
 

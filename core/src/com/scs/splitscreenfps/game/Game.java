@@ -36,6 +36,7 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
@@ -416,6 +417,9 @@ public class Game implements IModule {
 	public void explosion(final Vector3 pos, float range, float force) {
 		//Settings.p("Explosion at " + pos);
 
+		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos);
+		ecs.addEntity(expl);
+		
 		// Temp vars
 		Matrix4 mat = new Matrix4();
 		Vector3 vec = new Vector3();
