@@ -28,4 +28,11 @@ public class PhysicsComponent {
 		return vec;
 	}
 	
+	
+	public void rotate(Vector3 axis, float degrees) {
+		body.getWorldTransform(mat);
+		mat.rotate(axis, degrees);
+		
+	}
+	
 }

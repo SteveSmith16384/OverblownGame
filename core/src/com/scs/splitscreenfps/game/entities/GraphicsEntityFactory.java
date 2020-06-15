@@ -67,7 +67,7 @@ public class GraphicsEntityFactory {
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false);
 
-		HasModelComponent hasModel = new HasModelComponent("model", instance);
+		HasModelComponent hasModel = new HasModelComponent(instance);
 		float scl = ModelFunctions.getScaleForHeight(instance, height);				
 		instance.transform.scl(scl);
 		ModelFunctions.getOrigin(instance, hasModel.offset);

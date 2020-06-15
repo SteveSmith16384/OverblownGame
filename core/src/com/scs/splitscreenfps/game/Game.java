@@ -45,7 +45,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
+import com.scs.splitscreenfps.game.levels.RollingBallLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -131,8 +131,10 @@ public class Game implements IModule {
 		coll = new ProcessCollisionSystem(this);
 		new MyContactListener(coll);
 
-		currentLevel = new GangBeastsLevel1(this);
+		//currentLevel = new GangBeastsLevel1(this);
+		currentLevel = new RollingBallLevel(this);
 
+		
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), i);
 			ecs.addEntity(players[i]);
@@ -149,8 +151,6 @@ public class Game implements IModule {
 			cam.lookAt(7,  0.4f,  7);
 			cam.update();
 		}
-
-		currentLevel.startGame();
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
 	}
@@ -252,6 +252,8 @@ public class Game implements IModule {
 				return;
 			}
 		}
+		
+		this.currentLevel.update();
 
 		this.ecs.events.clear();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
@@ -306,7 +308,14 @@ public class Game implements IModule {
 				}
 			}*/
 
-			currentLevel.renderUI(batch2d, currentViewId);
+			//currentLevel.renderUI(batch2d, currentViewId);
+			float yOff = font_med.getLineHeight() * 1.2f;
+
+			font_med.setColor(1, 1, 1, 1);
+
+			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
+			font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
+			//font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
 
 			/*if (Settings.TEST_SCREEN_COORDS) {
 				font.draw(batch2d, "TL", 20, 20);

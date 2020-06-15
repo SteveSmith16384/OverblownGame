@@ -21,7 +21,7 @@ public class GenericModel extends AbstractEntity {
 
 		Vector3 offset = ModelFunctions.getOrigin(instance);
 		//offset.y -= 0.2f; // Put wheels on floor
-		HasModelComponent hasModel = new HasModelComponent(name = "_model", instance, offset, 0, scale);
+		HasModelComponent hasModel = new HasModelComponent(instance, offset, 0, scale);
 		this.addComponent(hasModel);
 
 		PositionComponent pos = new PositionComponent(posX, posY, posZ);

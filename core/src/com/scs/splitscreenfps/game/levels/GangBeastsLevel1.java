@@ -1,23 +1,17 @@
 package com.scs.splitscreenfps.game.levels;
 
-import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
-import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.data.MapSquare;
-import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.IScoreSystem;
 import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
@@ -26,16 +20,14 @@ import ssmith.libgdx.GridPoint2Static;
 
 public class GangBeastsLevel1 extends AbstractLevel {
 
-	public static Properties prop;
-
 	public IScoreSystem scoreSystem;
+	protected int map_width;
+	protected int map_height;
 
 	public GangBeastsLevel1(Game _game) {
 		super(_game);
 
 		scoreSystem = new LastPlayerOnPointScoreSystem(game);
-
-		prop = new Properties();
 	}
 
 
@@ -138,17 +130,13 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	}
 
 
-	public void renderUI(SpriteBatch batch2d, int viewIndex) {
-		float yOff = game.font_med.getLineHeight() * 1.2f;
-
-		game.font_med.setColor(1, 1, 1, 1);
-
-		PlayerData playerData = (PlayerData)game.players[viewIndex].getComponent(PlayerData.class);
-		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
-		game.font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
+	@Override
+	public void update() {
+		// Do nothing
+		
 	}
 
-
+/*
 	public static void setAvatarColour(AbstractEntity e, boolean alive) {
 		// Reset player colours
 		HasModelComponent hasModel = (HasModelComponent)e.getComponent(HasModelComponent.class);
@@ -163,12 +151,5 @@ public class GangBeastsLevel1 extends AbstractLevel {
 			}
 		}
 	}
-
-
-	@Override
-	public void startGame() {
-		//BillBoardFPS_Main.audio.play("sfx/AirHorn.wav");
-		//BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
-	}
-
+*/
 }

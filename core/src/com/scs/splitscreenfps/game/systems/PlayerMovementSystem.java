@@ -48,9 +48,9 @@ public class PlayerMovementSystem extends AbstractSystem {
 			btCollisionObject obj = game.rayTestByDir(pos.position, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
 			if (obj != null) {
 				movementData.characterController.applyCentralForce(new Vector3(0, 180, 0));
-				Settings.p("Jump!");
+				//Settings.p("Jump!");
 			} else {
-				Settings.p("Not on floor!");
+				//Settings.p("Not on floor!");
 			}
 			movementData.jumpPressed = false;
 		}

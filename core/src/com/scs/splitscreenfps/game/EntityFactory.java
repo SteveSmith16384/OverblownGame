@@ -213,7 +213,7 @@ public class EntityFactory {
 		//ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		//instance.transform.rotate(Vector3.Z, 90); // Position textures upright
 
-		HasModelComponent model = new HasModelComponent("Crate", instance);
+		HasModelComponent model = new HasModelComponent(instance);
 		crate.addComponent(model);
 
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
