@@ -37,9 +37,9 @@ public class GraphicsHelper {
 	}
 
 
-	public static Decal DecalHelper(TextureRegion tr, float sizePcent) {
+	public static Decal DecalHelper(TextureRegion tr, float size) {
 		Decal decal = Decal.newDecal(tr, true);
-		decal.setScale(sizePcent / tr.getRegionWidth());
+		decal.setScale(size / tr.getRegionWidth());
 		return decal;
 	}
 

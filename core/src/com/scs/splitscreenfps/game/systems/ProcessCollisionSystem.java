@@ -42,7 +42,7 @@ public class ProcessCollisionSystem {
 		if (explodes != null) {
 			PhysicsComponent phys = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 			phys.body.getWorldTransform(mat);
-			game.explosion(mat.getTranslation(vec), 2, 4);
+			game.explosion(mat.getTranslation(vec), 2, 4, 4);
 		}
 
 		

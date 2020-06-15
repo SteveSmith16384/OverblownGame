@@ -8,10 +8,13 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
@@ -33,10 +36,12 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
+import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
@@ -128,12 +133,21 @@ public class Game implements IModule {
 
 		currentLevel = new GangBeastsLevel1(this);
 
-		currentLevel.loadAvatars();
+		for (int i=0 ; i<players.length ; i++) {
+			players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), i);
+			ecs.addEntity(players[i]);
+		}	
+
 		loadLevel();
 		this.loadAssetsForRescale(); // Need this to load font
 
 		for (int i=0 ; i<players.length ; i++) {
-			this.currentLevel.setupAvatars(this.players[i], i);
+			//this.currentLevel.setupAvatars(this.players[i], i);
+
+			// Todo - move to where we know size of the map
+			Camera cam = players[i].camera;
+			cam.lookAt(7,  0.4f,  7);
+			cam.update();
 		}
 
 		currentLevel.startGame();
@@ -143,7 +157,26 @@ public class Game implements IModule {
 
 
 	private void loadAssetsForRescale() {
-		this.currentLevel.loadAssets();
+		//this.currentLevel.loadAssets();
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
+		
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
+		//Settings.p("Font size=" + parameter.size);
+		font_small = generator.generateFont(parameter);
+		
+		parameter = new FreeTypeFontParameter();
+		parameter.size = Gdx.graphics.getBackBufferHeight()/20;
+		//Settings.p("Font size=" + parameter.size);
+		font_med = generator.generateFont(parameter);
+		
+		parameter = new FreeTypeFontParameter();
+		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
+		//Settings.p("Font size=" + parameter.size);
+		font_large = generator.generateFont(parameter);
+		
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!
+
 		DrawGuiSpritesSystem sys = (DrawGuiSpritesSystem)this.ecs.getSystem(DrawGuiSpritesSystem.class);
 		sys.rescaleSprites();
 	}
@@ -414,10 +447,10 @@ public class Game implements IModule {
 	}
 	 */
 
-	public void explosion(final Vector3 pos, float range, float force) {
+	public void explosion(final Vector3 pos, float range, float force, float width_height) {
 		//Settings.p("Explosion at " + pos);
 
-		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos);
+		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos, width_height);
 		ecs.addEntity(expl);
 		
 		// Temp vars

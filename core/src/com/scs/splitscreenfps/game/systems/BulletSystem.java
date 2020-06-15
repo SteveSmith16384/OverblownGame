@@ -62,7 +62,7 @@ public class BulletSystem extends AbstractSystem {
 							}
 						}
 
-						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos.position);
+						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos.position, 1);
 						ecs.addEntity(expl);
 
 						return;

@@ -18,6 +18,7 @@ import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
@@ -97,6 +98,16 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		}
 
 		addComponent(weapon);
+
+		// Add crosshairs
+		/*Texture weaponTex = new Texture(Gdx.files.internal("quantumleague/crosshairs.png"));		
+		Sprite sprite = new Sprite(weaponTex);
+		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
+		game.players[playerIdx].addComponent(hgsc);
+		 */
+
+		addComponent(new PlayerData(playerIdx));
 
 		GangBeastsLevel1.setAvatarColour(this, true);	
 

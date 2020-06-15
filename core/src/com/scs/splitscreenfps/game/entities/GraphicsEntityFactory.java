@@ -80,7 +80,7 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createNormalExplosion(BasicECS ecs, Vector3 pos) {
+	public static AbstractEntity createNormalExplosion(BasicECS ecs, Vector3 pos, float width_height) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Explosion");
 
 		// todo - the -.5f here .  Is that always the case?
@@ -89,12 +89,10 @@ public class GraphicsEntityFactory {
 
 		TextureRegion[][] trs = GraphicsHelper.createSheet("Explosion21.png", 4, 4);
 
-		float size = 4f;
-		
 		HasDecal hasDecal = new HasDecal();
 		TextureRegion tr = trs[0][0];
 		hasDecal.decal = Decal.newDecal(tr, true);
-		hasDecal.decal.setScale(size / tr.getRegionWidth());
+		hasDecal.decal.setScale(width_height / tr.getRegionWidth());
 		hasDecal.decal.setPosition(posData.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = false;
@@ -106,7 +104,7 @@ public class GraphicsEntityFactory {
 		int idx = 0;
 		for (int y=0 ; y<trs[0].length ; y++) {
 			for (int x=0 ; x<trs.length ; x++) {
-				cycle.decals[idx] = GraphicsHelper.DecalHelper(trs[x][y], size);
+				cycle.decals[idx] = GraphicsHelper.DecalHelper(trs[x][y], width_height);
 				idx++;
 			}
 		}

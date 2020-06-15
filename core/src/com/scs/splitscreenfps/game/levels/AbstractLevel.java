@@ -25,48 +25,13 @@ public abstract class AbstractLevel implements ILevelInterface {
 	}
 	
 	
-	public void loadAvatars() {
-		for (int i=0 ; i<game.players.length ; i++) {
-			game.players[i] = new PlayersAvatar_Person(game, i, game.viewports[i], game.inputs.get(i), i);
-			game.ecs.addEntity(game.players[i]);
-		}	
-	}
-	
-	
 	public void setBackgroundColour() {
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
 	}
-	
-	
-	/**
-	 * This will get called at the start and also every time the screen is resized.
-	 */
-	public void loadAssets() {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
-		//Settings.p("Font size=" + parameter.size);
-		game.font_small = generator.generateFont(parameter);
-		
-		parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferHeight()/20;
-		//Settings.p("Font size=" + parameter.size);
-		game.font_med = generator.generateFont(parameter);
-		
-		parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
-		//Settings.p("Font size=" + parameter.size);
-		game.font_large = generator.generateFont(parameter);
-		
-		generator.dispose(); // don't forget to dispose to avoid memory leaks!
-	}
-
 	public abstract void load();
 	
 	public abstract void startGame();
-	
-	public void setupAvatars(AbstractEntity player, int playerIdx) {}
 	
 	public void renderUI(SpriteBatch batch, int viewIndex) {}
 
@@ -74,8 +39,4 @@ public abstract class AbstractLevel implements ILevelInterface {
 		return this.startPositions.get(idx);
 	}
 	
-	public String getMusicFilename() {
-		// Override if required
-		return null;
-	}
 }

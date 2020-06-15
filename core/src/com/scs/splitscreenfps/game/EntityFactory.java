@@ -171,7 +171,7 @@ public class EntityFactory {
 		
 		hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = false;
+		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
 		e.addComponent(new IsBulletComponent(shooter, playerData.side));

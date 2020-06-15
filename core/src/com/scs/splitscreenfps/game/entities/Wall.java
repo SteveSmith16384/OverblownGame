@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Matrix3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
@@ -66,7 +68,9 @@ public class Wall extends AbstractEntity {
 	}
 
 	 */
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass) {
+	
+	// Note that the mass gets multipled by the size
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre) {
 		super(ecs, name);
 
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
@@ -81,6 +85,8 @@ public class Wall extends AbstractEntity {
 		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 
+		float mass = mass_pre * w * h * d; 
+		
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
 		Vector3 local_inertia = new Vector3();
 		boxShape.calculateLocalInertia(mass, local_inertia);

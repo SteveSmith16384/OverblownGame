@@ -26,7 +26,7 @@ public class ExplodeAfterTimeSystem extends AbstractSystem {
 			entity.remove();
 			PhysicsComponent phys = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 			//phys.body.getWorldTransform(mat);
-			game.explosion(phys.getTranslation(), 2, 4);
+			game.explosion(phys.getTranslation(), 2, 4, 4f);
 		}
 	}
 	

@@ -40,25 +40,6 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 
 	@Override
-	public void setupAvatars(AbstractEntity player, int playerIdx) {
-		player.addComponent(new PlayerData(playerIdx));
-
-		// Todo - move to where we know size of the map
-		Camera cam = game.players[playerIdx].camera;
-		cam.lookAt(7,  0.4f,  7);
-		cam.update();
-
-		// Add crosshairs
-		/*Texture weaponTex = new Texture(Gdx.files.internal("quantumleague/crosshairs.png"));		
-		Sprite sprite = new Sprite(weaponTex);
-		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
-		game.players[playerIdx].addComponent(hgsc);
-		 */
-	}
-
-
-	@Override
 	public void setBackgroundColour() {
 		int winning_side = this.scoreSystem.getWinningPlayer();
 		if (winning_side == 0) {
@@ -83,6 +64,9 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 		loadMapFromFile("map1.csv");
 		
+		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", 10, -0.1f, 10, 20f, .2f, 20f, 0f);
+		game.ecs.addEntity(floor);
+
 		// Add platform
 		Wall wall1 = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", 1, 1.1f, 1, .3f, 2f, .3f, 2f);
 		game.ecs.addEntity(wall1);
@@ -91,8 +75,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		Wall wall3 = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", 1f, 1.1f, 3, .3f, 2f, .3f, 2f);
 		game.ecs.addEntity(wall3);
 		Wall wall4 = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", 3, 1.1f, 3, .3f, 2f, .3f, 2f);
-		game.ecs.addEntity(wall4);
-		
+		game.ecs.addEntity(wall4);		
 		Wall top = new Wall(game.ecs, "Top", "textures/set3_example_1.png", 2f, 2.1f, 2f, 3f, .2f, 3f, 2f);
 		game.ecs.addEntity(top);
 	}
@@ -127,15 +110,15 @@ public class GangBeastsLevel1 extends AbstractLevel {
 							//Wall wall = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1);
 							//game.ecs.addEntity(wall);
 
-							AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, 3, row, .3f, .3f, .3f);
-							game.ecs.addEntity(crate);
+							//AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, 3, row, .3f, .3f, .3f);
+							//game.ecs.addEntity(crate);
 						} else if (token.equals("C")) { // Chasm
 							//game.mapData.map[col][row].blocked = true;
 						} else if (token.equals("F")) { // Floor
-							if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
+							/*if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
 								Floor floor = new Floor(game.ecs, "Floor", "textures/floor006.png", col, 0, row, 4, 4);
 								game.ecs.addEntity(floor);
-							}
+							}*/
 						} else if (token.equals("G")) { // Goal point
 							//Floor floor = new Floor(game.ecs, "Centre", "textures/centre.png", col, .01f, row, 1, 1);
 							//game.ecs.addEntity(floor);
@@ -185,8 +168,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	@Override
 	public void startGame() {
 		//BillBoardFPS_Main.audio.play("sfx/AirHorn.wav");
-
-		BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
+		//BillBoardFPS_Main.audio.startMusic("sfx/fight.wav");
 	}
 
 }
