@@ -25,6 +25,7 @@ public class DrawModelSystem extends AbstractSystem {
 	private Environment environment;
 
 	private Vector3 tmpOffset = new Vector3();
+	private Matrix4 mat = new Matrix4();
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
@@ -67,8 +68,6 @@ public class DrawModelSystem extends AbstractSystem {
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		if (pc != null) {
-			Matrix4 mat = new Matrix4();
-			//Vector3 tmp = new Vector3();
 			pc.body.getWorldTransform(mat);//.getTranslation(tmp);
 			model.model.transform.set(mat);
 		} else {

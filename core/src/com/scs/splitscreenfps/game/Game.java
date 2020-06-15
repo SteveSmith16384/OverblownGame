@@ -187,7 +187,7 @@ public class Game implements IModule {
 
 			PlayerMovementData md = (PlayerMovementData)this.players[idx].getComponent(PlayerMovementData.class);
 			Matrix4 mat = new Matrix4();
-			mat.setTranslation(start_pos.x + 0.5f, 10, start_pos.y + 0.5f);
+			mat.setTranslation(start_pos.x + 0.5f, 2, start_pos.y + 0.5f);
 			md.characterController.setWorldTransform(mat);
 
 			posData.position.set(start_pos.x + 0.5f, Settings.PLAYER_HEIGHT/2, start_pos.y + 0.5f); // Start in middle of square
@@ -413,7 +413,7 @@ public class Game implements IModule {
 	}
 	 */
 
-	public void explosion(Vector3 pos, float range, float force) {
+	public void explosion(final Vector3 pos, float range, float force) {
 		//Settings.p("Explosion at " + pos);
 
 		// Temp vars

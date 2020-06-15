@@ -88,12 +88,12 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		game.ecs.addEntity(wall1);
 		Wall wall2 = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", 3f, 1.1f, 1f, .3f, 2f, .3f, 2f);
 		game.ecs.addEntity(wall2);
-		Wall wall3 = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", 1, 1.1f, 3, .3f, 2f, .3f, 2f);
+		Wall wall3 = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", 1f, 1.1f, 3, .3f, 2f, .3f, 2f);
 		game.ecs.addEntity(wall3);
 		Wall wall4 = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", 3, 1.1f, 3, .3f, 2f, .3f, 2f);
 		game.ecs.addEntity(wall4);
 		
-		Wall top = new Wall(game.ecs, "Top", "textures/set3_example_1.png", 1.5f, 2.1f, 1.5f, 3f, .2f, 3f, 2f);
+		Wall top = new Wall(game.ecs, "Top", "textures/set3_example_1.png", 2f, 2.1f, 2f, 3f, .2f, 3f, 2f);
 		game.ecs.addEntity(top);
 	}
 

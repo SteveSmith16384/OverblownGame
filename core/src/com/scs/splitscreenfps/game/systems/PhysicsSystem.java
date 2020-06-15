@@ -41,6 +41,12 @@ public class PhysicsSystem extends AbstractSystem {
 		if (pc.body.getCollisionShape().isDisposed()) {
 			Settings.pe("Shapedisposed for " + e);
 		}
+		
+		float height = pc.getTranslation().y;
+		if (height < -10) {
+			Settings.p("Removed " + e + " since it has fallen off");
+			e.remove();
+		}
 /*		if (pc.force != null) {
 			//pc.body.applyCentralForce(pc.force.scl(1));
 			pc.body.applyCentralImpulse(pc.force);
@@ -63,7 +69,6 @@ public class PhysicsSystem extends AbstractSystem {
 		if (pc.force != null) {
 			//pc.body.applyCentralForce(pc.force.scl(1));
 			pc.body.applyCentralImpulse(pc.force);
-			//pc.force = null;
 		}
 
 	}
