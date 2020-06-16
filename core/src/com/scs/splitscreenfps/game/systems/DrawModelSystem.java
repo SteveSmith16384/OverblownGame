@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -57,8 +58,10 @@ public class DrawModelSystem extends AbstractSystem {
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
-		if (model.dontDrawInViewId == game.currentViewId) {
-			return;
+		if (Settings.DEBUG_AVATAR_MODELS == false) {
+			if (model.dontDrawInViewId == game.currentViewId) {
+				return;
+			}
 		}
 		if (model.onlyDrawInViewId >= 0) {
 			if (model.onlyDrawInViewId != game.currentViewId) {
@@ -70,10 +73,7 @@ public class DrawModelSystem extends AbstractSystem {
 		if (pc != null) { // Rotate model to same place as physics body
 			pc.body.getWorldTransform(mat);
 			model.model.transform.set(mat);
-			
-			Vector3 vec = new Vector3();
-			mat.getTranslation(vec);
-			int f = 33;
+			model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
 		} else {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
 			if (posData != null) {
@@ -86,7 +86,7 @@ public class DrawModelSystem extends AbstractSystem {
 				tmpOffset.set(position);
 				tmpOffset.add(model.offset);
 				model.model.transform.setToTranslation(tmpOffset);
-				//model.model.transform.scl(model.scale);
+				model.model.transform.scl(model.scale);
 				model.model.transform.rotate(Vector3.Y, posData.angle_degs+model.angleOffset);
 			} else {
 				if (model.always_draw == false) {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
@@ -43,6 +44,12 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		inputMethod = _inputMethod;
 
 		PlayerMovementData md = new PlayerMovementData();
+		this.addComponent(md);
+
+		// Model stuff
+		this.addModel(playerIdx, 1);
+		HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
+		
 		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
@@ -50,24 +57,29 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody player_body = new btRigidBody(2f, motionState, capsuleShape, inertia);
 		player_body.userData = this;
+		
+		/*Matrix4 mat = new Matrix4();
+		player_body.getWorldTransform(mat);
+		mat.scale(hasModel.scale, hasModel.scale, hasModel.scale); // scs new
+		player_body.getWorldTransform(mat);*/
+
 		player_body.setDamping(0.8f, 0.8f);
 		player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		//characterController.setFriction(1);
-		game.dynamicsWorld.addRigidBody(player_body);
+		//game.dynamicsWorld.addRigidBody(player_body);
 		md.characterController = player_body;
+		PhysicsComponent physics = new PhysicsComponent(player_body);
+		addComponent(physics);
+		
+		//Vector3 scale = physics.getScale(); // todo - remove
 
-		this.addComponent(md);
 		this.addComponent(new PositionComponent());
-
-		// Model stuff
-		this.addModel(playerIdx, modelType);
 
 		camera = _viewportData.camera;
 		cameraController = new PersonCameraController(camera, inputMethod);
 
 		addComponent(new CanShoot());
 
-		addComponent(new PhysicsComponent(player_body));
 		addComponent(new AffectedByExplosionComponent());
 
 		WeaponSettingsComponent weapon = new WeaponSettingsComponent();
@@ -128,6 +140,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			ModelInstance instance = new ModelInstance(model);
 
 			HasModelComponent hasModel = new HasModelComponent(instance, -.3f, 90);//, 0.0016f);
+			hasModel.scale = 0.0016f;
 			hasModel.dontDrawInViewId = playerIdx;
 			this.addComponent(hasModel);
 
@@ -153,6 +166,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			offset.y -= .3f; // Hack since model is too high
 
 			HasModelComponent hasModel = new HasModelComponent(instance, offset, 90);//, scale);
+			hasModel.scale = scale;
 			hasModel.dontDrawInViewId = playerIdx;
 			this.addComponent(hasModel);
 
@@ -172,7 +186,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			return instance;
 		}
 		}
-		throw new RuntimeException("Unknown modelType:" + modelType);
+		throw new RuntimeException("Unknown modelType: " + modelType);
 	}
 
 
