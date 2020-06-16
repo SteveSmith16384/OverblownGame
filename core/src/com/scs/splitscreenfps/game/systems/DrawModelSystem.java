@@ -67,9 +67,13 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		if (pc != null) {
-			pc.body.getWorldTransform(mat);//.getTranslation(tmp);
+		if (pc != null) { // Rotate model to same place as physics body
+			pc.body.getWorldTransform(mat);
 			model.model.transform.set(mat);
+			
+			Vector3 vec = new Vector3();
+			mat.getTranslation(vec);
+			int f = 33;
 		} else {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
 			if (posData != null) {
@@ -82,7 +86,7 @@ public class DrawModelSystem extends AbstractSystem {
 				tmpOffset.set(position);
 				tmpOffset.add(model.offset);
 				model.model.transform.setToTranslation(tmpOffset);
-				model.model.transform.scl(model.scale);
+				//model.model.transform.scl(model.scale);
 				model.model.transform.rotate(Vector3.Y, posData.angle_degs+model.angleOffset);
 			} else {
 				if (model.always_draw == false) {

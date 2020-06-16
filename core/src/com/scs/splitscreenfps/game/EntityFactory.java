@@ -43,21 +43,13 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {
-			if (playerData.health > 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
-			} else {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red_desync.png", 0.2f);
-			}
 		} else if (playerData.side == 1) {
-			if (playerData.health > 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
-			} else {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue_desync.png", 0.2f);
-			}
-		} else {
+		} else { // todo - more sides!
 			throw new RuntimeException("Invalid side: " + playerData.side);
 		}
-		hasDecal.decal.setPosition(pos.position);
+		hasDecal.decal.setPosition(start);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
@@ -100,21 +92,13 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {
-			if (playerData.health > 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
-			} else {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red_desync.png", 0.2f);
-			}
 		} else if (playerData.side == 1) {
-			if (playerData.health > 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
-			} else {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue_desync.png", 0.2f);
-			}
-		} else {
+		} else { // todo - more sides!
 			throw new RuntimeException("Invalid side: " + playerData.side);
 		}
-		hasDecal.decal.setPosition(pos.position);
+		hasDecal.decal.setPosition(start);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
@@ -157,18 +141,10 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {
-			if (playerData.health > 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
-			} else {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red_desync.png", 0.2f);
-			}
 		} else if (playerData.side == 1) {
-			if (playerData.health > 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
-			} else {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue_desync.png", 0.2f);
-			}
-		} else {
+		} else { // todo - more sides!
 			throw new RuntimeException("Invalid side: " + playerData.side);
 		}
 		
@@ -213,8 +189,6 @@ public class EntityFactory {
 		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
-		//ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
-		//instance.transform.rotate(Vector3.Z, 90); // Position textures upright
 
 		HasModelComponent model = new HasModelComponent(instance);
 		crate.addComponent(model);
@@ -269,21 +243,25 @@ public class EntityFactory {
 		AbstractEntity doorway = new AbstractEntity(ecs, "Doorway");
 
 		ModelInstance instance = ModelFunctions.loadModel("models/magicavoxel/doorway.obj", false);
-		float scale = 1f;//ModelFunctions.getScaleForHeight(instance, .8f);
-		instance.transform.scl(scale);
-		instance.transform.setTranslation(posX, posY, posZ);
-		Vector3 offset = ModelFunctions.getOrigin(instance);
+		//float scale = 1f;//ModelFunctions.getScaleForHeight(instance, .8f);
+		//instance.transform.scl(scale);
+		//Vector3 offset = new Vector3();//ModelFunctions.getOrigin(instance);
 		//offset.y -= .3f; // Hack since model is too high
 
-		HasModelComponent hasModel = new HasModelComponent(instance, offset, 90, scale);
+		HasModelComponent hasModel = new HasModelComponent(instance);//, offset, 0, scale);
 		doorway.addComponent(hasModel);
+
+		instance.transform.setTranslation(posX, posY, posZ);
+
+		//PositionComponent pos = new PositionComponent(posX, posY, posZ);
+		//doorway.addComponent(pos);
 
 		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
 		//Vector3 local_inertia = new Vector3();
 		//boxShape.calculateLocalInertia(1f, local_inertia);
 		btRigidBody body = new btRigidBody(0, null, shape);//, local_inertia);
 		body.userData = doorway;
-		body.setRestitution(.5f);
+		//body.setRestitution(.5f);
 		body.setCollisionShape(shape);
 		body.setWorldTransform(instance.transform);
 		doorway.addComponent(new PhysicsComponent(body));

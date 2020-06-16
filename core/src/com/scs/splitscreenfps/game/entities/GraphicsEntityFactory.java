@@ -57,7 +57,7 @@ public class GraphicsEntityFactory {
 
 	}
 
-
+/*
 	public static AbstractEntity createModel(Game game, String name, String filename, float posX, float posY, float posZ, float height) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, name);
 
@@ -78,7 +78,7 @@ public class GraphicsEntityFactory {
 		return entity;
 	}
 
-
+*/
 	public static AbstractEntity createNormalExplosion(BasicECS ecs, Vector3 pos, float width_height) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Explosion");
 

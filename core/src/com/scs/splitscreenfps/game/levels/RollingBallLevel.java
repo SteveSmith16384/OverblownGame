@@ -34,25 +34,30 @@ public class RollingBallLevel extends AbstractLevel {
 		this.startPositions.add(new GridPoint2Static(3, 3));
 		this.startPositions.add(new GridPoint2Static(4, 4));
 
-		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", 5, -0.1f, 5, 10f, .2f, 10f, 0f);
+		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", 5, -0.1f, 5, 
+				10f, .2f, 10f, 
+				0f);
 		game.ecs.addEntity(floor);
 
 		Wall tilt = new Wall(game.ecs, "Tilt", "textures/set3_example_1.png", 12.5f, 1.5f, 5, 
-				6f, .2f, 10f, 0f, Vector3.Z, 25);
+				6f, .2f, 10f, 
+				0f, 
+				Vector3.Z, 25);
 		//HasModelComponent model = (HasModelComponent)tilt.getComponent(HasModelComponent.class);
 		//model.model.transform.rotate();
 		//PhysicsComponent pc = (PhysicsComponent)tilt.getComponent(PhysicsComponent.class);
 		//pc.rotate(Vector3.Z, 45);
 		game.ecs.addEntity(tilt);
-		
+		/*
 		for (int i=0 ; i<20 ; i++) {
 			int col = NumberFunctions.rnd(1,  10);
 			int row = NumberFunctions.rnd(1,  10);
 			AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, i+3, row, .4f, .4f, .4f);
 			game.ecs.addEntity(crate);
 		}
-
-		AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 8, -2, 7);
+*/
+		//AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 0, 0, 0);
+		AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 8, -2f, 7);
 		game.ecs.addEntity(doorway);
 
 	}
@@ -65,7 +70,7 @@ public class RollingBallLevel extends AbstractLevel {
 			
 			float z = NumberFunctions.rndFloat(2,  8);
 			AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/set3_example_1.png", 13, 10, z, 1.5f, 100);
-			game.ecs.addEntity(ball);
+			//game.ecs.addEntity(ball);
 		}
 	}
 

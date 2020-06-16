@@ -3,11 +3,14 @@ package com.scs.splitscreenfps.game.components;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector3;
 
-public class PositionComponent { // todo - delete this class?
+/**
+ * Not required for physics entities
+ *
+ */
+public class PositionComponent {
 
-	public Vector3 position; // Used as the centre of the radius for collisions! todo - remove
+	public Vector3 position;
 	public float angle_degs;
-	public Vector3 originalPosition = new Vector3(); // todo - remove
 
 	public PositionComponent() {
 		this.position = new Vector3();
