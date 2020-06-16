@@ -56,7 +56,7 @@ public class EntityFactory {
 
 		e.addComponent(new RemoveOnContactComponent());
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side));
+		e.addComponent(new IsBulletComponent(shooter, playerData.side, 20f, start));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -103,7 +103,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side));
+		e.addComponent(new IsBulletComponent(shooter, playerData.side, 20f, start));
 		e.addComponent(new RemoveOnContactComponent());
 		e.addComponent(new ExplodeOnContactComponent());
 		
@@ -153,7 +153,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side));
+		e.addComponent(new IsBulletComponent(shooter, playerData.side, 20f, start));
 
 		e.addComponent(new ExplodeAfterTimeComponent(3000));
 

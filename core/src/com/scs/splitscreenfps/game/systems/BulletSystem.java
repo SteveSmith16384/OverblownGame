@@ -9,6 +9,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
@@ -31,15 +32,25 @@ public class BulletSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
+		//PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 
+		IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
+
+		PhysicsComponent physics = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+
+		// Check range
+		float dist = bullet.start.dst(physics.getTranslation());
+		if (dist > bullet.range) {
+			entity.remove();
+			return;
+		}
+		
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
 
 			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, PlayerData.class);
 			if (ents != null) {
-				IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
 				// PlayerData shooterData = (PlayerData)bullet.shooter.getComponent(PlayerData.class);
 				PlayerData playerHitData = (PlayerData)ents[1].getComponent(PlayerData.class);
 				// Check if target is alive
@@ -62,7 +73,7 @@ public class BulletSystem extends AbstractSystem {
 							}
 						}
 
-						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos.position, 1);
+						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, physics.getTranslation(), 1);
 						ecs.addEntity(expl);
 
 						return;
