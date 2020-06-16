@@ -5,9 +5,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.entities.Wall;
 
+import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
 
 public class RollingBallLevel extends AbstractLevel {
@@ -44,6 +44,14 @@ public class RollingBallLevel extends AbstractLevel {
 		//PhysicsComponent pc = (PhysicsComponent)tilt.getComponent(PhysicsComponent.class);
 		//pc.rotate(Vector3.Z, 45);
 		game.ecs.addEntity(tilt);
+		
+		for (int i=0 ; i<10 ; i++) {
+			int col = NumberFunctions.rnd(1,  10);
+			int row = NumberFunctions.rnd(1,  10);
+			AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, i+3, row, .4f, .4f, .4f);
+			game.ecs.addEntity(crate);
+		}
+
 
 	}
 
@@ -53,7 +61,8 @@ public class RollingBallLevel extends AbstractLevel {
 		if (this.last_ball_time + BALL_INTERVAL < System.currentTimeMillis()) {
 			this.last_ball_time = System.currentTimeMillis();
 			
-			AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/set3_example_1.png", 13, 5, 3, 1.5f, 10);
+			float z = NumberFunctions.rndFloat(2,  8);
+			AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/set3_example_1.png", 13, 10, z, 1.5f, 100);
 			game.ecs.addEntity(ball);
 		}
 	}

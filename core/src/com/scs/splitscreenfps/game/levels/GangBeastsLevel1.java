@@ -3,14 +3,10 @@ package com.scs.splitscreenfps.game.levels;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
-import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.IScoreSystem;
@@ -33,14 +29,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 	@Override
 	public void setBackgroundColour() {
-		int winning_side = this.scoreSystem.getWinningPlayer();
-		if (winning_side == 0) {
-			Gdx.gl.glClearColor(1f, .3f, .3f, 1);
-		} else if (winning_side == 1) {
-			Gdx.gl.glClearColor(.3f, .3f, 1, 1);
-		} else {
-			Gdx.gl.glClearColor(.6f, .6f, 1, 1);
-		}
+		Gdx.gl.glClearColor(1f, .3f, .3f, 1);
 	}
 
 

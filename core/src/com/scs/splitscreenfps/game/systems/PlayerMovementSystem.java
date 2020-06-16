@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
@@ -16,7 +15,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 public class PlayerMovementSystem extends AbstractSystem {
 
 	private static final Vector3 V_DOWN = new Vector3(0, -1, 0);
-	
+	private static final Vector3 JUMP_FORCE = new Vector3(0, 180, 0);
 	private Game game;
 
 	public PlayerMovementSystem(Game _game, BasicECS ecs) {
@@ -47,7 +46,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 			// Check they are on ground
 			btCollisionObject obj = game.rayTestByDir(pos.position, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
 			if (obj != null) {
-				movementData.characterController.applyCentralForce(new Vector3(0, 180, 0));
+				movementData.characterController.applyCentralForce(JUMP_FORCE);
 				//Settings.p("Jump!");
 			} else {
 				//Settings.p("Not on floor!");

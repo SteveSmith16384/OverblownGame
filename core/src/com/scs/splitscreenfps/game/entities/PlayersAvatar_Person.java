@@ -23,7 +23,6 @@ import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
-import com.scs.splitscreenfps.game.levels.GangBeastsLevel1;
 
 import ssmith.libgdx.ModelFunctions;
 
@@ -94,7 +93,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			break;
 			
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown weapon: " + weapon_type);
 		}
 
 		addComponent(weapon);

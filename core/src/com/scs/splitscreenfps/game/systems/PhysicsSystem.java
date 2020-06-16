@@ -72,7 +72,12 @@ public class PhysicsSystem extends AbstractSystem {
 
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 		game.dynamicsWorld.removeRigidBody(pc.body);
-		pc.body.dispose();
+		if (pc.body.getCollisionShape().isDisposed() == false) {
+			pc.body.getCollisionShape().dispose();
+		}
+		if (pc.body.isDisposed() == false) {
+			pc.body.dispose();
+		}
 	}
 
 

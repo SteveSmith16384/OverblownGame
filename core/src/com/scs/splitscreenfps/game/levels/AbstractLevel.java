@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 
 import ssmith.libgdx.GridPoint2Static;
 

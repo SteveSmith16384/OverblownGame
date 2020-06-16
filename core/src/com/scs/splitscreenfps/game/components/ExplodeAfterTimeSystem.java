@@ -9,10 +9,6 @@ public class ExplodeAfterTimeSystem extends AbstractSystem {
 
 	private Game game;
 
-	// Temp vars
-	//private Matrix4 mat = new Matrix4();
-	//private Vector3 vec = new Vector3();
-
 	public ExplodeAfterTimeSystem(Game _game, BasicECS ecs) {
 		super(ecs, ExplodeAfterTimeComponent.class);
 		
