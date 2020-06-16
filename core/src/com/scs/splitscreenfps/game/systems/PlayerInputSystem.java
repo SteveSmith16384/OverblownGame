@@ -19,7 +19,6 @@ public class PlayerInputSystem implements ISystem {
 				game.players[i].process();
 			}
 		}
-
 	}
 
 }

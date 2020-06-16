@@ -9,6 +9,7 @@ public class PhysicsComponent {
 	public btRigidBody body;
 	public boolean disable_gravity = false;
 	public Vector3 force;
+	public boolean removeIfFallen = true;
 
 	// Temp vars
 	private Matrix4 mat = new Matrix4();

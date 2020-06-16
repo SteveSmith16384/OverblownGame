@@ -11,17 +11,21 @@ public class WeaponSettingsComponent {
 	public long shot_interval;
 	public long reload_interval;
 	public int max_ammo;
+	public int range;
+	public int damage;
 	
+	/*
 	public WeaponSettingsComponent() {
-	}
+	}*/
 	
 	
-	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo) {
+	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, int _range, int _damage) {
 		this.weapon_type = type;
 		this.max_ammo = ammo;
 		shot_interval = _shot_interval;
-		shot_interval = _shot_interval;
-		
+		reload_interval = _reload_interval;
+		damage = _damage;
+		range = _range;
 	}
 	
 }

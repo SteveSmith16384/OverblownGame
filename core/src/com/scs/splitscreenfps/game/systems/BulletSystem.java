@@ -40,7 +40,7 @@ public class BulletSystem extends AbstractSystem {
 
 		// Check range
 		float dist = bullet.start.dst(physics.getTranslation());
-		if (dist > bullet.range) {
+		if (dist > bullet.settings.range) {
 			entity.remove();
 			return;
 		}
@@ -57,7 +57,7 @@ public class BulletSystem extends AbstractSystem {
 				if (playerHitData.health > 0) {
 					if (playerHitData.side != bullet.side) {
 						//ents[0].remove(); // Remove bullet
-						playerHitData.health -= 50; // Todo - bullet power						
+						playerHitData.health -= bullet.settings.damage;
 
 						for (int id = 0 ; id<game.players.length ; id++) {
 							if (ents[1] == game.players[id]) {

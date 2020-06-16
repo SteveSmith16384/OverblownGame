@@ -69,6 +69,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		//game.dynamicsWorld.addRigidBody(player_body);
 		md.characterController = player_body;
 		PhysicsComponent physics = new PhysicsComponent(player_body);
+		physics.removeIfFallen = false;
 		addComponent(physics);
 		
 		//Vector3 scale = physics.getScale(); // todo - remove
@@ -82,29 +83,21 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new AffectedByExplosionComponent());
 
-		WeaponSettingsComponent weapon = new WeaponSettingsComponent();
+		WeaponSettingsComponent weapon;
 
 		int weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
+
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_BULLET:
-			weapon.shot_interval = 300;
-			weapon.reload_interval = 1500;
-			weapon.max_ammo = 20;
-			weapon.weapon_type = WeaponSettingsComponent.WEAPON_BULLET;
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_BULLET, 300, 1200, 20, 20, 10);
 			break;
 			
 		case WeaponSettingsComponent.WEAPON_GRENADE:
-			weapon.shot_interval = 600;
-			weapon.reload_interval = 1500;
-			weapon.max_ammo = 12;
-			weapon.weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE, 600, 1500, 12, 20, 20);
 			break;
 			
 		case WeaponSettingsComponent.WEAPON_ROCKET:
-			weapon.shot_interval = 900;
-			weapon.reload_interval = 2000;
-			weapon.max_ammo = 6;
-			weapon.weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30);
 			break;
 			
 		default:
@@ -123,7 +116,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new PlayerData(playerIdx));
 
-		//GangBeastsLevel1.setAvatarColour(this, true);	
+		//GangBeastsLevel1.setAvatarColour(this, true);	todo?
 
 	}
 

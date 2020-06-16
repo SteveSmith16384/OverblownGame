@@ -7,14 +7,14 @@ public class IsBulletComponent {
 
 	public int side;
 	public AbstractEntity shooter;
-	public float range;
 	public Vector3 start;
+	public WeaponSettingsComponent settings;
 	
-	public IsBulletComponent(AbstractEntity _shooter, int _side, float _range, Vector3 _start) {
+	public IsBulletComponent(AbstractEntity _shooter, int _side, Vector3 _start, WeaponSettingsComponent _settings) {
 		shooter = _shooter;
 		side = _side;
-		range = _range;
 		start = new Vector3(_start);
+		settings = _settings;
 	}
 	
 }

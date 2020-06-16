@@ -27,6 +27,7 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
+import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 
 import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
@@ -40,7 +41,8 @@ public class EntityFactory {
 		e.addComponent(pos);
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
-
+		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
+		
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
@@ -56,7 +58,7 @@ public class EntityFactory {
 
 		e.addComponent(new RemoveOnContactComponent());
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side, 20f, start));
+		e.addComponent(new IsBulletComponent(shooter, playerData.side, start, settings));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -89,6 +91,7 @@ public class EntityFactory {
 		e.addComponent(pos);
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {
@@ -103,7 +106,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side, 20f, start));
+		e.addComponent(new IsBulletComponent(shooter, playerData.side, start, settings));
 		e.addComponent(new RemoveOnContactComponent());
 		e.addComponent(new ExplodeOnContactComponent());
 		
@@ -138,6 +141,7 @@ public class EntityFactory {
 		e.addComponent(pos);
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.side == 0) {
@@ -153,7 +157,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.side, 20f, start));
+		e.addComponent(new IsBulletComponent(shooter, playerData.side, start, settings));
 
 		e.addComponent(new ExplodeAfterTimeComponent(3000));
 
@@ -257,11 +261,8 @@ public class EntityFactory {
 		//doorway.addComponent(pos);
 
 		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
-		//Vector3 local_inertia = new Vector3();
-		//boxShape.calculateLocalInertia(1f, local_inertia);
-		btRigidBody body = new btRigidBody(0, null, shape);//, local_inertia);
+		btRigidBody body = new btRigidBody(0, null, shape);
 		body.userData = doorway;
-		//body.setRestitution(.5f);
 		body.setCollisionShape(shape);
 		body.setWorldTransform(instance.transform);
 		doorway.addComponent(new PhysicsComponent(body));
@@ -272,5 +273,31 @@ public class EntityFactory {
 	}
 
 	
+	public static AbstractEntity createStairs(BasicECS ecs, float posX, float posY, float posZ) {
+		AbstractEntity stairs = new AbstractEntity(ecs, "Stairs");
+
+		ModelInstance instance = ModelFunctions.loadModel("models/magicavoxel/stairs.obj", false);
+		//float scale = 1f;//ModelFunctions.getScaleForHeight(instance, .8f);
+		//instance.transform.scl(scale);
+		//Vector3 offset = new Vector3();//ModelFunctions.getOrigin(instance);
+		//offset.y -= .3f; // Hack since model is too high
+
+		HasModelComponent hasModel = new HasModelComponent(instance);//, offset, 0, scale);
+		stairs.addComponent(hasModel);
+
+		instance.transform.setTranslation(posX, posY, posZ);
+
+		//PositionComponent pos = new PositionComponent(posX, posY, posZ);
+		//doorway.addComponent(pos);
+
+		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
+		btRigidBody body = new btRigidBody(0, null, shape);
+		body.userData = stairs;
+		body.setCollisionShape(shape);
+		body.setWorldTransform(instance.transform);
+		stairs.addComponent(new PhysicsComponent(body));
+		
+		return stairs;
+	}
 
 }
