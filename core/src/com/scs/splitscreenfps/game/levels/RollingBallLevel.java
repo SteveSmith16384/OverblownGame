@@ -52,6 +52,8 @@ public class RollingBallLevel extends AbstractLevel {
 			game.ecs.addEntity(crate);
 		}
 
+		AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 8, -2, 7);
+		game.ecs.addEntity(doorway);
 
 	}
 

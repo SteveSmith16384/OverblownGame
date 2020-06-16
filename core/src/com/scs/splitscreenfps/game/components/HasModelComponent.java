@@ -9,9 +9,9 @@ public class HasModelComponent {
 	public ModelInstance model;
 	public Vector3 offset; // In case the origin of the 3D model isn't 0,0,0
 	public int angleOffset;
-	public float scale;
+	public float scale; // todo - remove?
 	public int dontDrawInViewId = -1; // Don't draw the player's own avatar!
-	public int onlyDrawInViewId = -1; // Don't draw td build targetter!
+	public int onlyDrawInViewId = -1; // Don't draw the targetter for other players!
 	public BoundingBox bb; // For checking if in frustum  
 	public boolean always_draw = false;
 	

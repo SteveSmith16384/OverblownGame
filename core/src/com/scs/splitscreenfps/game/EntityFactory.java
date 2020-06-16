@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
@@ -27,6 +29,7 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 
 import ssmith.libgdx.GraphicsHelper;
+import ssmith.libgdx.ModelFunctions;
 
 public class EntityFactory {
 
@@ -259,6 +262,35 @@ public class EntityFactory {
 		ball.addComponent(new AffectedByExplosionComponent());
 		
 		return ball;
+	}
+
+	
+	public static AbstractEntity createDoorway(BasicECS ecs, float posX, float posY, float posZ) {
+		AbstractEntity doorway = new AbstractEntity(ecs, "Doorway");
+
+		ModelInstance instance = ModelFunctions.loadModel("models/magicavoxel/doorway.obj", false);
+		float scale = 1f;//ModelFunctions.getScaleForHeight(instance, .8f);
+		instance.transform.scl(scale);
+		instance.transform.setTranslation(posX, posY, posZ);
+		Vector3 offset = ModelFunctions.getOrigin(instance);
+		//offset.y -= .3f; // Hack since model is too high
+
+		HasModelComponent hasModel = new HasModelComponent(instance, offset, 90, scale);
+		doorway.addComponent(hasModel);
+
+		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
+		//Vector3 local_inertia = new Vector3();
+		//boxShape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody body = new btRigidBody(0, null, shape);//, local_inertia);
+		body.userData = doorway;
+		body.setRestitution(.5f);
+		body.setCollisionShape(shape);
+		body.setWorldTransform(instance.transform);
+		doorway.addComponent(new PhysicsComponent(body));
+		
+		//crate.addComponent(new AffectedByExplosionComponent());
+		
+		return doorway;
 	}
 
 	
