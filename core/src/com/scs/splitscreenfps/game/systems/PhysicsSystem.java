@@ -7,6 +7,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 
 public class PhysicsSystem extends AbstractSystem {
 
@@ -42,7 +43,10 @@ public class PhysicsSystem extends AbstractSystem {
 				e.remove();
 			} else {
 				// Is it a player?
-				
+				PlayerData player = (PlayerData)e.getComponent(PlayerData.class);
+				if (player != null) {
+					game.playerDamaged(player, 999);
+				}
 			}
 		}
 	}

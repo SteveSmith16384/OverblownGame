@@ -39,6 +39,7 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
@@ -134,7 +135,7 @@ public class Game implements IModule {
 		//currentLevel = new GangBeastsLevel1(this);
 		currentLevel = new RollingBallLevel(this);
 
-		
+
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), i);
 			ecs.addEntity(players[i]);
@@ -159,22 +160,22 @@ public class Game implements IModule {
 	private void loadAssetsForRescale() {
 		//this.currentLevel.loadAssets();
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
-		
+
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
 		//Settings.p("Font size=" + parameter.size);
 		font_small = generator.generateFont(parameter);
-		
+
 		parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferHeight()/20;
 		//Settings.p("Font size=" + parameter.size);
 		font_med = generator.generateFont(parameter);
-		
+
 		parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
 		//Settings.p("Font size=" + parameter.size);
 		font_large = generator.generateFont(parameter);
-		
+
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
 		DrawGuiSpritesSystem sys = (DrawGuiSpritesSystem)this.ecs.getSystem(DrawGuiSpritesSystem.class);
@@ -252,7 +253,7 @@ public class Game implements IModule {
 				return;
 			}
 		}
-		
+
 		this.currentLevel.update();
 
 		this.ecs.events.clear();
@@ -260,18 +261,20 @@ public class Game implements IModule {
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
+		
+		if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
+			// This must be run after the player has made inputs, but before the systems that process collisions!
+			final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+			dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+		}
+
+		this.ecs.processSystem(BulletSystem.class);
+		this.ecs.processSystem(ShootingSystem.class);
 		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
-		this.ecs.processSystem(BulletSystem.class);
-		this.ecs.processSystem(ShootingSystem.class);
-
-		if (System.currentTimeMillis() > startPhysicsTime) {
-			final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
-			dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
-		}
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
@@ -430,10 +433,10 @@ public class Game implements IModule {
 			AbstractEvent evt = it.next();
 			if (evt.getClass().equals(EventCollision.class)) {
 				EventCollision coll = (EventCollision)evt;
-				if (coll.movingEntity == e) {
-					list.add(coll.hitEntity);
-				} else if (coll.hitEntity == e) {
-					list.add(coll.movingEntity);
+				if (coll.entity1 == e) {
+					list.add(coll.entity2);
+				} else if (coll.entity2 == e) {
+					list.add(coll.entity1);
 				}
 			}
 		}
@@ -441,27 +444,32 @@ public class Game implements IModule {
 	}
 
 
-	/*
-	public boolean isAreaEmpty(AbstractEntity e) {
-		//float diameter = 1;
-		CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
-		float diameter = cc.rad * 2f;
-		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
-		if (this.mapData.rectangleFree(posData.position.x, posData.position.z, diameter, diameter)) {
-			// Give them a temp CollidesComponent if required
-			boolean empty = collCheckSystem.collided(e, posData, false) == false;
-			return empty;
+	public void playerDamaged(PlayerData playerHitData, float amt) {
+		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
+		playerHitData.health -= amt;//bullet.settings.damage;
+
+		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, playerHitData.playerIdx);
+		redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
+		ecs.addEntity(redfilter);
+
+		if (playerHitData.health <= 0) {
+			playerDied();
 		}
-		return false;
+
 	}
-	 */
+
+
+	public void playerDied() {
+		// todo
+	}
+
 
 	public void explosion(final Vector3 pos, float range, float force, float width_height) {
 		//Settings.p("Explosion at " + pos);
 
 		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos, width_height);
 		ecs.addEntity(expl);
-		
+
 		// Temp vars
 		Matrix4 mat = new Matrix4();
 		Vector3 vec = new Vector3();

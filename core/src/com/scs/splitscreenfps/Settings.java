@@ -20,7 +20,7 @@ public class Settings {
 	public static final boolean STRICT = !RELEASE_MODE && true;
 
 	// Game settings
-	//public static final long GAME_PHASE_DURATION = 15;
+	public static final int START_HEALTH = 100;
 
 	// Other settings
 	public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored

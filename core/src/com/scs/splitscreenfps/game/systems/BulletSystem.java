@@ -6,13 +6,12 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 
 /**
@@ -32,46 +31,29 @@ public class BulletSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		//PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
-
 		IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
-
 		PhysicsComponent physics = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 
 		// Check range
 		float dist = bullet.start.dst(physics.getTranslation());
 		if (dist > bullet.settings.range) {
+			Settings.p(entity + " reached range");
 			entity.remove();
 			return;
 		}
 		
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
+			entity.remove();
 			EventCollision coll = (EventCollision)evt;
 
-			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, PlayerData.class);
-			if (ents != null) {
-				// PlayerData shooterData = (PlayerData)bullet.shooter.getComponent(PlayerData.class);
-				PlayerData playerHitData = (PlayerData)ents[1].getComponent(PlayerData.class);
-				// Check if target is alive
+			//AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, PlayerData.class);
+			PlayerData playerHitData = (PlayerData)coll.entity2.getComponent(PlayerData.class);
+			if (playerHitData != null) {
+				//PlayerData playerHitData = (PlayerData)ents[1].getComponent(PlayerData.class);
 				if (playerHitData.health > 0) {
-					if (playerHitData.side != bullet.side) {
-						//ents[0].remove(); // Remove bullet
-						playerHitData.health -= bullet.settings.damage;
-
-						for (int id = 0 ; id<game.players.length ; id++) {
-							if (ents[1] == game.players[id]) {
-								if (playerHitData.health <= 0) {
-									AbstractEntity whitefilter = GraphicsEntityFactory.createWhiteFilter(game.ecs, id);
-									ecs.addEntity(whitefilter);
-								} else {
-									AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(game.ecs, id);
-									redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
-									ecs.addEntity(redfilter);
-								}
-								break;
-							}
-						}
+					if (playerHitData.playerIdx != bullet.side) {
+						game.playerDamaged(playerHitData, bullet.settings.damage);
 
 						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, physics.getTranslation(), 1);
 						ecs.addEntity(expl);

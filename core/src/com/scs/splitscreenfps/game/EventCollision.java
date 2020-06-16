@@ -5,17 +5,26 @@ import com.scs.basicecs.AbstractEvent;
 
 public class EventCollision extends AbstractEvent {
 
-	public AbstractEntity movingEntity; // todo - rename
-	public AbstractEntity hitEntity; // todo - rename
+	public AbstractEntity entity1;
+	public AbstractEntity entity2;
 
-	public EventCollision(AbstractEntity _movingEntity, AbstractEntity _hitEntity) {
-		movingEntity = _movingEntity;
-		hitEntity = _hitEntity;
+	public EventCollision(AbstractEntity e1, AbstractEntity e2) {
+		entity1 = e1;
+		entity2 = e2;
 	}
 
 	@Override
 	public boolean isForEntity(AbstractEntity e) {
-		return movingEntity == e || hitEntity == e;
+		if (entity1 == e || entity2 == e) {
+			// Make the entity we search for the moving one
+			if (e == entity2) {
+				AbstractEntity tmp = entity1;
+				entity1 = entity2;
+				entity2 = tmp;
+			}
+			return true;
+		}
+		return false;
 	}
 
 
@@ -24,22 +33,22 @@ public class EventCollision extends AbstractEvent {
 	 * Returns an array: [0] = entity with component of clazz1, [1] = entity with component of clazz2
 	 */
 	public AbstractEntity[] getEntitiesByComponent(Class<?> clazz1, Class<?> clazz2) {
-		if (this.hitEntity == null) {
+		if (this.entity2 == null) {
 			return null;
 		}
 
 		AbstractEntity result[] = new AbstractEntity[2];
-		
-		if (this.movingEntity.getComponent(clazz1) != null) {
-			result[0] = this.movingEntity;
-			if (this.hitEntity.getComponent(clazz2) != null) {
-				result[1] = this.hitEntity;
+
+		if (this.entity1.getComponent(clazz1) != null) {
+			result[0] = this.entity1;
+			if (this.entity2.getComponent(clazz2) != null) {
+				result[1] = this.entity2;
 				return result;
 			}
-		} else if (this.movingEntity.getComponent(clazz2) != null) {
-			result[1] = this.movingEntity;
-			if (this.hitEntity.getComponent(clazz1) != null) {
-				result[0] = this.hitEntity;
+		} else if (this.entity1.getComponent(clazz2) != null) {
+			result[1] = this.entity1;
+			if (this.entity2.getComponent(clazz1) != null) {
+				result[0] = this.entity2;
 				return result;
 			}
 		}

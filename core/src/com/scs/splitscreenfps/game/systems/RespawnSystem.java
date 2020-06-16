@@ -40,7 +40,6 @@ public class RespawnSystem implements ISystem {
 				PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 				posData.position.set(wrc.respawnPoint);
 
-
 				e.removeComponent(WillRespawnComponent.class);
 				ecs.addEntity(e);
 				this.entities.remove(i);

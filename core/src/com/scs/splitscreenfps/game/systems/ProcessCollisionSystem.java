@@ -8,7 +8,6 @@ import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
-import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 
 public class ProcessCollisionSystem {
 
@@ -23,13 +22,6 @@ public class ProcessCollisionSystem {
 	
 	
 	public void processCollision(AbstractEntity e1, AbstractEntity e2) {
-		if (e1.getComponent(RemoveOnContactComponent.class) != null) {
-			e1.remove();
-		}
-		if (e2.getComponent(RemoveOnContactComponent.class) != null) {
-			e2.remove();
-		}
-		
 		checkExplosion(e1, e2);
 		checkExplosion(e2, e1);
 		
@@ -41,7 +33,7 @@ public class ProcessCollisionSystem {
 	private void checkExplosion(AbstractEntity rocket, AbstractEntity hit) {
 		ExplodeOnContactComponent explodes = (ExplodeOnContactComponent)rocket.getComponent(ExplodeOnContactComponent.class);
 		if (explodes != null) {
-			Settings.p("Rocket hit " + hit);
+			//Settings.p("Rocket hit " + hit);
 			PhysicsComponent phys = (PhysicsComponent)rocket.getComponent(PhysicsComponent.class);
 			phys.body.getWorldTransform(mat);
 			game.explosion(mat.getTranslation(vec), 2, 4, 4);
