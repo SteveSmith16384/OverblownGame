@@ -76,18 +76,21 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_BULLET:
 			weapon.shot_interval = 300;
+			weapon.reload_interval = 1500;
 			weapon.max_ammo = 20;
 			weapon.weapon_type = WeaponSettingsComponent.WEAPON_BULLET;
 			break;
 			
 		case WeaponSettingsComponent.WEAPON_GRENADE:
 			weapon.shot_interval = 600;
+			weapon.reload_interval = 1500;
 			weapon.max_ammo = 12;
 			weapon.weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
 			break;
 			
 		case WeaponSettingsComponent.WEAPON_ROCKET:
 			weapon.shot_interval = 900;
+			weapon.reload_interval = 2000;
 			weapon.max_ammo = 6;
 			weapon.weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
 			break;

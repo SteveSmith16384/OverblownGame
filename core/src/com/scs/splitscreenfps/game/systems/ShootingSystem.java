@@ -5,6 +5,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanShoot;
@@ -32,6 +33,7 @@ public class ShootingSystem extends AbstractSystem {
 		if (cc.ammo == 0) {
 			interval = weapon.reload_interval;//1500;
 		}
+		
 		if (cc.lastShotTime + interval > System.currentTimeMillis()) {
 			//Settings.p("Too soon");
 			return;
@@ -40,7 +42,7 @@ public class ShootingSystem extends AbstractSystem {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
 		if (player.inputMethod.isShootPressed()) {
-			//Settings.p("Shoot!");
+			Settings.p("Shoot at " + System.currentTimeMillis());
 			if (cc.ammo == 0) {
 				BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");			
 				//Settings.p("Reloading");
