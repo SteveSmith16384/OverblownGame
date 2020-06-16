@@ -45,7 +45,7 @@ public class RollingBallLevel extends AbstractLevel {
 		//pc.rotate(Vector3.Z, 45);
 		game.ecs.addEntity(tilt);
 		
-		for (int i=0 ; i<10 ; i++) {
+		for (int i=0 ; i<20 ; i++) {
 			int col = NumberFunctions.rnd(1,  10);
 			int row = NumberFunctions.rnd(1,  10);
 			AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, i+3, row, .4f, .4f, .4f);

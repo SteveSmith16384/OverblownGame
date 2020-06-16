@@ -72,7 +72,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		WeaponSettingsComponent weapon = new WeaponSettingsComponent();
 
-		int weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
+		int weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_BULLET:
 			weapon.shot_interval = 300;

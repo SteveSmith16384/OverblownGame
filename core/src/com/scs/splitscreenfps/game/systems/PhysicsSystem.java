@@ -37,7 +37,7 @@ public class PhysicsSystem extends AbstractSystem {
 		
 		float height = pc.getTranslation().y;
 		if (height < -10) {
-			Settings.p("Removed " + e + " since it has fallen off");
+			//Settings.p("Removed " + e + " since it has fallen off");
 			e.remove();
 		}
 /*		if (pc.force != null) {
