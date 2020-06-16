@@ -74,7 +74,8 @@ public class DrawModelSystem extends AbstractSystem {
 			pc.body.getWorldTransform(mat);
 			model.model.transform.set(mat);
 			model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
-		} else {
+
+		} //else {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
 			if (posData != null) {
 				// Only draw if in frustum 
@@ -101,7 +102,7 @@ public class DrawModelSystem extends AbstractSystem {
 					}
 				}
 			}
-		}
+		//}
 		modelBatch.render(model.model, environment);
 	}
 

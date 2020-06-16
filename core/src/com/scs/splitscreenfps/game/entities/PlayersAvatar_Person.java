@@ -139,8 +139,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			Model model = am.get("models/quaternius/Smooth_Male_Shirt.g3db");
 			ModelInstance instance = new ModelInstance(model);
 
-			HasModelComponent hasModel = new HasModelComponent(instance, -.3f, 90);//, 0.0016f);
-			hasModel.scale = 0.0016f;
+			HasModelComponent hasModel = new HasModelComponent(instance, -.3f, 90, 0.0016f);
 			hasModel.dontDrawInViewId = playerIdx;
 			this.addComponent(hasModel);
 
@@ -165,8 +164,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			Vector3 offset = ModelFunctions.getOrigin(instance);
 			offset.y -= .3f; // Hack since model is too high
 
-			HasModelComponent hasModel = new HasModelComponent(instance, offset, 90);//, scale);
-			hasModel.scale = scale;
+			HasModelComponent hasModel = new HasModelComponent(instance, offset, 90, scale);
 			hasModel.dontDrawInViewId = playerIdx;
 			this.addComponent(hasModel);
 
