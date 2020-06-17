@@ -61,7 +61,7 @@ import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
-import com.scs.splitscreenfps.game.systems.RespawnSystem;
+import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
@@ -88,7 +88,7 @@ public class Game implements IModule {
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
 	private PhysicsSystem physicsSystem;
-	private RespawnSystem respawnSystem;
+	private RespawnPlayerSystem respawnSystem;
 	
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
@@ -209,7 +209,7 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
 		physicsSystem = new PhysicsSystem(this, ecs);
 		ecs.addSystem(physicsSystem);
-		this.respawnSystem = new RespawnSystem(ecs);
+		this.respawnSystem = new RespawnPlayerSystem(ecs);
 	}
 
 

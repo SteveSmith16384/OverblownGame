@@ -11,16 +11,17 @@ import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WillRespawnComponent;
 
-public class RespawnSystem implements ISystem {
+public class RespawnPlayerSystem implements ISystem {
 
 	private List<AbstractEntity> entities = new ArrayList<AbstractEntity>();
 	private BasicECS ecs;
 
-	public RespawnSystem(BasicECS _ecs) {
+	public RespawnPlayerSystem(BasicECS _ecs) {
 		ecs = _ecs;
 	}
 
@@ -40,26 +41,16 @@ public class RespawnSystem implements ISystem {
 			if (wrc.respawn_time < System.currentTimeMillis()) {
 				Settings.p("Respawning " + e);
 				
-				// Set position
-/*				PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
-				posData.position.set(wrc.respawnPoint);
-				
-				PhysicsComponent physics = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-				physics.body.clearForces();
-
-				Matrix4 mat = new Matrix4();
-				physics.body.getWorldTransform(mat);
-				mat.setTranslation(wrc.respawnPoint);
-*/
 				PlayerMovementData md = (PlayerMovementData)e.getComponent(PlayerMovementData.class);
 				Matrix4 mat = new Matrix4();
 				mat.setTranslation(wrc.respawnPoint);
 				md.characterController.setWorldTransform(mat);
 				
-				// todo - reset health etc.
+				// Reset health
+				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);
+				playerData.health = Settings.START_HEALTH;
 
 				e.removeComponent(WillRespawnComponent.class);
-				//ecs.addEntity(e);
 				this.entities.remove(i);
 			}
 		}
