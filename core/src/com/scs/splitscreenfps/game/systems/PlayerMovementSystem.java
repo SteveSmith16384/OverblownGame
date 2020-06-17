@@ -8,6 +8,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
@@ -28,16 +29,17 @@ public class PlayerMovementSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		PlayerMovementData movementData = (PlayerMovementData)entity.getComponent(PlayerMovementData.class);
+		PhysicsComponent physics = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 
 		// Set model position based on physics object
 		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
-		Matrix4 mat = movementData.characterController.getWorldTransform();
+		Matrix4 mat = physics.body.getWorldTransform();
 		mat.getTranslation(pos.position);
 		
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
-				movementData.characterController.activate(); // Need this!
-				movementData.characterController.applyCentralForce(movementData.offset.scl(20));
+				physics.body.activate(); // Need this!
+				physics.body.applyCentralForce(movementData.offset.scl(20));
 				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
 			}
 		}
@@ -46,7 +48,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 			// Check they are on ground
 			btCollisionObject obj = game.rayTestByDir(pos.position, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
 			if (obj != null) {
-				movementData.characterController.applyCentralForce(JUMP_FORCE);
+				physics.body.applyCentralForce(JUMP_FORCE);
 				//Settings.p("Jump!");
 			} else {
 				//Settings.p("Not on floor!");

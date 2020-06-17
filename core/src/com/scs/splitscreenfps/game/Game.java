@@ -221,10 +221,10 @@ public class Game implements IModule {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			Vector3 start_pos = currentLevel.getPlayerStartPoint(idx);
 
-			PlayerMovementData md = (PlayerMovementData)this.players[idx].getComponent(PlayerMovementData.class);
+			PhysicsComponent md = (PhysicsComponent)this.players[idx].getComponent(PhysicsComponent.class);
 			Matrix4 mat = new Matrix4();
 			mat.setTranslation(start_pos.x + 0.5f, start_pos.y, start_pos.z + 0.5f);
-			md.characterController.setWorldTransform(mat);
+			md.body.setWorldTransform(mat);
 
 			// Look down the z-axis
 			this.viewports[idx].camera.direction.x = 0;

@@ -41,10 +41,11 @@ public class RespawnPlayerSystem implements ISystem {
 			if (wrc.respawn_time < System.currentTimeMillis()) {
 				Settings.p("Respawning " + e);
 				
-				PlayerMovementData md = (PlayerMovementData)e.getComponent(PlayerMovementData.class);
+				PhysicsComponent md = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 				Matrix4 mat = new Matrix4();
 				mat.setTranslation(wrc.respawnPoint);
-				md.characterController.setWorldTransform(mat);
+				md.body.setWorldTransform(mat);
+				md.body.activate();
 				
 				// Reset health
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);

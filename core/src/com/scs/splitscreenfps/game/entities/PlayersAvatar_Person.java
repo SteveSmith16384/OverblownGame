@@ -47,7 +47,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		// Model stuff
 		this.addModel(playerIdx, 1);
-		HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
+		//HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
 		
 		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
@@ -65,8 +65,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		player_body.setDamping(0.8f, 0.8f);
 		player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		//characterController.setFriction(1);
-		//game.dynamicsWorld.addRigidBody(player_body);
-		md.characterController = player_body;
+		//md.characterController = player_body;
 		PhysicsComponent physics = new PhysicsComponent(player_body);
 		physics.removeIfFallen = false;
 		addComponent(physics);
