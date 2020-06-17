@@ -74,12 +74,11 @@ public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
-	public BitmapFont font_small, font_med, font_large;// todo - change to getFont()
+	public BitmapFont font_small, font_med, font_large;
 	public final ViewportData[] viewports;
 
 	public AbstractPlayersAvatar[] players;
 	public List<IInputMethod> inputs;
-	public MapData mapData;
 	public BasicECS ecs;
 	public AbstractLevel currentLevel; // todo - use ILevelInterface
 

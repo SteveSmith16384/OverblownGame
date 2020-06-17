@@ -83,7 +83,7 @@ public class ShootingSystem extends AbstractSystem {
 				break;
 
 			default:
-				throw new RuntimeException("Todo");
+				throw new RuntimeException("Unknown weapon type: " + weapon.weapon_type);
 			}
 		}
 	}

@@ -71,8 +71,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		physics.removeIfFallen = false;
 		addComponent(physics);
 		
-		//Vector3 scale = physics.getScale(); // todo - remove
-
 		this.addComponent(new PositionComponent());
 
 		camera = _viewportData.camera;

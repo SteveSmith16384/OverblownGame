@@ -38,7 +38,7 @@ public class HasModelComponent {
 		
 		if (Settings.STRICT) {
 			if (_scale <= 0) {
-				throw new RuntimeException("Todo");
+				throw new RuntimeException("Zero scale!");
 			}
 		}
 	}

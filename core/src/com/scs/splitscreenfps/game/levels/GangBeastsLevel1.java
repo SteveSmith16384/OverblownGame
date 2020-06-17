@@ -1,18 +1,12 @@
 package com.scs.splitscreenfps.game.levels;
 
-import java.util.regex.Pattern;
-
 import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.MapData;
-import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.IScoreSystem;
 import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
-
-import ssmith.libgdx.GridPoint2Static;
 
 public class GangBeastsLevel1 extends AbstractLevel {
 
@@ -29,7 +23,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 	@Override
 	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(1f, .3f, .3f, 1);
+		Gdx.gl.glClearColor(.7f, .3f, .3f, 1);
 	}
 
 
@@ -43,7 +37,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 			game.ecs.addEntity(crate);
 		}
 
-		loadMapFromFile("map1.csv");
+		//loadMapFromFile("map1.csv");
 		
 		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", 10, -0.1f, 10, 20f, .2f, 20f, 0f);
 		game.ecs.addEntity(floor);
@@ -61,64 +55,7 @@ public class GangBeastsLevel1 extends AbstractLevel {
 		game.ecs.addEntity(top);
 	}
 
-
-	private void loadMapFromFile(String file) {
-		String str = Gdx.files.internal(file).readString();
-		String[] str2 = str.split("\n");
-
-		this.map_width = str2[0].split("\t").length;
-		this.map_height = str2.length;
-
-		game.mapData = new MapData(map_width, map_height);
-
-		int row = 0;
-		for (String s : str2) {
-			s = s.trim();
-			if (s.length() > 0 && s.startsWith("#") == false) {
-				String cells[] = s.split("\t");
-				for (int col=0 ; col<cells.length ; col++) {
-					game.mapData.map[col][row] = new MapSquare(game.ecs);
-
-					String cell = cells[col];
-					String tokens[] = cell.split(Pattern.quote("+"));
-					for (String token : tokens) {
-						if (token.equals("S")) { // Start pos
-							this.startPositions.add(new GridPoint2Static(col, row));
-							//Floor floor = new Floor(game.ecs, "quantumleague/textures/corridor.jpg", col, row, 1, 1, false);
-							//game.ecs.addEntity(floor);
-						} else if (token.equals("W")) { // Wall
-							//game.mapData.map[col][row].blocked = true;
-							//Wall wall = new Wall(game.ecs, "Wall", "textures/set3_example_1.png", col, 0, row, 1, 1, 1);
-							//game.ecs.addEntity(wall);
-
-							//AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, 3, row, .3f, .3f, .3f);
-							//game.ecs.addEntity(crate);
-						} else if (token.equals("C")) { // Chasm
-							//game.mapData.map[col][row].blocked = true;
-						} else if (token.equals("F")) { // Floor
-							/*if ((col-1) % 4 == 0 && (row-1)  % 4 == 0) {
-								Floor floor = new Floor(game.ecs, "Floor", "textures/floor006.png", col, 0, row, 4, 4);
-								game.ecs.addEntity(floor);
-							}*/
-						} else if (token.equals("G")) { // Goal point
-							//Floor floor = new Floor(game.ecs, "Centre", "textures/centre.png", col, .01f, row, 1, 1);
-							//game.ecs.addEntity(floor);
-						} else if (token.equals("B")) { // Border
-							//game.mapData.map[col][row].blocked = true;
-							//Wall wall = new Wall(game.ecs, "BorderWall", "textures/mjst_metal_beamwindow_diffuse.png", col, 0, row, 1, 1, 1, true);
-							//game.ecs.addEntity(wall);
-						} else {
-							throw new RuntimeException("Unknown cell type: " + token);
-						}
-					}
-				}
-				row++;
-			}
-		}
-
-	}
-
-
+	
 	@Override
 	public void update() {
 		// Do nothing

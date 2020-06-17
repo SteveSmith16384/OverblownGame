@@ -41,13 +41,17 @@ public class EntityFactory {
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
-		
+
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.playerIdx == 0) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
 		} else if (playerData.playerIdx == 1) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
-		} else { // todo - more sides!
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
+		} else if (playerData.playerIdx == 2) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+		} else if (playerData.playerIdx == 3) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
 		hasDecal.decal.setPosition(start);
@@ -92,10 +96,14 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.playerIdx == 0) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
 		} else if (playerData.playerIdx == 1) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
-		} else { // todo - more sides!
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
+		} else if (playerData.playerIdx == 2) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+		} else if (playerData.playerIdx == 3) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
 		hasDecal.decal.setPosition(start);
@@ -105,7 +113,7 @@ public class EntityFactory {
 
 		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings));
 		e.addComponent(new ExplodeOnContactComponent());
-		
+
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
 		btRigidBody body = new btRigidBody(.1f, null, shape);
@@ -141,13 +149,17 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.playerIdx == 0) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
 		} else if (playerData.playerIdx == 1) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
-		} else { // todo - more sides!
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
+		} else if (playerData.playerIdx == 2) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+		} else if (playerData.playerIdx == 3) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
-		
+
 		hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
@@ -202,13 +214,13 @@ public class EntityFactory {
 		groundObject.setCollisionShape(boxShape);
 		groundObject.setWorldTransform(instance.transform);
 		crate.addComponent(new PhysicsComponent(groundObject));
-		
+
 		crate.addComponent(new AffectedByExplosionComponent());
-		
+
 		return crate;
 	}
 
-	
+
 	public static AbstractEntity createBall(BasicECS ecs, String tex_filename, float posX, float posY, float posZ, float diam, float mass_pre) {
 		AbstractEntity ball = new AbstractEntity(ecs, "Ball");
 
@@ -222,7 +234,7 @@ public class EntityFactory {
 		ball.addComponent(model);
 
 		float mass = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
-		
+
 		btSphereShape sphere_shape = new btSphereShape(diam/2);
 		Vector3 local_inertia = new Vector3();
 		sphere_shape.calculateLocalInertia(1f, local_inertia);
@@ -232,13 +244,13 @@ public class EntityFactory {
 		groundObject.setCollisionShape(sphere_shape);
 		groundObject.setWorldTransform(instance.transform);
 		ball.addComponent(new PhysicsComponent(groundObject));
-		
+
 		ball.addComponent(new AffectedByExplosionComponent());
-		
+
 		return ball;
 	}
 
-	
+
 	public static AbstractEntity createDoorway(BasicECS ecs, float posX, float posY, float posZ) {
 		AbstractEntity doorway = new AbstractEntity(ecs, "Doorway");
 
@@ -262,13 +274,13 @@ public class EntityFactory {
 		body.setCollisionShape(shape);
 		body.setWorldTransform(instance.transform);
 		doorway.addComponent(new PhysicsComponent(body));
-		
+
 		//crate.addComponent(new AffectedByExplosionComponent());
-		
+
 		return doorway;
 	}
 
-	
+
 	public static AbstractEntity createStairs(BasicECS ecs, float posX, float posY, float posZ) {
 		AbstractEntity stairs = new AbstractEntity(ecs, "Stairs");
 
@@ -292,7 +304,7 @@ public class EntityFactory {
 		body.setCollisionShape(shape);
 		body.setWorldTransform(instance.transform);
 		stairs.addComponent(new PhysicsComponent(body));
-		
+
 		return stairs;
 	}
 
