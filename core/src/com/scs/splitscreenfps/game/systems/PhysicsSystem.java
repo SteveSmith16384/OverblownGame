@@ -45,7 +45,7 @@ public class PhysicsSystem extends AbstractSystem {
 				// Is it a player?
 				PlayerData player = (PlayerData)e.getComponent(PlayerData.class);
 				if (player != null) {
-					game.playerDamaged(player, 999);
+					game.playerDamaged(e, player, 999);
 				}
 			}
 		}

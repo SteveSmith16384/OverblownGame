@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.Game;
-
-import ssmith.libgdx.GridPoint2Static;
 
 public abstract class AbstractLevel implements ILevelInterface {
 
 	public Game game;
-	protected List<GridPoint2Static> startPositions = new ArrayList<GridPoint2Static>();
+	protected List<Vector3> startPositions = new ArrayList<Vector3>();
 	
 	public AbstractLevel(Game _game) {
 		game = _game;
@@ -26,7 +25,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 	
 	public abstract void update();
 
-	public GridPoint2Static getPlayerStartMap(int idx) {
+	public Vector3 getPlayerStartPoint(int idx) {
 		return this.startPositions.get(idx);
 	}
 	

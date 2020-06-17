@@ -8,7 +8,6 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 import ssmith.lang.NumberFunctions;
-import ssmith.libgdx.GridPoint2Static;
 
 public class RollingBallLevel extends AbstractLevel {
 
@@ -29,10 +28,10 @@ public class RollingBallLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		this.startPositions.add(new GridPoint2Static(1, 1));
-		this.startPositions.add(new GridPoint2Static(2, 2));
-		this.startPositions.add(new GridPoint2Static(3, 3));
-		this.startPositions.add(new GridPoint2Static(4, 4));
+		this.startPositions.add(new Vector3(1, 2f, 1));
+		this.startPositions.add(new Vector3(2, 2f, 2));
+		this.startPositions.add(new Vector3(3, 2f, 3));
+		this.startPositions.add(new Vector3(4, 2f, 4));
 
 		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", 5, -0.1f, 5, 
 				10f, .2f, 10f, 

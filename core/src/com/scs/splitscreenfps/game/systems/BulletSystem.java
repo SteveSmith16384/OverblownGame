@@ -53,7 +53,7 @@ public class BulletSystem extends AbstractSystem {
 				//PlayerData playerHitData = (PlayerData)ents[1].getComponent(PlayerData.class);
 				if (playerHitData.health > 0) {
 					if (playerHitData.playerIdx != bullet.side) {
-						game.playerDamaged(playerHitData, bullet.settings.damage);
+						game.playerDamaged(coll.entity2, playerHitData, bullet.settings.damage);
 
 						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, physics.getTranslation(), 1);
 						ecs.addEntity(expl);

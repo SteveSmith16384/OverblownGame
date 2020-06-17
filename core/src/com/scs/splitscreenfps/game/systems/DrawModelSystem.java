@@ -76,32 +76,32 @@ public class DrawModelSystem extends AbstractSystem {
 			model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
 
 		} //else {
-			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
-			if (posData != null) {
+		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
+		if (posData != null) {
+			// Only draw if in frustum 
+			if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
+				return;
+			}
+
+			Vector3 position = posData.position;
+			tmpOffset.set(position);
+			tmpOffset.add(model.offset);
+			model.model.transform.setToTranslation(tmpOffset);
+			model.model.transform.scl(model.scale);
+			model.model.transform.rotate(Vector3.Y, posData.angle_degs+model.angleOffset);
+		} else {
+			if (model.always_draw == false) {
 				// Only draw if in frustum 
-				if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
+				if (model.bb == null) {
+					model.bb = new BoundingBox();
+					model.model.calculateBoundingBox(model.bb);
+					model.bb.mul(model.model.transform);
+				}
+				if (!camera.frustum.boundsInFrustum(model.bb)) {
 					return;
 				}
-
-				Vector3 position = posData.position;
-				tmpOffset.set(position);
-				tmpOffset.add(model.offset);
-				model.model.transform.setToTranslation(tmpOffset);
-				model.model.transform.scl(model.scale);
-				model.model.transform.rotate(Vector3.Y, posData.angle_degs+model.angleOffset);
-			} else {
-				if (model.always_draw == false) {
-					// Only draw if in frustum 
-					if (model.bb == null) {
-						model.bb = new BoundingBox();
-						model.model.calculateBoundingBox(model.bb);
-						model.bb.mul(model.model.transform);
-					}
-					if (!camera.frustum.boundsInFrustum(model.bb)) {
-						return;
-					}
-				}
 			}
+		}
 		//}
 		modelBatch.render(model.model, environment);
 	}

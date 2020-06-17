@@ -61,10 +61,9 @@ import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
+import com.scs.splitscreenfps.game.systems.RespawnSystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
-
-import ssmith.libgdx.GridPoint2Static;
 
 /**
  * This is the main game, where the players move about n'stuff.
@@ -89,6 +88,8 @@ public class Game implements IModule {
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
 	private PhysicsSystem physicsSystem;
+	private RespawnSystem respawnSystem;
+	
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 	private ProcessCollisionSystem coll;
@@ -208,6 +209,7 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
 		physicsSystem = new PhysicsSystem(this, ecs);
 		ecs.addSystem(physicsSystem);
+		this.respawnSystem = new RespawnSystem(ecs);
 	}
 
 
@@ -217,15 +219,12 @@ public class Game implements IModule {
 		// Set start position of players
 		for (int idx=0 ; idx<players.length  ; idx++) {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
-			GridPoint2Static start_pos = currentLevel.getPlayerStartMap(idx);
+			Vector3 start_pos = currentLevel.getPlayerStartPoint(idx);
 
 			PlayerMovementData md = (PlayerMovementData)this.players[idx].getComponent(PlayerMovementData.class);
 			Matrix4 mat = new Matrix4();
-			mat.setTranslation(start_pos.x + 0.5f, 2, start_pos.y + 0.5f);
+			mat.setTranslation(start_pos.x + 0.5f, start_pos.y, start_pos.z + 0.5f);
 			md.characterController.setWorldTransform(mat);
-
-			posData.position.set(start_pos.x + 0.5f, Settings.PLAYER_HEIGHT/2, start_pos.y + 0.5f); // Start in middle of square
-			players[idx].process();
 
 			// Look down the z-axis
 			this.viewports[idx].camera.direction.x = 0;
@@ -256,6 +255,7 @@ public class Game implements IModule {
 		this.currentLevel.update();
 
 		this.ecs.events.clear();
+		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
@@ -443,7 +443,12 @@ public class Game implements IModule {
 	}
 
 
-	public void playerDamaged(PlayerData playerHitData, float amt) {
+	public void playerDamaged(AbstractEntity player, PlayerData playerHitData, float amt) {
+		if (playerHitData.health <= 0) {
+			// Already dead
+			return;
+		}
+		
 		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 		playerHitData.health -= amt;//bullet.settings.damage;
 
@@ -452,14 +457,15 @@ public class Game implements IModule {
 		ecs.addEntity(redfilter);
 
 		if (playerHitData.health <= 0) {
-			playerDied();
+			playerDied(player, playerHitData);
 		}
 
 	}
 
 
-	public void playerDied() {
-		// todo
+	public void playerDied(AbstractEntity player, PlayerData playerData) {
+		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
+		// todo - show "died"
 	}
 
 
