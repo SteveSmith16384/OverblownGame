@@ -27,6 +27,7 @@ import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
+import com.google.gson.Gson;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -37,7 +38,6 @@ import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -47,6 +47,7 @@ import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.RollingBallLevel;
+import com.scs.splitscreenfps.game.mapdata.MapBlock;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -108,6 +109,13 @@ public class Game implements IModule {
 		main = _main;
 		inputs = _inputs;
 
+		// todo - delete
+		/*Gson g = new Gson();
+		MapBlock person = g.fromJson("{\"x\": \"10\"}", MapBlock.class);
+		System.out.println(person.x); //John
+		System.out.println(g.toJson(person)); // {"name":"John"}*/
+		
+		
 		game_stage = 0;
 		batch2d = new SpriteBatch();
 		this.createECS();
@@ -464,6 +472,7 @@ public class Game implements IModule {
 
 
 	public void playerDied(AbstractEntity player, PlayerData playerData) {
+		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 		// todo - show "died"
 	}
@@ -502,18 +511,17 @@ public class Game implements IModule {
 	}
 
 
-	//private final ClosestRayResultCallback callback = new ClosestRayResultCallback(rayFrom, rayTo);
 	public btCollisionObject rayTestByDir(Vector3 ray_from, Vector3 dir, float range) {
-		Vector3 ray_to = new Vector3(ray_from).mulAdd(dir, range);
+		Vector3 ray_to = new Vector3(ray_from).mulAdd(dir, range); // todo - use temp
 
 		callback.setCollisionObject(null);
 		callback.setClosestHitFraction(1f);
 
-		Vector3 v1 = new Vector3();
+		Vector3 v1 = new Vector3(); // todo - use temp
 		callback.getRayFromWorld(v1);
 		v1.set(ray_from);
 
-		Vector3 v2 = new Vector3();
+		Vector3 v2 = new Vector3(); // todo - use temp
 		callback.getRayToWorld(v2);
 		v2.set(ray_to);
 
