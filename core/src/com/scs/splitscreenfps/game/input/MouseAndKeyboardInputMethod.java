@@ -62,47 +62,22 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		// Not used in this implementation
 		return 0;
 	}
-/*
-	@Override
-	public boolean isCrossPressed() {
-		return false;
-	}
-
-	@Override
-	public boolean isL1ressed() {
-		return false; //Gdx.input.isKeyPressed(Keys.NUM_1);
-	}
-
-	@Override
-	public boolean isR1Pressed() {
-		return false; //Gdx.input.isKeyPressed(Keys.NUM_2);
-	}
-
-	@Override
-	public boolean isTrianglePressed() {
-		return false; //Gdx.input.isKeyPressed(Keys.CONTROL_LEFT);
-	}
 
 
-	@Override
-	public boolean isKeyJustPressed(int key) {
-		return Gdx.input.isKeyJustPressed(key);
-	}
-
-	@Override
-	public boolean isKeyPressed(int key) {
-		return Gdx.input.isKeyPressed(key);
-	}
-
-	
-	@Override
-	public boolean isSquarePressed() {
-		return false;
-	}
-*/
 	@Override
 	public boolean isShootPressed() {
 		return Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 	}
+
+
+	public boolean isKeyJustPressed(int key) {
+		return Gdx.input.isKeyJustPressed(key);
+	}
+
+
+	public boolean isKeyPressed(int key) {
+		return Gdx.input.isKeyPressed(key);
+	}
+
 
 }

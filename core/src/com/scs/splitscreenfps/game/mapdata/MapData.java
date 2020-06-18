@@ -6,6 +6,10 @@ import java.util.List;
 public class MapData {
 
 	public String filename;
-	public List<MapBlockComponent> blocks = new ArrayList<MapBlockComponent>();
+	public List<MapBlockComponent> blocks;
 	
+	public MapData() {
+		blocks = new ArrayList<MapBlockComponent>();
+		this.filename = "default_map.json";
+	}
 }

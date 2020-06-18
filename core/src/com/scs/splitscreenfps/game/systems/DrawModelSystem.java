@@ -98,7 +98,7 @@ public class DrawModelSystem extends AbstractSystem {
 					model.bb.mul(model.model.transform);
 				}
 				if (!camera.frustum.boundsInFrustum(model.bb)) {
-					return;
+					//return; todo - fix
 				}
 			}
 		}

@@ -54,6 +54,7 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
+import com.scs.splitscreenfps.game.systems.MapBuilderSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
@@ -87,6 +88,7 @@ public class Game implements IModule {
 	private DrawModelSystem drawModelSystem;
 	private PhysicsSystem physicsSystem;
 	private RespawnPlayerSystem respawnSystem;
+	private MapBuilderSystem mapBuilderSystem;
 	
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
@@ -208,7 +210,12 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
 		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
 		ecs.addSystem(new BulletSystem(ecs, this));
-		ecs.addSystem(new ShootingSystem(ecs, this));
+		if (Settings.BUILD_MAP) {
+			this.mapBuilderSystem = new MapBuilderSystem(ecs, this);
+			ecs.addSystem(this.mapBuilderSystem);
+		} else {
+			ecs.addSystem(new ShootingSystem(ecs, this));
+		}
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
@@ -273,7 +280,11 @@ public class Game implements IModule {
 		}
 
 		this.ecs.processSystem(BulletSystem.class);
-		this.ecs.processSystem(ShootingSystem.class);
+		if (Settings.BUILD_MAP) {
+			this.mapBuilderSystem.process();
+		} else {
+			this.ecs.processSystem(ShootingSystem.class);
+		}
 		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
