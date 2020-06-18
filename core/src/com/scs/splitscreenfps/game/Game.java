@@ -54,7 +54,7 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
-import com.scs.splitscreenfps.game.systems.MapBuilderSystem;
+import com.scs.splitscreenfps.game.systems.MapEditorSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
@@ -88,7 +88,7 @@ public class Game implements IModule {
 	private DrawModelSystem drawModelSystem;
 	private PhysicsSystem physicsSystem;
 	private RespawnPlayerSystem respawnSystem;
-	public MapBuilderSystem mapBuilderSystem;
+	public MapEditorSystem mapBuilderSystem;
 	
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
@@ -212,7 +212,7 @@ public class Game implements IModule {
 		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
 		ecs.addSystem(new BulletSystem(ecs, this));
 		if (Settings.BUILD_MAP) {
-			this.mapBuilderSystem = new MapBuilderSystem(ecs, this);
+			this.mapBuilderSystem = new MapEditorSystem(ecs, this);
 			ecs.addSystem(this.mapBuilderSystem);
 		} else {
 			ecs.addSystem(new ShootingSystem(ecs, this));

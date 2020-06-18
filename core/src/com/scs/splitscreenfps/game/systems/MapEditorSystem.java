@@ -19,21 +19,31 @@ import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
 
-public class MapBuilderSystem extends AbstractSystem {
+public class MapEditorSystem extends AbstractSystem {
 
 	private enum Mode {ROTATION, POSITION, SIZE};
 
 	private Game game;
-	private Mode mode;
+	private Mode mode = Mode.POSITION;
 	private AbstractEntity selectedObject;
 
-	public MapBuilderSystem(BasicECS ecs, Game _game) {
+	public MapEditorSystem(BasicECS ecs, Game _game) {
 		super(ecs, PlayerData.class);
 
 		game = _game;
 	}
 
+	
+	public void saveMap() {
+		try {
+			game.currentLevel.saveFile();
+			Settings.p("Saved");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
+	
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
@@ -55,31 +65,16 @@ public class MapBuilderSystem extends AbstractSystem {
 		}
 
 		if (keyboard.isKeyJustPressed(Keys.NUM_1)) { // Save
-			try {
-				game.currentLevel.saveFile();
-				Settings.p("Saved");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			this.saveMap();
 		}
 
 		if (selectedObject != null) {
 			if (keyboard.isKeyJustPressed(Keys.P)) {
 				mode = Mode.POSITION;
-				/*MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-
-				// Move left
-				PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
-				Matrix4 mat = new Matrix4();
-				md.body.getWorldTransform(mat);
-				mat.getTranslation(block.position);
-				block.position.x -= 0.1f;
-				mat.setTranslation(block.position);
-				md.body.setWorldTransform(mat);
-				//md.body.activate();
-				 */
 			} else if (keyboard.isKeyJustPressed(Keys.S)) {
 				mode = Mode.SIZE;
+			} else if (keyboard.isKeyJustPressed(Keys.R)) {
+				mode = Mode.ROTATION;
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
 				switch (mode) {
 				case POSITION:
@@ -88,6 +83,19 @@ public class MapBuilderSystem extends AbstractSystem {
 				case SIZE:
 					this.resizeBlock(new Vector3(.1f, 0, 0));
 					break;
+				default:
+					throw new RuntimeException("Todo");
+				}
+			} else if (keyboard.isKeyJustPressed(Keys.PAGE_UP)) {
+				switch (mode) {
+				case POSITION:
+					this.moveBlock(new Vector3(0, 0, .1f));
+					break;
+				case SIZE:
+					this.resizeBlock(new Vector3(0, 0, .1f));
+					break;
+				default:
+					throw new RuntimeException("Todo");
 				}
 			} else if (keyboard.isKeyJustPressed(Keys.RIGHT)) {
 				switch (mode) {
@@ -97,6 +105,41 @@ public class MapBuilderSystem extends AbstractSystem {
 				case SIZE:
 					this.resizeBlock(new Vector3(-.1f, 0, 0));
 					break;
+				default:
+					throw new RuntimeException("Todo");
+				}
+			} else if (keyboard.isKeyJustPressed(Keys.PAGE_DOWN)) {
+				switch (mode) {
+				case POSITION:
+					this.moveBlock(new Vector3(0, 0, -.1f));
+					break;
+				case SIZE:
+					this.resizeBlock(new Vector3(0, 0, -.1f));
+					break;
+				default:
+					throw new RuntimeException("Todo");
+				}
+			} else if (keyboard.isKeyJustPressed(Keys.UP)) {
+				switch (mode) {
+				case POSITION:
+					this.moveBlock(new Vector3(0, 0.1f, 0));
+					break;
+				case SIZE:
+					this.resizeBlock(new Vector3(0, .1f, 0));
+					break;
+				default:
+					throw new RuntimeException("Todo");
+				}
+			} else if (keyboard.isKeyJustPressed(Keys.DOWN)) {
+				switch (mode) {
+				case POSITION:
+					this.moveBlock(new Vector3(0, -0.1f, 0));
+					break;
+				case SIZE:
+					this.resizeBlock(new Vector3(0, -0.1f, 0));
+					break;
+				default:
+					throw new RuntimeException("Todo");
 				}
 			}
 		}
@@ -104,25 +147,40 @@ public class MapBuilderSystem extends AbstractSystem {
 
 
 	private void moveBlock(Vector3 off) {
-		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-
 		// Move left
+		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+		Matrix4 mat = this.setBlockDataToCurrentPosition(block);
 		PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
+		/*
 		Matrix4 mat = new Matrix4();
 		md.body.getWorldTransform(mat);
-		mat.getTranslation(block.position);
+
+		mat.getTranslation(block.position);*/
+
 		block.position.add(off);
 		mat.setTranslation(block.position);
 		md.body.setWorldTransform(mat);
 	}
-	
+
 
 	private void resizeBlock(Vector3 adj) {
-		// todo - set matix to current pos
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-		block.size.add(adj); // todo - adjust pos by half
+		this.setBlockDataToCurrentPosition(block);
+
+		block.size.add(adj); 
 		this.selectedObject.remove();
 		this.selectedObject = this.createAndAddEntityFromBlockData(block);
+	}
+
+
+	private Matrix4 setBlockDataToCurrentPosition(MapBlockComponent block) {
+		// Set matix to current pos
+		PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
+		Matrix4 mat = new Matrix4();
+		md.body.getWorldTransform(mat);
+		mat.getTranslation(block.position);
+		return mat;
+
 	}
 
 

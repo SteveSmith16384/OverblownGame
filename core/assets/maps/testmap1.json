@@ -1,19 +1,19 @@
 {
-  "filename": "maps/default_map.json",
+  "filename": "maps/testmap1.json",
   "blocks": [
     {
       "name": "",
       "texture_filename": "textures/set3_example_1.png",
       "model_filename": "",
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
       },
       "position": {
-        "x": 5.0,
-        "y": 5.0,
-        "z": 5.0
+        "x": 4.9106803,
+        "y": 1.2999797,
+        "z": 5.012547
       },
       "rotation": {
         "x": 0.0,
