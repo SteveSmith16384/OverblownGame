@@ -1,7 +1,10 @@
 package com.scs.splitscreenfps.game.systems;
 
+import java.util.Vector;
+
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -47,8 +50,7 @@ public class MapBuilderSystem extends AbstractSystem {
 			Settings.p(obj + " selected");
 		}
 
-		if (keyboard.isKeyJustPressed(Keys.NUM_1)) {
-			// Save
+		if (keyboard.isKeyJustPressed(Keys.NUM_1)) { // Save
 			try {
 				game.currentLevel.saveFile();
 				Settings.p("Saved");
@@ -64,6 +66,9 @@ public class MapBuilderSystem extends AbstractSystem {
 				// Move left
 				PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
 				Matrix4 mat = new Matrix4();
+				md.body.getWorldTransform(mat);
+				mat.getTranslation(block.position);
+				block.position.x -= 0.1f;
 				mat.setTranslation(block.position);
 				md.body.setWorldTransform(mat);
 				md.body.activate();
