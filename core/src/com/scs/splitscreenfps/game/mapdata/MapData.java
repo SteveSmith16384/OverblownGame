@@ -10,6 +10,6 @@ public class MapData {
 	
 	public MapData() {
 		blocks = new ArrayList<MapBlockComponent>();
-		this.filename = "default_map.json";
+		this.filename = "maps/default_map.json";
 	}
 }

@@ -44,7 +44,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.RollingBallLevel;
+import com.scs.splitscreenfps.game.levels.JsonMapLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -140,7 +140,8 @@ public class Game implements IModule {
 		new MyContactListener(coll);
 
 		//currentLevel = new GangBeastsLevel1(this);
-		currentLevel = new RollingBallLevel(this);
+		//currentLevel = new RollingBallLevel(this);
+		currentLevel = new JsonMapLevel(this);
 
 
 		for (int i=0 ; i<players.length ; i++) {

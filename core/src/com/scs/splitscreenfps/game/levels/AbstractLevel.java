@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonWriter;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EntityFactory;
@@ -51,17 +51,18 @@ public abstract class AbstractLevel implements ILevelInterface {
 
 		// 1. JSON file to Java object
 		mapdata = gson.fromJson(new FileReader(filename), MapData.class);
-
+		mapdata.filename = filename;
+		
 		for (MapBlockComponent block : mapdata.blocks) {
-			if (block.filename.length() > 0) {
-				AbstractEntity doorway = EntityFactory.Model(game.ecs, block.name, block.filename, 
+			if (block.model_filename != null && block.model_filename.length() > 0) {
+				AbstractEntity doorway = EntityFactory.Model(game.ecs, block.name, block.model_filename, 
 						8, -2f, 7, 
 						block.mass);
 				doorway.addComponent(block);
 				game.ecs.addEntity(doorway);
-			} else if (block.texture.length() > 0) {
-				Wall wall = new Wall(game.ecs, block.name, block.texture, block.posX, block.posY, block.posZ, 
-						block.lenX, block.lenY, block.lenZ, 
+			} else if (block.texture_filename != null && block.texture_filename.length() > 0) {
+				Wall wall = new Wall(game.ecs, block.name, block.texture_filename, block.position.x, block.position.y, block.position.z, 
+						block.size.x, block.size.y, block.size.z, 
 						block.mass);
 				wall.addComponent(block);
 				game.ecs.addEntity(wall);
@@ -80,14 +81,17 @@ public abstract class AbstractLevel implements ILevelInterface {
 		if (mapdata.blocks.size() == 0) {
 			// Create dummy block
 			MapBlockComponent block = new MapBlockComponent();
+			block.model_filename = "";
+			block.texture_filename = "";
 			mapdata.blocks.add(block);
 		}
 
 		// Todo - backup old file
 
-		Writer writer = new FileWriter(mapdata.filename);
+		JsonWriter writer = new JsonWriter(new FileWriter(mapdata.filename));
+		writer.setIndent("  ");
 		Gson gson = new GsonBuilder().create();
-		gson.toJson(mapdata, writer);
+		gson.toJson(mapdata, MapData.class, writer);
 		writer.flush();
 		writer.close();
 

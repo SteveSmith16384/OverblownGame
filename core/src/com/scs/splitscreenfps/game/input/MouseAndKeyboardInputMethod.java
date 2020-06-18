@@ -79,5 +79,12 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		return Gdx.input.isKeyPressed(key);
 	}
 
+	
+	public boolean isMouseClicked() {
+		return Gdx.input.isButtonJustPressed(Input.Buttons.LEFT);
+	}
+
+
+
 
 }
