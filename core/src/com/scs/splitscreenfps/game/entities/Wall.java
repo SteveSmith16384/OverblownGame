@@ -53,8 +53,6 @@ public class Wall extends AbstractEntity {
 		this.addComponent(new PhysicsComponent(groundObject));
 
 		this.addComponent(new AffectedByExplosionComponent());
-
-
 	}
 
 }

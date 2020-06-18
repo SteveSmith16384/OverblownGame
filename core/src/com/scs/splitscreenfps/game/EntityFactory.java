@@ -308,4 +308,40 @@ public class EntityFactory {
 		return stairs;
 	}
 
+	
+	// Note that the mass gets multiplied by the size
+	public static AbstractEntity Model(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
+		AbstractEntity stairs = new AbstractEntity(ecs, name);
+
+		ModelInstance instance = ModelFunctions.loadModel(filename, false);
+		instance.transform.setTranslation(posX, posY, posZ);
+
+		/* todo
+		if (axis != null) {
+			instance.transform.rotate(axis, degrees);
+		}*/
+		
+		HasModelComponent model = new HasModelComponent(instance);
+		stairs.addComponent(model);
+
+		//float mass = mass_pre * w * h * d; 
+
+		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
+		Vector3 local_inertia = new Vector3();
+		if (mass > 0) {
+			shape.calculateLocalInertia(mass, local_inertia);
+		}
+		btRigidBody groundObject = new btRigidBody(mass, null, shape, local_inertia);
+		groundObject.userData = stairs;
+		groundObject.setRestitution(.2f);
+		groundObject.setCollisionShape(shape);
+		groundObject.setWorldTransform(instance.transform);
+		stairs.addComponent(new PhysicsComponent(groundObject));
+
+		if (mass > 0) {
+			stairs.addComponent(new AffectedByExplosionComponent());
+		}
+		return stairs;
+	}
+	
 }

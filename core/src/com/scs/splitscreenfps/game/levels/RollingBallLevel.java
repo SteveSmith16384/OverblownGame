@@ -56,11 +56,14 @@ public class RollingBallLevel extends AbstractLevel {
 		}
 */
 		//AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 0, 0, 0);
-		AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 8, -2f, 7);
+		//AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 8, -2f, 7);
+		//game.ecs.addEntity(doorway);
+
+		AbstractEntity doorway = EntityFactory.Model(game.ecs, "Doorway", "models/magicavoxel/doorway.obj", 8, -2f, 7, 0f);
 		game.ecs.addEntity(doorway);
 
-		AbstractEntity stairs = EntityFactory.createStairs(game.ecs, 3, -2f, 7);
-		game.ecs.addEntity(stairs);
+		//AbstractEntity stairs = EntityFactory.createStairs(game.ecs, 3, -2f, 7);
+		//game.ecs.addEntity(stairs);
 	}
 
 
@@ -71,7 +74,7 @@ public class RollingBallLevel extends AbstractLevel {
 			
 			float z = NumberFunctions.rndFloat(2,  8);
 			AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/set3_example_1.png", 13, 10, z, 1.5f, 100);
-			//game.ecs.addEntity(ball);
+			game.ecs.addEntity(ball);
 		}
 	}
 

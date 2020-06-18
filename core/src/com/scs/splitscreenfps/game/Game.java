@@ -27,7 +27,6 @@ import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
-import com.google.gson.Gson;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -38,7 +37,6 @@ import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
@@ -47,7 +45,6 @@ import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.RollingBallLevel;
-import com.scs.splitscreenfps.game.mapdata.MapBlock;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -226,7 +223,7 @@ public class Game implements IModule {
 
 		// Set start position of players
 		for (int idx=0 ; idx<players.length  ; idx++) {
-			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
+			//PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			Vector3 start_pos = currentLevel.getPlayerStartPoint(idx);
 
 			PhysicsComponent md = (PhysicsComponent)this.players[idx].getComponent(PhysicsComponent.class);

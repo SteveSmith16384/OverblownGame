@@ -57,7 +57,8 @@ public class GraphicsEntityFactory {
 	public static AbstractEntity createNormalExplosion(BasicECS ecs, Vector3 pos, float width_height) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Explosion");
 
-		PositionComponent posData = new PositionComponent(pos.x, pos.y-(width_height/2), pos.z);
+		//PositionComponent posData = new PositionComponent(pos.x, pos.y-(width_height/2), pos.z);
+		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
 		entity.addComponent(posData);
 
 		TextureRegion[][] trs = GraphicsHelper.createSheet("Explosion21.png", 4, 4);

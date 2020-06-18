@@ -5,15 +5,12 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.PlayerMovementData;
-import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WillRespawnComponent;
 
 public class RespawnPlayerSystem implements ISystem {
