@@ -7,8 +7,6 @@ public class PlayerMovementData {
 
 	public Vector3 offset = new Vector3();
 	public long frozenUntil = 0;
-	
-	//public btRigidBody characterController;
 	public boolean jumpPressed = false;
 	
 }

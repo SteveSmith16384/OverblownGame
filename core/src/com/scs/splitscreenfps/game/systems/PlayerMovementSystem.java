@@ -9,6 +9,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
@@ -35,6 +36,11 @@ public class PlayerMovementSystem extends AbstractSystem {
 		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 		Matrix4 mat = physics.body.getWorldTransform();
 		mat.getTranslation(pos.position);
+		
+		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
+		if (playerData.health <= 0) {
+			return;
+		}
 		
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
