@@ -88,7 +88,7 @@ public class Game implements IModule {
 	private DrawModelSystem drawModelSystem;
 	private PhysicsSystem physicsSystem;
 	private RespawnPlayerSystem respawnSystem;
-	private MapBuilderSystem mapBuilderSystem;
+	public MapBuilderSystem mapBuilderSystem;
 	
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();

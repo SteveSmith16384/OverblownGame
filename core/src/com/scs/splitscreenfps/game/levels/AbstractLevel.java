@@ -54,7 +54,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 		mapdata.filename = filename;
 		
 		for (MapBlockComponent block : mapdata.blocks) {
-			if (block.model_filename != null && block.model_filename.length() > 0) {
+			/*if (block.model_filename != null && block.model_filename.length() > 0) {
 				AbstractEntity doorway = EntityFactory.Model(game.ecs, block.name, block.model_filename, 
 						8, -2f, 7, 
 						block.mass);
@@ -68,7 +68,8 @@ public abstract class AbstractLevel implements ILevelInterface {
 				game.ecs.addEntity(wall);
 			} else {
 				Settings.p("Ignoring line");
-			}
+			}*/
+			game.mapBuilderSystem.createAndAddEntityFromBlockData(block);
 		}
 
 	}
