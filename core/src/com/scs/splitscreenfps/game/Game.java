@@ -44,7 +44,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.MapEditorLevel;
+import com.scs.splitscreenfps.game.levels.LoadMapLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -54,7 +54,6 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
-import com.scs.splitscreenfps.game.systems.MapEditorSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
@@ -134,7 +133,8 @@ public class Game implements IModule {
 
 		//currentLevel = new GangBeastsLevel1(this);
 		//currentLevel = new RollingBallLevel(this);
-		currentLevel = new MapEditorLevel(this);
+		//currentLevel = new MapEditorLevel(this);
+		currentLevel = new LoadMapLevel(this);
 
 
 		for (int i=0 ; i<players.length ; i++) {
