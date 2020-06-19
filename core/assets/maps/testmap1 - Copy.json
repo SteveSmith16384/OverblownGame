@@ -1,0 +1,320 @@
+{
+  "filename": "maps/testmap1.json",
+  "blocks": [
+    {
+      "name": "",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 4.557847,
+        "y": 1.2999855,
+        "z": 5.1304717
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.6999998,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 8.121818,
+        "y": 1.3499871,
+        "z": 5.0116997
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 6.3237166,
+        "y": 1.3000097,
+        "z": 6.8645487
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 90.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 6.3364763,
+        "y": 1.2999932,
+        "z": 3.2601345
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 90.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 3.5999987,
+        "z": 4.2999983
+      },
+      "position": {
+        "x": 6.578101,
+        "y": 2.749989,
+        "z": 5.123617
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -80.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 4.557847,
+        "y": 1.2999855,
+        "z": 15.130471
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.6999998,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 8.121818,
+        "y": 1.3499871,
+        "z": 15.0117
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 6.3237166,
+        "y": 1.3000097,
+        "z": 16.86455
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 90.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 6.3364763,
+        "y": 1.2999932,
+        "z": 13.260135
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 90.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 3.5999987,
+        "z": 4.2999983
+      },
+      "position": {
+        "x": 6.578101,
+        "y": 2.749989,
+        "z": 15.123617
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -80.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 14.557847,
+        "y": 1.2999855,
+        "z": 5.1304717
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.6999998,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 18.121819,
+        "y": 1.3499871,
+        "z": 5.0116997
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 16.323717,
+        "y": 1.3000097,
+        "z": 6.8645487
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 90.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 2.5999997,
+        "z": 3.399999
+      },
+      "position": {
+        "x": 16.336475,
+        "y": 1.2999932,
+        "z": 3.2601345
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 90.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "name": "_new",
+      "texture_filename": "textures/set3_example_1.png",
+      "model_filename": "",
+      "size": {
+        "x": 0.29999992,
+        "y": 3.5999987,
+        "z": 4.2999983
+      },
+      "position": {
+        "x": 16.5781,
+        "y": 2.749989,
+        "z": 5.123617
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -80.0
+      },
+      "mass": 1.0
+    }
+  ]
+}
