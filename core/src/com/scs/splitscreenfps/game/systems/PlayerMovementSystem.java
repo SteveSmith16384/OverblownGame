@@ -45,7 +45,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
 				physics.body.activate(); // Need this!
-				physics.body.applyCentralForce(movementData.offset.scl(20));
+				physics.body.applyCentralForce(movementData.offset);
 				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
 			}
 		}

@@ -58,7 +58,7 @@ public class MapEditorLevel extends AbstractLevel {
 	@Override
 	public void renderUI(SpriteBatch batch2d, int currentViewId) {
 		float yOff = (game.font_med.getLineHeight() * 1.2f);
-		float yPos = 100 + yOff;
+		float yPos = 200 + yOff;
 		game.font_med.setColor(1, 1, 1, 1);
 		game.font_med.draw(batch2d, mapBuilderSystem.mode_text, 10, yPos);
 
