@@ -101,7 +101,8 @@ public class Game implements IModule {
 	private btBroadphaseInterface broadphase;
 	private btCollisionDispatcher dispatcher;
 	public btDiscreteDynamicsWorld dynamicsWorld;
-
+	public boolean physics_enabled = true;
+	
 	private long startPhysicsTime;
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
@@ -268,13 +269,13 @@ public class Game implements IModule {
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 
-		//if (Settings.BUILD_MAP == false) {
+		if (physics_enabled) {
 			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
 				// This must be run after the player has made inputs, but before the systems that process collisions!
 				final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 				dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 			}
-		//}
+		}
 
 		this.ecs.processSystem(BulletSystem.class);
 		if (Settings.BUILD_MAP) {
@@ -323,11 +324,9 @@ public class Game implements IModule {
 				}
 			}*/
 
-			//currentLevel.renderUI(batch2d, currentViewId);
+			currentLevel.renderUI(batch2d, currentViewId);
 			float yOff = font_med.getLineHeight() * 1.2f;
-
 			font_med.setColor(1, 1, 1, 1);
-
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 			font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
 			//font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));

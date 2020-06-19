@@ -1,7 +1,5 @@
 package com.scs.splitscreenfps.game.systems;
 
-import java.util.Vector;
-
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -25,12 +23,15 @@ public class MapEditorSystem extends AbstractSystem {
 
 	private Game game;
 	private Mode mode = Mode.POSITION;
+	public String mode_text = "";
 	private AbstractEntity selectedObject;
 
 	public MapEditorSystem(BasicECS ecs, Game _game) {
 		super(ecs, PlayerData.class);
 
 		game = _game;
+		
+		game.physics_enabled = false;
 	}
 
 
@@ -73,10 +74,20 @@ public class MapEditorSystem extends AbstractSystem {
 		if (selectedObject != null) {
 			if (keyboard.isKeyJustPressed(Keys.P)) {
 				mode = Mode.POSITION;
+				mode_text = "Mode: Position";
 			} else if (keyboard.isKeyJustPressed(Keys.S)) {
-				mode = Mode.SIZE;
+				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+				if (block.model_filename.length() == 0) {
+					mode = Mode.SIZE;
+					mode_text = "Mode: Size";
+				} else {
+					Settings.p("Cannot adjust size of model");
+				}
 			} else if (keyboard.isKeyJustPressed(Keys.R)) {
 				mode = Mode.ROTATION;
+				mode_text = "Mode: Rotation";
+			} else if (keyboard.isKeyJustPressed(Keys.T)) {
+				game.physics_enabled = !game.physics_enabled;
 			} else if (keyboard.isKeyJustPressed(Keys.N)) {
 				MapBlockComponent block = new MapBlockComponent();
 				block.size = new Vector3(1, 1, 1);
@@ -167,6 +178,7 @@ public class MapEditorSystem extends AbstractSystem {
 		block.position.add(off);
 		mat.setTranslation(block.position);
 		md.body.setWorldTransform(mat);
+		md.body.activate();
 	}
 
 

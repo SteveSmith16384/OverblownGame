@@ -1,12 +1,13 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class JsonMapLevel extends AbstractLevel {
-
+	
 	public JsonMapLevel(Game _game) {
 		super(_game);
 	}
@@ -40,6 +41,15 @@ public class JsonMapLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
+	}
+
+
+	@Override
+	public void renderUI(SpriteBatch batch2d, int currentViewId) {
+		float yOff = 100-(game.font_med.getLineHeight() * 1.2f);
+		game.font_med.setColor(1, 1, 1, 1);
+		game.font_med.draw(batch2d, game.mapBuilderSystem.mode_text, 10, (yOff*4));
+		
 	}
 
 

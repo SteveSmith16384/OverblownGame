@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
@@ -59,6 +60,13 @@ public class GangBeastsLevel1 extends AbstractLevel {
 	@Override
 	public void update() {
 		// Do nothing
+		
+	}
+
+
+	@Override
+	public void renderUI(SpriteBatch batch2d, int currentViewId) {
+		// TODO Auto-generated method stub
 		
 	}
 

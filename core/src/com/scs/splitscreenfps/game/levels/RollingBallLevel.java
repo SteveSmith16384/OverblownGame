@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.EntityFactory;
@@ -76,6 +77,13 @@ public class RollingBallLevel extends AbstractLevel {
 			AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/set3_example_1.png", 13, 10, z, 1.5f, 100);
 			game.ecs.addEntity(ball);
 		}
+	}
+
+
+	@Override
+	public void renderUI(SpriteBatch batch2d, int currentViewId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

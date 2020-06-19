@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.levels;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,6 +40,8 @@ public abstract class AbstractLevel implements ILevelInterface {
 
 	public abstract void update();
 
+	public abstract void renderUI(SpriteBatch batch2d, int currentViewId);
+	
 	public Vector3 getPlayerStartPoint(int idx) {
 		return this.startPositions.get(idx);
 	}
