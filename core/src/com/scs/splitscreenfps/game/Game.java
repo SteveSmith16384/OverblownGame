@@ -89,7 +89,7 @@ public class Game implements IModule {
 	private PhysicsSystem physicsSystem;
 	private RespawnPlayerSystem respawnSystem;
 	public MapEditorSystem mapBuilderSystem;
-	
+
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 	private ProcessCollisionSystem coll;
@@ -108,13 +108,6 @@ public class Game implements IModule {
 		main = _main;
 		inputs = _inputs;
 
-		// todo - delete
-		/*Gson g = new Gson();
-		MapBlock person = g.fromJson("{\"x\": \"10\"}", MapBlock.class);
-		System.out.println(person.x); //John
-		System.out.println(g.toJson(person)); // {"name":"John"}*/
-		
-		
 		game_stage = 0;
 		batch2d = new SpriteBatch();
 		this.createECS();
@@ -250,6 +243,7 @@ public class Game implements IModule {
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			//this.mapBuilderSystem.saveMap();
 			if (Settings.AUTO_START) {
 				System.exit(0);
 				return;
@@ -273,12 +267,14 @@ public class Game implements IModule {
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
-		
-		if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
-			// This must be run after the player has made inputs, but before the systems that process collisions!
-			final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
-			dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
-		}
+
+		//if (Settings.BUILD_MAP == false) {
+			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
+				// This must be run after the player has made inputs, but before the systems that process collisions!
+				final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+				dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+			}
+		//}
 
 		this.ecs.processSystem(BulletSystem.class);
 		if (Settings.BUILD_MAP) {
@@ -465,7 +461,7 @@ public class Game implements IModule {
 			// Already dead
 			return;
 		}
-		
+
 		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 		playerHitData.health -= amt;//bullet.settings.damage;
 

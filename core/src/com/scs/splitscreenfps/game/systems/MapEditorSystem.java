@@ -33,7 +33,7 @@ public class MapEditorSystem extends AbstractSystem {
 		game = _game;
 	}
 
-	
+
 	public void saveMap() {
 		try {
 			game.currentLevel.saveFile();
@@ -43,7 +43,7 @@ public class MapEditorSystem extends AbstractSystem {
 		}
 	}
 
-	
+
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
@@ -58,10 +58,12 @@ public class MapEditorSystem extends AbstractSystem {
 
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 				if (block == null) {
-					// todo - add block
+					// todo - add block?
 				}
+				Settings.p(block.name + " selected");
+			} else {
+				Settings.p("Nothing selected");
 			}
-			Settings.p(obj + " selected");
 		}
 
 		if (keyboard.isKeyJustPressed(Keys.NUM_1)) { // Save
@@ -75,6 +77,11 @@ public class MapEditorSystem extends AbstractSystem {
 				mode = Mode.SIZE;
 			} else if (keyboard.isKeyJustPressed(Keys.R)) {
 				mode = Mode.ROTATION;
+			} else if (keyboard.isKeyJustPressed(Keys.N)) {
+				MapBlockComponent block = new MapBlockComponent();
+				block.size = new Vector3(1, 1, 1);
+				block.texture_filename = "";
+				this.selectedObject = this.createAndAddEntityFromBlockData(block);
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
 				switch (mode) {
 				case POSITION:

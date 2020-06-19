@@ -81,8 +81,8 @@ public abstract class AbstractLevel implements ILevelInterface {
 		if (mapdata.blocks.size() == 0) {
 			// Create dummy block
 			MapBlockComponent block = new MapBlockComponent();
-			block.model_filename = "";
-			block.texture_filename = "";
+			//block.model_filename = "";
+			//block.texture_filename = "";
 			mapdata.blocks.add(block);
 		}
 

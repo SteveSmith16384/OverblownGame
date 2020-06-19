@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
@@ -31,7 +32,10 @@ public class Wall extends AbstractEntity {
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-		//ModelInstance instance = new ModelInstance(box_model, new Vector3(posX+(w/2), posY+(h/2), posZ+(d/2)));
+		/*Matrix3 mat = new Matrix3();
+		mat.setToTranslation(1f, .1f);
+		box_model.meshes.get(0).transformUV(mat);*/
+
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		if (axis != null) {
 			instance.transform.rotate(axis, degrees);
