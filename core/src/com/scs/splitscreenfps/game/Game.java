@@ -44,7 +44,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.JsonMapLevel;
+import com.scs.splitscreenfps.game.levels.MapEditorLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -88,7 +88,6 @@ public class Game implements IModule {
 	private DrawModelSystem drawModelSystem;
 	private PhysicsSystem physicsSystem;
 	private RespawnPlayerSystem respawnSystem;
-	public MapEditorSystem mapBuilderSystem;
 
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
@@ -135,7 +134,7 @@ public class Game implements IModule {
 
 		//currentLevel = new GangBeastsLevel1(this);
 		//currentLevel = new RollingBallLevel(this);
-		currentLevel = new JsonMapLevel(this);
+		currentLevel = new MapEditorLevel(this);
 
 
 		for (int i=0 ; i<players.length ; i++) {
@@ -205,12 +204,12 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
 		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
 		ecs.addSystem(new BulletSystem(ecs, this));
-		if (Settings.BUILD_MAP) {
+		/*if (Settings.BUILD_MAP) {
 			this.mapBuilderSystem = new MapEditorSystem(ecs, this);
 			ecs.addSystem(this.mapBuilderSystem);
-		} else {
+		} else {*/
 			ecs.addSystem(new ShootingSystem(ecs, this));
-		}
+		//}
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
@@ -278,11 +277,11 @@ public class Game implements IModule {
 		}
 
 		this.ecs.processSystem(BulletSystem.class);
-		if (Settings.BUILD_MAP) {
+		/*if (Settings.BUILD_MAP) {
 			this.mapBuilderSystem.process();
-		} else {
+		} else {*/
 			this.ecs.processSystem(ShootingSystem.class);
-		}
+		//}
 		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();

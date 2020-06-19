@@ -15,7 +15,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonWriter;
+import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
 import com.scs.splitscreenfps.game.mapdata.MapData;
 
@@ -50,32 +55,39 @@ public abstract class AbstractLevel implements ILevelInterface {
 	public void loadJsonFile(String filename) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		Gson gson = new Gson();
 
-		// 1. JSON file to Java object
 		mapdata = gson.fromJson(new FileReader(filename), MapData.class);
 		mapdata.filename = filename;
 		
 		for (MapBlockComponent block : mapdata.blocks) {
-			/*if (block.model_filename != null && block.model_filename.length() > 0) {
-				AbstractEntity doorway = EntityFactory.Model(game.ecs, block.name, block.model_filename, 
-						8, -2f, 7, 
-						block.mass);
-				doorway.addComponent(block);
-				game.ecs.addEntity(doorway);
-			} else if (block.texture_filename != null && block.texture_filename.length() > 0) {
-				Wall wall = new Wall(game.ecs, block.name, block.texture_filename, block.position.x, block.position.y, block.position.z, 
-						block.size.x, block.size.y, block.size.z, 
-						block.mass);
-				wall.addComponent(block);
-				game.ecs.addEntity(wall);
-			} else {
-				Settings.p("Ignoring line");
-			}*/
-			game.mapBuilderSystem.createAndAddEntityFromBlockData(block);
+			game.currentLevel.createAndAddEntityFromBlockData(block);
 		}
 
 	}
 
 
+	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block) {
+		if (block.model_filename != null && block.model_filename.length() > 0) {
+			AbstractEntity model = EntityFactory.Model(game.ecs, block.name, block.model_filename, 
+					8, -2f, 7, 
+					block.mass);
+			model.addComponent(block);
+			game.ecs.addEntity(model);
+			//this.saveMap();
+			return model;
+		} else if (block.texture_filename != null && block.texture_filename.length() > 0) {
+			Wall wall = new Wall(game.ecs, block.name, block.texture_filename, block.position.x, block.position.y, block.position.z, 
+					block.size.x, block.size.y, block.size.z, 
+					block.mass,
+					block.rotation.x, block.rotation.y, block.rotation.z);
+			wall.addComponent(block);
+			game.ecs.addEntity(wall);
+			return wall;
+		}
+		Settings.p("Ignoring line");
+		return null;
+	}
+	
+	
 	public void saveFile() throws JsonIOException, IOException {
 		if (mapdata == null) {
 			mapdata = new MapData();

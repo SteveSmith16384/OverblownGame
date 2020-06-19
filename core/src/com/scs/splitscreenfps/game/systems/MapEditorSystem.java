@@ -58,7 +58,11 @@ public class MapEditorSystem extends AbstractSystem {
 				selectedObject = (AbstractEntity)obj.userData;
 
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-				Settings.p(block.name + " selected");
+				if (block != null) {
+					Settings.p(block.name + " selected");
+				} else {
+					selectedObject = null;
+				}
 			} else {
 				Settings.p("Nothing selected");
 			}
@@ -71,7 +75,7 @@ public class MapEditorSystem extends AbstractSystem {
 		if (keyboard.isKeyJustPressed(Keys.P)) {
 			mode = Mode.POSITION;
 			mode_text = "Mode: Position";
-		} else if (keyboard.isKeyJustPressed(Keys.S)) {
+		} else if (keyboard.isKeyJustPressed(Keys.B)) {
 			//MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 			//if (block.model_filename.length() == 0) {
 				mode = Mode.SIZE;
@@ -89,14 +93,14 @@ public class MapEditorSystem extends AbstractSystem {
 			MapBlockComponent block = new MapBlockComponent();
 			block.size = new Vector3(1, 1, 1);
 			block.texture_filename = "";
-			this.selectedObject = this.createAndAddEntityFromBlockData(block);
+			this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			game.currentLevel.mapdata.blocks.add(block);
 		}
 		if (selectedObject != null) {
 			if (keyboard.isKeyJustPressed(Keys.C)) { // Clone
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 				MapBlockComponent new_block = block.clone();
-				this.selectedObject = this.createAndAddEntityFromBlockData(new_block);
+				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(new_block);
 				game.currentLevel.mapdata.blocks.add(new_block);
 			} else if (keyboard.isKeyJustPressed(Keys.X)) { // Remove
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
@@ -208,7 +212,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 		block.size.add(adj); 
 		this.selectedObject.remove();
-		this.selectedObject = this.createAndAddEntityFromBlockData(block);
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 	}
 
 
@@ -218,7 +222,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 		block.rotation.add(adj);
 		this.selectedObject.remove();
-		this.selectedObject = this.createAndAddEntityFromBlockData(block);
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 	}
 
 
@@ -233,25 +237,5 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
-	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block) {
-		if (block.model_filename != null && block.model_filename.length() > 0) {
-			AbstractEntity model = EntityFactory.Model(game.ecs, block.name, block.model_filename, 
-					8, -2f, 7, 
-					block.mass);
-			model.addComponent(block);
-			game.ecs.addEntity(model);
-			this.saveMap();
-			return model;
-		} else if (block.texture_filename != null && block.texture_filename.length() > 0) {
-			Wall wall = new Wall(game.ecs, block.name, block.texture_filename, block.position.x, block.position.y, block.position.z, 
-					block.size.x, block.size.y, block.size.z, 
-					block.mass,
-					block.rotation.x, block.rotation.y, block.rotation.z);
-			wall.addComponent(block);
-			game.ecs.addEntity(wall);
-			return wall;
-		}
-		Settings.p("Ignoring line");
-		return null;
-	}
+
 }
