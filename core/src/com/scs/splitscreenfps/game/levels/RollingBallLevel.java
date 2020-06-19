@@ -42,7 +42,7 @@ public class RollingBallLevel extends AbstractLevel {
 		Wall tilt = new Wall(game.ecs, "Tilt", "textures/set3_example_1.png", 12.5f, 1.5f, 5, 
 				6f, .2f, 10f, 
 				0f, 
-				Vector3.Z, 25);
+				0, 0, 25);
 		//HasModelComponent model = (HasModelComponent)tilt.getComponent(HasModelComponent.class);
 		//model.model.transform.rotate();
 		//PhysicsComponent pc = (PhysicsComponent)tilt.getComponent(PhysicsComponent.class);

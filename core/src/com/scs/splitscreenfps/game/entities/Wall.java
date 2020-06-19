@@ -20,12 +20,12 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 public class Wall extends AbstractEntity {
 
 	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre) {
-		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, null, 0);
+		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0);
 	}
 	
 	
 	// Note that the mass gets multiplied by the size
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, Vector3 axis, float degrees) {
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ) {
 		super(ecs, name);
 
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
@@ -37,8 +37,14 @@ public class Wall extends AbstractEntity {
 		box_model.meshes.get(0).transformUV(mat);*/
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
-		if (axis != null) {
-			instance.transform.rotate(axis, degrees);
+		if (degreesX != 0) {
+			instance.transform.rotate(Vector3.X, degreesX);
+		}
+		if (degreesY != 0) {
+			instance.transform.rotate(Vector3.Y, degreesY);
+		}
+		if (degreesZ != 0) {
+			instance.transform.rotate(Vector3.Z, degreesZ);
 		}
 		
 		HasModelComponent model = new HasModelComponent(instance);

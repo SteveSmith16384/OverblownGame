@@ -30,7 +30,7 @@ public class MapEditorSystem extends AbstractSystem {
 		super(ecs, PlayerData.class);
 
 		game = _game;
-		
+
 		game.physics_enabled = false;
 	}
 
@@ -38,7 +38,7 @@ public class MapEditorSystem extends AbstractSystem {
 	public void saveMap() {
 		try {
 			game.currentLevel.saveFile();
-			Settings.p("Saved");
+			Settings.p("Map saved");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,9 +58,6 @@ public class MapEditorSystem extends AbstractSystem {
 				selectedObject = (AbstractEntity)obj.userData;
 
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-				if (block == null) {
-					// todo - add block?
-				}
 				Settings.p(block.name + " selected");
 			} else {
 				Settings.p("Nothing selected");
@@ -71,28 +68,40 @@ public class MapEditorSystem extends AbstractSystem {
 			this.saveMap();
 		}
 
+		if (keyboard.isKeyJustPressed(Keys.P)) {
+			mode = Mode.POSITION;
+			mode_text = "Mode: Position";
+		} else if (keyboard.isKeyJustPressed(Keys.S)) {
+			//MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+			//if (block.model_filename.length() == 0) {
+				mode = Mode.SIZE;
+				mode_text = "Mode: Size";
+			/*} else {
+				Settings.p("Cannot adjust size of model");
+			}*/
+		} else if (keyboard.isKeyJustPressed(Keys.R)) {
+			mode = Mode.ROTATION;
+			mode_text = "Mode: Rotation";
+		} else if (keyboard.isKeyJustPressed(Keys.T)) { // Toggle physics
+			game.physics_enabled = !game.physics_enabled;
+			Settings.p("Physics enabled: " + game.physics_enabled);
+		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
+			MapBlockComponent block = new MapBlockComponent();
+			block.size = new Vector3(1, 1, 1);
+			block.texture_filename = "";
+			this.selectedObject = this.createAndAddEntityFromBlockData(block);
+			game.currentLevel.mapdata.blocks.add(block);
+		}
 		if (selectedObject != null) {
-			if (keyboard.isKeyJustPressed(Keys.P)) {
-				mode = Mode.POSITION;
-				mode_text = "Mode: Position";
-			} else if (keyboard.isKeyJustPressed(Keys.S)) {
+			if (keyboard.isKeyJustPressed(Keys.C)) { // Clone
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-				if (block.model_filename.length() == 0) {
-					mode = Mode.SIZE;
-					mode_text = "Mode: Size";
-				} else {
-					Settings.p("Cannot adjust size of model");
-				}
-			} else if (keyboard.isKeyJustPressed(Keys.R)) {
-				mode = Mode.ROTATION;
-				mode_text = "Mode: Rotation";
-			} else if (keyboard.isKeyJustPressed(Keys.T)) {
-				game.physics_enabled = !game.physics_enabled;
-			} else if (keyboard.isKeyJustPressed(Keys.N)) {
-				MapBlockComponent block = new MapBlockComponent();
-				block.size = new Vector3(1, 1, 1);
-				block.texture_filename = "";
-				this.selectedObject = this.createAndAddEntityFromBlockData(block);
+				MapBlockComponent new_block = block.clone();
+				this.selectedObject = this.createAndAddEntityFromBlockData(new_block);
+				game.currentLevel.mapdata.blocks.add(new_block);
+			} else if (keyboard.isKeyJustPressed(Keys.X)) { // Remove
+				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+				game.currentLevel.mapdata.blocks.remove(block);
+				this.selectedObject.remove();
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
 				switch (mode) {
 				case POSITION:
@@ -100,6 +109,9 @@ public class MapEditorSystem extends AbstractSystem {
 					break;
 				case SIZE:
 					this.resizeBlock(new Vector3(.1f, 0, 0));
+					break;
+				case ROTATION:
+					this.rotateBlock(new Vector3(10, 0, 0));
 					break;
 				default:
 					throw new RuntimeException("Todo");
@@ -112,6 +124,9 @@ public class MapEditorSystem extends AbstractSystem {
 				case SIZE:
 					this.resizeBlock(new Vector3(0, 0, .1f));
 					break;
+				case ROTATION:
+					this.rotateBlock(new Vector3(0, 0, 10));
+					break;
 				default:
 					throw new RuntimeException("Todo");
 				}
@@ -122,6 +137,9 @@ public class MapEditorSystem extends AbstractSystem {
 					break;
 				case SIZE:
 					this.resizeBlock(new Vector3(-.1f, 0, 0));
+					break;
+				case ROTATION:
+					this.rotateBlock(new Vector3(-10, 0, 0));
 					break;
 				default:
 					throw new RuntimeException("Todo");
@@ -134,6 +152,9 @@ public class MapEditorSystem extends AbstractSystem {
 				case SIZE:
 					this.resizeBlock(new Vector3(0, 0, -.1f));
 					break;
+				case ROTATION:
+					this.rotateBlock(new Vector3(0, 0, -10));
+					break;
 				default:
 					throw new RuntimeException("Todo");
 				}
@@ -144,6 +165,9 @@ public class MapEditorSystem extends AbstractSystem {
 					break;
 				case SIZE:
 					this.resizeBlock(new Vector3(0, .1f, 0));
+					break;
+				case ROTATION:
+					this.rotateBlock(new Vector3(0, 10, 0));
 					break;
 				default:
 					throw new RuntimeException("Todo");
@@ -156,6 +180,9 @@ public class MapEditorSystem extends AbstractSystem {
 				case SIZE:
 					this.resizeBlock(new Vector3(0, -0.1f, 0));
 					break;
+				case ROTATION:
+					this.rotateBlock(new Vector3(0, -10, 0));
+					break;
 				default:
 					throw new RuntimeException("Todo");
 				}
@@ -165,16 +192,9 @@ public class MapEditorSystem extends AbstractSystem {
 
 
 	private void moveBlock(Vector3 off) {
-		// Move left
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		Matrix4 mat = this.setBlockDataToCurrentPosition(block);
 		PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
-		/*
-		Matrix4 mat = new Matrix4();
-		md.body.getWorldTransform(mat);
-
-		mat.getTranslation(block.position);*/
-
 		block.position.add(off);
 		mat.setTranslation(block.position);
 		md.body.setWorldTransform(mat);
@@ -187,6 +207,16 @@ public class MapEditorSystem extends AbstractSystem {
 		this.setBlockDataToCurrentPosition(block);
 
 		block.size.add(adj); 
+		this.selectedObject.remove();
+		this.selectedObject = this.createAndAddEntityFromBlockData(block);
+	}
+
+
+	private void rotateBlock(Vector3 adj) {
+		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+		this.setBlockDataToCurrentPosition(block);
+
+		block.rotation.add(adj);
 		this.selectedObject.remove();
 		this.selectedObject = this.createAndAddEntityFromBlockData(block);
 	}
@@ -205,16 +235,18 @@ public class MapEditorSystem extends AbstractSystem {
 
 	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block) {
 		if (block.model_filename != null && block.model_filename.length() > 0) {
-			AbstractEntity doorway = EntityFactory.Model(game.ecs, block.name, block.model_filename, 
+			AbstractEntity model = EntityFactory.Model(game.ecs, block.name, block.model_filename, 
 					8, -2f, 7, 
 					block.mass);
-			doorway.addComponent(block);
-			game.ecs.addEntity(doorway);
-			return doorway;
+			model.addComponent(block);
+			game.ecs.addEntity(model);
+			this.saveMap();
+			return model;
 		} else if (block.texture_filename != null && block.texture_filename.length() > 0) {
 			Wall wall = new Wall(game.ecs, block.name, block.texture_filename, block.position.x, block.position.y, block.position.z, 
 					block.size.x, block.size.y, block.size.z, 
-					block.mass);
+					block.mass,
+					block.rotation.x, block.rotation.y, block.rotation.z);
 			wall.addComponent(block);
 			game.ecs.addEntity(wall);
 			return wall;
