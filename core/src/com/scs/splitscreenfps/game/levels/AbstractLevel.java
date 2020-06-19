@@ -59,6 +59,9 @@ public abstract class AbstractLevel implements ILevelInterface {
 		mapdata.filename = filename;
 		
 		for (MapBlockComponent block : mapdata.blocks) {
+			if (block.id == 0) {
+				block.id = MapBlockComponent.next_id++;
+			}
 			game.currentLevel.createAndAddEntityFromBlockData(block);
 		}
 

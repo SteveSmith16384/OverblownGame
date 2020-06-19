@@ -1,9 +1,13 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
@@ -16,6 +20,7 @@ import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanShoot;
+import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
@@ -55,13 +60,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody player_body = new btRigidBody(2f, motionState, capsuleShape, inertia);
-		player_body.userData = this;
-		
-		/*Matrix4 mat = new Matrix4();
-		player_body.getWorldTransform(mat);
-		mat.scale(hasModel.scale, hasModel.scale, hasModel.scale); // scs new
-		player_body.getWorldTransform(mat);*/
-
+		player_body.userData = this;		
 		player_body.setDamping(0.8f, 0.8f);
 		player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		//characterController.setFriction(1);
@@ -103,12 +102,11 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		addComponent(weapon);
 
 		// Add crosshairs
-		/*Texture weaponTex = new Texture(Gdx.files.internal("quantumleague/crosshairs.png"));		
+		Texture weaponTex = new Texture(Gdx.files.internal("crosshairs.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
-		game.players[playerIdx].addComponent(hgsc);
-		 */
+		addComponent(hgsc);
 
 		addComponent(new PlayerData(playerIdx));
 

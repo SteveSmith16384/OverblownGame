@@ -24,6 +24,7 @@ public class MapEditorSystem extends AbstractSystem {
 	private Game game;
 	private Mode mode = Mode.POSITION;
 	public String mode_text = "";
+	public String selected_text = "";
 	private AbstractEntity selectedObject;
 
 	public MapEditorSystem(BasicECS ecs, Game _game) {
@@ -60,6 +61,7 @@ public class MapEditorSystem extends AbstractSystem {
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 				if (block != null) {
 					Settings.p(block.name + " selected");
+					this.selected_text = "Selected: " + block.id;
 				} else {
 					selectedObject = null;
 				}
