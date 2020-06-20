@@ -74,8 +74,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new CanShoot());
 
-		//addComponent(new AffectedByExplosionComponent());
-
 		WeaponSettingsComponent weapon;
 
 		int weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;

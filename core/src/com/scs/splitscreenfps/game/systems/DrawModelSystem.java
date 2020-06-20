@@ -73,7 +73,8 @@ public class DrawModelSystem extends AbstractSystem {
 			model.model.transform.set(mat);
 			model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
 
-		} //else {
+		}
+
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
 		if (posData != null) {
 			// Only draw if in frustum 

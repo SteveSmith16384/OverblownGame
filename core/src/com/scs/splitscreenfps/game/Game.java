@@ -101,6 +101,11 @@ public class Game implements IModule {
 	public boolean physics_enabled = true;
 
 	private long startPhysicsTime;
+	
+	// Temp vars
+	private Vector3 tmp_from = new Vector3();
+	private Vector3 tmp_to = new Vector3();
+	private Vector3 tmp_to2 = new Vector3();
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
@@ -496,8 +501,6 @@ public class Game implements IModule {
 			if (e.isMarkedForRemoval()) {
 				continue;
 			}
-			//AffectedByExplosionComponent aff = (AffectedByExplosionComponent)e.getComponent(AffectedByExplosionComponent.class);
-			//if (aff != null) {
 			PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 			if (pc.body.getInvMass() != 0) {
 				pc.body.getWorldTransform(mat);
@@ -515,20 +518,18 @@ public class Game implements IModule {
 
 
 	public btCollisionObject rayTestByDir(Vector3 ray_from, Vector3 dir, float range) {
-		Vector3 ray_to = new Vector3(ray_from).mulAdd(dir, range); // todo - use temp
+		tmp_to.set(ray_from).mulAdd(dir, range);
 
 		callback.setCollisionObject(null);
 		callback.setClosestHitFraction(1f);
 
-		Vector3 v1 = new Vector3(); // todo - use temp
-		callback.getRayFromWorld(v1);
-		v1.set(ray_from);
+		callback.getRayFromWorld(tmp_from);
+		tmp_from.set(ray_from);
 
-		Vector3 v2 = new Vector3(); // todo - use temp
-		callback.getRayToWorld(v2);
-		v2.set(ray_to);
+		callback.getRayToWorld(tmp_to2);
+		tmp_to2.set(tmp_to);
 
-		this.dynamicsWorld.rayTest(ray_from, ray_to, callback);
+		this.dynamicsWorld.rayTest(ray_from, tmp_to2, callback);
 		if (callback.hasHit()) {
 			return callback.getCollisionObject();
 		}
