@@ -17,7 +17,6 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
 import com.scs.splitscreenfps.game.ViewportData;
-import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
@@ -75,7 +74,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new CanShoot());
 
-		addComponent(new AffectedByExplosionComponent());
+		//addComponent(new AffectedByExplosionComponent());
 
 		WeaponSettingsComponent weapon;
 

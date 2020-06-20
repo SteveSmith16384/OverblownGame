@@ -2,8 +2,8 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
@@ -82,7 +81,7 @@ public class Wall extends AbstractEntity {
 		groundObject.setWorldTransform(instance.transform);
 		this.addComponent(new PhysicsComponent(groundObject));
 
-		this.addComponent(new AffectedByExplosionComponent());
+		//this.addComponent(new AffectedByExplosionComponent());
 	}
 
 }

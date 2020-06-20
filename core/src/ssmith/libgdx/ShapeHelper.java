@@ -58,7 +58,27 @@ public class ShapeHelper {
 		return instance;
 	}
 
+	
+	public static ModelInstance createCylinder(String tex_filename1, float x, float y, float z, float diam, float length) {
+		Texture tex = new Texture(tex_filename1);
+		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model floor = modelBuilder.createCylinder(diam, length, diam, 8, white_material,
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		Matrix3 mat = new Matrix3();
+		floor.meshes.get(0).transformUV(mat);
+
+		ModelInstance instance = new ModelInstance(floor, new Vector3(x, y, z));
+		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
+		//instance.calculateTransforms();
+
+		return instance;
+	}
+
+/*
 	public static ModelInstance createCube(String tex_filename1, float w, float h, float d) {
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename1)));
 		ModelBuilder modelBuilder = new ModelBuilder();
@@ -68,5 +88,5 @@ public class ShapeHelper {
 
 		return instance;
 	}
-
+*/
 }

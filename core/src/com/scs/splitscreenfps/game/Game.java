@@ -33,7 +33,6 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
@@ -100,7 +99,7 @@ public class Game implements IModule {
 	private btCollisionDispatcher dispatcher;
 	public btDiscreteDynamicsWorld dynamicsWorld;
 	public boolean physics_enabled = true;
-	
+
 	private long startPhysicsTime;
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
@@ -208,7 +207,7 @@ public class Game implements IModule {
 			this.mapBuilderSystem = new MapEditorSystem(ecs, this);
 			ecs.addSystem(this.mapBuilderSystem);
 		} else {*/
-			ecs.addSystem(new ShootingSystem(ecs, this));
+		ecs.addSystem(new ShootingSystem(ecs, this));
 		//}
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
@@ -280,7 +279,7 @@ public class Game implements IModule {
 		/*if (Settings.BUILD_MAP) {
 			this.mapBuilderSystem.process();
 		} else {*/
-			this.ecs.processSystem(ShootingSystem.class);
+		this.ecs.processSystem(ShootingSystem.class);
 		//}
 		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
@@ -497,9 +496,10 @@ public class Game implements IModule {
 			if (e.isMarkedForRemoval()) {
 				continue;
 			}
-			AffectedByExplosionComponent aff = (AffectedByExplosionComponent)e.getComponent(AffectedByExplosionComponent.class);
-			if (aff != null) {
-				PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+			//AffectedByExplosionComponent aff = (AffectedByExplosionComponent)e.getComponent(AffectedByExplosionComponent.class);
+			//if (aff != null) {
+			PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+			if (pc.body.getInvMass() != 0) {
 				pc.body.getWorldTransform(mat);
 				mat.getTranslation(vec);
 				float distance = vec.dst(pos);

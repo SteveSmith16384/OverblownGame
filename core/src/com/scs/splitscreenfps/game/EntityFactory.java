@@ -12,12 +12,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
+import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
-import com.scs.splitscreenfps.game.components.AffectedByExplosionComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -30,6 +30,7 @@ import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 
 import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
+import ssmith.libgdx.ShapeHelper;
 
 public class EntityFactory {
 
@@ -204,14 +205,14 @@ public class EntityFactory {
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
 		Vector3 local_inertia = new Vector3();
 		boxShape.calculateLocalInertia(1f, local_inertia);
-		btRigidBody groundObject = new btRigidBody(.7f, null, boxShape, local_inertia);
+		btRigidBody groundObject = new btRigidBody(w*h*d, null, boxShape, local_inertia);
 		groundObject.userData = crate;
 		groundObject.setRestitution(.5f);
 		groundObject.setCollisionShape(boxShape);
 		groundObject.setWorldTransform(instance.transform);
 		crate.addComponent(new PhysicsComponent(groundObject));
 
-		crate.addComponent(new AffectedByExplosionComponent());
+		//crate.addComponent(new AffectedByExplosionComponent());
 
 		return crate;
 	}
@@ -241,7 +242,7 @@ public class EntityFactory {
 		groundObject.setWorldTransform(instance.transform);
 		ball.addComponent(new PhysicsComponent(groundObject));
 
-		ball.addComponent(new AffectedByExplosionComponent());
+		//ball.addComponent(new AffectedByExplosionComponent());
 
 		return ball;
 	}
@@ -334,10 +335,39 @@ public class EntityFactory {
 		groundObject.setWorldTransform(instance.transform);
 		stairs.addComponent(new PhysicsComponent(groundObject));
 
-		if (mass > 0) {
+		/*if (mass > 0) {
 			stairs.addComponent(new AffectedByExplosionComponent());
-		}
+		}*/
 		return stairs;
 	}
+	
+	
+	public static AbstractEntity createPillar(BasicECS ecs, String tex_filename, float x, float y, float z, float diam, float length) {
+		AbstractEntity crate = new AbstractEntity(ecs, "Cylinder");
+
+		ModelInstance instance = ShapeHelper.createCylinder(tex_filename, x, y, z, diam, length);
+
+		HasModelComponent model = new HasModelComponent(instance);
+		crate.addComponent(model);
+
+		btCylinderShape boxShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
+		Vector3 local_inertia = new Vector3();
+		float mass_pre = 1f;
+		float mass = (float)(Math.PI * (diam/2) * (diam/2) + length);
+		boxShape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);
+		groundObject.userData = crate;
+		groundObject.setRestitution(.5f);
+		groundObject.setCollisionShape(boxShape);
+		groundObject.setWorldTransform(instance.transform);
+		crate.addComponent(new PhysicsComponent(groundObject));
+
+		//crate.addComponent(new AffectedByExplosionComponent());
+
+		return crate;
+	}
+
+
+
 	
 }

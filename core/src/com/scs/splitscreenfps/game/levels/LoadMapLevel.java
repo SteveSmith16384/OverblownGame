@@ -3,13 +3,15 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.scs.basicecs.AbstractEntity;
+import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class LoadMapLevel extends AbstractLevel {
-	
+
 	private static final int FLOOR_SIZE = 20;
-	
+
 	public LoadMapLevel(Game _game) {
 		super(_game);
 	}
@@ -37,6 +39,10 @@ public class LoadMapLevel extends AbstractLevel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		AbstractEntity pillar = EntityFactory.createPillar(game.ecs, "textures/set3_example_1.png", 15, 5, 15, 1f, 10f);
+		game.ecs.addEntity(pillar);
+
 	}
 
 
@@ -47,7 +53,7 @@ public class LoadMapLevel extends AbstractLevel {
 
 	@Override
 	public void renderUI(SpriteBatch batch2d, int currentViewId) {
-		
+
 	}
 
 
