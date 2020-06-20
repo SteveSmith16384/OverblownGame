@@ -331,6 +331,7 @@ public class Game implements IModule {
 			float yOff = font_med.getLineHeight() * 1.2f;
 			font_med.setColor(1, 1, 1, 1);
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
+			font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
 			font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
 			//font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
 
@@ -458,7 +459,7 @@ public class Game implements IModule {
 	}
 
 
-	public void playerDamaged(AbstractEntity player, PlayerData playerHitData, float amt) {
+	public void playerDamaged(AbstractEntity player, PlayerData playerHitData, float amt, AbstractEntity shooter) {
 		if (playerHitData.health <= 0) {
 			// Already dead
 			return;
@@ -471,17 +472,26 @@ public class Game implements IModule {
 		redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
 		ecs.addEntity(redfilter);
 
+		playerHitData.last_person_to_hit_them = shooter;
+		
 		if (playerHitData.health <= 0) {
-			playerDied(player, playerHitData);
+			playerDied(player, playerHitData, shooter);
 		}
 
 	}
 
 
-	public void playerDied(AbstractEntity player, PlayerData playerData) {
+	public void playerDied(AbstractEntity player, PlayerData playerData, AbstractEntity shooter) {
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 		// todo - show "died"
+		
+		PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
+		shooterData.points += 1;
+		
+		if (shooterData.points >= Settings.POINTS_TO_WIN) {
+			playerHasWon(shooter);
+		}
 	}
 
 

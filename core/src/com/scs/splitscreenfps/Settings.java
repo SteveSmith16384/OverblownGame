@@ -12,8 +12,7 @@ public class Settings {
 	public static final String VERSION = "1.01";
 	
 	// Debugging Hacks
-	public static final boolean DEBUG_PHYSICS = !RELEASE_MODE && true;
-	//public static final boolean DEBUG_AVATAR_MODELS = !RELEASE_MODE && false;
+	public static final boolean DEBUG_PHYSICS = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
@@ -29,7 +28,7 @@ public class Settings {
 	public static final String TITLE = "Gang Beasts FPS";
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
-	//public static boolean BUILD_MAP = false;
+	public static int POINTS_TO_WIN = 1;
 
 	public static Properties prop;
 	
