@@ -22,7 +22,7 @@ public class RemoveEntityAfterTimeSystem extends AbstractSystem {
 
 		hdc.timeRemaining_secs -= dt;
 		if(hdc.timeRemaining_secs <= 0) {
-			Settings.p("Removed " + entity);
+			//Settings.p("Removed " + entity);
 			entity.remove();
 		}
 	}

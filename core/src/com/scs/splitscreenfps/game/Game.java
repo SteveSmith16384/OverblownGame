@@ -101,7 +101,7 @@ public class Game implements IModule {
 	public boolean physics_enabled = true;
 
 	private long startPhysicsTime;
-	
+
 	// Temp vars
 	private Vector3 tmp_from = new Vector3();
 	private Vector3 tmp_to = new Vector3();
@@ -507,10 +507,9 @@ public class Game implements IModule {
 				mat.getTranslation(vec);
 				float distance = vec.dst(pos);
 				if (distance <= range) {
-					// Todo - check the explosion can see the target?
 					pc.body.activate();
 					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(force));
-					//Settings.p("Moving " + e.name);
+					Settings.p("Moving " + e.name);
 				}
 			}
 		}

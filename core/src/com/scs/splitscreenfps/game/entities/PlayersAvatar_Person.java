@@ -76,21 +76,22 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		WeaponSettingsComponent weapon;
 
-		int weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
+		int weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
 
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_BULLET:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_BULLET, 300, 1200, 20, 20, 10, 0f, 0f);
+			weapon.kickback_force = 1f;
 			break;
 			
 		case WeaponSettingsComponent.WEAPON_GRENADE:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE, 600, 1500, 12, 20, 20, 3f, 6f);
-			weapon.kickback_force = 2f;
+			weapon.kickback_force = 1f;
 			break;
 			
 		case WeaponSettingsComponent.WEAPON_ROCKET:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30, 2f, 3f);
-			weapon.kickback_force = 10f;
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30, 2f, 15f);
+			weapon.kickback_force = 5f;
 			break;
 			
 		default:
@@ -108,7 +109,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new PlayerData(playerIdx));
 
-		//GangBeastsLevel1.setAvatarColour(this, true);	todo?
+		//todo game.setAvatarColour(this, true);
 
 	}
 

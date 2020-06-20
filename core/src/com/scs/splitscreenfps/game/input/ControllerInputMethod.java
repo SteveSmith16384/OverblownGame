@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.input;
 
 import com.badlogic.gdx.controllers.Controller;
+import com.scs.splitscreenfps.Settings;
 
 public class ControllerInputMethod implements IInputMethod {
 
@@ -57,7 +58,14 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isJumpPressed() {
-		return this.controller.getButton(1);
+		// Code for testing buttons
+		/*for (int i=0 ; i<16 ; i++) {
+			if (this.controller.getButton(i)) {
+				Settings.p("Pressed! " + i);
+				break;
+			}
+		}*/
+		return this.controller.getButton(0);
 	}
 
 
@@ -68,6 +76,7 @@ public class ControllerInputMethod implements IInputMethod {
 		for (int i=0 ; i<16 ; i++) {
 			if (this.controller.getButton(i)) {
 				Settings.p("Pressed! " + i);
+				break;
 			}
 		}*/
 

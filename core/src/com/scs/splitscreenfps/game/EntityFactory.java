@@ -47,7 +47,7 @@ public class EntityFactory {
 		if (playerData.playerIdx == 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
 		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
 		} else if (playerData.playerIdx == 2) {
 			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
 		} else if (playerData.playerIdx == 3) {
@@ -99,7 +99,7 @@ public class EntityFactory {
 		if (playerData.playerIdx == 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
 		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
 		} else if (playerData.playerIdx == 2) {
 			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
 		} else if (playerData.playerIdx == 3) {
@@ -152,7 +152,7 @@ public class EntityFactory {
 		if (playerData.playerIdx == 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
 		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_blue.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
 		} else if (playerData.playerIdx == 2) {
 			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
 		} else if (playerData.playerIdx == 3) {
