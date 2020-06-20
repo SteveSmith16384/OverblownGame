@@ -13,19 +13,20 @@ public class WeaponSettingsComponent {
 	public int max_ammo;
 	public int range;
 	public int damage;
+	public float expl_force;
+	public float expl_range;
+	public float kickback_force = 0f;
 	
-	/*
-	public WeaponSettingsComponent() {
-	}*/
-	
-	
-	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, int _range, int _damage) {
+	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, int _range, int _damage, 
+			float _expl_range, float _expl_force) {
 		this.weapon_type = type;
 		this.max_ammo = ammo;
 		shot_interval = _shot_interval;
 		reload_interval = _reload_interval;
 		damage = _damage;
 		range = _range;
+		expl_range = _expl_range;
+		expl_force = _expl_force;
 	}
 	
 }

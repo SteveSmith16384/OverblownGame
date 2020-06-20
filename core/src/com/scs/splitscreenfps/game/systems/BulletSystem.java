@@ -44,13 +44,14 @@ public class BulletSystem extends AbstractSystem {
 		
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
-			entity.remove();
+			//entity.remove(); No! Don't remove grenades on contact!
 			EventCollision coll = (EventCollision)evt;
 
 			//AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, PlayerData.class);
 			PlayerData playerHitData = (PlayerData)coll.entity2.getComponent(PlayerData.class);
 			if (playerHitData != null) {
 				//PlayerData playerHitData = (PlayerData)ents[1].getComponent(PlayerData.class);
+				entity.remove();
 				if (playerHitData.health > 0) {
 					if (playerHitData.playerIdx != bullet.side) {
 						game.playerDamaged(coll.entity2, playerHitData, bullet.settings.damage);

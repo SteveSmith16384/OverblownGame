@@ -8,6 +8,7 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanShoot;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -34,7 +35,6 @@ public class ShootingSystem extends AbstractSystem {
 		}
 		
 		if (cc.lastShotTime + interval > System.currentTimeMillis()) {
-			//Settings.p("Too soon");
 			return;
 		}
 
@@ -43,8 +43,7 @@ public class ShootingSystem extends AbstractSystem {
 		if (player.inputMethod.isShootPressed()) {
 			//Settings.p("Shoot at " + System.currentTimeMillis());
 			if (cc.ammo == 0) {
-				BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");			
-				//Settings.p("Reloading");
+				BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
 				cc.ammo = weapon.max_ammo;
 			}
 
@@ -83,6 +82,13 @@ public class ShootingSystem extends AbstractSystem {
 
 			default:
 				throw new RuntimeException("Unknown weapon type: " + weapon.weapon_type);
+			}
+			
+			if (weapon.kickback_force != 0) {
+				PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+				pc.body.activate();				
+				pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(-1 * weapon.kickback_force));
+
 			}
 		}
 	}

@@ -3,11 +3,13 @@ package com.scs.splitscreenfps.game.entities;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
@@ -19,16 +21,18 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
 public class Wall extends AbstractEntity {
 
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre) {
-		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0);
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, int texRepeat) {
+		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, texRepeat);
 	}
 	
 	
 	// Note that the mass gets multiplied by the size
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ) {
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, int texRepeat) {
 		super(ecs, name);
 
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
+		Texture tex = new Texture(tex_filename);
+		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		//Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
@@ -48,10 +52,9 @@ public class Wall extends AbstractEntity {
 		    .rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
 		Model box_model = modelBuilder.end();
 		
-		
-		/*Matrix3 mat = new Matrix3();
-		mat.setToTranslation(1f, .1f);
-		box_model.meshes.get(0).transformUV(mat);*/
+		Matrix3 mat = new Matrix3();
+		mat.scl(texRepeat);
+		box_model.meshes.get(0).transformUV(mat);
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		if (degreesX != 0) {

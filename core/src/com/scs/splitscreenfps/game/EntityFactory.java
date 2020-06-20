@@ -167,10 +167,10 @@ public class EntityFactory {
 
 		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings));
 
-		e.addComponent(new ExplodeAfterTimeComponent(3000));
+		e.addComponent(new ExplodeAfterTimeComponent(3000, settings.expl_force));
 
 		// Add physics
-		btSphereShape shape = new btSphereShape(.1f);//new Vector3(.1f, .1f, .1f));
+		btSphereShape shape = new btSphereShape(.1f);
 		btRigidBody body = new btRigidBody(.1f, null, shape);
 		body.userData = e;
 		body.setFriction(0.9f);
@@ -179,11 +179,7 @@ public class EntityFactory {
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
-		//body.applyCentralForce(offset.scl(100));
-		//body.applyCentralImpulse(offset.scl(10));
-		//body.setGravity(new Vector3());
 		PhysicsComponent pc = new PhysicsComponent(body);
-		//pc.disable_gravity = true;
 		pc.force = dir.scl(1f);
 		e.addComponent(pc);
 

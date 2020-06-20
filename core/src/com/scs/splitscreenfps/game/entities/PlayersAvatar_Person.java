@@ -79,19 +79,21 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		WeaponSettingsComponent weapon;
 
-		int weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
+		int weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
 
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_BULLET:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_BULLET, 300, 1200, 20, 20, 10);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_BULLET, 300, 1200, 20, 20, 10, 0f, 0f);
 			break;
 			
 		case WeaponSettingsComponent.WEAPON_GRENADE:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE, 600, 1500, 12, 20, 20);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE, 600, 1500, 12, 20, 20, 3f, 6f);
+			weapon.kickback_force = 2f;
 			break;
 			
 		case WeaponSettingsComponent.WEAPON_ROCKET:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30, 2f, 3f);
+			weapon.kickback_force = 10f;
 			break;
 			
 		default:
