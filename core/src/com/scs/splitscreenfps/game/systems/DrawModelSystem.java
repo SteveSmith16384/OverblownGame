@@ -87,7 +87,7 @@ public class DrawModelSystem extends AbstractSystem {
 			tmpOffset.add(model.offset);
 			model.model.transform.setToTranslation(tmpOffset);
 			model.model.transform.scl(model.scale);
-			model.model.transform.rotate(Vector3.Y, posData.angle_Y_degs+model.angleOffset);
+			model.model.transform.rotate(Vector3.Y, posData.angle_Y_degs+model.angleYOffset);
 			if (posData.angle_x_degrees != 0) {
 				model.model.transform.rotate(Vector3.X, posData.angle_x_degrees);
 			}

@@ -66,7 +66,6 @@ public class GangBeastsLevel1 extends AbstractLevel {
 
 	@Override
 	public void renderUI(SpriteBatch batch2d, int currentViewId) {
-		// TODO Auto-generated method stub
 		
 	}
 

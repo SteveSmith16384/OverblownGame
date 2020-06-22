@@ -102,7 +102,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 			mapdata.blocks.add(block);
 		}
 
-		// Todo - backup old file
+		// backup old file
 		IOFunctions.copyFileUsingStream(mapdata.filename, mapdata.filename + "_old");
 
 		JsonWriter writer = new JsonWriter(new FileWriter(mapdata.filename));

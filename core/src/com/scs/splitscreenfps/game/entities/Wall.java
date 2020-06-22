@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
@@ -30,9 +29,9 @@ public class Wall extends AbstractEntity {
 	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile) {
 		super(ecs, name);
 
-		//todo - re-add Texture tex = new Texture(tex_filename);
+		Texture tex = new Texture(tex_filename);
 		//Texture tex = new Texture("textures/neon/tron_green.jpg");
-		Texture tex = new Texture("textures/seamlessTextures2/IMGP5482_seamless.jpg");
+		//Texture tex = new Texture("textures/seamlessTextures2/IMGP5482_seamless.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();

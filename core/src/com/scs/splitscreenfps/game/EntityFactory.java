@@ -219,8 +219,8 @@ public class EntityFactory {
 	public static AbstractEntity createBall(BasicECS ecs, String tex_filename, float posX, float posY, float posZ, float diam, float mass_pre) {
 		AbstractEntity ball = new AbstractEntity(ecs, "Ball");
 
-		//todo - re-add Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("textures/neon/tron_yellow.jpg")));
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
+		//Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("textures/neon/tron_yellow.jpg")));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 

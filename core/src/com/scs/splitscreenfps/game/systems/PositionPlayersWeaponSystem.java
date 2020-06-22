@@ -30,7 +30,6 @@ public class PositionPlayersWeaponSystem extends AbstractSystem {
 		weaponPos.angle_Y_degs = playerPos.angle_Y_degs + 90;
 		//weaponPos.position.set(3f, 3f, 3f);
 	*/	
-		// todo
 	}
 
 }
