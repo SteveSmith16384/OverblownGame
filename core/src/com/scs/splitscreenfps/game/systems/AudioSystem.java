@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.scs.splitscreenfps.Settings;
 
 public class AudioSystem {
 
@@ -55,19 +56,22 @@ public class AudioSystem {
 
 
 	public void play(String name) {
-		if (sounds.containsKey(name)) {
-			sounds.get(name).play();
-		} else {
-			String filename = name;// + ".wav";
-			if (filename.indexOf(".") < 0) {
-				filename = filename + ".wav";
+		try {
+			if (sounds.containsKey(name)) {
+				sounds.get(name).play();
+			} else {
+				String filename = name;// + ".wav";
+				if (filename.indexOf(".") < 0) {
+					filename = filename + ".wav";
+				}
+				Sound sfx = Gdx.audio.newSound(Gdx.files.internal(filename));
+				sounds.put(name, sfx);
+				//System.out.println("Sound " + name + " not preloaded");
+				play(name); // Loop round to play the newly-added file.
 			}
-			Sound sfx = Gdx.audio.newSound(Gdx.files.internal(filename));
-			sounds.put(name, sfx);
-			//System.out.println("Sound " + name + " not preloaded");
-			play(name); // Loop round to play the newly-added file.
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-
 	}
 
 

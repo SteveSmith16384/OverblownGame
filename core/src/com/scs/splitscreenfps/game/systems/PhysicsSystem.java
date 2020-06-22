@@ -1,9 +1,12 @@
 package com.scs.splitscreenfps.game.systems;
 
+import java.nio.charset.MalformedInputException;
+
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -37,7 +40,7 @@ public class PhysicsSystem extends AbstractSystem {
 		}
 
 		float height = pc.getTranslation().y;
-		if (height < -10) {
+		if (height < -4) {
 			if (pc.removeIfFallen) {
 				//Settings.p("Removed " + e + " since it has fallen off");
 				e.remove();
@@ -45,7 +48,10 @@ public class PhysicsSystem extends AbstractSystem {
 				// Is it a player?
 				PlayerData player = (PlayerData)e.getComponent(PlayerData.class);
 				if (player != null) {
-					game.playerDamaged(e, player, 999, player.last_person_to_hit_them);
+					if (player.health > 0) {
+						game.playerDamaged(e, player, 999, player.last_person_to_hit_them);
+						BillBoardFPS_Main.audio.play("sfx/qubodup-PowerDrain.ogg");
+					}
 				}
 			}
 		}

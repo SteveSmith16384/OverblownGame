@@ -503,6 +503,8 @@ public class Game implements IModule {
 
 	public void explosion(final Vector3 pos, float range, float force, float width_height) {
 		//Settings.p("Explosion at " + pos);
+		
+		main.audio.play("sfx/explosion1.mp3");
 
 		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos, width_height);
 		ecs.addEntity(expl);
