@@ -241,8 +241,6 @@ public class EntityFactory {
 		groundObject.setWorldTransform(instance.transform);
 		ball.addComponent(new PhysicsComponent(groundObject));
 
-		//ball.addComponent(new AffectedByExplosionComponent());
-
 		return ball;
 	}
 

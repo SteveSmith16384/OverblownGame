@@ -43,7 +43,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.LoadMapLevel;
+import com.scs.splitscreenfps.game.levels.AvoidTheBallsLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -53,6 +53,7 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
+import com.scs.splitscreenfps.game.systems.HarmOnContactSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
@@ -138,8 +139,8 @@ public class Game implements IModule {
 		//currentLevel = new GangBeastsLevel1(this);
 		//currentLevel = new RollingBallLevel(this);
 		//currentLevel = new MapEditorLevel(this);
-		currentLevel = new LoadMapLevel(this);
-
+		//currentLevel = new LoadMapLevel(this);
+		currentLevel = new AvoidTheBallsLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), i);
@@ -223,7 +224,7 @@ public class Game implements IModule {
 		physicsSystem = new PhysicsSystem(this, ecs);
 		ecs.addSystem(physicsSystem);
 		this.respawnSystem = new RespawnPlayerSystem(ecs);
-		//ecs.addSystem(new PositionPlayersWeaponSystem(ecs));
+		ecs.addSystem(new HarmOnContactSystem(this, ecs));
 	}
 
 
@@ -296,6 +297,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
+		this.ecs.getSystem(HarmOnContactSystem.class).process();
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];

@@ -9,7 +9,7 @@ import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.IScoreSystem;
 import com.scs.splitscreenfps.game.gamemodes.LastPlayerOnPointScoreSystem;
 
-public class GangBeastsLevel1 extends AbstractLevel {
+public class GangBeastsLevel1 extends AbstractLevel { // todo - delete this?
 
 	public IScoreSystem scoreSystem;
 	protected int map_width;
