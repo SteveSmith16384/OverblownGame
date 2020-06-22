@@ -80,7 +80,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 			Wall wall = new Wall(game.ecs, block.name, block.texture_filename, block.position.x, block.position.y, block.position.z, 
 					block.size.x, block.size.y, block.size.z, 
 					block.mass,
-					block.rotation.x, block.rotation.y, block.rotation.z, 1);
+					block.rotation.x, block.rotation.y, block.rotation.z, true);
 			wall.addComponent(block);
 			game.ecs.addEntity(wall);
 			return wall;

@@ -56,7 +56,6 @@ import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
-import com.scs.splitscreenfps.game.systems.PositionPlayersWeaponSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
@@ -146,8 +145,8 @@ public class Game implements IModule {
 			players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), i);
 			ecs.addEntity(players[i]);
 
-			AbstractEntity weapon = EntityFactory.playersWeapon(ecs, players[i]);
-			ecs.addEntity(weapon);
+			//AbstractEntity weapon = EntityFactory.playersWeapon(ecs, players[i]);
+			//ecs.addEntity(weapon);
 		}	
 
 		loadLevel();
@@ -224,7 +223,7 @@ public class Game implements IModule {
 		physicsSystem = new PhysicsSystem(this, ecs);
 		ecs.addSystem(physicsSystem);
 		this.respawnSystem = new RespawnPlayerSystem(ecs);
-		ecs.addSystem(new PositionPlayersWeaponSystem(ecs));
+		//ecs.addSystem(new PositionPlayersWeaponSystem(ecs));
 	}
 
 
@@ -274,7 +273,7 @@ public class Game implements IModule {
 		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();		
-		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
+		//this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 

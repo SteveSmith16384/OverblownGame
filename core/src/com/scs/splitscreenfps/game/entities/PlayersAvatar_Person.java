@@ -183,7 +183,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		if (hasModel != null) {
 			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
 			tmpVec2.set(camera.direction.x, camera.direction.z);
-			pos.angle_degs = -tmpVec2.angle();
+			pos.angle_Y_degs = -tmpVec2.angle();
 		}
 
 	}

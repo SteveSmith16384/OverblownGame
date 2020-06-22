@@ -38,7 +38,7 @@ public class MapEditorLevel extends AbstractLevel {
 
 		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
-				0f, FLOOR_SIZE/2);
+				0f, true);
 		game.ecs.addEntity(floor);
 
 		try {

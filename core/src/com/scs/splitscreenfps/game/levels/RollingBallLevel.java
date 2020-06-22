@@ -23,7 +23,7 @@ public class RollingBallLevel extends AbstractLevel {
 
 	@Override
 	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(1f, .3f, .3f, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 
 
@@ -36,13 +36,13 @@ public class RollingBallLevel extends AbstractLevel {
 
 		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", 5, -0.1f, 5, 
 				10f, .2f, 10f, 
-				0f, 4);
+				0f, true);
 		game.ecs.addEntity(floor);
 
 		Wall tilt = new Wall(game.ecs, "Tilt", "textures/set3_example_1.png", 12.5f, 1.5f, 5, 
 				6f, .2f, 10f, 
 				0f, 
-				0, 0, 25, 2);
+				0, 0, 25, true);
 		//HasModelComponent model = (HasModelComponent)tilt.getComponent(HasModelComponent.class);
 		//model.model.transform.rotate();
 		//PhysicsComponent pc = (PhysicsComponent)tilt.getComponent(PhysicsComponent.class);
@@ -74,8 +74,8 @@ public class RollingBallLevel extends AbstractLevel {
 			this.last_ball_time = System.currentTimeMillis();
 			
 			float z = NumberFunctions.rndFloat(2,  8);
-			//AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/set3_example_1.png", 13, 10, z, 1.5f, 100);
-			//game.ecs.addEntity(ball);
+			AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/set3_example_1.png", 13, 10, z, 1.5f, 100);
+			game.ecs.addEntity(ball);
 		}
 	}
 

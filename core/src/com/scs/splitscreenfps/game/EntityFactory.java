@@ -220,7 +220,8 @@ public class EntityFactory {
 	public static AbstractEntity createBall(BasicECS ecs, String tex_filename, float posX, float posY, float posZ, float diam, float mass_pre) {
 		AbstractEntity ball = new AbstractEntity(ecs, "Ball");
 
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
+		//todo - re-add Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("textures/neon/tron_yellow.jpg")));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
@@ -276,7 +277,7 @@ public class EntityFactory {
 		return doorway;
 	}
 
-
+/*
 	public static AbstractEntity createGun(BasicECS ecs, float posX, float posY, float posZ) {
 		AbstractEntity stairs = new AbstractEntity(ecs, "Stairs");
 
@@ -303,7 +304,7 @@ public class EntityFactory {
 
 		return stairs;
 	}
-
+*/
 	
 	// Note that the mass gets multiplied by the size
 	public static AbstractEntity Model(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
@@ -361,12 +362,10 @@ public class EntityFactory {
 		groundObject.setWorldTransform(instance.transform);
 		pillar.addComponent(new PhysicsComponent(groundObject));
 
-		//crate.addComponent(new AffectedByExplosionComponent());
-
 		return pillar;
 	}
 
-
+/*
 	public static AbstractEntity playersWeapon(BasicECS ecs, AbstractEntity player) {
 		AbstractEntity weapon = new AbstractEntity(ecs, "PlayersWeapon");
 
@@ -374,8 +373,8 @@ public class EntityFactory {
 		pos.angle_x_degrees = 90;
 		weapon.addComponent(pos);
 		
-		//ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
-		ModelInstance instance = ShapeHelper.createCylinder("textures/set3_example_1.png", 0, 0, 0, .2f, 1f);
+		ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
+		//ModelInstance instance = ShapeHelper.createCylinder("textures/set3_example_1.png", 0, 0, 0, .2f, 1f);
 		//instance.transform.rotate(Vector3.Z, 90);
 		//instance.transform.rotate(Vector3.X, 90);
 		
@@ -395,5 +394,5 @@ public class EntityFactory {
 		return weapon;
 	}
 
-	
+	*/
 }

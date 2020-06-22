@@ -3,14 +3,10 @@ package com.scs.splitscreenfps.game.components;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector3;
 
-/**
- * Not required for physics entities
- *
- */
 public class PositionComponent {
 
 	public Vector3 position;
-	public float angle_degs; // todo - rename
+	public float angle_Y_degs; 
 	public float angle_x_degrees;
 
 	public PositionComponent() {

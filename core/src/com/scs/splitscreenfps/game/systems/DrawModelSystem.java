@@ -68,7 +68,7 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		if (pc != null) { // Rotate model to same place as physics body
+		if (pc != null) { // Put model in same place as physics body
 			pc.body.getWorldTransform(mat);
 			model.model.transform.set(mat);
 			model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
@@ -87,7 +87,7 @@ public class DrawModelSystem extends AbstractSystem {
 			tmpOffset.add(model.offset);
 			model.model.transform.setToTranslation(tmpOffset);
 			model.model.transform.scl(model.scale);
-			model.model.transform.rotate(Vector3.Y, posData.angle_degs+model.angleOffset);
+			model.model.transform.rotate(Vector3.Y, posData.angle_Y_degs+model.angleOffset);
 			if (posData.angle_x_degrees != 0) {
 				model.model.transform.rotate(Vector3.X, posData.angle_x_degrees);
 			}
@@ -104,7 +104,6 @@ public class DrawModelSystem extends AbstractSystem {
 				}
 			}
 		}
-		//}
 		modelBatch.render(model.model, environment);
 	}
 

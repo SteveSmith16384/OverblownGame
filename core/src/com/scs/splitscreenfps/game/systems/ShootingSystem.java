@@ -55,7 +55,7 @@ public class ShootingSystem extends AbstractSystem {
 			if (cc.shootInCameraDirection) {
 				dir.set(player.camera.direction);
 			} else {
-				dir.set((float)Math.sin(Math.toRadians(posData.angle_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_degs+90)));
+				dir.set((float)Math.sin(Math.toRadians(posData.angle_Y_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_Y_degs+90)));
 			}
 			dir.nor();
 

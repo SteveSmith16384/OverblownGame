@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
@@ -20,16 +21,17 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 
 public class Wall extends AbstractEntity {
 
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, int texRepeat) {
-		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, texRepeat);
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile) {
+		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile);
 	}
 	
 	
 	// Note that the mass gets multiplied by the size
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, int texRepeat) {
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile) {
 		super(ecs, name);
 
-		Texture tex = new Texture(tex_filename);
+		//todo - re-add Texture tex = new Texture(tex_filename);
+		Texture tex = new Texture("textures/neon/tron_green.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();
@@ -51,10 +53,14 @@ public class Wall extends AbstractEntity {
 		    .rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
 		Model box_model = modelBuilder.end();
 		
-		Matrix3 mat = new Matrix3();
-		mat.scl(texRepeat);
-		box_model.meshes.get(0).transformUV(mat);
-
+		if (tile) {
+			Matrix3 mat = new Matrix3();
+			float max2 = Math.max(w, h);
+			float max = Math.max(max2, d);
+			mat.scl(max);//new Vector2(h, d));//, h));
+			box_model.meshes.get(0).transformUV(mat);
+		}
+		
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		if (degreesX != 0) {
 			instance.transform.rotate(Vector3.X, degreesX);
