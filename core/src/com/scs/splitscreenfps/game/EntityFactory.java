@@ -25,6 +25,7 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.components.PlayersWeaponComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 
@@ -343,31 +344,53 @@ public class EntityFactory {
 	
 	
 	public static AbstractEntity createPillar(BasicECS ecs, String tex_filename, float x, float y, float z, float diam, float length) {
-		AbstractEntity crate = new AbstractEntity(ecs, "Cylinder");
+		AbstractEntity pillar = new AbstractEntity(ecs, "Cylinder");
 
 		ModelInstance instance = ShapeHelper.createCylinder(tex_filename, x, y, z, diam, length);
 
 		HasModelComponent model = new HasModelComponent(instance);
-		crate.addComponent(model);
+		pillar.addComponent(model);
 
 		btCylinderShape boxShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
 		Vector3 local_inertia = new Vector3();
 		float mass_pre = 1f;
-		float mass = (float)(Math.PI * (diam/2) * (diam/2) + length);
+		float mass = (float)(Math.PI * (diam/2) * (diam/2) + length) * mass_pre;
 		boxShape.calculateLocalInertia(1f, local_inertia);
 		btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);
-		groundObject.userData = crate;
+		groundObject.userData = pillar;
 		groundObject.setRestitution(.5f);
 		groundObject.setCollisionShape(boxShape);
 		groundObject.setWorldTransform(instance.transform);
-		crate.addComponent(new PhysicsComponent(groundObject));
+		pillar.addComponent(new PhysicsComponent(groundObject));
 
 		//crate.addComponent(new AffectedByExplosionComponent());
 
-		return crate;
+		return pillar;
 	}
 
 
+	public static AbstractEntity playersWeapon(BasicECS ecs, AbstractEntity player) {
+		AbstractEntity crate = new AbstractEntity(ecs, "Cylinder");
+
+		PositionComponent pos = new PositionComponent();
+		crate.addComponent(pos);
+		
+		ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
+
+		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
+		instance.transform.scl(scale);		
+
+		HasModelComponent model = new HasModelComponent(instance);
+		PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
+		model.onlyDrawInViewId = playerData.playerIdx;
+		crate.addComponent(model);
+		
+		PlayersWeaponComponent wep = new PlayersWeaponComponent(player);
+		crate.addComponent(wep);
+
+		
+		return crate;
+	}
 
 	
 }

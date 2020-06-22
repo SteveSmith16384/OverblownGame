@@ -56,6 +56,7 @@ import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
+import com.scs.splitscreenfps.game.systems.PositionPlayersWeaponSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
@@ -144,6 +145,9 @@ public class Game implements IModule {
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), i);
 			ecs.addEntity(players[i]);
+
+			AbstractEntity weapon = EntityFactory.playersWeapon(ecs, players[i]);
+			ecs.addEntity(weapon);
 		}	
 
 		loadLevel();
@@ -220,6 +224,7 @@ public class Game implements IModule {
 		physicsSystem = new PhysicsSystem(this, ecs);
 		ecs.addSystem(physicsSystem);
 		this.respawnSystem = new RespawnPlayerSystem(ecs);
+		ecs.addSystem(new PositionPlayersWeaponSystem(ecs));
 	}
 
 
@@ -268,7 +273,8 @@ public class Game implements IModule {
 		this.ecs.events.clear();
 		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
-		this.ecs.addAndRemoveEntities();
+		this.ecs.addAndRemoveEntities();		
+		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 
@@ -473,7 +479,7 @@ public class Game implements IModule {
 		ecs.addEntity(redfilter);
 
 		playerHitData.last_person_to_hit_them = shooter;
-		
+
 		if (playerHitData.health <= 0) {
 			playerDied(player, playerHitData, shooter);
 		}
@@ -484,13 +490,14 @@ public class Game implements IModule {
 	public void playerDied(AbstractEntity player, PlayerData playerData, AbstractEntity shooter) {
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
-		// todo - show "died"
-		
-		PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
-		shooterData.points += 1;
-		
-		if (shooterData.points >= Settings.POINTS_TO_WIN) {
-			playerHasWon(shooter);
+
+		if (shooter != null) {
+			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
+			shooterData.points += 1;
+
+			if (shooterData.points >= Settings.POINTS_TO_WIN) {
+				playerHasWon(shooter);
+			}
 		}
 	}
 

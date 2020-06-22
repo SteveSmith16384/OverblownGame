@@ -58,9 +58,9 @@ public class DrawModelSystem extends AbstractSystem {
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
-			if (model.dontDrawInViewId == game.currentViewId) {
-				return;
-			}
+		if (model.dontDrawInViewId == game.currentViewId) {
+			return;
+		}
 		if (model.onlyDrawInViewId >= 0) {
 			if (model.onlyDrawInViewId != game.currentViewId) {
 				return;

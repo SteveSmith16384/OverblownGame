@@ -99,7 +99,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		}
 
 		addComponent(weapon);
-
+		
 		// Add crosshairs
 		Texture weaponTex = new Texture(Gdx.files.internal("crosshairs.png"));		
 		Sprite sprite = new Sprite(weaponTex);
