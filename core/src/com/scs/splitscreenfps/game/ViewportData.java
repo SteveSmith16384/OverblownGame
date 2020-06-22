@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 
 public class ViewportData {
@@ -91,37 +92,15 @@ public class ViewportData {
 
 
 	public void resize(int idx, boolean full_screen, int total) {
-		/*int w = Gdx.graphics.getWidth()/2;
-		int h = Gdx.graphics.getHeight()/2;
-		if (full_screen) {
-			w = Gdx.graphics.getBackBufferWidth()/2;
-			h = Gdx.graphics.getBackBufferHeight()/2;
-		}
-
-		// Goes clockwise starting top-left
-		switch (idx) {
-		case 0:
-			this.viewPos = new Rectangle(0, 0, w, h);
-			break;
-		case 1:
-			this.viewPos = new Rectangle(w, 0, w, h);
-			break;
-		case 2:
-			this.viewPos = new Rectangle(w, h, w, h);
-			break;
-		case 3:
-			this.viewPos = new Rectangle(0, h, w, h);
-			break;
-		}*/
-		
 		this.viewPos = this.getDimensions(idx, full_screen, total);
 
 		camera.viewportWidth = viewPos.width;
 		camera.viewportHeight = viewPos.height;
 
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_WIDTH_PIXELS, Settings.LOGICAL_HEIGHT_PIXELS, true);
+		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
 		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 512, 512, true);
+		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 512, 512, true);
+		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 2048, 2048, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {

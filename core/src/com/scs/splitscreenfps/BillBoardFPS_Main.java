@@ -22,9 +22,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		Bullet.init();
-		
 		Settings.init();
+		Bullet.init();
 
 		if (Settings.RELEASE_MODE) {
 			this.setFullScreen();

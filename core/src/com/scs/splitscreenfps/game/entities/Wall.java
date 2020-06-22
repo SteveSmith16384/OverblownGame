@@ -31,7 +31,8 @@ public class Wall extends AbstractEntity {
 		super(ecs, name);
 
 		//todo - re-add Texture tex = new Texture(tex_filename);
-		Texture tex = new Texture("textures/neon/tron_green.jpg");
+		//Texture tex = new Texture("textures/neon/tron_green.jpg");
+		Texture tex = new Texture("textures/seamlessTextures2/IMGP5482_seamless.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();

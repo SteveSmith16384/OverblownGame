@@ -25,7 +25,6 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.PlayersWeaponComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 
@@ -247,15 +246,11 @@ public class EntityFactory {
 		return ball;
 	}
 
-
+/*
 	public static AbstractEntity createDoorway(BasicECS ecs, float posX, float posY, float posZ) {
 		AbstractEntity doorway = new AbstractEntity(ecs, "Doorway");
 
 		ModelInstance instance = ModelFunctions.loadModel("models/magicavoxel/doorway.obj", false);
-		//float scale = 1f;//ModelFunctions.getScaleForHeight(instance, .8f);
-		//instance.transform.scl(scale);
-		//Vector3 offset = new Vector3();//ModelFunctions.getOrigin(instance);
-		//offset.y -= .3f; // Hack since model is too high
 
 		HasModelComponent hasModel = new HasModelComponent(instance);//, offset, 0, scale);
 		doorway.addComponent(hasModel);
@@ -271,8 +266,6 @@ public class EntityFactory {
 		body.setCollisionShape(shape);
 		body.setWorldTransform(instance.transform);
 		doorway.addComponent(new PhysicsComponent(body));
-
-		//crate.addComponent(new AffectedByExplosionComponent());
 
 		return doorway;
 	}
@@ -311,6 +304,13 @@ public class EntityFactory {
 		AbstractEntity stairs = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false);
+
+		// todo - remove?
+		//TextureAttribute textureAttribute1 = TextureAttribute.createDiffuse(new Texture("textures/seamlessTextures2/IMGP5511_seamless.jpg"));
+		//TextureAttribute textureAttribute1 = new TextureAttribute(TextureAttribute.Diffuse, new Texture("textures/seamlessTextures2/IMGP5511_seamless.jpg"));
+		//Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("textures/seamlessTextures2/IMGP5511_seamless.jpg")));
+		//instance.model.materials.get(0).set(black_material);
+
 		instance.transform.setTranslation(posX, posY, posZ);
 
 		/* todo
@@ -320,8 +320,6 @@ public class EntityFactory {
 		
 		HasModelComponent model = new HasModelComponent(instance);
 		stairs.addComponent(model);
-
-		//float mass = mass_pre * w * h * d; 
 
 		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
 		Vector3 local_inertia = new Vector3();

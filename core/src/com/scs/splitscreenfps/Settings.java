@@ -28,6 +28,7 @@ public class Settings {
 	public static final String TITLE = "Gang Beasts FPS";
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
+	public static final int LOGICAL_SIZE_PIXELS = 1024;
 	public static int POINTS_TO_WIN = 1;
 
 	public static Properties prop;
