@@ -61,7 +61,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings));
+		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, true));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -113,7 +113,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings));
+		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, true));
 		e.addComponent(new ExplodeOnContactComponent());
 
 		// Add physics
@@ -167,7 +167,7 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings));
+		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, false));
 
 		e.addComponent(new ExplodeAfterTimeComponent(3000, settings.expl_force));
 
@@ -212,8 +212,6 @@ public class EntityFactory {
 		groundObject.setCollisionShape(boxShape);
 		groundObject.setWorldTransform(instance.transform);
 		crate.addComponent(new PhysicsComponent(groundObject));
-
-		//crate.addComponent(new AffectedByExplosionComponent());
 
 		return crate;
 	}
@@ -279,10 +277,10 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createStairs(BasicECS ecs, float posX, float posY, float posZ) {
+	public static AbstractEntity createGun(BasicECS ecs, float posX, float posY, float posZ) {
 		AbstractEntity stairs = new AbstractEntity(ecs, "Stairs");
 
-		ModelInstance instance = ModelFunctions.loadModel("models/magicavoxel/stairs.obj", false);
+		ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
 		//float scale = 1f;//ModelFunctions.getScaleForHeight(instance, .8f);
 		//instance.transform.scl(scale);
 		//Vector3 offset = new Vector3();//ModelFunctions.getOrigin(instance);
@@ -297,7 +295,7 @@ public class EntityFactory {
 		//doorway.addComponent(pos);
 
 		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
-		btRigidBody body = new btRigidBody(0, null, shape);
+		btRigidBody body = new btRigidBody(1f, null, shape);
 		body.userData = stairs;
 		body.setCollisionShape(shape);
 		body.setWorldTransform(instance.transform);
@@ -370,26 +368,31 @@ public class EntityFactory {
 
 
 	public static AbstractEntity playersWeapon(BasicECS ecs, AbstractEntity player) {
-		AbstractEntity crate = new AbstractEntity(ecs, "Cylinder");
+		AbstractEntity weapon = new AbstractEntity(ecs, "PlayersWeapon");
 
 		PositionComponent pos = new PositionComponent();
-		crate.addComponent(pos);
+		pos.angle_x_degrees = 90;
+		weapon.addComponent(pos);
 		
-		ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
-
-		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
-		instance.transform.scl(scale);		
-
+		//ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
+		ModelInstance instance = ShapeHelper.createCylinder("textures/set3_example_1.png", 0, 0, 0, .2f, 1f);
+		//instance.transform.rotate(Vector3.Z, 90);
+		//instance.transform.rotate(Vector3.X, 90);
+		
 		HasModelComponent model = new HasModelComponent(instance);
+		model.always_draw = true;
+		//float scale = ModelFunctions.getScaleForHeight(instance, .8f);
+		//model.scale = 40;//scale;
+
 		PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
 		model.onlyDrawInViewId = playerData.playerIdx;
-		crate.addComponent(model);
+		weapon.addComponent(model);
 		
 		PlayersWeaponComponent wep = new PlayersWeaponComponent(player);
-		crate.addComponent(wep);
+		weapon.addComponent(wep);
 
 		
-		return crate;
+		return weapon;
 	}
 
 	

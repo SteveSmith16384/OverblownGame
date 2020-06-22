@@ -19,6 +19,8 @@ public class PositionPlayersWeaponSystem extends AbstractSystem {
 		PositionComponent playerPos = (PositionComponent)weapon.player.getComponent(PositionComponent.class);
 		PositionComponent weaponPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 		weaponPos.position.set(playerPos.position);
+		weaponPos.angle_degs = playerPos.angle_degs + 90;
+		//weaponPos.position.set(3f, 3f, 3f);
 		
 		// todo
 	}

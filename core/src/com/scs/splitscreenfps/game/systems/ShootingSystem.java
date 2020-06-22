@@ -62,7 +62,7 @@ public class ShootingSystem extends AbstractSystem {
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
 			startPos.mulAdd(dir, .5f);
-			startPos.y += .3f;
+			//startPos.y += .3f;
 
 			switch (weapon.weapon_type) {
 			case WeaponSettingsComponent.WEAPON_BULLET:
