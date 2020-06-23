@@ -82,7 +82,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		WeaponSettingsComponent weapon;
 
-		int weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
+		int weapon_type = WeaponSettingsComponent.WEAPON_PUNCH;
 
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_BULLET:
@@ -98,6 +98,11 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		case WeaponSettingsComponent.WEAPON_ROCKET:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30, 2f, 15f);
 			weapon.kickback_force = 5f;
+			break;
+
+		case WeaponSettingsComponent.WEAPON_PUNCH:
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 1, 60, 0f, 0f);
+			//weapon.kickback_force = 5f;
 			break;
 
 		default:

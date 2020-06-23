@@ -80,6 +80,11 @@ public class ShootingSystem extends AbstractSystem {
 				game.ecs.addEntity(r);
 				break;
 
+			case WeaponSettingsComponent.WEAPON_PUNCH:
+				AbstractEntity p = EntityFactory.createPunch(ecs, player, startPos, dir);
+				game.ecs.addEntity(p);
+				break;
+
 			default:
 				throw new RuntimeException("Unknown weapon type: " + weapon.weapon_type);
 			}

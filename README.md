@@ -9,12 +9,19 @@ Still looking for an actual game to make with it...
 * Tested with PS4 controllers
 
 
+### Implemented Weapons
+* Gun
+* Grenade launcher
+* Rocket Launcher
+* Power punch
+
+
 ### Implemeted Abilities
 * Charge Boost
+* Power Jump
 
 
-### Map Editor Controls:-
-
+### Map Editor Controls
 * 1 - Save map
 * B - Size mode
 * C - Clone current block

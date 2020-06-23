@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
@@ -102,8 +103,10 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 	private void performPowerJump(AbstractEntity entity, AbstractPlayersAvatar player) {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		pc.body.activate();		
-		pc.body.applyCentralImpulse( new Vector3(0, 200, 0));
+		//pc.body.activate();
+		//pc.body.applyCentralForce(new Vector3(0, 500, 0));
+		pc.body.applyCentralImpulse(new Vector3(0, 30, 0));
+		Settings.p("Power jump!");
 		
 	}
 }

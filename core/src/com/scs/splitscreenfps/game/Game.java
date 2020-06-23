@@ -272,7 +272,7 @@ public class Game implements IModule {
 		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();		
-		//this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
+		this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 
@@ -286,7 +286,6 @@ public class Game implements IModule {
 
 		this.ecs.processSystem(BulletSystem.class);
 		this.ecs.processSystem(ShootingSystem.class);
-		this.ecs.processSystem(SecondaryAbilitySystem.class);
 		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();

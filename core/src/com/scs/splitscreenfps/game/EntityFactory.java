@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -139,6 +140,60 @@ public class EntityFactory {
 	}
 
 
+	public static AbstractEntity createPunch(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(ecs, "Punch");
+
+		PositionComponent pos = new PositionComponent(start);
+		e.addComponent(pos);
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
+
+		if (Settings.DEBUG_PUNCH) {
+			HasDecal hasDecal = new HasDecal();
+			if (playerData.playerIdx == 0) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			} else if (playerData.playerIdx == 1) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
+			} else if (playerData.playerIdx == 2) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+			} else if (playerData.playerIdx == 3) {
+				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+			} else {
+				throw new RuntimeException("Invalid side: " + playerData.playerIdx);
+			}
+			hasDecal.decal.setPosition(start);
+			hasDecal.faceCamera = true;
+			hasDecal.dontLockYAxis = false;
+			e.addComponent(hasDecal);
+		}
+
+		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, true));
+
+		// Add physics
+		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
+		btRigidBody body = new btRigidBody(10f, null, shape);
+		body.userData = e;
+		//body.setFriction(0);
+		//body.setRestitution(.9f);
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		//body.applyCentralForce(offset.scl(100));
+		//body.applyCentralImpulse(offset.scl(10));
+		//body.setGravity(new Vector3());
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.disable_gravity = true;
+		pc.force = dir.scl(100f);
+		e.addComponent(pc);
+
+		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+
+		return e;
+	}
+
+
 	public static AbstractEntity createGrenade(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Grenade");
 
@@ -244,7 +299,7 @@ public class EntityFactory {
 		return ball;
 	}
 
-/*
+	/*
 	public static AbstractEntity createDoorway(BasicECS ecs, float posX, float posY, float posZ) {
 		AbstractEntity doorway = new AbstractEntity(ecs, "Doorway");
 
@@ -295,8 +350,8 @@ public class EntityFactory {
 
 		return stairs;
 	}
-*/
-	
+	 */
+
 	// Note that the mass gets multiplied by the size
 	public static AbstractEntity Model(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
 		AbstractEntity stairs = new AbstractEntity(ecs, name);
@@ -315,7 +370,7 @@ public class EntityFactory {
 		if (axis != null) {
 			instance.transform.rotate(axis, degrees);
 		}*/
-		
+
 		HasModelComponent model = new HasModelComponent(instance);
 		stairs.addComponent(model);
 
@@ -336,8 +391,8 @@ public class EntityFactory {
 		}*/
 		return stairs;
 	}
-	
-	
+
+
 	public static AbstractEntity createPillar(BasicECS ecs, String tex_filename, float x, float y, float z, float diam, float length) {
 		AbstractEntity pillar = new AbstractEntity(ecs, "Cylinder");
 
@@ -361,19 +416,19 @@ public class EntityFactory {
 		return pillar;
 	}
 
-/*
+	/*
 	public static AbstractEntity playersWeapon(BasicECS ecs, AbstractEntity player) {
 		AbstractEntity weapon = new AbstractEntity(ecs, "PlayersWeapon");
 
 		PositionComponent pos = new PositionComponent();
 		pos.angle_x_degrees = 90;
 		weapon.addComponent(pos);
-		
+
 		ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
 		//ModelInstance instance = ShapeHelper.createCylinder("textures/set3_example_1.png", 0, 0, 0, .2f, 1f);
 		//instance.transform.rotate(Vector3.Z, 90);
 		//instance.transform.rotate(Vector3.X, 90);
-		
+
 		HasModelComponent model = new HasModelComponent(instance);
 		model.always_draw = true;
 		//float scale = ModelFunctions.getScaleForHeight(instance, .8f);
@@ -382,13 +437,13 @@ public class EntityFactory {
 		PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
 		model.onlyDrawInViewId = playerData.playerIdx;
 		weapon.addComponent(model);
-		
+
 		PlayersWeaponComponent wep = new PlayersWeaponComponent(player);
 		weapon.addComponent(wep);
 
-		
+
 		return weapon;
 	}
 
-	*/
+	 */
 }

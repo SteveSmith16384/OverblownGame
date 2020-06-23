@@ -6,6 +6,7 @@ public class WeaponSettingsComponent {
 	public static final int WEAPON_BULLET = 1;
 	public static final int WEAPON_GRENADE = 2;
 	public static final int WEAPON_ROCKET = 3;
+	public static final int WEAPON_PUNCH = 4;
 	
 	public int weapon_type;
 	public long shot_interval;
