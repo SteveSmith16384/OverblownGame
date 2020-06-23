@@ -106,7 +106,8 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(weapon);
 
-		this.addComponent(new SecondaryAbilityComponent(Type.Boost, 1000));
+		//this.addComponent(new SecondaryAbilityComponent(Type.Boost, 1000));
+		this.addComponent(new SecondaryAbilityComponent(Type.Jump, 1000));
 		
 		// Add crosshairs
 		Texture weaponTex = new Texture(Gdx.files.internal("crosshairs.png"));		

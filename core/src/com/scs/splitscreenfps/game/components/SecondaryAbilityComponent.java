@@ -2,7 +2,7 @@ package com.scs.splitscreenfps.game.components;
 
 public class SecondaryAbilityComponent {
 
-	public enum Type {Boost};
+	public enum Type {Boost, Jump};
 		
 	public long interval;
 	public long lastShotTime;

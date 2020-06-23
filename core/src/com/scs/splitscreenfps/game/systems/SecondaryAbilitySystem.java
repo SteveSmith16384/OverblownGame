@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.systems;
 
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -21,12 +22,10 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		SecondaryAbilityComponent cc = (SecondaryAbilityComponent)entity.getComponent(SecondaryAbilityComponent.class);
-		//WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
+		SecondaryAbilityComponent ability = (SecondaryAbilityComponent)entity.getComponent(SecondaryAbilityComponent.class);
 
-		long interval = cc.interval;
-
-		if (cc.lastShotTime + interval > System.currentTimeMillis()) {
+		long interval = ability.interval;
+		if (ability.lastShotTime + interval > System.currentTimeMillis()) {
 			return;
 		}
 
@@ -34,14 +33,17 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 		if (player.inputMethod.isAbilityPressed()) {
 			//Settings.p("Shoot at " + System.currentTimeMillis());
-			cc.lastShotTime = System.currentTimeMillis();
+			ability.lastShotTime = System.currentTimeMillis();
 
-			switch (cc.type) {
+			switch (ability.type) {
 			case Boost:
 				performBoost(entity, player);
 				break;
+			case Jump:
+				performPowerJump(entity, player);
+				break;
 			default:
-				throw new RuntimeException("todo");
+				throw new RuntimeException("Unknown ability: " + ability.type);
 			}
 			
 			/*
@@ -97,4 +99,11 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		
 	}
 
+
+	private void performPowerJump(AbstractEntity entity, AbstractPlayersAvatar player) {
+		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		pc.body.activate();		
+		pc.body.applyCentralImpulse( new Vector3(0, 200, 0));
+		
+	}
 }
