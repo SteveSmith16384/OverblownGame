@@ -29,7 +29,7 @@ public class LoadMapLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(5, 1f, 5));
 		this.startPositions.add(new Vector3(5, 1f, 15));
 
-		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
+		Wall floor = new Wall(game.ecs, "Floor", "textures/seamlessTextures2/clover.jpg", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
 				0f, true);
 		game.ecs.addEntity(floor);

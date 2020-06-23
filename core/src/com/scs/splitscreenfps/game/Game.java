@@ -43,7 +43,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.AvoidTheBallsLevel;
+import com.scs.splitscreenfps.game.levels.LoadMapLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -139,8 +139,8 @@ public class Game implements IModule {
 		//currentLevel = new GangBeastsLevel1(this);
 		//currentLevel = new RollingBallLevel(this);
 		//currentLevel = new MapEditorLevel(this);
-		//currentLevel = new LoadMapLevel(this);
-		currentLevel = new AvoidTheBallsLevel(this);
+		currentLevel = new LoadMapLevel(this);
+		//currentLevel = new AvoidTheBallsLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), i);
@@ -148,19 +148,14 @@ public class Game implements IModule {
 
 			//AbstractEntity weapon = EntityFactory.playersWeapon(ecs, players[i]);
 			//ecs.addEntity(weapon);
-		}	
 
-		loadLevel();
-		this.loadAssetsForRescale(); // Need this to load font
-
-		for (int i=0 ; i<players.length ; i++) {
-			//this.currentLevel.setupAvatars(this.players[i], i);
-
-			// Todo - move to where we know size of the map
 			Camera cam = players[i].camera;
 			cam.lookAt(7,  0.4f,  7);
 			cam.update();
-		}
+}	
+
+		loadLevel();
+		this.loadAssetsForRescale(); // Need this to load font
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
 	}

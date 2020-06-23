@@ -2,10 +2,12 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
+import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
@@ -52,7 +55,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		// Model stuff
 		this.addModel(playerIdx, 1);
 		//HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
-		
+
 		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
@@ -66,7 +69,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		PhysicsComponent physics = new PhysicsComponent(player_body);
 		physics.removeIfFallen = false;
 		addComponent(physics);
-		
+
 		this.addComponent(new PositionComponent());
 
 		camera = _viewportData.camera;
@@ -83,23 +86,23 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_BULLET, 300, 1200, 20, 20, 10, 0f, 0f);
 			weapon.kickback_force = 1f;
 			break;
-			
+
 		case WeaponSettingsComponent.WEAPON_GRENADE:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE, 600, 1500, 12, 20, 20, 3f, 6f);
 			weapon.kickback_force = 1f;
 			break;
-			
+
 		case WeaponSettingsComponent.WEAPON_ROCKET:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30, 2f, 15f);
 			weapon.kickback_force = 5f;
 			break;
-			
+
 		default:
 			throw new RuntimeException("Unknown weapon: " + weapon_type);
 		}
 
 		addComponent(weapon);
-		
+
 		// Add crosshairs
 		Texture weaponTex = new Texture(Gdx.files.internal("crosshairs.png"));		
 		Sprite sprite = new Sprite(weaponTex);
@@ -109,8 +112,37 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new PlayerData(playerIdx));
 
-		//todo game.setAvatarColour(this, true);
+		setAvatarColour(this, playerIdx);
 
+	}
+
+
+	private void setAvatarColour(AbstractEntity e, int idx) {
+		// Reset player colours
+		HasModelComponent hasModel = (HasModelComponent)e.getComponent(HasModelComponent.class);
+		ModelInstance instance = hasModel.model;
+		for (int i=0 ; i<instance.materials.size ; i++) {
+			switch (idx) {
+			case 0:
+				//instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.RED));
+				//instance.materials.get(i).set(ColorAttribute.createAmbient(Color.RED));
+				break;
+			case 1:
+				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.MAGENTA));
+				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.MAGENTA));
+				break;
+			case 2:
+				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.RED));
+				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.RED));
+				break;
+			case 3:
+				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.YELLOW));
+				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.YELLOW));
+				break;
+			default:
+				throw new RuntimeException("Todo");
+			}
+		}
 	}
 
 
@@ -134,12 +166,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			anim.animationController = animation;
 			this.addComponent(anim);
 
-			/*
-			for (int i=0 ; i<instance.materials.size ; i++) {
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
-			}
-			 */
 			return instance;
 		}
 		case 1:
@@ -159,14 +185,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			anim.animationController = animation;
 			this.addComponent(anim);
 
-			/*
-			QuantumLeagueLevel.setAvatarColour(e, alive);
-
-			for (int i=0 ; i<instance.materials.size ; i++) {
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
-			}
-			 */
 			return instance;
 		}
 		}

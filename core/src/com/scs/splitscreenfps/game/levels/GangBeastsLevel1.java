@@ -69,20 +69,4 @@ public class GangBeastsLevel1 extends AbstractLevel { // todo - delete this?
 		
 	}
 
-/*
-	public static void setAvatarColour(AbstractEntity e, boolean alive) {
-		// Reset player colours
-		HasModelComponent hasModel = (HasModelComponent)e.getComponent(HasModelComponent.class);
-		ModelInstance instance = hasModel.model;
-		for (int i=0 ; i<instance.materials.size ; i++) {
-			if (alive) {
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.BLACK));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.BLACK));
-			} else {
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.WHITE));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.WHITE));
-			}
-		}
-	}
-*/
 }
