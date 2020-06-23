@@ -1,11 +1,9 @@
 package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
@@ -28,7 +26,9 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
+import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent.Type;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 import ssmith.libgdx.ModelFunctions;
@@ -53,8 +53,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		this.addComponent(md);
 
 		// Model stuff
-		this.addModel(playerIdx, 1);
-		//HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
+		this.addModel(playerIdx);
 
 		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
@@ -74,6 +73,10 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		camera = _viewportData.camera;
 		cameraController = new PersonCameraController(camera, inputMethod);
+
+		addComponent(new PlayerData(playerIdx));
+
+		setAvatarColour(this, playerIdx);
 
 		addComponent(new CanShoot());
 
@@ -103,16 +106,14 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(weapon);
 
+		this.addComponent(new SecondaryAbilityComponent(Type.Boost, 1000));
+		
 		// Add crosshairs
 		Texture weaponTex = new Texture(Gdx.files.internal("crosshairs.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
 		addComponent(hgsc);
-
-		addComponent(new PlayerData(playerIdx));
-
-		setAvatarColour(this, playerIdx);
 
 	}
 
@@ -146,49 +147,23 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	}
 
 
-	private ModelInstance addModel(int playerIdx, int modelType) {
-		AssetManager am = game.assetManager;
+	private ModelInstance addModel(int playerIdx) {
+		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false);
+		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
+		instance.transform.scl(scale);		
+		Vector3 offset = ModelFunctions.getOrigin(instance);
+		offset.y -= .3f; // Hack since model is too high
 
-		switch (modelType) {
-		case 0:
-		{
-			am.load("models/quaternius/Smooth_Male_Shirt.g3db", Model.class);
-			am.finishLoading();
-			Model model = am.get("models/quaternius/Smooth_Male_Shirt.g3db");
-			ModelInstance instance = new ModelInstance(model);
+		HasModelComponent hasModel = new HasModelComponent(instance, offset, 90, scale);
+		hasModel.dontDrawInViewId = playerIdx;
+		this.addComponent(hasModel);
 
-			HasModelComponent hasModel = new HasModelComponent(instance, -.3f, 90, 0.0016f);
-			hasModel.dontDrawInViewId = playerIdx;
-			this.addComponent(hasModel);
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
+		anim.animationController = animation;
+		this.addComponent(anim);
 
-			AnimationController animation = new AnimationController(instance);
-			AnimatedComponent anim = new AnimatedComponent(animation, "HumanArmature|Man_Walk", "HumanArmature|Man_Idle");
-			anim.animationController = animation;
-			this.addComponent(anim);
-
-			return instance;
-		}
-		case 1:
-		{
-			ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false);
-			float scale = ModelFunctions.getScaleForHeight(instance, .8f);
-			instance.transform.scl(scale);		
-			Vector3 offset = ModelFunctions.getOrigin(instance);
-			offset.y -= .3f; // Hack since model is too high
-
-			HasModelComponent hasModel = new HasModelComponent(instance, offset, 90, scale);
-			hasModel.dontDrawInViewId = playerIdx;
-			this.addComponent(hasModel);
-
-			AnimationController animation = new AnimationController(instance);
-			AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
-			anim.animationController = animation;
-			this.addComponent(anim);
-
-			return instance;
-		}
-		}
-		throw new RuntimeException("Unknown modelType: " + modelType);
+		return instance;
 	}
 
 

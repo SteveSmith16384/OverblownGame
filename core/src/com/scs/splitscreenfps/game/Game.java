@@ -60,6 +60,7 @@ import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
+import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
@@ -220,6 +221,8 @@ public class Game implements IModule {
 		ecs.addSystem(physicsSystem);
 		this.respawnSystem = new RespawnPlayerSystem(ecs);
 		ecs.addSystem(new HarmOnContactSystem(this, ecs));
+		ecs.addSystem(new SecondaryAbilitySystem(ecs, this));
+		
 	}
 
 
@@ -282,11 +285,8 @@ public class Game implements IModule {
 		}
 
 		this.ecs.processSystem(BulletSystem.class);
-		/*if (Settings.BUILD_MAP) {
-			this.mapBuilderSystem.process();
-		} else {*/
 		this.ecs.processSystem(ShootingSystem.class);
-		//}
+		this.ecs.processSystem(SecondaryAbilitySystem.class);
 		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();

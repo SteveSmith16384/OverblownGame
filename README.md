@@ -4,7 +4,16 @@ Gameplay video: https://youtu.be/Ega4PZugBy0
 
 Still looking for an actual game to make with it...
 
-Map Editor Controls:-
+## Controls
+* Mouse/keyboard
+* Tested with PS4 controllers
+
+
+### Implemeted Abilities
+* Charge Boost
+
+
+### Map Editor Controls:-
 
 * 1 - Save map
 * B - Size mode

@@ -86,5 +86,11 @@ public class ControllerInputMethod implements IInputMethod {
 	}
 
 
+	@Override
+	public boolean isAbilityPressed() {
+		return this.controller.getAxis(4) > 0.5f;
+	}
+
+
 
 }

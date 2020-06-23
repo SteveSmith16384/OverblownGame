@@ -23,4 +23,6 @@ public interface IInputMethod {
 	boolean isJumpPressed();
 
 	boolean isShootPressed();
+	
+	boolean isAbilityPressed();
 }
