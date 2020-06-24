@@ -1,13 +1,10 @@
-package com.scs.splitscreenfps.pregame;
+package com.scs.splitscreenfps.selectcharacter;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,33 +14,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.utils.Array;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
-import com.scs.splitscreenfps.ControllerManager;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
-import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
-import com.scs.splitscreenfps.game.input.NoInputMethod;
-import com.scs.splitscreenfps.selectcharacter.SelectCharacterScreen;
 
-public class PreGameScreen implements IModule {
+public class SelectCharacterScreen implements IModule {
 
 	private SpriteBatch batch2d;
 	private BitmapFont font_small, font_large;
-	private ControllerManager controllerManager = new ControllerManager(null, 3);
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
+	public List<IInputMethod> inputs;
 	private Sprite logo;
-	private boolean keyboard_player_joined = false;
 
-	public PreGameScreen(BillBoardFPS_Main _main) {
+	public SelectCharacterScreen(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		super();
 
 		main = _main;
+		inputs = _inputs;
 
 		batch2d = new SpriteBatch();
 
@@ -54,16 +45,6 @@ public class PreGameScreen implements IModule {
 		loadAssetsForResize();
 
 		this.appendToLog("Welcome to " + Settings.TITLE);
-
-		this.appendToLog("v" + Settings.VERSION);
-		/*if (Settings.RELEASE_MODE == false) {
-			this.appendToLog("WARNING! Game in debug mode!");
-		}*/
-		//this.appendToLog("Looking for controllers...");
-		this.appendToLog("Click mouse to play with keyboard/mouse");
-		this.appendToLog("Press X to play with controller");
-		this.appendToLog("F1 to toggle full-screen");
-		this.appendToLog("To SPACE to start once all players have joined!");
 
 		//BillBoardFPS_Main.audio.startMusic("sfx/battleThemeA.mp3");
 	}
@@ -90,7 +71,7 @@ public class PreGameScreen implements IModule {
 		logo = new Sprite(logoTex);
 		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 		logo.setColor(0.4f, 0.4f, 0.4f, 1);
-*/
+		 */
 	}
 
 
@@ -100,23 +81,10 @@ public class PreGameScreen implements IModule {
 			System.exit(0);
 		}
 
-		controllerManager.checkForControllers();
-
 		if (Settings.AUTO_START) {
-			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
-			inputs.add(new MouseAndKeyboardInputMethod());
-			Array<Controller> allControllers = this.controllerManager.getAllControllers();
-			for (Controller c : allControllers) {
-				inputs.add(new ControllerInputMethod(c));
-			}
-			if (inputs.size() == 1) {
-				inputs.add(new NoInputMethod());
-			}
 			main.next_module = new Game(main, inputs);
 			return;
 		}
-
-		controllerManager.checkForControllers();
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -131,42 +99,23 @@ public class PreGameScreen implements IModule {
 			logo.draw(batch2d);
 		}
 
-		// Show controllers
-		int y = Gdx.graphics.getHeight()-10;// - (int)this.font_large.getLineHeight()*1;
-		Array<Controller> allControllers = this.controllerManager.getAllControllers();
-		int idx = 1;
-		for (Controller c : allControllers) {
-			font_large.setColor(1,  1,  1,  1);
-			font_large.draw(batch2d, "Controller " + idx, 10, y);
-
-			if (this.controllerManager.isControllerInGame(c)) {
-				font_large.setColor(0,  1,  0,  1);
-				font_large.draw(batch2d, "IN GAME!", 10, y-this.font_large.getLineHeight());
-			} else {
-				font_large.setColor(1,  0,  0,  1);
-				font_large.draw(batch2d, "Not in game - Press X to Join!", 10, y-this.font_large.getLineHeight());
-			}
-			y -= this.font_large.getLineHeight()*2;
-			idx++;
-		}
-		if (allControllers.size == 0) {
-			font_large.setColor(1,  1,  1,  1);
-			font_large.draw(batch2d, "No Controllers Found", 10, y);
-		}
 
 		// Draw log
 		font_small.setColor(1,  1,  1,  1);
-		y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
+		int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
 		for (String s :this.log) {
 			font_small.draw(batch2d, s, 10, y);
 			y -= this.font_small.getLineHeight();
 		}
 
-		// Draw game options
-		font_small.setColor(0,  1,  1,  1);
-		int x = (int)(Gdx.graphics.getWidth() * 0.7f);
-		y = (int)(Gdx.graphics.getHeight()*.3f);
-		font_small.draw(batch2d, "PRESS SPACE TO START!", x, y);
+		if (Settings.TEST_SCREEN_COORDS) {
+			font_small.draw(batch2d, "TL", 20, 20);
+			font_small.draw(batch2d, "50", 50, 50);
+			font_small.draw(batch2d, "150", 150, 150);
+			font_small.draw(batch2d, "TR", Gdx.graphics.getBackBufferWidth()-20, 20);
+			font_small.draw(batch2d, "BL", 10, Gdx.graphics.getBackBufferHeight()-20);
+			font_small.draw(batch2d, "BR", Gdx.graphics.getBackBufferWidth()-20, Gdx.graphics.getBackBufferHeight()-20);
+		}
 
 		batch2d.end();
 
@@ -181,38 +130,12 @@ public class PreGameScreen implements IModule {
 		}*/
 
 		batch2d.end();
-
-		readKeyboard();
-	}
-
-
-	private void readKeyboard() {
-		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && keyboard_player_joined == false) {
-			this.keyboard_player_joined = true;
-			this.appendToLog("Mouse/Keyboard player joined!");
-			BillBoardFPS_Main.audio.play("sfx/Plug-in.wav");
-		} else if (Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-			this.startGame();
-		}
 	}
 
 
 	private void startGame() {
-		List<IInputMethod> inputs = new ArrayList<IInputMethod>();
-		if (keyboard_player_joined) {
-			inputs.add(new MouseAndKeyboardInputMethod());
-		}
-		for (Controller c : controllerManager.getInGameControllers()) {
-			if (inputs.size() <= 2) { // Max 2 players for now
-				inputs.add(new ControllerInputMethod(c));
-			}
-		}
-		if (inputs.size() > 0) {
-			//main.next_module = new Game(main, inputs);
-			main.next_module = new SelectCharacterScreen(main, inputs);
-		} else {
-			this.appendToLog("No players have joined!");
-		}
+		// Check all players have selected a character
+		main.next_module = new Game(main, inputs);
 	}
 
 

@@ -1,7 +1,5 @@
 package com.scs.splitscreenfps.game.systems;
 
-import java.nio.charset.MalformedInputException;
-
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;

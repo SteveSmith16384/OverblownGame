@@ -3,6 +3,7 @@ package com.scs.splitscreenfps.game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -83,6 +84,7 @@ public class Game implements IModule {
 	private int game_stage;
 	private long restartTime;
 	private List<AbstractEntity> losers = new ArrayList<AbstractEntity>();
+	private List<String> log = new LinkedList<String>();
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
@@ -101,7 +103,6 @@ public class Game implements IModule {
 	private btCollisionDispatcher dispatcher;
 	public btDiscreteDynamicsWorld dynamicsWorld;
 	public boolean physics_enabled = true;
-
 	private long startPhysicsTime;
 
 	// Temp vars
@@ -153,12 +154,14 @@ public class Game implements IModule {
 			Camera cam = players[i].camera;
 			cam.lookAt(7,  0.4f,  7);
 			cam.update();
-}	
+		}	
 
 		loadLevel();
 		this.loadAssetsForRescale(); // Need this to load font
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
+		
+		this.appendToLog("Game about to start...");
 	}
 
 
@@ -222,7 +225,7 @@ public class Game implements IModule {
 		this.respawnSystem = new RespawnPlayerSystem(ecs);
 		ecs.addSystem(new HarmOnContactSystem(this, ecs));
 		ecs.addSystem(new SecondaryAbilitySystem(ecs, this));
-		
+
 	}
 
 
@@ -335,6 +338,16 @@ public class Game implements IModule {
 			font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
 			font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
 			//font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
+
+			if (currentViewId == 0 ) {
+				// Draw log
+				font_small.setColor(1,  1,  1,  1);
+				int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
+				for (String s :this.log) {
+					font_small.draw(batch2d, s, 10, y);
+					y -= this.font_small.getLineHeight();
+				}
+			}
 
 			/*if (Settings.TEST_SCREEN_COORDS) {
 				font.draw(batch2d, "TL", 20, 20);
@@ -499,7 +512,7 @@ public class Game implements IModule {
 
 	public void explosion(final Vector3 pos, float range, float force, float width_height) {
 		//Settings.p("Explosion at " + pos);
-		
+
 		main.audio.play("sfx/explosion1.mp3");
 
 		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos, width_height);
@@ -548,6 +561,14 @@ public class Game implements IModule {
 		}
 
 		return null;
+	}
+
+
+	private void appendToLog(String s) {
+		this.log.add(s);
+		while (log.size() > 6) {
+			log.remove(0);
+		}
 	}
 
 
