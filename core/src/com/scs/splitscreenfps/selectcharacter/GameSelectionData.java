@@ -8,6 +8,7 @@ public class GameSelectionData {
 	
 	public GameSelectionData(int num_players) {
 		this.character = new int[num_players];
+		this.selected_character = new boolean[num_players];
 	}
 	
 }
