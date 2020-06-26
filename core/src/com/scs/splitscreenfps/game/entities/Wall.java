@@ -26,16 +26,15 @@ public class Wall extends AbstractEntity {
 	
 	
 	// Note that the mass gets multiplied by the size
+	// Positions are from the centre
 	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile) {
 		super(ecs, name);
 
 		Texture tex = new Texture(tex_filename);
 		//Texture tex = new Texture("textures/neon/tron_green.jpg");
-		//Texture tex = new Texture("textures/seamlessTextures2/IMGP5482_seamless.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();
-		//Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
