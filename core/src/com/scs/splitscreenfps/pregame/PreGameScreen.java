@@ -22,11 +22,13 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.ControllerManager;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.AvatarFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
+import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
 import com.scs.splitscreenfps.selectcharacter.SelectCharacterScreen;
 
 public class PreGameScreen implements IModule {
@@ -112,7 +114,10 @@ public class PreGameScreen implements IModule {
 			if (inputs.size() == 1) {
 				inputs.add(new NoInputMethod());
 			}
-			main.next_module = new Game(main, inputs);
+			GameSelectionData gameSelectionData = new GameSelectionData(2);
+			gameSelectionData.character[0] = Settings.AUTOSTART_CHARACTER;//AvatarFactory.CHAR_PHARTA;
+			gameSelectionData.character[1] = Settings.AUTOSTART_CHARACTER;//AvatarFactory.CHAR_PHARTA;
+			main.next_module = new Game(main, inputs, gameSelectionData);
 			return;
 		}
 

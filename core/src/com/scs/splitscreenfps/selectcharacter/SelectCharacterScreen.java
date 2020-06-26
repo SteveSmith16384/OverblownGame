@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.AvatarFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
@@ -29,12 +30,19 @@ public class SelectCharacterScreen implements IModule {
 	private BillBoardFPS_Main main;
 	public List<IInputMethod> inputs;
 	private Sprite logo;
+	private GameSelectionData gameSelectionData;
+
+	// Gfx pos data
+	private int spacing_x;
+	private Sprite arrow;
 
 	public SelectCharacterScreen(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		super();
 
 		main = _main;
 		inputs = _inputs;
+
+		this.gameSelectionData = new GameSelectionData(inputs.size());
 
 		batch2d = new SpriteBatch();
 
@@ -45,6 +53,8 @@ public class SelectCharacterScreen implements IModule {
 		loadAssetsForResize();
 
 		this.appendToLog("Welcome to " + Settings.TITLE);
+
+		spacing_x = Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
 
 		//BillBoardFPS_Main.audio.startMusic("sfx/battleThemeA.mp3");
 	}
@@ -72,6 +82,8 @@ public class SelectCharacterScreen implements IModule {
 		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 		logo.setColor(0.4f, 0.4f, 0.4f, 1);
 		 */
+
+		arrow = new Sprite(new Texture(Gdx.files.internal("blue_arrow_down.png")));
 	}
 
 
@@ -81,8 +93,36 @@ public class SelectCharacterScreen implements IModule {
 			System.exit(0);
 		}
 
-		if (Settings.AUTO_START) {
+/*		if (Settings.AUTO_START) {
 			main.next_module = new Game(main, inputs);
+			return;
+		}
+*/
+		// Read inputs
+		boolean all_selected = true;
+		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
+			IInputMethod input = this.inputs.get(playerIdx);
+			if (this.gameSelectionData.selected_character[playerIdx] == false) {
+				all_selected = false;
+				if (input.getStrafeLeft() > .5f) {
+					this.gameSelectionData.character[playerIdx]--;
+					if (this.gameSelectionData.character[playerIdx] < 0) {
+						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS;
+					}
+				} else if (input.getStrafeRight() > .5f) {
+					this.gameSelectionData.character[playerIdx]++;
+					if (this.gameSelectionData.character[playerIdx] > AvatarFactory.MAX_CHARS) {
+						this.gameSelectionData.character[playerIdx] = 0;
+					}
+				} 
+			}
+			if (input.isShootPressed()) {
+				this.gameSelectionData.selected_character[playerIdx] = true;
+			}
+		}
+		
+		if (all_selected) {
+			this.startGame();
 			return;
 		}
 
@@ -99,9 +139,25 @@ public class SelectCharacterScreen implements IModule {
 			logo.draw(batch2d);
 		}
 
+		font_small.setColor(1,  1,  1,  1);
+
+		// Draw characters
+		int y_pos =  Settings.LOGICAL_SIZE_PIXELS/2;
+		for (int i=0 ; i<AvatarFactory.MAX_CHARS ; i++) {
+			int x_pos = spacing_x * (i+1);
+			font_small.draw(batch2d, AvatarFactory.getName(i), x_pos, y_pos);
+		}
+
+		// Draw arrows
+		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
+			y_pos = y_pos + (30*playerIdx);
+			int x_pos = spacing_x * (this.gameSelectionData.character[playerIdx]+1);
+
+			arrow.setBounds(x_pos,  y_pos , 30, 30);
+			arrow.draw(batch2d);
+		}
 
 		// Draw log
-		font_small.setColor(1,  1,  1,  1);
 		int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
 		for (String s :this.log) {
 			font_small.draw(batch2d, s, 10, y);
@@ -135,7 +191,7 @@ public class SelectCharacterScreen implements IModule {
 
 	private void startGame() {
 		// Check all players have selected a character
-		main.next_module = new Game(main, inputs);
+		main.next_module = new Game(main, inputs, gameSelectionData);
 	}
 
 

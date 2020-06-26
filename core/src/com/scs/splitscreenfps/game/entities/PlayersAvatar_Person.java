@@ -26,9 +26,6 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
-import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
-import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent.Type;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 import ssmith.libgdx.ModelFunctions;
@@ -43,10 +40,10 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	private Vector3 tmpVector = new Vector3();
 	private Vector2 tmpVec2 = new Vector2();
 
-	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int modelType) {
+	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
-		game = _game;
+		//game = _game;
 		inputMethod = _inputMethod;
 
 		PlayerMovementData md = new PlayerMovementData();
@@ -80,40 +77,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new CanShoot());
 
-		WeaponSettingsComponent weapon;
-
-		int weapon_type = WeaponSettingsComponent.WEAPON_PUNCH;
-
-		switch (weapon_type) {
-		case WeaponSettingsComponent.WEAPON_BULLET:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_BULLET, 300, 1200, 20, 20, 10, 0f, 0f);
-			weapon.kickback_force = 1f;
-			break;
-
-		case WeaponSettingsComponent.WEAPON_GRENADE:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE, 600, 1500, 12, 20, 20, 3f, 6f);
-			weapon.kickback_force = 1f;
-			break;
-
-		case WeaponSettingsComponent.WEAPON_ROCKET:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30, 2f, 15f);
-			weapon.kickback_force = 5f;
-			break;
-
-		case WeaponSettingsComponent.WEAPON_PUNCH:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 1, 60, 0f, 0f);
-			//weapon.kickback_force = 5f;
-			break;
-
-		default:
-			throw new RuntimeException("Unknown weapon: " + weapon_type);
-		}
-
-		addComponent(weapon);
-
-		//this.addComponent(new SecondaryAbilityComponent(Type.Boost, 1000));
-		this.addComponent(new SecondaryAbilityComponent(Type.Jump, 1000));
-		
 		// Add crosshairs
 		Texture weaponTex = new Texture(Gdx.files.internal("crosshairs.png"));		
 		Sprite sprite = new Sprite(weaponTex);

@@ -40,7 +40,6 @@ import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
-import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
@@ -64,6 +63,7 @@ import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
 import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
+import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
 
 /**
  * This is the main game, where the players move about n'stuff.
@@ -85,6 +85,7 @@ public class Game implements IModule {
 	private long restartTime;
 	private List<AbstractEntity> losers = new ArrayList<AbstractEntity>();
 	private List<String> log = new LinkedList<String>();
+	private GameSelectionData gameSelectionData;
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
@@ -110,9 +111,10 @@ public class Game implements IModule {
 	private Vector3 tmp_to = new Vector3();
 	private Vector3 tmp_to2 = new Vector3();
 
-	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
+	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs, GameSelectionData _gameSelectionData) {
 		main = _main;
 		inputs = _inputs;
+		gameSelectionData = _gameSelectionData;
 
 		game_stage = 0;
 		batch2d = new SpriteBatch();
@@ -145,7 +147,8 @@ public class Game implements IModule {
 		currentLevel = new IliosLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
-			players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), i);
+			//players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
+			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
 			ecs.addEntity(players[i]);
 
 			//AbstractEntity weapon = EntityFactory.playersWeapon(ecs, players[i]);
@@ -264,7 +267,7 @@ public class Game implements IModule {
 
 		if (this.game_stage == 1) {
 			if (this.restartTime < System.currentTimeMillis()) {
-				this.main.next_module = new Game(main, this.inputs);
+				this.main.next_module = new Game(main, this.inputs, gameSelectionData);
 				return;
 			}
 		}
