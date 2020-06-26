@@ -13,8 +13,9 @@ public class AvatarFactory {
 	public static final int CHAR_BOOMFIST = 1;
 	public static final int CHAR_WINSTON = 2;
 	public static final int CHAR_TRACY = 3;
+	public static final int CHAR_BASTION = 4;
 
-	public static final int MAX_CHARS = 4;
+	public static final int MAX_CHARS = 5;
 
 	public static String getName(int id) {
 		switch (id) {
@@ -22,8 +23,9 @@ public class AvatarFactory {
 		case CHAR_BOOMFIST: return "Boomfist";
 		case CHAR_WINSTON: return "Winston";
 		case CHAR_TRACY: return "Tracey";
+		case CHAR_BASTION: return "Bastion";
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unhandled character id: " + id);
 		}
 	}
 
@@ -35,41 +37,49 @@ public class AvatarFactory {
 		int weapon_type = -1;
 		switch (character) {
 		case CHAR_PHARTA:
-			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET;
+			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER;
 			break;
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_PUNCH;
 			avatar.addComponent(new SecondaryAbilityComponent(Type.Boost, 1000));
 			break;
 		case CHAR_WINSTON:
-			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE;
+			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(Type.Jump, 1000));
 			break;
-		case CHAR_TRACY:
-			weapon_type = WeaponSettingsComponent.WEAPON_BULLET;
+		/*case CHAR_TRACY:
+			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
+			break;*/
+		case CHAR_BASTION:
+			weapon_type = WeaponSettingsComponent.WEAPON_CANNON;
 			break;
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unhandled character: " + character);
 		}
 
 		switch (weapon_type) {
-		case WeaponSettingsComponent.WEAPON_BULLET:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_BULLET, 300, 1200, 20, 20, 10, 0f, 0f);
+		case WeaponSettingsComponent.WEAPON_RIFLE:
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_RIFLE, 300, 1200, 20, 20, 10, 0f, 0f);
 			weapon.kickback_force = 1f;
 			break;
 
-		case WeaponSettingsComponent.WEAPON_GRENADE:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE, 600, 1500, 12, 20, 20, 3f, 6f);
+		case WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER:
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER, 600, 1500, 12, 20, 20, 3f, 6f);
 			weapon.kickback_force = 1f;
 			break;
 
-		case WeaponSettingsComponent.WEAPON_ROCKET:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET, 900, 2000, 6, 20, 30, 2f, 15f);
+		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER:
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 900, 2000, 6, 20, 30, 2f, 15f);
 			weapon.kickback_force = 5f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_PUNCH:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 1, 60, 0f, 0f);
+			//weapon.kickback_force = 5f;
+			break;
+
+		case WeaponSettingsComponent.WEAPON_CANNON:
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_CANNON, 300, 500, 1500, 20, 60, 0f, 0f);
 			//weapon.kickback_force = 5f;
 			break;
 

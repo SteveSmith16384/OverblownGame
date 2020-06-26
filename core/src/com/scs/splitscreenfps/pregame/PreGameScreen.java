@@ -114,8 +114,9 @@ public class PreGameScreen implements IModule {
 			if (inputs.size() == 1) {
 				inputs.add(new NoInputMethod());
 			}
-			GameSelectionData gameSelectionData = new GameSelectionData(1);
-			gameSelectionData.character[0] = AvatarFactory.CHAR_PHARTA;
+			GameSelectionData gameSelectionData = new GameSelectionData(2);
+			gameSelectionData.character[0] = Settings.AUTOSTART_CHARACTER;//AvatarFactory.CHAR_PHARTA;
+			gameSelectionData.character[1] = Settings.AUTOSTART_CHARACTER;//AvatarFactory.CHAR_PHARTA;
 			main.next_module = new Game(main, inputs, gameSelectionData);
 			return;
 		}

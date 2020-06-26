@@ -27,6 +27,7 @@ import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 
 import ssmith.libgdx.GraphicsHelper;
@@ -140,7 +141,7 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createPunch(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+	public static AbstractEntity createFist(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Punch");
 
 		PositionComponent pos = new PositionComponent(start);
@@ -416,7 +417,59 @@ public class EntityFactory {
 		return pillar;
 	}
 
-	/*
+
+	public static AbstractEntity createCannonball(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(ecs, "Cannonball");
+
+		PositionComponent pos = new PositionComponent(start);
+		e.addComponent(pos);
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
+
+		HasDecal hasDecal = new HasDecal();
+		if (playerData.playerIdx == 0) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+		} else if (playerData.playerIdx == 1) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
+		} else if (playerData.playerIdx == 2) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+		} else if (playerData.playerIdx == 3) {
+			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+		} else {
+			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
+		}
+
+		hasDecal.decal.setPosition(pos.position);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = true;
+		e.addComponent(hasDecal);
+
+		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, false));
+
+		e.addComponent(new RemoveEntityAfterTimeComponent(4));
+
+		// Add physics
+		btSphereShape shape = new btSphereShape(.2f);
+		btRigidBody body = new btRigidBody(.2f, null, shape);
+		body.userData = e;
+		body.setFriction(0.6f);
+		body.setRestitution(.8f);
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.force = dir.scl(4f);
+		e.addComponent(pc);
+
+		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+
+		return e;
+	}
+
+
+/*
 	public static AbstractEntity playersWeapon(BasicECS ecs, AbstractEntity player) {
 		AbstractEntity weapon = new AbstractEntity(ecs, "PlayersWeapon");
 
