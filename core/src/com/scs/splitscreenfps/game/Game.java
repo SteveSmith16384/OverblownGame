@@ -541,7 +541,7 @@ public class Game implements IModule {
 				if (distance <= range) {
 					pc.body.activate();
 					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(force));
-					Settings.p("Moving " + e.name);
+					//Settings.p("Moving " + e.name);
 				}
 			}
 		}

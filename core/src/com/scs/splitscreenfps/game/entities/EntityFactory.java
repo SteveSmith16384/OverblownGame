@@ -503,16 +503,15 @@ public class EntityFactory {
 		float scale = ModelFunctions.getScaleForWidth(instance, 1f);
 		instance.transform.scale(scale, scale, scale);
 		
-		/* todo
-		if (axis != null) {
-			instance.transform.rotate(axis, degrees);
-		}*/
-
 		HasModelComponent hasModel = new HasModelComponent(instance, scale);
 		hasModel.positionOffsetToOrigin = ModelFunctions.getOrigin(instance).scl(-1);
 		entity.addComponent(hasModel);
 		
 		instance.transform.setTranslation(posX, posY, posZ); // Must be AFTER we've got the origin!
+
+		if (rotYDegrees != 0) {
+			instance.transform.rotate(Vector3.Y, rotYDegrees);
+		}
 
 		entity.addComponent(new PositionComponent());
 

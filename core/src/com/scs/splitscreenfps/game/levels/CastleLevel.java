@@ -32,7 +32,7 @@ public class CastleLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, FLOOR_SIZE-2));
 		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, 1));
 
-		Wall floor = new Wall(game.ecs, "Floor", "textures/neon/tron_green.jpg", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
+		Wall floor = new Wall(game.ecs, "Floor", "textures/seamlessTextures2/clover.jpg", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
 				0f, true);
 		game.ecs.addEntity(floor);
@@ -53,7 +53,7 @@ public class CastleLevel extends AbstractLevel {
 					int code = Integer.parseInt(items[0].trim());
 					int angle = 0;
 					if (items.length > 1) {
-						Integer.parseInt(items[1].trim());
+						angle = Integer.parseInt(items[1].trim());
 					}
 					addItem(col, row, code, angle);
 				}
@@ -68,13 +68,13 @@ public class CastleLevel extends AbstractLevel {
 		case 0:
 			// Do nothing
 			break;
-		case 1:
+		case 1: // Edge
 			AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wall.g3db", col, 0, row, angle, SECTION_MASS);
 			game.ecs.addEntity(entity);
 			break;
-		case 2:
+		case 2:  // Corner
 			AbstractEntity corner = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", col, 0, row, angle, SECTION_MASS);
-			game.ecs.addEntity(corner);
+			//game.ecs.addEntity(corner);
 			break;
 		default:
 			//throw new RuntimeException("Unknown code: " + code);
