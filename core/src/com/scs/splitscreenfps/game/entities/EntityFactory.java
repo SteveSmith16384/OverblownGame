@@ -499,9 +499,6 @@ public class EntityFactory {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, true);
-		instance.transform.setTranslation(posX, posY, posZ);
-
-		entity.addComponent(new PositionComponent());
 
 		float scale = ModelFunctions.getScaleForWidth(instance, 1f);
 		instance.transform.scale(scale, scale, scale);
@@ -511,9 +508,15 @@ public class EntityFactory {
 			instance.transform.rotate(axis, degrees);
 		}*/
 
-		HasModelComponent model = new HasModelComponent(instance, scale);
-		entity.addComponent(model);
+		HasModelComponent hasModel = new HasModelComponent(instance, scale);
+		hasModel.positionOffsetToOrigin = ModelFunctions.getOrigin(instance).scl(-1);
+		entity.addComponent(hasModel);
 		
+		instance.transform.setTranslation(posX, posY, posZ); // Must be AFTER we've got the origin!
+
+		entity.addComponent(new PositionComponent());
+
+		// Calc BB for physics box
 		BoundingBox bb = new BoundingBox();
 		instance.calculateBoundingBox(bb);
 		bb.mul(instance.transform);

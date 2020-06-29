@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.UBJsonReader;
+import com.scs.splitscreenfps.Settings;
 
 public class ModelFunctions {
 
@@ -64,9 +65,18 @@ public class ModelFunctions {
 	public static void getOrigin(ModelInstance model, Vector3 out) {
 		BoundingBox bb = new BoundingBox();
 		model.calculateBoundingBox(bb);
+		
+		if (Settings.STRICT) {
+			Vector3 vec = new Vector3();
+			model.transform.getTranslation(vec);
+			if (vec.len() != 0) {
+				throw new RuntimeException("Model must be at 0,0,0 to get correct origin!");
+			}
+		}
+		
 		bb.mul(model.transform);
 		bb.getCenter(out);
-		out.y -= bb.getHeight()/2; // Make origin at the bottom of the model
+		// NO! Origin must be in middle for physics -  out.y -= bb.getHeight()/2; // Make origin at the bottom of the model
 	}
 	
 	
