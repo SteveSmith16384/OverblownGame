@@ -69,32 +69,34 @@ public class DrawModelSystem extends AbstractSystem {
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+		if (Settings.STRICT) {
+			if (posData == null) {
+				throw new RuntimeException(entity + " has no PositionComponent");
+			}
+		}
 		if (pc != null) { 
 			// Put model in same place as physics body
 			pc.body.getWorldTransform(mat);
 			model.model.transform.set(mat);
 			model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
-			if (posData != null) {
-				// Set model position based on physics object
-				Matrix4 mat = pc.body.getWorldTransform();
-				mat.getTranslation(posData.position);
-			}
+			//if (posData != null) {
+			// Set model position based on physics object
+			Matrix4 mat = pc.body.getWorldTransform(); // todo - cache
+			mat.getTranslation(posData.position);
+			//}
 		} //else {
-		if (posData != null) {
-			Vector3 position = posData.position;
-			tmpOffset.set(position);
-			tmpOffset.add(model.offset);
-			model.model.transform.setToTranslation(tmpOffset);
-			model.model.transform.scl(model.scale);
-			model.model.transform.rotate(Vector3.Y, posData.angle_Y_degs+model.angleYOffset);
-			if (posData.angle_x_degrees != 0) {
-				model.model.transform.rotate(Vector3.X, posData.angle_x_degrees);
-			}
-			// Only draw if in frustum 
-			if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
-				return;
-			}
-		} else {
+		tmpOffset.set(model.positionOffsetToOrigin);
+		//if (posData != null) {
+		//Vector3 position = posData.position;
+		tmpOffset.add(posData.position);
+		model.model.transform.setToTranslation(tmpOffset);
+		model.model.transform.scl(model.scale);
+		model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+		// Only draw if in frustum 
+		if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
+			//return; todo - check if bounds are in frustum!
+		}
+		/*} else {
 			if (model.always_draw == false) {
 				// Only draw if in frustum 
 				if (model.bb == null) {
@@ -106,7 +108,7 @@ public class DrawModelSystem extends AbstractSystem {
 					//return; todo - fix
 				}
 			}
-		}
+		}*/
 		//}
 		modelBatch.render(model.model, environment);
 	}

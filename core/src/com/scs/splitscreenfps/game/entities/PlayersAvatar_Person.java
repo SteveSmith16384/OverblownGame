@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -39,6 +40,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	public PersonCameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
 	private Vector2 tmpVec2 = new Vector2();
+	//private Matrix4 tmpMat = new Matrix4();
 
 	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
@@ -140,14 +142,21 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		checkMovementInput();
 		cameraController.update();
 
-		HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
-		//if (hasModel != null) {
-			// Rotate model to direction of camera
-			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
-			tmpVec2.set(camera.direction.x, camera.direction.z);
-			pos.angle_Y_degs = -tmpVec2.angle();
-		//}
+		// Position camera
+		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
+		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+		//PhysicsComponent physics = (PhysicsComponent)this.getComponent(PhysicsComponent.class);
+		//physics.body.getWorldTransform(tmpMat);
+		//tmpMat.getTranslation(tmpVector);
+		//camera.position.set(tmpVector.x, tmpVector.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, tmpVector.z);
 
+		//HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
+		//if (hasModel != null) {
+		// Rotate model to direction of camera
+		//PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
+		tmpVec2.set(camera.direction.x, camera.direction.z);
+		posData.angle_y_degrees = -tmpVec2.angle();
+		//}
 	}
 
 
@@ -178,10 +187,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		if (this.inputMethod.isJumpPressed()) {
 			movementData.jumpPressed = true;
 		}
-
-		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
-		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
-
 	}
 
 }

@@ -1,18 +1,15 @@
 package com.scs.splitscreenfps.game.components;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Needed for entities that either don't have a PhysicsComponent, or need extra adjustments after
- * position to physics component.
+ * Stores extra position data.  For entities with a physics body, the position is overwritten by the position of the physics body.
  *
  */
 public class PositionComponent {
 
 	public Vector3 position;
-	public float angle_Y_degs; 
-	public float angle_x_degrees;
+	public float angle_y_degrees;
 
 	public PositionComponent() {
 		this.position = new Vector3();
@@ -33,7 +30,7 @@ public class PositionComponent {
 		this(v.x, v.y, v.z);
 	}
 	
-	
+	/*
 	public GridPoint2 getMapPos() {
 		float x = (position.x);
 		float y = position.z;
@@ -41,5 +38,5 @@ public class PositionComponent {
 		return new GridPoint2((int)x, (int)y) ;
 
 	}
-	
+	*/
 }

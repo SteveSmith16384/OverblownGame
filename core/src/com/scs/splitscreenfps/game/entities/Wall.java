@@ -17,6 +17,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class Wall extends AbstractEntity {
 
@@ -86,7 +87,7 @@ public class Wall extends AbstractEntity {
 		groundObject.setWorldTransform(instance.transform);
 		this.addComponent(new PhysicsComponent(groundObject));
 
-		//this.addComponent(new AffectedByExplosionComponent());
+		this.addComponent(new PositionComponent());
 	}
 
 }

@@ -40,8 +40,7 @@ public class EntityFactory {
 	public static AbstractEntity createBullet(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Bullet");
 
-		//scs new PositionComponent pos = new PositionComponent(start);
-		//e.addComponent(pos);
+		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -92,8 +91,7 @@ public class EntityFactory {
 	public static AbstractEntity createRocket(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Rocket");
 
-		//scs new PositionComponent pos = new PositionComponent(start);
-		//e.addComponent(pos);
+		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -145,8 +143,7 @@ public class EntityFactory {
 	public static AbstractEntity createFist(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Punch");
 
-		//scs new PositionComponent pos = new PositionComponent(start);
-		//scs new e.addComponent(pos);
+		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -199,8 +196,7 @@ public class EntityFactory {
 	public static AbstractEntity createGrenade(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Grenade");
 
-		//scs new PositionComponent pos = new PositionComponent(start);
-		//e.addComponent(pos);
+		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -419,8 +415,7 @@ public class EntityFactory {
 	public static AbstractEntity createCannonball(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Cannonball");
 
-		//scs new PositionComponent pos = new PositionComponent(start);
-		//scs new e.addComponent(pos);
+		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -506,8 +501,7 @@ public class EntityFactory {
 		ModelInstance instance = ModelFunctions.loadModel(filename, true);
 		instance.transform.setTranslation(posX, posY, posZ);
 
-		//scs new PositionComponent pos = new PositionComponent(new Vector3(posX, posY, posZ));
-		//entity.addComponent(pos);
+		entity.addComponent(new PositionComponent());
 
 		float scale = ModelFunctions.getScaleForWidth(instance, 1f);
 		instance.transform.scale(scale, scale, scale);

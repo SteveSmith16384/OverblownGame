@@ -32,11 +32,6 @@ public class PlayerMovementSystem extends AbstractSystem {
 		PlayerMovementData movementData = (PlayerMovementData)entity.getComponent(PlayerMovementData.class);
 		PhysicsComponent physics = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 
-		// Set model position based on physics object
-		//PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
-		// scs new Matrix4 mat = physics.body.getWorldTransform();
-		// scs new mat.getTranslation(pos.position);
-
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 		if (playerData.health <= 0) {
 			return;
