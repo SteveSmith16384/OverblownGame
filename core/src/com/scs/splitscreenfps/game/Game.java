@@ -157,7 +157,7 @@ public class Game implements IModule {
 			//ecs.addEntity(weapon);
 
 			Camera cam = players[i].camera;
-			cam.lookAt(7,  0.4f,  7);
+			//cam.lookAt(7, 0.4f, 7); todo - makes camera slightly slanted?
 			cam.update();
 		}	
 
