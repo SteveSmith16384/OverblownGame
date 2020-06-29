@@ -140,13 +140,13 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		checkMovementInput();
 		cameraController.update();
 
-		// Rotate model to direction of camera
 		HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
-		if (hasModel != null) {
+		//if (hasModel != null) {
+			// Rotate model to direction of camera
 			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
 			tmpVec2.set(camera.direction.x, camera.direction.z);
 			pos.angle_Y_degs = -tmpVec2.angle();
-		}
+		//}
 
 	}
 

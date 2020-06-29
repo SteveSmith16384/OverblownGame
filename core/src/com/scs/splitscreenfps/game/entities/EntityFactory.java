@@ -40,8 +40,8 @@ public class EntityFactory {
 	public static AbstractEntity createBullet(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Bullet");
 
-		PositionComponent pos = new PositionComponent(start);
-		e.addComponent(pos);
+		//scs new PositionComponent pos = new PositionComponent(start);
+		//e.addComponent(pos);
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -92,8 +92,8 @@ public class EntityFactory {
 	public static AbstractEntity createRocket(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Rocket");
 
-		PositionComponent pos = new PositionComponent(start);
-		e.addComponent(pos);
+		//scs new PositionComponent pos = new PositionComponent(start);
+		//e.addComponent(pos);
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -145,8 +145,8 @@ public class EntityFactory {
 	public static AbstractEntity createFist(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Punch");
 
-		PositionComponent pos = new PositionComponent(start);
-		e.addComponent(pos);
+		//scs new PositionComponent pos = new PositionComponent(start);
+		//scs new e.addComponent(pos);
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -199,8 +199,8 @@ public class EntityFactory {
 	public static AbstractEntity createGrenade(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Grenade");
 
-		PositionComponent pos = new PositionComponent(start);
-		e.addComponent(pos);
+		//scs new PositionComponent pos = new PositionComponent(start);
+		//e.addComponent(pos);
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -218,7 +218,7 @@ public class EntityFactory {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
 
-		hasDecal.decal.setPosition(pos.position);
+		// scs new hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
@@ -419,8 +419,8 @@ public class EntityFactory {
 	public static AbstractEntity createCannonball(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(ecs, "Cannonball");
 
-		PositionComponent pos = new PositionComponent(start);
-		e.addComponent(pos);
+		//scs new PositionComponent pos = new PositionComponent(start);
+		//scs new e.addComponent(pos);
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
@@ -438,7 +438,7 @@ public class EntityFactory {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
 
-		hasDecal.decal.setPosition(pos.position);
+		// scs new hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
@@ -506,8 +506,8 @@ public class EntityFactory {
 		ModelInstance instance = ModelFunctions.loadModel(filename, true);
 		instance.transform.setTranslation(posX, posY, posZ);
 
-		PositionComponent pos = new PositionComponent(new Vector3(posX, posY, posZ));
-		entity.addComponent(pos);
+		//scs new PositionComponent pos = new PositionComponent(new Vector3(posX, posY, posZ));
+		//entity.addComponent(pos);
 
 		float scale = ModelFunctions.getScaleForWidth(instance, 1f);
 		instance.transform.scale(scale, scale, scale);

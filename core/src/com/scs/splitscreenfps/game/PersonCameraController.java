@@ -44,7 +44,7 @@ public class PersonCameraController {
 				camera.rotate(Vector3.Y, -cursorSpeed  * rx);
 			}
 		} else if (input instanceof NoInputMethod) {
-			// DO nothing
+			// Do nothing
 		} else {
 			//Rotation
 			float dt = Gdx.graphics.getDeltaTime();

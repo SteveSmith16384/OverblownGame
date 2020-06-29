@@ -33,15 +33,15 @@ public class PlayerMovementSystem extends AbstractSystem {
 		PhysicsComponent physics = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 
 		// Set model position based on physics object
-		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
-		Matrix4 mat = physics.body.getWorldTransform();
-		mat.getTranslation(pos.position);
-		
+		//PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
+		// scs new Matrix4 mat = physics.body.getWorldTransform();
+		// scs new mat.getTranslation(pos.position);
+
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 		if (playerData.health <= 0) {
 			return;
 		}
-		
+
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
 				physics.body.activate(); // Need this!
@@ -49,10 +49,13 @@ public class PlayerMovementSystem extends AbstractSystem {
 				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
 			}
 		}
-		
+
 		if (movementData.jumpPressed) {
 			// Check they are on ground
-			btCollisionObject obj = game.rayTestByDir(pos.position, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
+			Matrix4 mat = physics.body.getWorldTransform();
+			Vector3 pos = new Vector3(); // todo - cache
+			mat.getTranslation(pos);
+			btCollisionObject obj = game.rayTestByDir(pos, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
 			if (obj != null) {
 				physics.body.applyCentralForce(JUMP_FORCE);
 				//Settings.p("Jump!");

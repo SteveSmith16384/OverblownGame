@@ -44,18 +44,17 @@ public class DrawDecalSystem extends AbstractSystem {
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera, DecalBatch batch) {
 		HasDecal hasDecal = (HasDecal)entity.getComponent(HasDecal.class);
-		PositionComponent hasPosition = (PositionComponent)entity.getComponent(PositionComponent.class);
-		updateTransform(entity, camera, hasDecal, hasPosition);
+		updateTransform(entity, camera, hasDecal);
 
-		if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
+		/*if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
 			return;
-		}
+		}*/
 
 		batch.add(hasDecal.decal);
 	}
 
 
-	private void updateTransform(AbstractEntity entity, Camera cam, HasDecal hasDecal, PositionComponent pos) {
+	private void updateTransform(AbstractEntity entity, Camera cam, HasDecal hasDecal) {
 		if (hasDecal.faceCamera) {
 			tmp.set(cam.direction).scl(-1);
 			if(!hasDecal.dontLockYAxis) {
@@ -72,6 +71,7 @@ public class DrawDecalSystem extends AbstractSystem {
 			pc.body.getWorldTransform().getTranslation(tmp);
 			hasDecal.decal.setPosition(tmp);
 		} else {
+			PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			hasDecal.decal.setPosition(pos.position);
 			hasDecal.decal.translateY(.5f);
 		}

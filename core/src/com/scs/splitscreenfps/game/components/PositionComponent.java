@@ -3,6 +3,11 @@ package com.scs.splitscreenfps.game.components;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Needed for entities that either don't have a PhysicsComponent, or need extra adjustments after
+ * position to physics component.
+ *
+ */
 public class PositionComponent {
 
 	public Vector3 position;

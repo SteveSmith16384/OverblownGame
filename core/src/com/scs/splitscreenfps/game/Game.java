@@ -146,6 +146,7 @@ public class Game implements IModule {
 		//currentLevel = new LoadMapLevel(this);
 		//currentLevel = new AvoidTheBallsLevel(this);
 		currentLevel = new CastleLevel(this);
+		//currentLevel = new IliosLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
 			//players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);

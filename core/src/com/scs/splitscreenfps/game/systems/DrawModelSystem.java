@@ -68,42 +68,46 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		if (pc != null) { 
 			// Put model in same place as physics body
 			pc.body.getWorldTransform(mat);
 			model.model.transform.set(mat);
 			model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
-		} else {
-			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 			if (posData != null) {
+				// Set model position based on physics object
+				Matrix4 mat = pc.body.getWorldTransform();
+				mat.getTranslation(posData.position);
+			}
+		} //else {
+		if (posData != null) {
+			Vector3 position = posData.position;
+			tmpOffset.set(position);
+			tmpOffset.add(model.offset);
+			model.model.transform.setToTranslation(tmpOffset);
+			model.model.transform.scl(model.scale);
+			model.model.transform.rotate(Vector3.Y, posData.angle_Y_degs+model.angleYOffset);
+			if (posData.angle_x_degrees != 0) {
+				model.model.transform.rotate(Vector3.X, posData.angle_x_degrees);
+			}
+			// Only draw if in frustum 
+			if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
+				return;
+			}
+		} else {
+			if (model.always_draw == false) {
 				// Only draw if in frustum 
-				if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
-					return;
+				if (model.bb == null) {
+					model.bb = new BoundingBox();
+					model.model.calculateBoundingBox(model.bb);
+					model.bb.mul(model.model.transform);
 				}
-
-				Vector3 position = posData.position;
-				tmpOffset.set(position);
-				tmpOffset.add(model.offset);
-				model.model.transform.setToTranslation(tmpOffset);
-				model.model.transform.scl(model.scale);
-				model.model.transform.rotate(Vector3.Y, posData.angle_Y_degs+model.angleYOffset);
-				if (posData.angle_x_degrees != 0) {
-					model.model.transform.rotate(Vector3.X, posData.angle_x_degrees);
-				}
-			} else {
-				if (model.always_draw == false) {
-					// Only draw if in frustum 
-					if (model.bb == null) {
-						model.bb = new BoundingBox();
-						model.model.calculateBoundingBox(model.bb);
-						model.bb.mul(model.model.transform);
-					}
-					if (!camera.frustum.boundsInFrustum(model.bb)) {
-						//return; todo - fix
-					}
+				if (!camera.frustum.boundsInFrustum(model.bb)) {
+					//return; todo - fix
 				}
 			}
 		}
+		//}
 		modelBatch.render(model.model, environment);
 	}
 
