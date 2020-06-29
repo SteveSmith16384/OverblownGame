@@ -26,7 +26,7 @@ public class ShapeHelper {
 				
 				1f,1f,1f,
 				white_material,
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 
 		Matrix3 mat = new Matrix3();
 		floor.meshes.get(0).transformUV(mat);
@@ -46,7 +46,7 @@ public class ShapeHelper {
 
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createSphere(size, size, size, 5, 5, white_material,
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 
 		Matrix3 mat = new Matrix3();
 		floor.meshes.get(0).transformUV(mat);
@@ -66,7 +66,7 @@ public class ShapeHelper {
 
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createCylinder(diam, length, diam, 8, white_material,
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 
 		Matrix3 mat = new Matrix3();
 		floor.meshes.get(0).transformUV(mat);

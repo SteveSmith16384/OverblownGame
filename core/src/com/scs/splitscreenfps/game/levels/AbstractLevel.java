@@ -17,8 +17,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonWriter;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
 import com.scs.splitscreenfps.game.mapdata.MapData;
@@ -69,7 +69,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 
 	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block) {
 		if (block.model_filename != null && block.model_filename.length() > 0) {
-			AbstractEntity model = EntityFactory.Model(game.ecs, block.name, block.model_filename, 
+			AbstractEntity model = EntityFactory.createModel(game.ecs, block.name, block.model_filename, 
 					8, -2f, 7, 
 					block.mass);
 			model.addComponent(block);

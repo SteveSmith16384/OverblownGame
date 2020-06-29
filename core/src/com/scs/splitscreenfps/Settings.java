@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 import java.util.Random;
 
-import com.scs.splitscreenfps.game.AvatarFactory;
+import com.scs.splitscreenfps.game.entities.AvatarFactory;
 
 public class Settings {
 	
@@ -15,7 +15,7 @@ public class Settings {
 	
 	// Debugging Hacks
 	public static final boolean DEBUG_PUNCH = !RELEASE_MODE && false;
-	public static final boolean DEBUG_PHYSICS = !RELEASE_MODE && false;
+	public static final boolean DEBUG_PHYSICS = !RELEASE_MODE && true;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BASTION;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;

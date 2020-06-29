@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 import ssmith.lang.NumberFunctions;
@@ -60,7 +60,7 @@ public class RollingBallLevel extends AbstractLevel {
 		//AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 8, -2f, 7);
 		//game.ecs.addEntity(doorway);
 
-		AbstractEntity doorway = EntityFactory.Model(game.ecs, "Doorway", "models/magicavoxel/doorway.obj", 8, -2f, 7, 0f);
+		AbstractEntity doorway = EntityFactory.createModel(game.ecs, "Doorway", "models/magicavoxel/doorway.obj", 8, -2f, 7, 0f);
 		game.ecs.addEntity(doorway);
 
 		//AbstractEntity stairs = EntityFactory.createGun(game.ecs, 3, 2f, 3);

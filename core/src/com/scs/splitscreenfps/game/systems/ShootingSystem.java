@@ -5,13 +5,13 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
-import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 
 public class ShootingSystem extends AbstractSystem {
 

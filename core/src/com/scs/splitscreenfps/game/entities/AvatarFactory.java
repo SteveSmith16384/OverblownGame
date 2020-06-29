@@ -1,10 +1,10 @@
-package com.scs.splitscreenfps.game;
+package com.scs.splitscreenfps.game.entities;
 
+import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent.Type;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
-import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
-import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class AvatarFactory {

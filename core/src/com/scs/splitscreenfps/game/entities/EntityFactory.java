@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game;
+package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
@@ -255,7 +256,7 @@ public class EntityFactory {
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 
-		HasModelComponent model = new HasModelComponent(instance);
+		HasModelComponent model = new HasModelComponent(instance, 1f);
 		crate.addComponent(model);
 
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
@@ -282,7 +283,7 @@ public class EntityFactory {
 
 		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
 
-		HasModelComponent model = new HasModelComponent(instance);
+		HasModelComponent model = new HasModelComponent(instance, 1f);
 		ball.addComponent(model);
 
 		float mass = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
@@ -353,8 +354,9 @@ public class EntityFactory {
 	}
 	 */
 
+
 	// Note that the mass gets multiplied by the size
-	public static AbstractEntity Model(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
+	public static AbstractEntity createModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
 		AbstractEntity stairs = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false);
@@ -367,12 +369,11 @@ public class EntityFactory {
 
 		instance.transform.setTranslation(posX, posY, posZ);
 
-		/* todo
-		if (axis != null) {
+		/*if (axis != null) {
 			instance.transform.rotate(axis, degrees);
 		}*/
 
-		HasModelComponent model = new HasModelComponent(instance);
+		HasModelComponent model = new HasModelComponent(instance, 1f);
 		stairs.addComponent(model);
 
 		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
@@ -387,9 +388,6 @@ public class EntityFactory {
 		groundObject.setWorldTransform(instance.transform);
 		stairs.addComponent(new PhysicsComponent(groundObject));
 
-		/*if (mass > 0) {
-			stairs.addComponent(new AffectedByExplosionComponent());
-		}*/
 		return stairs;
 	}
 
@@ -399,7 +397,7 @@ public class EntityFactory {
 
 		ModelInstance instance = ShapeHelper.createCylinder(tex_filename, x, y, z, diam, length);
 
-		HasModelComponent model = new HasModelComponent(instance);
+		HasModelComponent model = new HasModelComponent(instance, 1);
 		pillar.addComponent(model);
 
 		btCylinderShape boxShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
@@ -499,4 +497,48 @@ public class EntityFactory {
 	}
 
 	 */
+	
+	
+	// Note that the mass gets multiplied by the size
+	public static AbstractEntity createModelAndPhysicsBox(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, int rotYDegrees, float mass_pre) {
+		AbstractEntity entity = new AbstractEntity(ecs, name);
+
+		ModelInstance instance = ModelFunctions.loadModel(filename, true);
+		instance.transform.setTranslation(posX, posY, posZ);
+
+		PositionComponent pos = new PositionComponent(new Vector3(posX, posY, posZ));
+		entity.addComponent(pos);
+
+		float scale = ModelFunctions.getScaleForWidth(instance, 1f);
+		instance.transform.scale(scale, scale, scale);
+		
+		/* todo
+		if (axis != null) {
+			instance.transform.rotate(axis, degrees);
+		}*/
+
+		HasModelComponent model = new HasModelComponent(instance, scale);
+		entity.addComponent(model);
+		
+		BoundingBox bb = new BoundingBox();
+		instance.calculateBoundingBox(bb);
+		bb.mul(instance.transform);
+
+		btBoxShape boxShape = new btBoxShape(new Vector3(bb.getWidth()/2, bb.getHeight()/2, bb.getDepth()/2));
+		Vector3 local_inertia = new Vector3();
+		float mass = mass_pre * bb.getWidth() * bb.getHeight() * bb.getDepth();
+		if (mass > 0) {
+			boxShape.calculateLocalInertia(mass, local_inertia);
+		}
+		btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);
+		groundObject.userData = entity;
+		groundObject.setRestitution(.2f);
+		groundObject.setCollisionShape(boxShape);
+		groundObject.setWorldTransform(instance.transform);
+		entity.addComponent(new PhysicsComponent(groundObject));
+		return entity;
+	}
+
+
+
 }

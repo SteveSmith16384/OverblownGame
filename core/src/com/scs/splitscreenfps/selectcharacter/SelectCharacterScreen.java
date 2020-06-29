@@ -17,8 +17,8 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.AvatarFactory;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class SelectCharacterScreen implements IModule {

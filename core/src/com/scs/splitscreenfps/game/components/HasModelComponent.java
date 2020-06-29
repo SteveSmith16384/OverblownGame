@@ -15,18 +15,18 @@ public class HasModelComponent {
 	public int onlyDrawInViewId = -1; // Don't draw the targetter for other players!
 	public BoundingBox bb; // For checking if in frustum  
 	public boolean always_draw = false;
+
 	
-	public HasModelComponent(ModelInstance _model) {
-		this(_model, new Vector3(), 0, 1f);
+	public HasModelComponent(ModelInstance _model, float scale) {
+		this(_model, new Vector3(), 0, scale);
 	}
 	
 
 	public HasModelComponent(ModelInstance _model, float yOffset, int _angleOffset, float _scale) {
-		this(_model);
+		this(_model, _scale);
 		
 		this.offset.y = yOffset;
 		angleYOffset = _angleOffset;
-		scale = _scale;
 	}
 
 	

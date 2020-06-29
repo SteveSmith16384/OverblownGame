@@ -71,7 +71,7 @@ public class Wall extends AbstractEntity {
 			instance.transform.rotate(Vector3.Z, degreesZ);
 		}
 		
-		HasModelComponent model = new HasModelComponent(instance);
+		HasModelComponent model = new HasModelComponent(instance, 1f);
 		this.addComponent(model);
 
 		float mass = mass_pre * w * h * d; 

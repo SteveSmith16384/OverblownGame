@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.game.EntityFactory;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HarmOnContactComponent;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 import ssmith.lang.NumberFunctions;
