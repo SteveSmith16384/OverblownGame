@@ -123,7 +123,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 		instance.transform.scl(scale);		
 		Vector3 offset = ModelFunctions.getOrigin(instance);
-		offset.y -= .3f; // Hack since model is too high
+		offset.y -= .9f; // Hack since model is too high
 
 		HasModelComponent hasModel = new HasModelComponent(instance, offset, 90, scale);
 		hasModel.dontDrawInViewId = playerIdx;
@@ -145,18 +145,9 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		// Position camera
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
-		//PhysicsComponent physics = (PhysicsComponent)this.getComponent(PhysicsComponent.class);
-		//physics.body.getWorldTransform(tmpMat);
-		//tmpMat.getTranslation(tmpVector);
-		//camera.position.set(tmpVector.x, tmpVector.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, tmpVector.z);
 
-		//HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
-		//if (hasModel != null) {
-		// Rotate model to direction of camera
-		//PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
 		tmpVec2.set(camera.direction.x, camera.direction.z);
 		posData.angle_y_degrees = -tmpVec2.angle();
-		//}
 	}
 
 

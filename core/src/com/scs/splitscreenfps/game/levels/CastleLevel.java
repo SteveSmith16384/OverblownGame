@@ -11,7 +11,8 @@ import com.scs.splitscreenfps.game.entities.Wall;
 
 public class CastleLevel extends AbstractLevel {
 
-	private static final float FLOOR_SIZE = 20f;
+	private static final float SECTION_MASS = 5f;
+	private static final float FLOOR_SIZE = 15f;
 
 	public CastleLevel(Game _game) {
 		super(_game);
@@ -36,11 +37,10 @@ public class CastleLevel extends AbstractLevel {
 				0f, true);
 		game.ecs.addEntity(floor);
 
-		AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/towerSquare.g3db", 5, 2, 5, 0, 1);
-		//AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/quaternius/alien.g3db", 5, 2, 5, 0, 1);
-		game.ecs.addEntity(entity);
+		//AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/towerSquare.g3db", 5, 2, 5, 0, 1);
+		//game.ecs.addEntity(entity);
 
-		
+
 		FileHandle file = Gdx.files.local("maps/castle1.csv");
 		String csv = file.readString();
 		String rows[] = csv.split("\n");
@@ -61,13 +61,26 @@ public class CastleLevel extends AbstractLevel {
 		}
 	}
 
-	
+
 	private void addItem(int col, int row, int code, int angle) {
-		// todo
-		AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/towerBase.g3db", col, 0, row, angle, 1);
-		//game.ecs.addEntity(entity);
+
+		switch (code) {
+		case 0:
+			// Do nothing
+			break;
+		case 1:
+			AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wall.g3db", col, 0, row, angle, SECTION_MASS);
+			game.ecs.addEntity(entity);
+			break;
+		case 2:
+			AbstractEntity corner = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", col, 0, row, angle, SECTION_MASS);
+			game.ecs.addEntity(corner);
+			break;
+		default:
+			//throw new RuntimeException("Unknown code: " + code);
+		}
 	}
-	
+
 
 	@Override
 	public void update() {
