@@ -122,7 +122,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	private ModelInstance addModel(int playerIdx) {
 		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
-		instance.transform.scl(scale);		
+		instance.transform.scl(scale);
 		Vector3 offset = ModelFunctions.getOrigin(instance);
 		offset.y -= .9f; // Hack since model is too high
 
