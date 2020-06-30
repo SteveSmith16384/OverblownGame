@@ -2,6 +2,7 @@ package ssmith.libgdx;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.UBJsonReader;
 import com.scs.splitscreenfps.Settings;
 
@@ -32,6 +34,16 @@ public class ModelFunctions {
 			throw new RuntimeException("Unhandled model format: " + filename);
 		}
 
+		// Trying to permanently scale a model...
+		/*for (int i=0 ; i<model.meshes.size ; i++) {
+			Array<Mesh> meshes = model.meshes;
+			int x = meshes.items[i].getNumIndices();
+			Object obj = model.meshes.items[i];
+			if (obj instanceof Mesh) {
+				Mesh mesh = (Mesh)obj;
+				int vertices = mesh.getNumVertices();
+			}
+		}*/
 		ModelInstance instance = new ModelInstance(model);
 
 		if (removeMaterials) {
@@ -43,7 +55,7 @@ public class ModelFunctions {
 		return instance;
 	}
 
-	
+
 	public static float getScaleForHeight(ModelInstance model, float height) {
 		BoundingBox bb = new BoundingBox();
 		model.calculateBoundingBox(bb);
@@ -51,8 +63,8 @@ public class ModelFunctions {
 
 		return height / bb.getHeight();
 	}
-	
-	
+
+
 	public static float getScaleForWidth(ModelInstance model, float width) {
 		BoundingBox bb = new BoundingBox();
 		model.calculateBoundingBox(bb);
@@ -60,12 +72,12 @@ public class ModelFunctions {
 
 		return width / bb.getWidth();
 	}
-	
-	
+
+
 	public static void getOrigin(ModelInstance model, Vector3 out) {
 		BoundingBox bb = new BoundingBox();
 		model.calculateBoundingBox(bb);
-		
+
 		if (Settings.STRICT) {
 			Vector3 vec = new Vector3();
 			model.transform.getTranslation(vec);
@@ -73,13 +85,13 @@ public class ModelFunctions {
 				throw new RuntimeException("Model must be at 0,0,0 to get correct origin!");
 			}
 		}
-		
+
 		bb.mul(model.transform);
 		bb.getCenter(out);
 		// NO! Origin must be in middle for physics -  out.y -= bb.getHeight()/2; // Make origin at the bottom of the model
 	}
-	
-	
+
+
 	public static Vector3 getOrigin(ModelInstance model) {
 		Vector3 out = new Vector3();
 		getOrigin(model, out);

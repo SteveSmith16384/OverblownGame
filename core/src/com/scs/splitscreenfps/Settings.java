@@ -31,7 +31,7 @@ public class Settings {
 	public static final float PLAYER_HEIGHT = 0.52f;
 	public static final float CAM_OFFSET = -0.2f;//0.14f;
 	public static final String TITLE = "Gang Beasts FPS";
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024*2;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 	public static final int LOGICAL_SIZE_PIXELS = 1024;
 	public static int POINTS_TO_WIN = 1;

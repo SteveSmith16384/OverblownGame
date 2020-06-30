@@ -43,8 +43,8 @@ public class CastleLevel extends AbstractLevel {
 		wall_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", 5, 2, 5, 0, SECTION_MASS);
 		game.ecs.addEntity(wall_test);
 
-		AbstractEntity crate = EntityFactory.createCrate(game.ecs, "colours/red.png", 3, 3, 3, 1, 1, 1);
-		game.ecs.addEntity(crate);
+		//AbstractEntity crate = EntityFactory.createCrate(game.ecs, "colours/red.png", 3, 3, 3, 1, 1, 1);
+		//game.ecs.addEntity(crate);
 
 		FileHandle file = Gdx.files.local("maps/castle1.csv");
 		String csv = file.readString();
