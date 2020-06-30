@@ -11,6 +11,7 @@ public class PhysicsComponent {
 	public boolean disable_gravity = false;
 	public Vector3 force;
 	public boolean removeIfFallen = true;
+	public boolean physicsControlsRotation = true; // False for players
 
 	// Temp vars
 	private Matrix4 mat = new Matrix4();

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 
@@ -14,6 +15,8 @@ public class CastleLevel extends AbstractLevel {
 	private static final float SECTION_MASS = 5f;
 	private static final float FLOOR_SIZE = 15f;
 
+	private AbstractEntity wall_test;
+	
 	public CastleLevel(Game _game) {
 		super(_game);
 	}
@@ -37,9 +40,11 @@ public class CastleLevel extends AbstractLevel {
 				0f, true);
 		game.ecs.addEntity(floor);
 
-		//AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/towerSquare.g3db", 5, 2, 5, 0, 1);
-		//game.ecs.addEntity(entity);
+		wall_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", 5, 2, 5, 0, SECTION_MASS);
+		game.ecs.addEntity(wall_test);
 
+		AbstractEntity crate = EntityFactory.createCrate(game.ecs, "colours/red.png", 3, 3, 3, 1, 1, 1);
+		game.ecs.addEntity(crate);
 
 		FileHandle file = Gdx.files.local("maps/castle1.csv");
 		String csv = file.readString();
@@ -55,7 +60,7 @@ public class CastleLevel extends AbstractLevel {
 					if (items.length > 1) {
 						angle = Integer.parseInt(items[1].trim());
 					}
-					addItem(col, row, code, angle);
+					//todo - re-add addItem(col, row, code, angle);
 				}
 			}
 		}
@@ -84,7 +89,9 @@ public class CastleLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-
+		PhysicsComponent phys = (PhysicsComponent)wall_test.getComponent(PhysicsComponent.class);
+		phys.body.applyTorque(new Vector3(1, 10, 0));
+		phys.body.activate();
 	}
 
 

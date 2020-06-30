@@ -255,6 +255,8 @@ public class EntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f);
 		crate.addComponent(model);
 
+		crate.addComponent(new PositionComponent());
+
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
 		Vector3 local_inertia = new Vector3();
 		boxShape.calculateLocalInertia(1f, local_inertia);

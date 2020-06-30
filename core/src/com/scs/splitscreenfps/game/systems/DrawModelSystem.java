@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -26,7 +26,7 @@ public class DrawModelSystem extends AbstractSystem {
 	private Environment environment;
 
 	private Vector3 tmpOffset = new Vector3();
-	private Matrix4 mat = new Matrix4();
+	private Matrix4 tmpMat = new Matrix4();
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
@@ -75,25 +75,43 @@ public class DrawModelSystem extends AbstractSystem {
 			}
 		}
 		if (pc != null) { 
-			// Put model in same place as physics body
-			pc.body.getWorldTransform(mat);
-			model.model.transform.set(mat);
-			model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
-			//if (posData != null) {
-			// Set model position based on physics object
-			Matrix4 mat = pc.body.getWorldTransform(); // todo - cache
-			mat.getTranslation(posData.position);
-			//}
-		} //else {
-		tmpOffset.set(model.positionOffsetToOrigin);
-		//if (posData != null) {
-		//Vector3 position = posData.position;
-		tmpOffset.add(posData.position);
-		model.model.transform.setToTranslation(tmpOffset);
-		model.model.transform.scl(model.scale);
-		model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+			pc.body.getWorldTransform(tmpMat);
+
+			// Put model in same place as physics body. Also resets the matrix to avoid hangoffs
+			model.model.transform.set(tmpMat);
+
+			tmpMat.getTranslation(tmpOffset);
+			tmpOffset.add(model.positionOffsetToOrigin); // Adjust model position for origin
+
+			// Set model translation
+			Quaternion q  = new Quaternion();
+			tmpMat.getRotation(q);
+			model.model.transform.set(tmpOffset.x, tmpOffset.y, tmpOffset.z, 
+					q.x, q.y, q.z, q.w,
+					model.scale, model.scale, model.scale);
+
+			// Set scale
+			//model.model.transform.scl(model.scale); // Scale is not stored in RigidBody transform!
+
+			// Set rotation
+			if (pc.physicsControlsRotation == false) {
+				model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+			}
+
+			// Set model position data based on physics data
+			tmpMat.getTranslation(posData.position);
+
+		} else { // Non-physics entity
+			tmpOffset.set(model.positionOffsetToOrigin);
+			tmpOffset.add(posData.position);
+			model.model.transform.setToTranslation(tmpOffset);
+			model.model.transform.scl(model.scale);
+			model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+		}
+
+
 		// Only draw if in frustum 
-		if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
+		/*if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
 			//return; todo - check if bounds are in frustum!
 		}
 		/*} else {
@@ -110,6 +128,14 @@ public class DrawModelSystem extends AbstractSystem {
 			}
 		}*/
 		//}
+		
+		if (Settings.DEBUG_MISSING_MODEL) {
+			Vector3 v = new Vector3();
+			model.model.transform.getTranslation(v);
+			model.model.transform.getScale(v);
+			int dfgdfg = 454;
+		}
+		
 		modelBatch.render(model.model, environment);
 	}
 

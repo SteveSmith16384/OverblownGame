@@ -66,6 +66,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		PhysicsComponent physics = new PhysicsComponent(player_body);
 		physics.removeIfFallen = false;
+		physics.physicsControlsRotation = false;
 		addComponent(physics);
 
 		this.addComponent(new PositionComponent());
