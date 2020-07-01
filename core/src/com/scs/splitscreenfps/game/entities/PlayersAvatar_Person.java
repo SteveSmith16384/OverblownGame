@@ -120,7 +120,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 
 	private ModelInstance addModel(int playerIdx) {
-		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false);
+		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false, null, 1f);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 		instance.transform.scl(scale);
 		Vector3 offset = ModelFunctions.getOrigin(instance);

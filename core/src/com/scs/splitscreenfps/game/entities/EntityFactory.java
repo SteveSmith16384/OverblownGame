@@ -357,7 +357,7 @@ public class EntityFactory {
 	public static AbstractEntity createModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass, Vector3 adj) {
 		AbstractEntity stairs = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, false, adj);
+		ModelInstance instance = ModelFunctions.loadModel(filename, false, adj, 1f);
 
 		// todo - remove?
 		//TextureAttribute textureAttribute1 = TextureAttribute.createDiffuse(new Texture("textures/seamlessTextures2/IMGP5511_seamless.jpg"));
@@ -497,15 +497,15 @@ public class EntityFactory {
 	
 	
 	// Note that the mass gets multiplied by the size
-	public static AbstractEntity createModelAndPhysicsBox(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, int rotYDegrees, float mass_pre) {
+	public static AbstractEntity createModelAndPhysicsBox(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, int rotYDegrees, float mass_pre, Vector3 adj, float mscale) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, true);
+		ModelInstance instance = ModelFunctions.loadModel(filename, true, adj, mscale);
 
-		float scale = ModelFunctions.getScaleForWidth(instance, 1f);
-		instance.transform.scale(scale, scale, scale);
+		//float scale = ModelFunctions.getScaleForWidth(instance, 1f);
+		//instance.transform.scale(scale, scale, scale);
 		
-		HasModelComponent hasModel = new HasModelComponent(instance, scale);
+		HasModelComponent hasModel = new HasModelComponent(instance, 1f);
 		hasModel.positionOffsetToOrigin = ModelFunctions.getOrigin(instance).scl(-1);
 		entity.addComponent(hasModel);
 		

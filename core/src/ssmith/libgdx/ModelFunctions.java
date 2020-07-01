@@ -23,18 +23,19 @@ public class ModelFunctions {
 	}
 
 
-	public static ModelInstance loadModel(String filename, boolean removeMaterials, Vector3 adj) {
+	public static ModelInstance loadModel(String filename, boolean removeMaterials, Vector3 adj, float scale) {
 		Model model = null;
 		if (filename.endsWith(".obj")) {
 			ModelLoader loader = new ObjLoader();
 			model = loader.loadModel(Gdx.files.internal(filename));
 		} else if (filename.endsWith(".g3db")) {
-			MyModelLoader g3dbModelLoader = new MyModelLoader(new UBJsonReader(), adj);
+			MyModelLoader g3dbModelLoader = new MyModelLoader(new UBJsonReader(), adj, scale);
 			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
 		} else {
 			throw new RuntimeException("Unhandled model format: " + filename);
 		}
 
+		/*
 		// Trying to permanently scale a model...
 		for (int i=0 ; i<model.meshes.size ; i++) {
 			Array<Mesh> meshes = model.meshes;
@@ -49,6 +50,7 @@ public class ModelFunctions {
 				}
 			}
 		}
+		*/
 		ModelInstance instance = new ModelInstance(model);
 
 		if (removeMaterials) {

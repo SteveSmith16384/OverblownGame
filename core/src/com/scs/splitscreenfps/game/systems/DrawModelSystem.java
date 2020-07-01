@@ -79,12 +79,12 @@ public class DrawModelSystem extends AbstractSystem {
 			pc.body.getWorldTransform(tmpMat);
 
 			tmpMat.getTranslation(tmpOffset);
-			tmpOffset.add(model.positionOffsetToOrigin); // Adjust model position for origin
+			//tmpOffset.add(model.positionOffsetToOrigin); // Adjust model position for origin
 
 			// Resets the matrix to avoid hangoffs
 			//model.model.transform.set(tmpMat);
 			model.model.transform.setToTranslation(tmpOffset);
-			model.model.transform.scl(model.scale);
+			//model.model.transform.scl(model.scale);
 			
 			// Set rotation
 			if (pc.physicsControlsRotation == false) {

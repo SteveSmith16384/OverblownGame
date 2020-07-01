@@ -71,7 +71,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 		if (block.model_filename != null && block.model_filename.length() > 0) {
 			AbstractEntity model = EntityFactory.createModel(game.ecs, block.name, block.model_filename, 
 					8, -2f, 7, 
-					block.mass);
+					block.mass, null);
 			model.addComponent(block);
 			game.ecs.addEntity(model);
 			//this.saveMap();

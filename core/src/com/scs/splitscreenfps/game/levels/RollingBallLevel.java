@@ -60,7 +60,7 @@ public class RollingBallLevel extends AbstractLevel {
 		//AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 8, -2f, 7);
 		//game.ecs.addEntity(doorway);
 
-		AbstractEntity doorway = EntityFactory.createModel(game.ecs, "Doorway", "models/magicavoxel/doorway.obj", 8, -2f, 7, 0f);
+		AbstractEntity doorway = EntityFactory.createModel(game.ecs, "Doorway", "models/magicavoxel/doorway.obj", 8, -2f, 7, 0f, null);
 		game.ecs.addEntity(doorway);
 
 		//AbstractEntity stairs = EntityFactory.createGun(game.ecs, 3, 2f, 3);

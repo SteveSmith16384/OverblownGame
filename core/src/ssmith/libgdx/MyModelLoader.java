@@ -30,20 +30,22 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 	public static final short VERSION_HI = 0;
 	public static final short VERSION_LO = 1;
 	protected final BaseJsonReader reader;
-	
-	private Vector3 adj;// = new Vector3();
 
-	public MyModelLoader (final BaseJsonReader reader, Vector3 off) {
-		this(reader, null, off);
+	private Vector3 adj;// todo - remove
+	private float scale;
+
+	public MyModelLoader (final BaseJsonReader reader, Vector3 off, float scale) {
+		this(reader, null, off, scale);
 	}
 
-	public MyModelLoader (BaseJsonReader reader, FileHandleResolver resolver, Vector3 off) {
+	public MyModelLoader (BaseJsonReader reader, FileHandleResolver resolver, Vector3 off, float _scale) {
 		super(resolver);
 		this.reader = reader;
-		
+
 		if (off != null) {
 			adj = new Vector3(off);
 		}
+		scale = _scale;
 	}
 
 	@Override
@@ -82,12 +84,22 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 				JsonValue attributes = mesh.require("attributes");
 				jsonMesh.attributes = parseAttributes(attributes);
 				jsonMesh.vertices = mesh.require("vertices").asFloatArray();
-				
+
 				// Adjust positions
-				for (int i=0 ; i<jsonMesh.vertices.length ; i+=3) {
-					jsonMesh.vertices[i] += adj.x;
-					jsonMesh.vertices[i+1] += adj.y;
-					jsonMesh.vertices[i+2] += adj.z;
+				if (scale != 1 && scale > 0) {
+					for (int i=0 ; i<jsonMesh.vertices.length-2 ; i+=3) {
+						jsonMesh.vertices[i] *= scale;
+						jsonMesh.vertices[i+1] *= scale;
+						jsonMesh.vertices[i+2] *= scale;
+					}
+				}
+
+				if (adj != null) {
+					for (int i=0 ; i<jsonMesh.vertices.length-2 ; i+=8) {
+						jsonMesh.vertices[i] += adj.x;
+						jsonMesh.vertices[i+1] += adj.y;
+						jsonMesh.vertices[i+2] += adj.z;
+					}
 				}
 
 				JsonValue meshParts = mesh.require("parts");
@@ -133,7 +145,7 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 			return GL20.GL_LINE_STRIP;
 		} else {
 			throw new GdxRuntimeException("Unknown primitive type '" + type
-				+ "', should be one of triangle, trianglestrip, line, linestrip, lineloop or point");
+					+ "', should be one of triangle, trianglestrip, line, linestrip, lineloop or point");
 		}
 	}
 
@@ -162,7 +174,7 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 				vertexAttributes.add(VertexAttribute.BoneWeight(blendWeightCount++));
 			} else {
 				throw new GdxRuntimeException("Unknown vertex attribute '" + attr
-					+ "', should be one of position, normal, uv, tangent or binormal");
+						+ "', should be one of position, normal, uv, tangent or binormal");
 			}
 		}
 		return vertexAttributes.toArray(VertexAttribute.class);
@@ -211,7 +223,7 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 						String fileName = texture.getString("filename", null);
 						if (fileName == null) throw new GdxRuntimeException("Texture needs filename.");
 						jsonTexture.fileName = materialDir + (materialDir.length() == 0 || materialDir.endsWith("/") ? "" : "/")
-							+ fileName;
+								+ fileName;
 
 						jsonTexture.uvTranslation = readVector2(texture.get("uvTranslation"), 0f, 0f);
 						jsonTexture.uvScaling = readVector2(texture.get("uvScaling"), 1f, 1f);
@@ -294,12 +306,12 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 		JsonValue translation = json.get("translation");
 		if (translation != null && translation.size != 3) throw new GdxRuntimeException("Node translation incomplete");
 		jsonNode.translation = translation == null ? null : new Vector3(translation.getFloat(0), translation.getFloat(1),
-			translation.getFloat(2));
+				translation.getFloat(2));
 
 		JsonValue rotation = json.get("rotation");
 		if (rotation != null && rotation.size != 4) throw new GdxRuntimeException("Node rotation incomplete");
 		jsonNode.rotation = rotation == null ? null : new Quaternion(rotation.getFloat(0), rotation.getFloat(1),
-			rotation.getFloat(2), rotation.getFloat(3));
+				rotation.getFloat(2), rotation.getFloat(3));
 
 		JsonValue scale = json.get("scale");
 		if (scale != null && scale.size != 3) throw new GdxRuntimeException("Node scale incomplete");
@@ -429,8 +441,8 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 								kf.value = new Vector3(translation.getFloat(0), translation.getFloat(1), translation.getFloat(2));
 						}
 					}
-					
-					
+
+
 					JsonValue rotationKF = node.get("rotation");
 					if (rotationKF != null && rotationKF.isArray()) {
 						nodeAnim.rotation = new Array<ModelNodeKeyframe<Quaternion>>();
@@ -444,7 +456,7 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 								kf.value = new Quaternion(rotation.getFloat(0), rotation.getFloat(1), rotation.getFloat(2), rotation.getFloat(3));
 						}
 					}
-					
+
 					JsonValue scalingKF = node.get("scaling");
 					if (scalingKF != null && scalingKF.isArray()) {
 						nodeAnim.scaling = new Array<ModelNodeKeyframe<Vector3>>();

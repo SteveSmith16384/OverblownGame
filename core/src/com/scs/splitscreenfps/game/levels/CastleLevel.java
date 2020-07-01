@@ -40,7 +40,10 @@ public class CastleLevel extends AbstractLevel {
 				0f, true);
 		game.ecs.addEntity(floor);
 
-		wall_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", 5, 2, 5, 0, SECTION_MASS);
+		wall_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", 
+				5, 2, 5, 
+				0, SECTION_MASS,
+				new Vector3(-0.5f, -0.55f, 0.5f), .1f);
 		game.ecs.addEntity(wall_test);
 
 		//AbstractEntity crate = EntityFactory.createCrate(game.ecs, "colours/red.png", 3, 3, 3, 1, 1, 1);
@@ -73,11 +76,11 @@ public class CastleLevel extends AbstractLevel {
 			// Do nothing
 			break;
 		case 1: // Edge
-			AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wall.g3db", col, 0, row, angle, SECTION_MASS);
+			AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wall.g3db", col, 0, row, angle, SECTION_MASS, null, 1f);
 			game.ecs.addEntity(entity);
 			break;
 		case 2:  // Corner
-			AbstractEntity corner = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", col, 0, row, angle, SECTION_MASS);
+			AbstractEntity corner = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", col, 0, row, angle, SECTION_MASS, null, 1f);
 			//game.ecs.addEntity(corner);
 			break;
 		default:
