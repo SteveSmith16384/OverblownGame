@@ -35,22 +35,6 @@ public class ModelFunctions {
 			throw new RuntimeException("Unhandled model format: " + filename);
 		}
 
-		/*
-		// Trying to permanently scale a model...
-		for (int i=0 ; i<model.meshes.size ; i++) {
-			Array<Mesh> meshes = model.meshes;
-			//int x = meshes.items[i].getNumIndices();
-			Object obj = model.meshes.get(i);
-			if (obj instanceof Mesh) {
-				Mesh mesh = (Mesh)obj;
-				int vertices = mesh.getNumVertices();
-				for (int v=0 ; v<vertices ; v++) {
-					FloatBuffer buffer = mesh.getVerticesBuffer();
-					//buffer.g
-				}
-			}
-		}
-		*/
 		ModelInstance instance = new ModelInstance(model);
 
 		if (removeMaterials) {
