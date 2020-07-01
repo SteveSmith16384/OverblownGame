@@ -1,5 +1,7 @@
 package ssmith.libgdx;
 
+import java.nio.FloatBuffer;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.Mesh;
@@ -21,29 +23,32 @@ public class ModelFunctions {
 	}
 
 
-	public static ModelInstance loadModel(String filename, boolean removeMaterials) {
+	public static ModelInstance loadModel(String filename, boolean removeMaterials, Vector3 adj) {
 		Model model = null;
 		if (filename.endsWith(".obj")) {
 			ModelLoader loader = new ObjLoader();
 			model = loader.loadModel(Gdx.files.internal(filename));
 		} else if (filename.endsWith(".g3db")) {
-			G3dModelLoader g3dbModelLoader;
-			g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
+			MyModelLoader g3dbModelLoader = new MyModelLoader(new UBJsonReader(), adj);
 			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
 		} else {
 			throw new RuntimeException("Unhandled model format: " + filename);
 		}
 
 		// Trying to permanently scale a model...
-		/*for (int i=0 ; i<model.meshes.size ; i++) {
+		for (int i=0 ; i<model.meshes.size ; i++) {
 			Array<Mesh> meshes = model.meshes;
-			int x = meshes.items[i].getNumIndices();
-			Object obj = model.meshes.items[i];
+			//int x = meshes.items[i].getNumIndices();
+			Object obj = model.meshes.get(i);
 			if (obj instanceof Mesh) {
 				Mesh mesh = (Mesh)obj;
 				int vertices = mesh.getNumVertices();
+				for (int v=0 ; v<vertices ; v++) {
+					FloatBuffer buffer = mesh.getVerticesBuffer();
+					//buffer.g
+				}
 			}
-		}*/
+		}
 		ModelInstance instance = new ModelInstance(model);
 
 		if (removeMaterials) {

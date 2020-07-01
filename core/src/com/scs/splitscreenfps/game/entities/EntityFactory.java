@@ -354,10 +354,10 @@ public class EntityFactory {
 
 
 	// Note that the mass gets multiplied by the size
-	public static AbstractEntity createModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
+	public static AbstractEntity createModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass, Vector3 adj) {
 		AbstractEntity stairs = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, false);
+		ModelInstance instance = ModelFunctions.loadModel(filename, false, adj);
 
 		// todo - remove?
 		//TextureAttribute textureAttribute1 = TextureAttribute.createDiffuse(new Texture("textures/seamlessTextures2/IMGP5511_seamless.jpg"));

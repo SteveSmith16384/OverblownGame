@@ -131,13 +131,10 @@ public class DrawModelSystem extends AbstractSystem {
 
 	
 	private void showModelDetails(Matrix4 mat) {
-		if (Settings.DEBUG_MISSING_MODEL) {
 			Vector3 v = new Vector3();
 			mat.getTranslation(v);
 			mat.getScale(v);
 			int dfgdfg = 454;
-		}
-		
-		
 	}
+
 }
