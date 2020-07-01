@@ -63,7 +63,7 @@ public class CastleLevel extends AbstractLevel {
 					if (items.length > 1) {
 						angle = Integer.parseInt(items[1].trim());
 					}
-					//todo - re-add addItem(col, row, code, angle);
+					addItem(col, row, code, angle);
 				}
 			}
 		}
@@ -76,11 +76,11 @@ public class CastleLevel extends AbstractLevel {
 			// Do nothing
 			break;
 		case 1: // Edge
-			AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wall.g3db", col, 0, row, angle, SECTION_MASS, null, 1f);
+			AbstractEntity entity = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wall.g3db", col, 0, row, angle, SECTION_MASS, new Vector3(-0.5f, -0.55f, 0.5f), .1f);
 			game.ecs.addEntity(entity);
 			break;
 		case 2:  // Corner
-			AbstractEntity corner = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", col, 0, row, angle, SECTION_MASS, null, 1f);
+			AbstractEntity corner = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", col, 0, row, angle, SECTION_MASS, new Vector3(-0.5f, -0.55f, 0.5f), .1f);
 			//game.ecs.addEntity(corner);
 			break;
 		default:

@@ -93,6 +93,8 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 						jsonMesh.vertices[i+2] *= scale;
 					}
 				}
+				
+				// todo - improve as per https://stackoverflow.com/a/38745409/1551685
 
 				if (adj != null) {
 					for (int i=0 ; i<jsonMesh.vertices.length-2 ; i+=8) {
