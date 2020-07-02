@@ -52,7 +52,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		this.addComponent(md);
 
 		// Model stuff
-		this.addModel(playerIdx);
+		this.addAlienModel(playerIdx);
 
 		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
@@ -119,7 +119,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	}
 
 
-	private ModelInstance addModel(int playerIdx) {
+	private ModelInstance addAlienModel(int playerIdx) {
 		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false, null, 1f);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 		instance.transform.scl(scale);
