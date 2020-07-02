@@ -31,7 +31,7 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 	public static final short VERSION_LO = 1;
 	protected final BaseJsonReader reader;
 
-	private Vector3 adj;// todo - remove
+	private Vector3 adj;
 	private float model_scale;
 
 	public MyModelLoader (final BaseJsonReader reader, Vector3 off, float scale) {
@@ -73,7 +73,6 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 	protected void parseMeshes (ModelData model, JsonValue json) {
 		JsonValue meshes = json.get("meshes");
 		if (meshes != null) {
-
 			model.meshes.ensureCapacity(meshes.size);
 			for (JsonValue mesh = meshes.child; mesh != null; mesh = mesh.next) {
 				ModelMesh jsonMesh = new ModelMesh();
@@ -91,22 +90,22 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 				}
 
 				// Adjust positions
-				if (model_scale != 1 && model_scale > 0) {
-					for (int i=0 ; i<jsonMesh.vertices.length-2 ; i+=count) {
-						jsonMesh.vertices[i] *= model_scale;
-						jsonMesh.vertices[i+1] *= model_scale;
-						jsonMesh.vertices[i+2] *= model_scale;
-					}
-				}
-				
-				if (adj != null) {
-					for (int i=0 ; i<jsonMesh.vertices.length-2 ; i+=count) {
+				if (adj != null && adj.len2() > 0) {
+					for (int i=0 ; i<jsonMesh.vertices.length-1 ; i+=count) {
 						jsonMesh.vertices[i] += adj.x;
 						jsonMesh.vertices[i+1] += adj.y;
 						jsonMesh.vertices[i+2] += adj.z;
 					}
 				}
 
+				if (model_scale != 1 && model_scale > 0) {
+					for (int i=0 ; i<jsonMesh.vertices.length-1 ; i+=count) {
+						jsonMesh.vertices[i] *= model_scale;
+						jsonMesh.vertices[i+1] *= model_scale;
+						jsonMesh.vertices[i+2] *= model_scale;
+					}
+				}
+				
 				JsonValue meshParts = mesh.require("parts");
 				Array<ModelMeshPart> parts = new Array<ModelMeshPart>();
 				for (JsonValue meshPart = meshParts.child; meshPart != null; meshPart = meshPart.next) {
@@ -312,13 +311,17 @@ public class MyModelLoader extends ModelLoader<ModelLoader.ModelParameters> {
 		if (translation != null && translation.size != 3) throw new GdxRuntimeException("Node translation incomplete");
 		jsonNode.translation = translation == null ? null : new Vector3(translation.getFloat(0), translation.getFloat(1),
 				translation.getFloat(2));
-		/*
+
+		// This is required for Quaternius bus
 		if (jsonNode.translation != null) {
-			jsonNode.translation.x *= model_scale;
-			jsonNode.translation.y *= model_scale;
-			jsonNode.translation.z *= model_scale;
+			if (adj != null) {
+				jsonNode.translation.add(adj);
+			}
+
+			jsonNode.translation.scl(model_scale);
+
 		}
-*/
+
 		JsonValue rotation = json.get("rotation");
 		if (rotation != null && rotation.size != 4) throw new GdxRuntimeException("Node rotation incomplete");
 		jsonNode.rotation = rotation == null ? null : new Quaternion(rotation.getFloat(0), rotation.getFloat(1),

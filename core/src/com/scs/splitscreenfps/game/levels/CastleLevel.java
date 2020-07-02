@@ -40,11 +40,17 @@ public class CastleLevel extends AbstractLevel {
 				0f, true);
 		game.ecs.addEntity(floor);
 
-		wall_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", 
+		/*wall_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", 
 				5, 2, 5, 
 				0, SECTION_MASS,
 				new Vector3(-0.5f, -0.55f, 0.5f), .1f);
-		game.ecs.addEntity(wall_test);
+		game.ecs.addEntity(wall_test);*/
+
+		/*AbstractEntity bus_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "Bus", "models/quaternius/vehicles/Train.g3db", 
+				5, 4, 5, 
+				0, SECTION_MASS,
+				new Vector3(2, 0.28f, 0), .01f);
+		game.ecs.addEntity(bus_test);*/
 
 		//AbstractEntity crate = EntityFactory.createCrate(game.ecs, "colours/red.png", 3, 3, 3, 1, 1, 1);
 		//game.ecs.addEntity(crate);
@@ -63,7 +69,7 @@ public class CastleLevel extends AbstractLevel {
 					if (items.length > 1) {
 						angle = Integer.parseInt(items[1].trim());
 					}
-					addItem(col, row, code, angle);
+					//addItem(col, row, code, angle);
 				}
 			}
 		}
@@ -91,9 +97,9 @@ public class CastleLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		PhysicsComponent phys = (PhysicsComponent)wall_test.getComponent(PhysicsComponent.class);
-		phys.body.applyTorque(new Vector3(1, 10, 0));
-		phys.body.activate();
+		//PhysicsComponent phys = (PhysicsComponent)wall_test.getComponent(PhysicsComponent.class);
+		//phys.body.applyTorque(new Vector3(1, 10, 0));
+		//phys.body.activate();
 	}
 
 

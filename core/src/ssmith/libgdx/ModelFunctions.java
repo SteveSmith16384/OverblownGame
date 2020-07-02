@@ -29,12 +29,13 @@ public class ModelFunctions {
 			ModelLoader loader = new ObjLoader();
 			model = loader.loadModel(Gdx.files.internal(filename));
 		} else if (filename.endsWith(".g3db")) {
-			MyModelLoader g3dbModelLoader = new MyModelLoader(new UBJsonReader(), adj, scale);
+			G3dModelLoader g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
+			//MyModelLoader g3dbModelLoader = new MyModelLoader(new UBJsonReader(), adj, scale);
 			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
 		} else {
 			throw new RuntimeException("Unhandled model format: " + filename);
 		}
-
+		
 		ModelInstance instance = new ModelInstance(model);
 
 		if (removeMaterials) {
