@@ -44,25 +44,25 @@ public class IliosLevel extends AbstractLevel {
 			// Top
 			Wall t1 = new Wall(game.ecs, "Floor", tex, MAP_SIZE/2, -THICKNESS/2, START_WIDTH/2, 
 					MAP_SIZE, THICKNESS, START_WIDTH, 
-					0f, true);
+					0f, true, false);
 			game.ecs.addEntity(t1);
 
 			// Left
 			Wall t2 = new Wall(game.ecs, "Floor", tex, START_WIDTH/2, -THICKNESS/2, MAP_SIZE/2, 
 					START_WIDTH, THICKNESS, MAP_SIZE-(START_WIDTH*2), 
-					0f, true);
+					0f, true, false);
 			game.ecs.addEntity(t2);
 
 			// Right
 			Wall t3 = new Wall(game.ecs, "Floor", tex, MAP_SIZE-(START_WIDTH/2), -THICKNESS/2, MAP_SIZE/2, 
 					START_WIDTH, THICKNESS, MAP_SIZE-(START_WIDTH*2), 
-					0f, true);
+					0f, true, false);
 			game.ecs.addEntity(t3);
 
 			// Bottom
 			Wall t4 = new Wall(game.ecs, "Floor", tex, MAP_SIZE/2, -THICKNESS/2, MAP_SIZE-(START_WIDTH/2), 
 					MAP_SIZE, THICKNESS, START_WIDTH, 
-					0f, true);
+					0f, true, false);
 			game.ecs.addEntity(t4);
 
 			// Cyl TL

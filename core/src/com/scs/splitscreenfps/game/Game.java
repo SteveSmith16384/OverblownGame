@@ -106,7 +106,7 @@ public class Game implements IModule {
 	public btDiscreteDynamicsWorld dynamicsWorld;
 	public boolean physics_enabled = true;
 	private long startPhysicsTime;
-
+	
 	// Temp vars
 	private Vector3 tmp_from = new Vector3();
 	private Vector3 tmp_to = new Vector3();
@@ -216,12 +216,7 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
 		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
 		ecs.addSystem(new BulletSystem(ecs, this));
-		/*if (Settings.BUILD_MAP) {
-			this.mapBuilderSystem = new MapEditorSystem(ecs, this);
-			ecs.addSystem(this.mapBuilderSystem);
-		} else {*/
 		ecs.addSystem(new ShootingSystem(ecs, this));
-		//}
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));

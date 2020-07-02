@@ -35,25 +35,20 @@ public class CastleLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, FLOOR_SIZE-2));
 		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, 1));
 
-		Wall floor = new Wall(game.ecs, "Floor", "textures/seamlessTextures2/clover.jpg", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
+		//textures/seamlessTextures2/clover.jpg
+		Wall floor = new Wall(game.ecs, "Floor", "colours/white.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
-				0f, true);
+				0f, true, false);
 		game.ecs.addEntity(floor);
 
 		/*wall_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "CastlePart", "models/kenney/castle/wallCorner.g3db", 
 				5, 2, 5, 
 				0, SECTION_MASS,
 				new Vector3(-0.5f, -0.55f, 0.5f), .1f);
-		game.ecs.addEntity(wall_test);*/
-
-		/*AbstractEntity bus_test = EntityFactory.createModelAndPhysicsBox(game.ecs, "Bus", "models/quaternius/vehicles/Train.g3db", 
-				5, 4, 5, 
-				0, SECTION_MASS,
-				new Vector3(2, 0.28f, 0), .01f);
-		game.ecs.addEntity(bus_test);*/
-
-		//AbstractEntity crate = EntityFactory.createCrate(game.ecs, "colours/red.png", 3, 3, 3, 1, 1, 1);
-		//game.ecs.addEntity(crate);
+		game.ecs.addEntity(wall_test);
+*/
+		AbstractEntity crate = EntityFactory.createCrate(game.ecs, "colours/red.png", 3, 3, 3, 1, 1, 1);
+		game.ecs.addEntity(crate);
 
 		FileHandle file = Gdx.files.local("maps/castle1.csv");
 		String csv = file.readString();

@@ -31,7 +31,7 @@ public class LoadMapLevel extends AbstractLevel {
 
 		Wall floor = new Wall(game.ecs, "Floor", "textures/seamlessTextures2/clover.jpg", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
-				0f, true);
+				0f, true, false);
 		game.ecs.addEntity(floor);
 
 		try {

@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -248,11 +249,26 @@ public class EntityFactory {
 
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();
-		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
+		modelBuilder.begin();
+		modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
+		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
+		modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
+		modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
+		modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
+		modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
+		Model box_model = modelBuilder.end();
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 
-		HasModelComponent model = new HasModelComponent(instance, 1f);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		crate.addComponent(model);
 
 		crate.addComponent(new PositionComponent());
@@ -281,7 +297,7 @@ public class EntityFactory {
 
 		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
 
-		HasModelComponent model = new HasModelComponent(instance, 1f);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		ball.addComponent(model);
 
 		float mass = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
@@ -296,6 +312,8 @@ public class EntityFactory {
 		groundObject.setWorldTransform(instance.transform);
 		ball.addComponent(new PhysicsComponent(groundObject));
 
+		ball.addComponent(new PositionComponent());
+		
 		return ball;
 	}
 
@@ -371,7 +389,7 @@ public class EntityFactory {
 			instance.transform.rotate(axis, degrees);
 		}*/
 
-		HasModelComponent model = new HasModelComponent(instance, 1f);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		stairs.addComponent(model);
 
 		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
@@ -395,7 +413,7 @@ public class EntityFactory {
 
 		ModelInstance instance = ShapeHelper.createCylinder(tex_filename, x, y, z, diam, length);
 
-		HasModelComponent model = new HasModelComponent(instance, 1);
+		HasModelComponent model = new HasModelComponent(instance, 1, true);
 		pillar.addComponent(model);
 
 		btCylinderShape boxShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
@@ -505,7 +523,7 @@ public class EntityFactory {
 		//float scale = ModelFunctions.getScaleForWidth(instance, 1f);
 		//instance.transform.scale(scale, scale, scale);
 		
-		HasModelComponent hasModel = new HasModelComponent(instance, 1f);
+		HasModelComponent hasModel = new HasModelComponent(instance, 1f, true);
 		Vector3 origin = ModelFunctions.getOrigin(instance);
 		entity.addComponent(hasModel);
 		

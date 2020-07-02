@@ -2,15 +2,18 @@ package com.scs.splitscreenfps.game.systems;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
+import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -29,6 +32,10 @@ public class DrawModelSystem extends AbstractSystem {
 	private Vector3 tmpOffset = new Vector3();
 	private Matrix4 tmpMat = new Matrix4();
 
+	private DirectionalShadowLight shadowLight;
+	private ModelBatch shadowBatch;
+	private long time_to_next_shadow = 0;
+
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
 		game = _game;
@@ -37,8 +44,13 @@ public class DrawModelSystem extends AbstractSystem {
 
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
+		environment.add((shadowLight = new DirectionalShadowLight(1024, 1024, 1024, 328, 1f, 100f))
+				.set(0.8f, 0.8f, 0.8f, 
+						1f, -.5f, 1f));
+		environment.shadowMap = shadowLight;
+		shadowBatch = new ModelBatch(new DepthShaderProvider());
 	}
 
 
@@ -49,15 +61,31 @@ public class DrawModelSystem extends AbstractSystem {
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
-			this.processEntity(entity, cam);
+			this.renderEntity(entity, modelBatch, false);
+		}
+		this.modelBatch.end();
+
+
+		if (Settings.DEBUG_PHYSICS == false) { // Doesn't work with shadows
+			if (time_to_next_shadow < System.currentTimeMillis()) {
+				time_to_next_shadow  = System.currentTimeMillis() + 100;
+				shadowLight.begin(Vector3.Zero, cam.direction);
+				shadowBatch.begin(shadowLight.getCamera());
+				Iterator<AbstractEntity> it2 = entities.iterator();
+				while (it2.hasNext()) {
+					AbstractEntity entity = it2.next();
+					this.renderEntity(entity, shadowBatch, true);
+				}
+				shadowBatch.end();
+				shadowLight.end();
+			}
 		}
 
-		this.modelBatch.end();
 	}
 
 
 	//@Override
-	public void processEntity(AbstractEntity entity, Camera camera) {
+	public void renderEntity(AbstractEntity entity, ModelBatch batch, boolean shadow) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
@@ -66,6 +94,10 @@ public class DrawModelSystem extends AbstractSystem {
 			if (model.onlyDrawInViewId != game.currentViewId) {
 				return;
 			}
+		}
+		
+		if (shadow && model.cast_shadow == false) {
+			return;
 		}
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
@@ -131,7 +163,7 @@ public class DrawModelSystem extends AbstractSystem {
 		}*/
 		//}
 
-		modelBatch.render(model.model, environment);
+		batch.render(model.model, environment);
 	}
 
 
