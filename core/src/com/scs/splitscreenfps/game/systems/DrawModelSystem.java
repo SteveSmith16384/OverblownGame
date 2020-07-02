@@ -45,7 +45,7 @@ public class DrawModelSystem extends AbstractSystem {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
 		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
-		environment.add((shadowLight = new DirectionalShadowLight(1024, 328, 1024, 328, 1f, 100f)).set(0.8f, 0.8f, 0.8f, -1f, -.8f,
+		environment.add((shadowLight = new DirectionalShadowLight(1024, 1024, 1024, 328, 1f, 100f)).set(0.8f, 0.8f, 0.8f, -1f, -.8f,
 				-.2f));
 		environment.shadowMap = shadowLight;
 		shadowBatch = new ModelBatch(new DepthShaderProvider());
@@ -54,16 +54,6 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void process(Camera cam) {
-		shadowLight.begin(Vector3.Zero, cam.direction);
-		shadowBatch.begin(shadowLight.getCamera());
-		Iterator<AbstractEntity> it2 = entities.iterator();
-		while (it2.hasNext()) {
-			AbstractEntity entity = it2.next();
-			this.processEntity(entity, shadowBatch);
-		}
-		shadowBatch.end();
-		shadowLight.end();
-
 	//	game.currentLevel.setBackgroundColour();
 	//	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -76,7 +66,21 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		this.modelBatch.end();
-	}
+
+		shadowLight.begin(Vector3.Zero, cam.direction);
+		shadowBatch.begin(shadowLight.getCamera());
+		Iterator<AbstractEntity> it2 = entities.iterator();
+		//while (it2.hasNext()) {
+		it2.next();
+		it2.next();
+		it2.next();
+		AbstractEntity entity = it2.next();
+			this.processEntity(entity, shadowBatch);
+		//}
+		shadowBatch.end();
+		shadowLight.end();
+
+}
 
 
 	//@Override
