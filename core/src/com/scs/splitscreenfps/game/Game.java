@@ -306,7 +306,7 @@ public class Game implements IModule {
 			this.currentLevel.setBackgroundColour();
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-			this.drawModelSystem.process(viewportData.camera);
+			this.drawModelSystem.process(viewportData.camera, false);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
 
 			if (Settings.DEBUG_PHYSICS) {
@@ -314,6 +314,8 @@ public class Game implements IModule {
 				dynamicsWorld.debugDrawWorld();
 				debugDrawer.end();
 			}
+
+			this.drawModelSystem.process(viewportData.camera, true);
 
 			batch2d.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();

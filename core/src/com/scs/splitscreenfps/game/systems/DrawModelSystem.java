@@ -34,7 +34,6 @@ public class DrawModelSystem extends AbstractSystem {
 
 	private DirectionalShadowLight shadowLight;
 	private ModelBatch shadowBatch;
-	private long time_to_next_shadow = 0;
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
@@ -46,7 +45,7 @@ public class DrawModelSystem extends AbstractSystem {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
 		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
-		environment.add((shadowLight = new DirectionalShadowLight(1024, 1024, 1024, 328, 1f, 100f))
+		environment.add((shadowLight = new DirectionalShadowLight(1024, 1024, 15, 15, 1f, 100f))
 				.set(0.8f, 0.8f, 0.8f, 
 						1f, -.5f, 1f));
 		environment.shadowMap = shadowLight;
@@ -55,32 +54,27 @@ public class DrawModelSystem extends AbstractSystem {
 
 
 	//@Override
-	public void process(Camera cam) {
-		this.modelBatch.begin(cam);
+	public void process(Camera cam, boolean shadows) {
+		if (!shadows) {
+			this.modelBatch.begin(cam);
 
-		Iterator<AbstractEntity> it = entities.iterator();
-		while (it.hasNext()) {
-			AbstractEntity entity = it.next();
-			this.renderEntity(entity, modelBatch, false);
-		}
-		this.modelBatch.end();
-
-
-		if (Settings.DEBUG_PHYSICS == false) { // Doesn't work with shadows
-			if (time_to_next_shadow < System.currentTimeMillis()) {
-				time_to_next_shadow  = System.currentTimeMillis() + 100;
-				shadowLight.begin(Vector3.Zero, cam.direction);
-				shadowBatch.begin(shadowLight.getCamera());
-				Iterator<AbstractEntity> it2 = entities.iterator();
-				while (it2.hasNext()) {
-					AbstractEntity entity = it2.next();
-					this.renderEntity(entity, shadowBatch, true);
-				}
-				shadowBatch.end();
-				shadowLight.end();
+			Iterator<AbstractEntity> it = entities.iterator();
+			while (it.hasNext()) {
+				AbstractEntity entity = it.next();
+				this.renderEntity(entity, modelBatch, false);
 			}
+			this.modelBatch.end();
+		} else {
+			shadowLight.begin(Vector3.Zero, cam.direction);
+			shadowBatch.begin(shadowLight.getCamera());
+			Iterator<AbstractEntity> it2 = entities.iterator();
+			while (it2.hasNext()) {
+				AbstractEntity entity = it2.next();
+				this.renderEntity(entity, shadowBatch, true);
+			}
+			shadowBatch.end();
+			shadowLight.end();
 		}
-
 	}
 
 
@@ -95,7 +89,7 @@ public class DrawModelSystem extends AbstractSystem {
 				return;
 			}
 		}
-		
+
 		if (shadow && model.cast_shadow == false) {
 			return;
 		}
