@@ -2,15 +2,18 @@ package com.scs.splitscreenfps.game.systems;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
+import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -29,6 +32,9 @@ public class DrawModelSystem extends AbstractSystem {
 	private Vector3 tmpOffset = new Vector3();
 	private Matrix4 tmpMat = new Matrix4();
 
+	DirectionalShadowLight shadowLight;
+	ModelBatch shadowBatch;
+
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
 		game = _game;
@@ -37,19 +43,36 @@ public class DrawModelSystem extends AbstractSystem {
 
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
+		environment.add((shadowLight = new DirectionalShadowLight(1024, 328, 1024, 328, 1f, 100f)).set(0.8f, 0.8f, 0.8f, -1f, -.8f,
+				-.2f));
+		environment.shadowMap = shadowLight;
+		shadowBatch = new ModelBatch(new DepthShaderProvider());
 	}
 
 
 	//@Override
 	public void process(Camera cam) {
+		shadowLight.begin(Vector3.Zero, cam.direction);
+		shadowBatch.begin(shadowLight.getCamera());
+		Iterator<AbstractEntity> it2 = entities.iterator();
+		while (it2.hasNext()) {
+			AbstractEntity entity = it2.next();
+			this.processEntity(entity, shadowBatch);
+		}
+		shadowBatch.end();
+		shadowLight.end();
+
+	//	game.currentLevel.setBackgroundColour();
+	//	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
 		this.modelBatch.begin(cam);
 
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
-			this.processEntity(entity, cam);
+			this.processEntity(entity, modelBatch);
 		}
 
 		this.modelBatch.end();
@@ -57,7 +80,7 @@ public class DrawModelSystem extends AbstractSystem {
 
 
 	//@Override
-	public void processEntity(AbstractEntity entity, Camera camera) {
+	public void processEntity(AbstractEntity entity, ModelBatch batch) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
@@ -131,7 +154,7 @@ public class DrawModelSystem extends AbstractSystem {
 		}*/
 		//}
 
-		modelBatch.render(model.model, environment);
+		batch.render(model.model, environment);
 	}
 
 

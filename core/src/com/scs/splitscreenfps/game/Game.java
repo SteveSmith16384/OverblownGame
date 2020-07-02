@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
@@ -106,7 +107,7 @@ public class Game implements IModule {
 	public btDiscreteDynamicsWorld dynamicsWorld;
 	public boolean physics_enabled = true;
 	private long startPhysicsTime;
-
+	
 	// Temp vars
 	private Vector3 tmp_from = new Vector3();
 	private Vector3 tmp_to = new Vector3();
