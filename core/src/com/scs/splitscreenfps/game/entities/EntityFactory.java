@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -248,7 +249,22 @@ public class EntityFactory {
 
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();
-		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
+		modelBuilder.begin();
+		modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
+		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
+		modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
+		modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
+		modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
+		modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
+		    .rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
+		Model box_model = modelBuilder.end();
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 
