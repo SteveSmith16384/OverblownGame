@@ -36,19 +36,18 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, FLOOR_SIZE-2));
 		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, 1));
 
-		Wall floor = new Wall(game.ecs, "Floor", "textures/neon/tron_green.jpg", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
+		Wall floor = new Wall(game.ecs, "Floor", "colours/white.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
-				0f, true);
+				0f, true, false);
 		game.ecs.addEntity(floor);
 
-		/*
 		for (int i=0 ; i<20 ; i++) {
 			int col = NumberFunctions.rnd(1,  10);
 			int row = NumberFunctions.rnd(1,  10);
 			AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, i+3, row, .4f, .4f, .4f);
 			game.ecs.addEntity(crate);
 		}
-*/
+
 	}
 
 

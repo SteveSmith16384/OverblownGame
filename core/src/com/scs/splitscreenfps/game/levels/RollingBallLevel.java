@@ -36,13 +36,13 @@ public class RollingBallLevel extends AbstractLevel {
 
 		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", 5, -0.1f, 5, 
 				10f, .2f, 10f, 
-				0f, true);
+				0f, true, false);
 		game.ecs.addEntity(floor);
 
 		Wall tilt = new Wall(game.ecs, "Tilt", "textures/set3_example_1.png", 12.5f, 1.5f, 5, 
 				6f, .2f, 10f, 
 				0f, 
-				0, 0, 25, true);
+				0, 0, 25, true, false);
 		//HasModelComponent model = (HasModelComponent)tilt.getComponent(HasModelComponent.class);
 		//model.model.transform.rotate();
 		//PhysicsComponent pc = (PhysicsComponent)tilt.getComponent(PhysicsComponent.class);
@@ -60,11 +60,8 @@ public class RollingBallLevel extends AbstractLevel {
 		//AbstractEntity doorway = EntityFactory.createDoorway(game.ecs, 8, -2f, 7);
 		//game.ecs.addEntity(doorway);
 
-		AbstractEntity doorway = EntityFactory.createModel(game.ecs, "Doorway", "models/magicavoxel/doorway.obj", 8, -2f, 7, 0f, null);
-		game.ecs.addEntity(doorway);
-
-		//AbstractEntity stairs = EntityFactory.createGun(game.ecs, 3, 2f, 3);
-		//game.ecs.addEntity(stairs);
+		//AbstractEntity doorway = EntityFactory.createModel(game.ecs, "Doorway", "models/magicavoxel/doorway.obj", 8, -2f, 7, 0f, null);
+		//game.ecs.addEntity(doorway);
 	}
 
 

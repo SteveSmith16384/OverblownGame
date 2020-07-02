@@ -21,14 +21,14 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class Wall extends AbstractEntity {
 
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile) {
-		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile);
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
+		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
 	}
 	
 	
 	// Note that the mass gets multiplied by the size
 	// Positions are from the centre
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile) {
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
 		super(ecs, name);
 
 		Texture tex = new Texture(tex_filename);
@@ -72,7 +72,7 @@ public class Wall extends AbstractEntity {
 			instance.transform.rotate(Vector3.Z, degreesZ);
 		}
 		
-		HasModelComponent model = new HasModelComponent(instance, 1f);
+		HasModelComponent model = new HasModelComponent(instance, 1f, cast_shadow);
 		this.addComponent(model);
 
 		float mass = mass_pre * w * h * d; 

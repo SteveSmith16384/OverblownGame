@@ -32,8 +32,9 @@ public class DrawModelSystem extends AbstractSystem {
 	private Vector3 tmpOffset = new Vector3();
 	private Matrix4 tmpMat = new Matrix4();
 
-	DirectionalShadowLight shadowLight;
-	ModelBatch shadowBatch;
+	private DirectionalShadowLight shadowLight;
+	private ModelBatch shadowBatch;
+	private long time_to_next_shadow = 0;
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
@@ -45,8 +46,9 @@ public class DrawModelSystem extends AbstractSystem {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
 		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
-		environment.add((shadowLight = new DirectionalShadowLight(1024, 1024, 1024, 328, 1f, 100f)).set(0.8f, 0.8f, 0.8f, -1f, -.8f,
-				-.2f));
+		environment.add((shadowLight = new DirectionalShadowLight(1024, 1024, 1024, 328, 1f, 100f))
+				.set(0.8f, 0.8f, 0.8f, 
+						1f, -.5f, 1f));
 		environment.shadowMap = shadowLight;
 		shadowBatch = new ModelBatch(new DepthShaderProvider());
 	}
@@ -54,37 +56,36 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void process(Camera cam) {
-	//	game.currentLevel.setBackgroundColour();
-	//	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
 		this.modelBatch.begin(cam);
 
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
-			this.processEntity(entity, modelBatch);
+			this.renderEntity(entity, modelBatch, false);
 		}
-
 		this.modelBatch.end();
 
-		shadowLight.begin(Vector3.Zero, cam.direction);
-		shadowBatch.begin(shadowLight.getCamera());
-		Iterator<AbstractEntity> it2 = entities.iterator();
-		//while (it2.hasNext()) {
-		it2.next();
-		it2.next();
-		it2.next();
-		AbstractEntity entity = it2.next();
-			this.processEntity(entity, shadowBatch);
-		//}
-		shadowBatch.end();
-		shadowLight.end();
 
-}
+		if (Settings.DEBUG_PHYSICS == false) { // Doesn't work with shadows
+			if (time_to_next_shadow < System.currentTimeMillis()) {
+				time_to_next_shadow  = System.currentTimeMillis() + 100;
+				shadowLight.begin(Vector3.Zero, cam.direction);
+				shadowBatch.begin(shadowLight.getCamera());
+				Iterator<AbstractEntity> it2 = entities.iterator();
+				while (it2.hasNext()) {
+					AbstractEntity entity = it2.next();
+					this.renderEntity(entity, shadowBatch, true);
+				}
+				shadowBatch.end();
+				shadowLight.end();
+			}
+		}
+
+	}
 
 
 	//@Override
-	public void processEntity(AbstractEntity entity, ModelBatch batch) {
+	public void renderEntity(AbstractEntity entity, ModelBatch batch, boolean shadow) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
@@ -93,6 +94,10 @@ public class DrawModelSystem extends AbstractSystem {
 			if (model.onlyDrawInViewId != game.currentViewId) {
 				return;
 			}
+		}
+		
+		if (shadow && model.cast_shadow == false) {
+			return;
 		}
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);

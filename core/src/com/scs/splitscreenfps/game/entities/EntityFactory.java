@@ -252,7 +252,7 @@ public class EntityFactory {
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 
-		HasModelComponent model = new HasModelComponent(instance, 1f);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		crate.addComponent(model);
 
 		crate.addComponent(new PositionComponent());
@@ -281,7 +281,7 @@ public class EntityFactory {
 
 		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
 
-		HasModelComponent model = new HasModelComponent(instance, 1f);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		ball.addComponent(model);
 
 		float mass = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
@@ -296,6 +296,8 @@ public class EntityFactory {
 		groundObject.setWorldTransform(instance.transform);
 		ball.addComponent(new PhysicsComponent(groundObject));
 
+		ball.addComponent(new PositionComponent());
+		
 		return ball;
 	}
 
@@ -371,7 +373,7 @@ public class EntityFactory {
 			instance.transform.rotate(axis, degrees);
 		}*/
 
-		HasModelComponent model = new HasModelComponent(instance, 1f);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		stairs.addComponent(model);
 
 		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
@@ -395,7 +397,7 @@ public class EntityFactory {
 
 		ModelInstance instance = ShapeHelper.createCylinder(tex_filename, x, y, z, diam, length);
 
-		HasModelComponent model = new HasModelComponent(instance, 1);
+		HasModelComponent model = new HasModelComponent(instance, 1, true);
 		pillar.addComponent(model);
 
 		btCylinderShape boxShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
@@ -505,7 +507,7 @@ public class EntityFactory {
 		//float scale = ModelFunctions.getScaleForWidth(instance, 1f);
 		//instance.transform.scale(scale, scale, scale);
 		
-		HasModelComponent hasModel = new HasModelComponent(instance, 1f);
+		HasModelComponent hasModel = new HasModelComponent(instance, 1f, true);
 		Vector3 origin = ModelFunctions.getOrigin(instance);
 		entity.addComponent(hasModel);
 		

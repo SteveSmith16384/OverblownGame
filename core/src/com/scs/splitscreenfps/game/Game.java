@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
@@ -45,7 +44,7 @@ import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.CastleLevel;
+import com.scs.splitscreenfps.game.levels.RollingBallLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -142,11 +141,11 @@ public class Game implements IModule {
 		coll = new ProcessCollisionSystem(this);
 		new MyContactListener(coll);
 
-		//currentLevel = new RollingBallLevel(this);
+		currentLevel = new RollingBallLevel(this);
 		//currentLevel = new MapEditorLevel(this);
 		//currentLevel = new LoadMapLevel(this);
 		//currentLevel = new AvoidTheBallsLevel(this);
-		currentLevel = new CastleLevel(this);
+		//currentLevel = new CastleLevel(this);
 		//currentLevel = new IliosLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
@@ -217,12 +216,7 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
 		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
 		ecs.addSystem(new BulletSystem(ecs, this));
-		/*if (Settings.BUILD_MAP) {
-			this.mapBuilderSystem = new MapEditorSystem(ecs, this);
-			ecs.addSystem(this.mapBuilderSystem);
-		} else {*/
 		ecs.addSystem(new ShootingSystem(ecs, this));
-		//}
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
