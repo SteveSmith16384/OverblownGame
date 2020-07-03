@@ -8,10 +8,10 @@ public class HasModelComponent {
 
 	public ModelInstance model;
 	
-	//public Vector3 positionOffsetToOrigin; // In case the origin of the 3D model isn't 0,0,0 // todo - remove!
+	//public Vector3 positionOffsetToOrigin; // In case the origin of the 3D model isn't 0,0,0
 	public float yOff;
 	public int angleYOffsetToFwds; // In case model at 0 degrees isn't facing fwds
-	public float scale = 1f; // Need this since scale is not stored in physics body.  Todo - remove, since we scale the model
+	public float scale = 1f; // Need this since scale is not stored in physics body.
 	
 	public int dontDrawInViewId = -1; // Don't draw the player's own avatar!
 	public int onlyDrawInViewId = -1; // Don't draw the targetter for other players!

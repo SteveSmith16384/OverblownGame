@@ -377,12 +377,6 @@ public class EntityFactory {
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false, adj, 1f);
 
-		// todo - remove?
-		//TextureAttribute textureAttribute1 = TextureAttribute.createDiffuse(new Texture("textures/seamlessTextures2/IMGP5511_seamless.jpg"));
-		//TextureAttribute textureAttribute1 = new TextureAttribute(TextureAttribute.Diffuse, new Texture("textures/seamlessTextures2/IMGP5511_seamless.jpg"));
-		//Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("textures/seamlessTextures2/IMGP5511_seamless.jpg")));
-		//instance.model.materials.get(0).set(black_material);
-
 		instance.transform.setTranslation(posX, posY, posZ);
 
 		/*if (axis != null) {

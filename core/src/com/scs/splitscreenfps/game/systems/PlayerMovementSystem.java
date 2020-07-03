@@ -17,8 +17,10 @@ public class PlayerMovementSystem extends AbstractSystem {
 
 	private static final Vector3 V_DOWN = new Vector3(0, -1, 0);
 	private static final Vector3 JUMP_FORCE = new Vector3(0, 180, 0);
-	private Game game;
 
+	private Game game;
+	private Vector3 tmpVec = new Vector3();
+	
 	public PlayerMovementSystem(Game _game, BasicECS ecs) {
 		super(ecs, PlayerMovementData.class);
 
@@ -47,9 +49,8 @@ public class PlayerMovementSystem extends AbstractSystem {
 		if (movementData.jumpPressed) {
 			// Check they are on ground
 			Matrix4 mat = physics.body.getWorldTransform();
-			Vector3 pos = new Vector3(); // todo - cache
-			mat.getTranslation(pos);
-			btCollisionObject obj = game.rayTestByDir(pos, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
+			mat.getTranslation(tmpVec);
+			btCollisionObject obj = game.rayTestByDir(tmpVec, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
 			if (obj != null) {
 				physics.body.applyCentralForce(JUMP_FORCE);
 				//Settings.p("Jump!");

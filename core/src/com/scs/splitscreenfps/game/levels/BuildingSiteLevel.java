@@ -136,7 +136,6 @@ public class BuildingSiteLevel extends AbstractLevel {
 		}
 		
 		if (got_pos == false) {
-			//pos.set(size).scl(.5f);
 			pos.y = size.y/2;
 		}
 		if (tex == null) {
