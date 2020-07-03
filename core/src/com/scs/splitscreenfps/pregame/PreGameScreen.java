@@ -23,7 +23,6 @@ import com.scs.splitscreenfps.ControllerManager;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;

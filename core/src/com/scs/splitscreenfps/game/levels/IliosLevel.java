@@ -8,8 +8,6 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 
-import ssmith.lang.NumberFunctions;
-
 public class IliosLevel extends AbstractLevel {
 
 	private static final float MAP_SIZE = 20;

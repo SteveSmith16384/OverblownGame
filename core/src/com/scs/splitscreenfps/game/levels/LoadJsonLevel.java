@@ -8,11 +8,11 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 
-public class LoadMapLevel extends AbstractLevel {
+public class LoadJsonLevel extends AbstractLevel {
 
 	private static final int FLOOR_SIZE = 20;
 
-	public LoadMapLevel(Game _game) {
+	public LoadJsonLevel(Game _game) {
 		super(_game);
 	}
 

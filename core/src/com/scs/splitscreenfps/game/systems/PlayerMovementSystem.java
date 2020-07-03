@@ -11,7 +11,6 @@ import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
-import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 
 public class PlayerMovementSystem extends AbstractSystem {

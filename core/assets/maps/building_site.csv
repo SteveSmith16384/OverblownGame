@@ -1,0 +1,17 @@
+Texture:1:colours/purple.png										
+Texture:1:colours/brown.png										
+										
+										
+										
+Map										
+Cube~w:15~h:1~d:15~tex:2										
+										
+		Cube~w:0.5~h:8~d:.5~tex:1								Cube~w:0.5~h:8~d:.5~tex:1
+										
+										
+										
+										
+										
+										
+										
+		Cube~w:0.5~h:8~d:.5~tex:1								Cube~w:0.5~h:8~d:.5~tex:1
