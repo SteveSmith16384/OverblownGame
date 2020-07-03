@@ -29,11 +29,11 @@ public class BuildingSiteLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		this.startPositions.add(new Vector3(1, 2f, 1));
+		/*		this.startPositions.add(new Vector3(1, 2f, 1));
 		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, FLOOR_SIZE-2));
 		this.startPositions.add(new Vector3(1, 2f, FLOOR_SIZE-2));
 		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, 1));
-
+		 */
 		/*
 		Wall floor = new Wall(game.ecs, "Floor", "colours/white.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
@@ -89,11 +89,13 @@ public class BuildingSiteLevel extends AbstractLevel {
 	private void decodeMapItem(String data, int col, int row) {
 		String items[] = data.trim().split("~");
 		//for (int i=0 ; i<items.length ; i++) {
-			if (items[0].equalsIgnoreCase("Cube")) {
-				parseCube(items, col, row);
-			} else {
-				throw new RuntimeException("Unknown code: " + items[0]);
-			}
+		if (items[0].equalsIgnoreCase("Cube")) {
+			parseCube(items, col, row);
+		} else if (items[0].equalsIgnoreCase("start")) {
+			this.startPositions.add(new Vector3(col, 1f, row));
+		} else {
+			throw new RuntimeException("Unknown code: " + items[0]);
+		}
 		//}
 	}
 
@@ -105,7 +107,7 @@ public class BuildingSiteLevel extends AbstractLevel {
 		String tex = null;
 		float mass = 0;
 		String name = "Todo";
-		
+
 		//String items[] = data.split("~");
 		for (int i=1 ; i<items.length ; i++) {
 			String[] split = items[i].split(":");
@@ -134,7 +136,7 @@ public class BuildingSiteLevel extends AbstractLevel {
 				throw new RuntimeException("Unknown code: " + items[i]);
 			}
 		}
-		
+
 		if (got_pos == false) {
 			pos.y = size.y/2;
 		}

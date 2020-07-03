@@ -1,17 +1,18 @@
-Texture:1:colours/purple.png										
-Texture:1:colours/brown.png										
-										
-										
-										
-Map										
-Cube~w:15~h:1~d:15~tex:2										
-										
-		Cube~w:0.5~h:8~d:.5~tex:1								Cube~w:0.5~h:8~d:.5~tex:1
-										
-										
-										
-										
-										
-										
-										
-		Cube~w:0.5~h:8~d:.5~tex:1								Cube~w:0.5~h:8~d:.5~tex:1
+Texture:1:colours/purple.png											
+Texture:2:colours/brown.png											
+Texture:3:colours/red.png											
+											
+											
+Map											
+											
+	Start										Start
+		Cube~name:upright~w:0.5~h:8~d:.5~tex:1				Cube~name:horiz~y:2.5~w:8~h:.2~d:.5~tex:3				Cube~name:upright~w:0.5~h:8~d:.5~tex:1	
+											
+											
+											
+						Cube~name:floor~w:15~h:1~d:15~tex:2					
+											
+											
+											
+		Cube~name:upright~w:0.5~h:8~d:.5~tex:1				Cube~name:horiz~y:2.5~w:8~h:.2~d:.5~tex:3				Cube~name:upright~w:0.5~h:8~d:.5~tex:1	
+	Start										Start
