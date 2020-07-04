@@ -19,6 +19,8 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
+import com.scs.splitscreenfps.game.entities.SkyboxSphere;
 
 public class DrawModelSystem extends AbstractSystem {
 
@@ -31,6 +33,8 @@ public class DrawModelSystem extends AbstractSystem {
 
 	private DirectionalShadowLight shadowLight;
 	private ModelBatch shadowBatch;
+	
+	private SkyboxSphere skybox;
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
@@ -47,7 +51,11 @@ public class DrawModelSystem extends AbstractSystem {
 						1f, -.5f, 1f));
 		environment.shadowMap = shadowLight;
 		shadowBatch = new ModelBatch(new DepthShaderProvider());
-	}
+
+		//skybox = new SkyboxCube(ecs, "Skybox", "", 30, 30, 30, false);
+		skybox = new SkyboxSphere(ecs, "Skybox", "", 20);
+
+		}
 
 
 	//@Override
@@ -55,6 +63,8 @@ public class DrawModelSystem extends AbstractSystem {
 		if (!shadows) {
 			this.modelBatch.begin(cam);
 
+			this.renderEntity(skybox, modelBatch, false);
+			
 			Iterator<AbstractEntity> it = entities.iterator();
 			while (it.hasNext()) {
 				AbstractEntity entity = it.next();

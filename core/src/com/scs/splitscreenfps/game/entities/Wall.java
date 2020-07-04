@@ -39,6 +39,7 @@ public class Wall extends AbstractEntity {
 
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
+
 		modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material)
 		    .rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
 		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
@@ -51,6 +52,7 @@ public class Wall extends AbstractEntity {
 		    .rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
 		modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
 		    .rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
+
 		Model box_model = modelBuilder.end();
 		
 		if (tile) {
