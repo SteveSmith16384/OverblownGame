@@ -14,7 +14,7 @@ public class Settings {
 	public static final String VERSION = "1.01";
 	
 	// Debugging Hacks
-	public static final boolean DEBUG_PHYSICS = !RELEASE_MODE && true;
+	public static final boolean DEBUG_PHYSICS = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOOMFIST;
 	public static final boolean DEBUG_PUNCH = !RELEASE_MODE && false;

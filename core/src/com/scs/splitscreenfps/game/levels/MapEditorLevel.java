@@ -36,7 +36,7 @@ public class MapEditorLevel extends AbstractLevel {
 		//this.startPositions.add(new Vector3(3, 2f, 3));
 		//this.startPositions.add(new Vector3(4, 2f, 4));
 
-		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
+		Wall floor = new Wall(game.ecs, "Floor", "textures/neon/tron_green.jpg", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
 				0f, true, false);
 		game.ecs.addEntity(floor);

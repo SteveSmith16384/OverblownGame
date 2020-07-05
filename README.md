@@ -26,6 +26,7 @@ Still looking for an actual game to make with it...
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block
+* M - Mass mode
 * N - New block
 * P - Position Mode
 * R - Rotation Mode

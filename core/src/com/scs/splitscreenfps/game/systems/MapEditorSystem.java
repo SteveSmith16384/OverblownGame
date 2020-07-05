@@ -25,7 +25,9 @@ import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
  */
 public class MapEditorSystem extends AbstractSystem {
 
-	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE};
+	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS};
+	
+	private float MOVE_INC = 0.2f;
 
 	private Game game;
 	private Mode mode = Mode.POSITION;
@@ -36,7 +38,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 		game = _game;
 
-		game.physics_enabled = false;
+		//game.physics_enabled = false;
 	}
 
 
@@ -60,6 +62,7 @@ public class MapEditorSystem extends AbstractSystem {
 				if (block != null) {
 					Settings.p(block.name + " selected");
 					game.appendToLog("Selected: " + block.id);
+					game.appendToLog("Mass=" + block.mass);
 				} else {
 					selectedObject = null;
 				}
@@ -85,6 +88,9 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (keyboard.isKeyJustPressed(Keys.T)) { // Textures
 			mode = Mode.TEXTURE;
 			game.appendToLog("Texture mode selected");
+		} else if (keyboard.isKeyJustPressed(Keys.M)) { // Mass
+			mode = Mode.MASS;
+			game.appendToLog("Mass mode selected");
 		} else if (keyboard.isKeyJustPressed(Keys.G)) { // Toggle physics
 			game.physics_enabled = !game.physics_enabled;
 			game.appendToLog("Physics enabled: " + game.physics_enabled);
@@ -116,14 +122,14 @@ public class MapEditorSystem extends AbstractSystem {
 				this.selectedObject.remove();
 				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation
-				resetBlockRotation();
+				reAlignBlock();
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
 				switch (mode) {
 				case POSITION:
-					this.moveBlock(new Vector3(.1f, 0, 0));
+					this.moveBlock(new Vector3(MOVE_INC, 0, 0));
 					break;
 				case SIZE:
-					this.resizeBlock(new Vector3(.1f, 0, 0));
+					this.resizeBlock(new Vector3(MOVE_INC, 0, 0));
 					break;
 				case ROTATION:
 					this.rotateBlock(new Vector3(10, 0, 0));
@@ -137,10 +143,10 @@ public class MapEditorSystem extends AbstractSystem {
 			} else if (keyboard.isKeyJustPressed(Keys.PAGE_UP)) {
 				switch (mode) {
 				case POSITION:
-					this.moveBlock(new Vector3(0, 0, .1f));
+					this.moveBlock(new Vector3(0, 0, MOVE_INC));
 					break;
 				case SIZE:
-					this.resizeBlock(new Vector3(0, 0, .1f));
+					this.resizeBlock(new Vector3(0, 0, MOVE_INC));
 					break;
 				case ROTATION:
 					this.rotateBlock(new Vector3(0, 0, 10));
@@ -151,10 +157,10 @@ public class MapEditorSystem extends AbstractSystem {
 			} else if (keyboard.isKeyJustPressed(Keys.RIGHT)) {
 				switch (mode) {
 				case POSITION:
-					this.moveBlock(new Vector3(-.1f, 0, 0));
+					this.moveBlock(new Vector3(-MOVE_INC, 0, 0));
 					break;
 				case SIZE:
-					this.resizeBlock(new Vector3(-.1f, 0, 0));
+					this.resizeBlock(new Vector3(-MOVE_INC, 0, 0));
 					break;
 				case ROTATION:
 					this.rotateBlock(new Vector3(-10, 0, 0));
@@ -168,10 +174,10 @@ public class MapEditorSystem extends AbstractSystem {
 			} else if (keyboard.isKeyJustPressed(Keys.PAGE_DOWN)) {
 				switch (mode) {
 				case POSITION:
-					this.moveBlock(new Vector3(0, 0, -.1f));
+					this.moveBlock(new Vector3(0, 0, -MOVE_INC));
 					break;
 				case SIZE:
-					this.resizeBlock(new Vector3(0, 0, -.1f));
+					this.resizeBlock(new Vector3(0, 0, -MOVE_INC));
 					break;
 				case ROTATION:
 					this.rotateBlock(new Vector3(0, 0, -10));
@@ -182,13 +188,16 @@ public class MapEditorSystem extends AbstractSystem {
 			} else if (keyboard.isKeyJustPressed(Keys.UP)) {
 				switch (mode) {
 				case POSITION:
-					this.moveBlock(new Vector3(0, 0.1f, 0));
+					this.moveBlock(new Vector3(0, MOVE_INC, 0));
 					break;
 				case SIZE:
-					this.resizeBlock(new Vector3(0, .1f, 0));
+					this.resizeBlock(new Vector3(0, MOVE_INC, 0));
 					break;
 				case ROTATION:
 					this.rotateBlock(new Vector3(0, 10, 0));
+					break;
+				case MASS:
+					this.changeMass(1);
 					break;
 				default:
 					game.appendToLog("Unknown mode: " + mode);
@@ -196,20 +205,23 @@ public class MapEditorSystem extends AbstractSystem {
 			} else if (keyboard.isKeyJustPressed(Keys.DOWN)) {
 				switch (mode) {
 				case POSITION:
-					this.moveBlock(new Vector3(0, -0.1f, 0));
+					this.moveBlock(new Vector3(0, -MOVE_INC, 0));
 					break;
 				case SIZE:
-					this.resizeBlock(new Vector3(0, -0.1f, 0));
+					this.resizeBlock(new Vector3(0, -MOVE_INC, 0));
 					break;
 				case ROTATION:
 					this.rotateBlock(new Vector3(0, -10, 0));
+					break;
+				case MASS:
+					this.changeMass(-1);
 					break;
 				default:
 					game.appendToLog("Unknown mode: " + mode);
 				}
 			}
 		} else {
-			game.appendToLog("No object selected");
+			//game.appendToLog("No object selected");
 		}
 	}
 
@@ -227,7 +239,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 	private void resizeBlock(Vector3 adj) {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-		this.setBlockDataFromPhysicsData(block);
+		//this.setBlockDataFromPhysicsData(block);
 
 		block.size.add(adj); 
 		this.selectedObject.remove();
@@ -237,7 +249,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 	private void rotateBlock(Vector3 adj) {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-		this.setBlockDataFromPhysicsData(block);
+		//this.setBlockDataFromPhysicsData(block);
 
 		block.rotation.add(adj);
 		this.selectedObject.remove();
@@ -247,7 +259,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 	private void rotateTexture(int off) {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-		this.setBlockDataFromPhysicsData(block);
+		//this.setBlockDataFromPhysicsData(block);
 
 		int max = -1;
 		Iterator<Integer> it = game.currentLevel.mapdata.textures.keySet().iterator();
@@ -265,17 +277,30 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
-	private void resetBlockRotation() {
+	private void changeMass(int off) {
+		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+		//this.setBlockDataFromPhysicsData(block);
+
+		block.mass += off;
+		if (block.mass < 0) {
+			block.mass = 0;
+		}
+		game.appendToLog("Mass=" + block.mass);
+	}
+
+
+	private void reAlignBlock() {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		this.setBlockDataFromPhysicsData(block);
 
+		//todo block.size.x = (int)
 		block.rotation.set(0, 0, 0);
 		this.selectedObject.remove();
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 	}
 
 
-	// Requird since physics may well have moved the position of the block
+	// Required since physics may well have moved the position of the block
 	private Matrix4 setBlockDataFromPhysicsData(MapBlockComponent block) {
 		// Set matrix to current pos
 		PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
