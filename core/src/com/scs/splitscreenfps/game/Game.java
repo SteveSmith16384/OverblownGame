@@ -44,7 +44,7 @@ import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.BuildingSiteLevel;
+import com.scs.splitscreenfps.game.levels.LoadCSVLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -147,7 +147,7 @@ public class Game implements IModule {
 		//currentLevel = new AvoidTheBallsLevel(this);
 		//currentLevel = new CastleLevel(this);
 		//currentLevel = new IliosLevel(this);
-		currentLevel = new BuildingSiteLevel(this);
+		currentLevel = new LoadCSVLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
 			//players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);

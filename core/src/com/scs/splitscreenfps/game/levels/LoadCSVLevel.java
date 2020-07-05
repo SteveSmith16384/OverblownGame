@@ -10,13 +10,11 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.Wall;
 
-public class BuildingSiteLevel extends AbstractLevel {
-
-	private static final float FLOOR_SIZE = 15f; // todo - read from map data
+public class LoadCSVLevel extends AbstractLevel {
 
 	private HashMap<String, String> textures = new HashMap<String, String>();
 
-	public BuildingSiteLevel(Game _game) {
+	public LoadCSVLevel(Game _game) {
 		super(_game);
 	}
 
@@ -29,20 +27,6 @@ public class BuildingSiteLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		/*		this.startPositions.add(new Vector3(1, 2f, 1));
-		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, FLOOR_SIZE-2));
-		this.startPositions.add(new Vector3(1, 2f, FLOOR_SIZE-2));
-		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, 1));
-		 */
-		/*
-		Wall floor = new Wall(game.ecs, "Floor", "colours/white.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
-				FLOOR_SIZE, .2f, FLOOR_SIZE, 
-				0f, true, false);
-		game.ecs.addEntity(floor);
-
-		AbstractEntity crate = EntityFactory.createCrate(game.ecs, "colours/red.png", 3, 3, 3, 1, 1, 1);
-		game.ecs.addEntity(crate);
-		 */
 		FileHandle file = Gdx.files.local("maps/building_site.csv");
 		String csv = file.readString();
 		String rows[] = csv.split("\n");
@@ -75,12 +59,9 @@ public class BuildingSiteLevel extends AbstractLevel {
 		for (int row=start_row ; row<rows.length ; row++) {
 			String cols[] = rows[row].split("\t");
 			for (int col=0 ; col<cols.length ; col++) {
-				//String tokens[] = cols[col].split("~");
-				//for (int t=0 ; t<tokens.length ; t++) {
 				if (cols[col].trim().length() > 0) {
 					decodeMapItem(cols[col].trim(), col, row-start_row);
 				}
-				//}
 			}
 		}		
 	}
@@ -88,7 +69,6 @@ public class BuildingSiteLevel extends AbstractLevel {
 
 	private void decodeMapItem(String data, int col, int row) {
 		String items[] = data.trim().split("~");
-		//for (int i=0 ; i<items.length ; i++) {
 		if (items[0].equalsIgnoreCase("Cube")) {
 			parseCube(items, col, row);
 		} else if (items[0].equalsIgnoreCase("start")) {
@@ -96,7 +76,6 @@ public class BuildingSiteLevel extends AbstractLevel {
 		} else {
 			throw new RuntimeException("Unknown code: " + items[0]);
 		}
-		//}
 	}
 
 
@@ -108,7 +87,6 @@ public class BuildingSiteLevel extends AbstractLevel {
 		float mass = 0;
 		String name = "Todo";
 
-		//String items[] = data.split("~");
 		for (int i=1 ; i<items.length ; i++) {
 			String[] split = items[i].split(":");
 			if (split[0].equalsIgnoreCase("name")) {
