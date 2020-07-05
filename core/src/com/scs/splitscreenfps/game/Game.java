@@ -167,7 +167,7 @@ public class Game implements IModule {
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
 
-		this.appendToLog("Game about to start...");
+		//this.appendToLog("Game about to start...");
 
 		if (Settings.TEST_SCREEN_COORDS) {
 			TextEntity te = new TextEntity(ecs, "LINE 1", 300, 1000, new Color(0, 0, 1, 1), -1, 2);
@@ -339,8 +339,8 @@ public class Game implements IModule {
 			float yOff = font_med.getLineHeight() * 1.2f;
 			font_med.setColor(1, 1, 1, 1);
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-			font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
-			font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
+			//font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
+			//font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
 			//font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
 
 			//if (currentViewId == 1 ) {
