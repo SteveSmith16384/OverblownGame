@@ -2,9 +2,9 @@
   "filename": "maps/default_map.json",
   "blocks": [
     {
-      "name": "",
-      "texture_filename": "tex",
-      "model_filename": "test",
+      "name": "Floor",
+      "texture_id": 0,
+      "model_filename": "",
       "size": {
         "x": 1.0,
         "y": 1.0,

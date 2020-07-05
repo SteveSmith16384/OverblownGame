@@ -32,7 +32,7 @@ public class MapEditorLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		this.startPositions.add(new Vector3(1, 2f, 1));
-		//this.startPositions.add(new Vector3(2, 2f, 2));
+		this.startPositions.add(new Vector3(2, 2f, 2));
 		//this.startPositions.add(new Vector3(3, 2f, 3));
 		//this.startPositions.add(new Vector3(4, 2f, 4));
 
@@ -42,7 +42,7 @@ public class MapEditorLevel extends AbstractLevel {
 		game.ecs.addEntity(floor);
 
 		try {
-			super.loadJsonFile("maps/testmap1.json");
+			super.loadJsonFile("maps/default_map.json");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

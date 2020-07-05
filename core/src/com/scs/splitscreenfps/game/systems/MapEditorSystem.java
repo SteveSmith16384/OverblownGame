@@ -34,19 +34,13 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
-	public void saveMap() {
-		try {
-			game.currentLevel.saveFile();
-			Settings.p("Map saved");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
+
+		if (player.inputMethod instanceof MouseAndKeyboardInputMethod == false) {
+			return;
+		}
 
 		MouseAndKeyboardInputMethod keyboard = (MouseAndKeyboardInputMethod)player.inputMethod;
 
@@ -78,8 +72,8 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (keyboard.isKeyJustPressed(Keys.B)) {
 			//MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 			//if (block.model_filename.length() == 0) {
-				mode = Mode.SIZE;
-				mode_text = "Mode: Size";
+			mode = Mode.SIZE;
+			mode_text = "Mode: Size";
 			/*} else {
 				Settings.p("Cannot adjust size of model");
 			}*/
@@ -92,7 +86,6 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
 			MapBlockComponent block = new MapBlockComponent();
 			block.size = new Vector3(1, 1, 1);
-			block.texture_filename = "";
 			this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			game.currentLevel.mapdata.blocks.add(block);
 		}
@@ -237,5 +230,13 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
+	public void saveMap() {
+		try {
+			game.currentLevel.saveFile();
+			Settings.p("Map saved");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

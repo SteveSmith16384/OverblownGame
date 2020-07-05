@@ -7,8 +7,9 @@ public class MapBlockComponent {
 	public static int next_id = 1;
 
 	public int id;
+	public String type = "";
 	public String name = "";
-	public String texture_filename = "";
+	public int texture_id;
 	public String model_filename = "";
 	public Vector3 size = new Vector3();
 	public Vector3 position = new Vector3();
@@ -22,8 +23,9 @@ public class MapBlockComponent {
 
 	public MapBlockComponent clone() {
 		MapBlockComponent tmp = new MapBlockComponent();
+		tmp.type = this.type;
 		tmp.name = this.name + "_new";
-		tmp.texture_filename = this.texture_filename;
+		tmp.texture_id = this.texture_id;
 		tmp.model_filename = this.model_filename;
 		tmp.size = new Vector3(this.size);
 		tmp.position = new Vector3(this.position);

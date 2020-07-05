@@ -41,11 +41,10 @@ import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
-import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.LoadCSVLevel;
+import com.scs.splitscreenfps.game.levels.MapEditorLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -113,10 +112,6 @@ public class Game implements IModule {
 	private Vector3 tmp_to = new Vector3();
 	private Vector3 tmp_to2 = new Vector3();
 
-	//private Matrix4 viewMatrix = new Matrix4();
-	//private Texture backgroundTexture;
-	//private SpriteBatch spritebatch;
-	
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs, GameSelectionData _gameSelectionData) {
 		main = _main;
 		inputs = _inputs;
@@ -147,13 +142,13 @@ public class Game implements IModule {
 		new MyContactListener(coll);
 
 		//currentLevel = new RollingBallLevel(this);
-		//currentLevel = new MapEditorLevel(this);
+		currentLevel = new MapEditorLevel(this);
 		//currentLevel = new LoadMapLevel(this);
 		//currentLevel = new AvoidTheBallsLevel(this);
 		//currentLevel = new CastleLevel(this);
 		//currentLevel = new IliosLevel(this);
 		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
-		currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
+		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
 
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
