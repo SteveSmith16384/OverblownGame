@@ -69,6 +69,7 @@ public class MapEditorSystem extends AbstractSystem {
 		if (keyboard.isKeyJustPressed(Keys.P)) {
 			mode = Mode.POSITION;
 			mode_text = "Mode: Position";
+			game.appendToLog("Position mode selected");
 		} else if (keyboard.isKeyJustPressed(Keys.B)) {
 			//MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 			//if (block.model_filename.length() == 0) {
@@ -99,6 +100,8 @@ public class MapEditorSystem extends AbstractSystem {
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 				game.currentLevel.mapdata.blocks.remove(block);
 				this.selectedObject.remove();
+			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation
+				resetBlockRotation();
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
 				switch (mode) {
 				case POSITION:
@@ -219,8 +222,19 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
+	private void resetBlockRotation() {
+		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+		this.setBlockDataToCurrentPosition(block);
+
+		block.rotation.set(0, 0, 0);
+		this.selectedObject.remove();
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+	}
+
+
+	// Requird since physics may well have moved the position of the block
 	private Matrix4 setBlockDataToCurrentPosition(MapBlockComponent block) {
-		// Set matix to current pos
+		// Set matrix to current pos
 		PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
 		Matrix4 mat = new Matrix4();
 		md.body.getWorldTransform(mat);
@@ -232,6 +246,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 	public void saveMap() {
 		try {
+			// todo - loop through each block and set the model data to the position/size/rot of the block
 			game.currentLevel.saveFile();
 			Settings.p("Map saved");
 		} catch (Exception e) {

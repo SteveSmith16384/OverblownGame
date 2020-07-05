@@ -169,9 +169,14 @@ public class Game implements IModule {
 
 		this.appendToLog("Game about to start...");
 
-		//spritebatch = new SpriteBatch();
-		//backgroundTexture = new Texture(Gdx.files.internal("textures/sky.png"), Format.RGB565, true);
-		//backgroundTexture.setFilter(TextureFilter.MipMap, TextureFilter.Linear);
+		if (Settings.TEST_SCREEN_COORDS) {
+			TextEntity te = new TextEntity(ecs, "LINE 1", 300, 1000, new Color(0, 0, 1, 1), -1, 2);
+			ecs.addEntity(te);
+			te = new TextEntity(ecs, "LINE 2", 360, 1000, new Color(0, 0, 1, 1), -1, 2);
+			ecs.addEntity(te);
+			te = new TextEntity(ecs, "LINE 3", 500, 1000, new Color(0, 0, 1, 1), -1, 2);
+			ecs.addEntity(te);
+		}
 	}
 
 
@@ -311,42 +316,24 @@ public class Game implements IModule {
 			this.currentLevel.setBackgroundColour();
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-			/*
-			viewMatrix.setToOrtho2D(0, 0, 480, 320);
-			spritebatch.setProjectionMatrix(viewMatrix);
-			spritebatch.begin();
-			spritebatch.disableBlending();
-			//spritebatch.setColor(Color.WHITE);
-			spritebatch.draw(backgroundTexture, 0, 0, 480, 320, 0, 0, 128, 128, false, false);
-			spritebatch.end();
-			*/
-
 			this.drawModelSystem.process(viewportData.camera, false);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
-
 			if (Settings.DEBUG_PHYSICS) {
 				debugDrawer.begin(viewportData.camera);
 				dynamicsWorld.debugDrawWorld();
 				debugDrawer.end();
 			}
-
 			this.drawModelSystem.process(viewportData.camera, true);
 
+			viewportData.frameBuffer.end();
+
 			batch2d.begin();
+			// Draw the 3D buffer
+			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
 			this.ecs.getSystem(DrawTextSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
-
-			//font_white.draw(batch2d, "Screen " + this.currentViewId, 10, 250);
-			/*if (this.game_stage == 1) {
-				if (this.losers.contains(this.players[this.currentViewId])) {
-					font.setColor(0, 1, 0, 1);
-					font.draw(batch2d, "YOU HAVE LOST!", 10, Gdx.graphics.getBackBufferHeight()/2);
-				} else {
-					font.setColor(0, 1, 1, 1);
-					font.draw(batch2d, "YOU HAVE WON!", 10, Gdx.graphics.getBackBufferHeight()/2);
-				}
-			}*/
 
 			currentLevel.renderUI(batch2d, currentViewId);
 			float yOff = font_med.getLineHeight() * 1.2f;
@@ -356,7 +343,7 @@ public class Game implements IModule {
 			font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
 			//font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
 
-			if (currentViewId == 0 ) {
+			//if (currentViewId == 1 ) {
 				// Draw log
 				font_small.setColor(1,  1,  1,  1);
 				int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
@@ -364,30 +351,26 @@ public class Game implements IModule {
 					font_small.draw(batch2d, s, 10, y);
 					y -= this.font_small.getLineHeight();
 				}
+			//}
+			if (Settings.TEST_SCREEN_COORDS) {
+				font_small.draw(batch2d, "50", 50, 50);
+				font_small.draw(batch2d, "150", 150, 150);
+				font_small.draw(batch2d, "X", 350, 360);
+				font_small.draw(batch2d, "BL", viewportData.viewPos.x+40, viewportData.viewPos.y+40);
+				font_small.draw(batch2d, "BR", viewportData.viewPos.width-40, viewportData.viewPos.y+40);
+				font_small.draw(batch2d, "TL", viewportData.viewPos.x+20,  viewportData.viewPos.y+viewportData.viewPos.height-20);
+				font_small.draw(batch2d, "TR", viewportData.viewPos.width-40,  viewportData.viewPos.y+viewportData.viewPos.height-20);
+
 			}
 
-			/*if (Settings.TEST_SCREEN_COORDS) {
-				font.draw(batch2d, "TL", 20, 20);
-				font.draw(batch2d, "50", 50, 50);
-				font.draw(batch2d, "150", 150, 150);
-				font.draw(batch2d, "TR", Gdx.graphics.getBackBufferWidth()-20, 20);
-				font.draw(batch2d, "BL", 10, Gdx.graphics.getBackBufferHeight()-20);
-				font.draw(batch2d, "BR", Gdx.graphics.getBackBufferWidth()-20, Gdx.graphics.getBackBufferHeight()-20);
-			}*/
-
-			batch2d.end();
-
-			viewportData.frameBuffer.end();
-
-			//Draw buffer and FPS
-			batch2d.begin();
-			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 			if (Settings.SHOW_FPS) {
 				if (font_small != null) {
 					font_small.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font_small.getLineHeight()*2);
 				}
 			}
+
 			batch2d.end();
+
 		}
 	}
 
@@ -581,7 +564,7 @@ public class Game implements IModule {
 	}
 
 
-	private void appendToLog(String s) {
+	public void appendToLog(String s) {
 		this.log.add(s);
 		while (log.size() > 6) {
 			log.remove(0);

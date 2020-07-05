@@ -18,7 +18,7 @@ public class Settings {
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOOMFIST;
 	public static final boolean DEBUG_PUNCH = !RELEASE_MODE && false;
-	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
+	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && true;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
 	public static final boolean STRICT = !RELEASE_MODE && true;
 

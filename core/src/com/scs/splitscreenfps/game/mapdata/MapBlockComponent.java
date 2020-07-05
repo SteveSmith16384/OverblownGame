@@ -11,9 +11,11 @@ public class MapBlockComponent {
 	public String name = "";
 	public int texture_id;
 	public String model_filename = "";
+	
 	public Vector3 size = new Vector3();
 	public Vector3 position = new Vector3();
 	public Vector3 rotation = new Vector3();
+	
 	public float mass = 1;
 
 	public MapBlockComponent() {
