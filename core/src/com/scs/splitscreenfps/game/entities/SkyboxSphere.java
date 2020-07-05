@@ -1,15 +1,13 @@
 package com.scs.splitscreenfps.game.entities;
 
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.math.Matrix3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasModelComponent;

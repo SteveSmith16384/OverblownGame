@@ -33,13 +33,12 @@ import ssmith.libgdx.ModelFunctions;
 // This also moves the camera
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
-	public static final float PLAYER_HEIGHT = 0.5f;
-	private static final float MOVE_SPEED = 25;//1.5f;
+	public static final float PLAYER_HEIGHT = 0.4f;
+	private static final float MOVE_SPEED = 15;//20;//25;//1.5f;
 
 	public PersonCameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
 	private Vector2 tmpVec2 = new Vector2();
-	//private Matrix4 tmpMat = new Matrix4();
 
 	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
@@ -53,7 +52,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		// Model stuff
 		this.addAlienModel(playerIdx);
 
-		btCapsuleShape capsuleShape = new btCapsuleShape(0.25f, PLAYER_HEIGHT);
+		btCapsuleShape capsuleShape = new btCapsuleShape(0.2f, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
 
@@ -125,7 +124,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		//Vector3 offset = ModelFunctions.getOrigin(instance);
 		//offset.y -= .9f; // Hack since model is too high
 
-		HasModelComponent hasModel = new HasModelComponent(instance, -0.5f, 90, scale, true);
+		HasModelComponent hasModel = new HasModelComponent(instance, -0.4f, 90, scale, true);
 		hasModel.dontDrawInViewId = playerIdx;
 		this.addComponent(hasModel);
 

@@ -1,0 +1,19 @@
+Rem: TAB CSV!											
+Texture:1:colours/purple.png											
+Texture:2:colours/brown.png											
+Texture:3:colours/red.png											
+Texture:4:colours/white.png											
+											
+Map											
+Cube~x:7~y:0~z:7~name:floor~w:15~h:1~d:15~tex:2											
+	Start										Start
+		Cube~name:upright~w:0.5~h:8~d:.5~tex:1~mass:1				Cube~name:horiz~y:8.5~w:8~h:.2~d:.5~tex:3~mass:1				Cube~name:upright~w:0.5~h:8~d:.5~tex:1~mass:1	
+											
+				Cube~name:block~y:1~s:.9~tex:4~mass:5	Cube~name:block~y:1~s:.9~tex:4~mass:5		Cube~name:block~y:1~s:.9~tex:4~mass:5	Cube~name:block~y:1~s:.9~tex:4~mass:5			
+				Cube~name:block~y:1~s:.9~tex:4~mass:5	Cube~name:block~y:1~s:.9~tex:4~mass:5		Cube~name:block~y:1~s:.9~tex:4~mass:5	Cube~name:block~y:1~s:.9~tex:4~mass:5			
+		Cube~name:vert~y:8.5~w:.5~h:.2~d:8~tex:3~mass:1				Cube~y:1.5~name:ceiling~w:5~h:.2~d:5~tex:4~mass:5				Cube~name:vert~y:8.5~w:.5~h:.2~d:8~tex:3~mass:1	
+				Cube~name:block~y:1~s:.9~tex:4~mass:5	Cube~name:block~y:1~s:.9~tex:4~mass:5		Cube~name:block~y:1~s:.9~tex:4~mass:5	Cube~name:block~y:1~s:.9~tex:4~mass:5			
+				Cube~name:block~y:1~s:.9~tex:4~mass:5	Cube~name:block~y:1~s:.9~tex:4~mass:5		Cube~name:block~y:1~s:.9~tex:4~mass:5	Cube~name:block~y:1~s:.9~tex:4~mass:5			
+											
+		Cube~name:upright~w:0.5~h:8~d:.5~tex:1~mass:1				Cube~name:horiz~y:8.5~w:8~h:.2~d:.5~tex:3~mass:1				Cube~name:upright~w:0.5~h:8~d:.5~tex:1~mass:1	
+	Start										Start

@@ -152,10 +152,10 @@ public class Game implements IModule {
 		//currentLevel = new AvoidTheBallsLevel(this);
 		//currentLevel = new CastleLevel(this);
 		//currentLevel = new IliosLevel(this);
-		currentLevel = new LoadCSVLevel(this);
+		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
+		currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
 
 		for (int i=0 ; i<players.length ; i++) {
-			//players[i] = new PlayersAvatar_Person(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
 			ecs.addEntity(players[i]);
 

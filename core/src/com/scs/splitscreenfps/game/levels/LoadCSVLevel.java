@@ -7,28 +7,32 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class LoadCSVLevel extends AbstractLevel {
 
 	private HashMap<String, String> textures = new HashMap<String, String>();
-
-	public LoadCSVLevel(Game _game) {
+	private String filename;
+	
+	public LoadCSVLevel(Game _game, String _filename) {
 		super(_game);
+		
+		filename = _filename;
 	}
 
 
 	@Override
 	public void setBackgroundColour() {
-		//Gdx.gl.glClearColor(0, .6f, .8f, 1);
-		Gdx.gl.glClearColor(0, 0f, 0f, 1);
+		Gdx.gl.glClearColor(0, .6f, .8f, 1);
+		//Gdx.gl.glClearColor(0, 0f, 0f, 1);
 	}
 
 
 	@Override
 	public void load() {
-		FileHandle file = Gdx.files.local("maps/building_site.csv");
+		FileHandle file = Gdx.files.local(filename);//"maps/building_site.csv");
 		String csv = file.readString();
 		String rows[] = csv.split("\n");
 		for (int row=0 ; row<rows.length ; row++) {
@@ -43,7 +47,8 @@ public class LoadCSVLevel extends AbstractLevel {
 	private boolean decodeRow(String data, String rows[], int current_row) {
 		if (data.startsWith("\t")) { // Blank row
 			// DO nothing
-		} else if (data.startsWith("texture")) {
+		} else if (data.startsWith("rem:")) {
+		} else if (data.startsWith("texture:")) {
 			String[] tokens = data.trim().split(":");
 			this.textures.put(tokens[1], tokens[2]);
 		} else if (data.startsWith("map")) {
@@ -107,6 +112,10 @@ public class LoadCSVLevel extends AbstractLevel {
 				size.y = Float.parseFloat(split[1]);
 			} else if (split[0].equalsIgnoreCase("d")) {
 				size.z = Float.parseFloat(split[1]);
+			} else if (split[0].equalsIgnoreCase("s")) {
+				size.x = Float.parseFloat(split[1]);
+				size.y = Float.parseFloat(split[1]);
+				size.z = Float.parseFloat(split[1]);
 			} else if (split[0].equalsIgnoreCase("mass")) {
 				mass = Float.parseFloat(split[1]);
 			} else if (split[0].equalsIgnoreCase("tex")) {
@@ -123,6 +132,7 @@ public class LoadCSVLevel extends AbstractLevel {
 			tex = "colours/white.png";
 		}
 
+		Settings.p("Creating " + name + " at " + pos);
 		AbstractEntity entity = new Wall(game.ecs, name, tex, pos.x, pos.y, pos.z, size.x, size.y, size.z, mass, 0, 0, 0, false, true);
 		game.ecs.addEntity(entity);
 	}
