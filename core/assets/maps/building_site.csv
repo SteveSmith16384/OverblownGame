@@ -10,7 +10,7 @@ Map
 											
 											
 											
-						Cube~name:floor~w:15~h:1~d:15~tex:2					
+		Cube~name:vert~y:2.5~w:.5~h:.2~d:8~tex:3				Cube~name:floor~w:15~h:1~d:15~tex:2				Cube~name:vert~y:2.5~w:.5~h:.2~d:8~tex:3	
 											
 											
 											

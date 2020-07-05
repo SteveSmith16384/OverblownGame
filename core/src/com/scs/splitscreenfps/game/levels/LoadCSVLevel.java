@@ -21,7 +21,8 @@ public class LoadCSVLevel extends AbstractLevel {
 
 	@Override
 	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(0, .6f, .8f, 1);
+		//Gdx.gl.glClearColor(0, .6f, .8f, 1);
+		Gdx.gl.glClearColor(0, 0f, 0f, 1);
 	}
 
 

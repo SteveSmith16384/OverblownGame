@@ -41,6 +41,7 @@ import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
@@ -106,12 +107,16 @@ public class Game implements IModule {
 	public btDiscreteDynamicsWorld dynamicsWorld;
 	public boolean physics_enabled = true;
 	private long startPhysicsTime;
-	
+
 	// Temp vars
 	private Vector3 tmp_from = new Vector3();
 	private Vector3 tmp_to = new Vector3();
 	private Vector3 tmp_to2 = new Vector3();
 
+	//private Matrix4 viewMatrix = new Matrix4();
+	//private Texture backgroundTexture;
+	//private SpriteBatch spritebatch;
+	
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs, GameSelectionData _gameSelectionData) {
 		main = _main;
 		inputs = _inputs;
@@ -166,8 +171,12 @@ public class Game implements IModule {
 		this.loadAssetsForRescale(); // Need this to load font
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
-		
+
 		this.appendToLog("Game about to start...");
+
+		//spritebatch = new SpriteBatch();
+		//backgroundTexture = new Texture(Gdx.files.internal("textures/sky.png"), Format.RGB565, true);
+		//backgroundTexture.setFilter(TextureFilter.MipMap, TextureFilter.Linear);
 	}
 
 
@@ -306,6 +315,16 @@ public class Game implements IModule {
 
 			this.currentLevel.setBackgroundColour();
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+			/*
+			viewMatrix.setToOrtho2D(0, 0, 480, 320);
+			spritebatch.setProjectionMatrix(viewMatrix);
+			spritebatch.begin();
+			spritebatch.disableBlending();
+			//spritebatch.setColor(Color.WHITE);
+			spritebatch.draw(backgroundTexture, 0, 0, 480, 320, 0, 0, 128, 128, false, false);
+			spritebatch.end();
+			*/
 
 			this.drawModelSystem.process(viewportData.camera, false);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
