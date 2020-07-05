@@ -29,7 +29,8 @@ Still looking for an actual game to make with it...
 * N - New block
 * P - Position Mode
 * R - Rotation Mode
-* Arrows & Pg Up/Pg Dn: Adjust model in dimensions depending on mode
-* T - Toggle physics
+* G - Toggle physics/gravity
+* U - Undo move
 * X - Remove block
+* Arrows & Pg Up/Pg Dn: Adjust model in dimensions depending on mode
 

@@ -17,9 +17,15 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
 
+/**
+ * Limitations of the map editor:-
+ * All the data is stored in MapBlockData, since it's not possible to get the l/w/h from a physics body, especially when its rotated.
+ * However, we do get the position from the physics body.
+ *
+ */
 public class MapEditorSystem extends AbstractSystem {
 
-	private enum Mode {ROTATION, POSITION, SIZE};
+	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE};
 
 	private Game game;
 	private Mode mode = Mode.POSITION;
@@ -76,7 +82,10 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (keyboard.isKeyJustPressed(Keys.R)) {
 			mode = Mode.ROTATION;
 			game.appendToLog("Rotation mode selected");
-		} else if (keyboard.isKeyJustPressed(Keys.T)) { // Toggle physics
+		} else if (keyboard.isKeyJustPressed(Keys.T)) { // Textures
+			mode = Mode.TEXTURE;
+			game.appendToLog("Texture mode selected");
+		} else if (keyboard.isKeyJustPressed(Keys.G)) { // Toggle physics
 			game.physics_enabled = !game.physics_enabled;
 			game.appendToLog("Physics enabled: " + game.physics_enabled);
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
@@ -85,7 +94,7 @@ public class MapEditorSystem extends AbstractSystem {
 			this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			game.currentLevel.mapdata.blocks.add(block);
 		}
-		
+
 		if (selectedObject != null) {
 			if (keyboard.isKeyJustPressed(Keys.C)) { // Clone
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
@@ -93,10 +102,19 @@ public class MapEditorSystem extends AbstractSystem {
 				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(new_block);
 				game.currentLevel.mapdata.blocks.add(new_block);
 			} else if (keyboard.isKeyJustPressed(Keys.X)) { // Remove
+				if (keyboard.isKeyPressed(Keys.SHIFT_LEFT)) {
+					MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+					game.currentLevel.mapdata.blocks.remove(block);
+					this.selectedObject.remove();
+					game.appendToLog("Block removed");
+					this.selectedObject = null;
+				} else {
+					game.appendToLog("Press Shift to remove block");
+				}
+			} else if (keyboard.isKeyJustPressed(Keys.U)) { // Undo
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-				game.currentLevel.mapdata.blocks.remove(block);
 				this.selectedObject.remove();
-				game.appendToLog("Block removed");
+				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation
 				resetBlockRotation();
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
@@ -110,8 +128,11 @@ public class MapEditorSystem extends AbstractSystem {
 				case ROTATION:
 					this.rotateBlock(new Vector3(10, 0, 0));
 					break;
+				case TEXTURE:
+					this.rotateTexture(-1);
+					break;
 				default:
-					throw new RuntimeException("");
+					game.appendToLog("Unknown mode: " + mode);
 				}
 			} else if (keyboard.isKeyJustPressed(Keys.PAGE_UP)) {
 				switch (mode) {
@@ -125,7 +146,7 @@ public class MapEditorSystem extends AbstractSystem {
 					this.rotateBlock(new Vector3(0, 0, 10));
 					break;
 				default:
-					throw new RuntimeException("");
+					game.appendToLog("Unknown mode: " + mode);
 				}
 			} else if (keyboard.isKeyJustPressed(Keys.RIGHT)) {
 				switch (mode) {
@@ -138,8 +159,11 @@ public class MapEditorSystem extends AbstractSystem {
 				case ROTATION:
 					this.rotateBlock(new Vector3(-10, 0, 0));
 					break;
+				case TEXTURE:
+					this.rotateTexture(1);
+					break;
 				default:
-					throw new RuntimeException("");
+					game.appendToLog("Unknown mode: " + mode);
 				}
 			} else if (keyboard.isKeyJustPressed(Keys.PAGE_DOWN)) {
 				switch (mode) {
@@ -153,7 +177,7 @@ public class MapEditorSystem extends AbstractSystem {
 					this.rotateBlock(new Vector3(0, 0, -10));
 					break;
 				default:
-					throw new RuntimeException("");
+					game.appendToLog("Unknown mode: " + mode);
 				}
 			} else if (keyboard.isKeyJustPressed(Keys.UP)) {
 				switch (mode) {
@@ -167,7 +191,7 @@ public class MapEditorSystem extends AbstractSystem {
 					this.rotateBlock(new Vector3(0, 10, 0));
 					break;
 				default:
-					throw new RuntimeException("");
+					game.appendToLog("Unknown mode: " + mode);
 				}
 			} else if (keyboard.isKeyJustPressed(Keys.DOWN)) {
 				switch (mode) {
@@ -181,9 +205,11 @@ public class MapEditorSystem extends AbstractSystem {
 					this.rotateBlock(new Vector3(0, -10, 0));
 					break;
 				default:
-					throw new RuntimeException("");
+					game.appendToLog("Unknown mode: " + mode);
 				}
 			}
+		} else {
+			game.appendToLog("No object selected");
 		}
 	}
 
@@ -219,6 +245,26 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
+	private void rotateTexture(int off) {
+		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+		this.setBlockDataFromPhysicsData(block);
+
+		int max = -1;
+		Iterator<Integer> it = game.currentLevel.mapdata.textures.keySet().iterator();
+		while (it.hasNext()) {
+			max = it.next();
+		}
+		block.texture_id += off;
+		if (block.texture_id < 0) {
+			block.texture_id = max;
+		} else if (block.texture_id > max) {
+			block.texture_id = 0;
+		}
+		this.selectedObject.remove();
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+	}
+
+
 	private void resetBlockRotation() {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		this.setBlockDataFromPhysicsData(block);
@@ -233,8 +279,7 @@ public class MapEditorSystem extends AbstractSystem {
 	private Matrix4 setBlockDataFromPhysicsData(MapBlockComponent block) {
 		// Set matrix to current pos
 		PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
-		Matrix4 mat = new Matrix4();
-		md.body.getWorldTransform(mat);
+		Matrix4 mat = md.body.getWorldTransform();
 		mat.getTranslation(block.position);
 		return mat;
 
@@ -244,14 +289,14 @@ public class MapEditorSystem extends AbstractSystem {
 	public void saveMap() {
 		try {
 			// loop through each block and set the model data to the position/size/rot of the block
-			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
+			/*Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
 			while (it.hasNext()) {
 				AbstractEntity e = it.next();
 				MapBlockComponent block = (MapBlockComponent)e.getComponent(MapBlockComponent.class);
 				if (block != null) {
 					this.setBlockDataFromPhysicsData(block);
 				}
-			}
+			}*/
 
 			game.currentLevel.saveFile();
 			Settings.p("Map saved");

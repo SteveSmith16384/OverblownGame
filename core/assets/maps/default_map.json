@@ -1,14 +1,16 @@
 {
   "filename": "maps/default_map.json",
   "textures": {
-    "1": "todo"
+    "1": "colours/white.png",
+    "2": "colours/red.png",
+    "3": "colours/brown.png"
   },
   "blocks": [
     {
       "id": 1,
       "type": "",
       "name": "Floor",
-      "texture_id": 0,
+      "texture_id": 3,
       "model_filename": "",
       "size": {
         "x": 1.0,
@@ -16,9 +18,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 6.1074,
-        "y": 0.49972874,
-        "z": 5.2599216
+        "x": 6.102946,
+        "y": 0.49999982,
+        "z": 3.559947
       },
       "rotation": {
         "x": 0.0,
