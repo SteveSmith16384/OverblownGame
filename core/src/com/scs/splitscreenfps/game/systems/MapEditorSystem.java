@@ -32,7 +32,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS};
 	
-	private float MOVE_INC = 0.2f;
+	private float MOVE_INC = 0.25f;
 
 	private Game game;
 	private Mode mode = Mode.POSITION;
@@ -100,12 +100,24 @@ public class MapEditorSystem extends AbstractSystem {
 		if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode
 			mode = Mode.POSITION;
 			game.appendToLog("Position mode selected");
+			if (this.selectedObject != null) {
+				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+				game.appendToLog("Position: " + block.position);
+			}
 		} else if (keyboard.isKeyJustPressed(Keys.B)) { // Size mode
 			mode = Mode.SIZE;
-			game.appendToLog("Sizen mode selected");
+			game.appendToLog("Size mode selected");
+			if (this.selectedObject != null) {
+				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+				game.appendToLog("Size: " + block.size);
+			}
 		} else if (keyboard.isKeyJustPressed(Keys.R)) { // rotation mode
 			mode = Mode.ROTATION;
 			game.appendToLog("Rotation mode selected");
+			if (this.selectedObject != null) {
+				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+				game.appendToLog("Rotation: " + block.rotation);
+			}
 		} else if (keyboard.isKeyJustPressed(Keys.T)) { // Textures
 			mode = Mode.TEXTURE;
 			game.appendToLog("Texture mode selected");
@@ -147,6 +159,7 @@ public class MapEditorSystem extends AbstractSystem {
 				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation
 				reAlignBlock();
+				game.appendToLog("Block re-aligned");
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
 				switch (mode) {
 				case POSITION:
@@ -317,7 +330,16 @@ public class MapEditorSystem extends AbstractSystem {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		this.setBlockDataFromPhysicsData(block);
 
-		//todo block.size.x = (int)
+		block.position.scl(1/MOVE_INC);
+		block.position.x = Math.round(block.position.x)*MOVE_INC; 
+		block.position.y = Math.round(block.position.y)*MOVE_INC; 
+		block.position.z = Math.round(block.position.z)*MOVE_INC; 
+		
+		block.size.scl(1/MOVE_INC);
+		block.size.x = Math.round(block.size.x)*MOVE_INC; 
+		block.size.y = Math.round(block.size.y)*MOVE_INC; 
+		block.size.z = Math.round(block.size.z)*MOVE_INC; 
+		
 		block.rotation.set(0, 0, 0);
 		this.selectedObject.remove();
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);

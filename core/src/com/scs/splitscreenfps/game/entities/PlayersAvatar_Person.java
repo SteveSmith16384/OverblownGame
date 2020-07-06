@@ -71,7 +71,9 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		camera = _viewportData.camera;
 		cameraController = new PersonCameraController(camera, inputMethod);
-
+		if (Game.physics_enabled == false) {
+			camera.position.set(5, 5, 5);
+		}
 		addComponent(new PlayerData(playerIdx));
 
 		setAvatarColour(this, playerIdx);
