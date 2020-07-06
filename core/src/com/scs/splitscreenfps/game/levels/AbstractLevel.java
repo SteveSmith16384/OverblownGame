@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,14 +61,21 @@ public abstract class AbstractLevel implements ILevelInterface {
 		
 		if (mapdata.textures == null) {
 			mapdata.textures = new HashMap<Integer, String>();
-			mapdata.textures.put(1, "todo");
+			mapdata.textures.put(1, "[texture filename]");
+		}
+
+		
+		for (int i=0 ; i<4 ; i++) {
+			if (mapdata.start_positions.containsKey(i)) {
+				this.startPositions.add(mapdata.start_positions.get(i));
+			}
 		}
 
 		for (MapBlockComponent block : mapdata.blocks) {
 			if (block.id == 0) {
 				block.id = MapBlockComponent.next_id++;
 			}
-			if (block.position.y >= 0) { // Skip any that have fallen off the edge
+			if (block.position.y >= -4f) { // Skip any that have fallen off the edge
 				game.currentLevel.createAndAddEntityFromBlockData(block);
 			}
 		}

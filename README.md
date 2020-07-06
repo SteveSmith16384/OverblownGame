@@ -24,6 +24,8 @@ Still looking for an actual game to make with it...
 ### Map Editor Controls
 * 1 - Save map
 * 2 - "Settle" position of selected entity
+* 3 - Show our position
+* 4 - Set start position - then press 1-4
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block

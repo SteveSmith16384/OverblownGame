@@ -79,7 +79,7 @@
       "id": 4,
       "type": "cube",
       "name": "New cube 63",
-      "texture_id": 0,
+      "texture_id": 1,
       "model_filename": "",
       "size": {
         "x": 9.5,
@@ -88,7 +88,7 @@
       },
       "position": {
         "x": 8.999998,
-        "y": 0.49999988,
+        "y": 2.25,
         "z": 9.0
       },
       "rotation": {
@@ -141,6 +141,29 @@
         "x": 0.0,
         "y": 0.0,
         "z": -20.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 7,
+      "type": "cube",
+      "name": "New cube 58",
+      "texture_id": 3,
+      "model_filename": "",
+      "size": {
+        "x": 13.5,
+        "y": 0.5,
+        "z": 12.75
+      },
+      "position": {
+        "x": 9.25,
+        "y": -0.25,
+        "z": 5.25
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
       "mass": 0.0
     }

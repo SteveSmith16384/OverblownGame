@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.systems;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Input.Keys;
@@ -27,7 +28,7 @@ import ssmith.lang.NumberFunctions;
  */
 public class MapEditorSystem extends AbstractSystem {
 
-	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS};
+	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS, SET_START_POS};
 
 	private float MOVE_INC = 0.25f;
 
@@ -51,18 +52,6 @@ public class MapEditorSystem extends AbstractSystem {
 
 
 	public void process() {
-		/*List<AbstractEvent> colls = ecs.getEvents(FallenOffEdgeEvent.class);
-		for (AbstractEvent evt : colls) {
-			FallenOffEdgeEvent event = (FallenOffEdgeEvent)evt;
-
-			for (int i=game.currentLevel.mapdata.blocks.size()-1 ; i>= 0 ; i--) {
-				MapBlockComponent block = game.currentLevel.mapdata.blocks.get(i);
-				if (event.entity1 == block.e
-			}
-
-
-		}*/
-
 		if (settle_block != null) {
 			if (this.settle_end_time < System.currentTimeMillis()) {
 				MapBlockComponent block = (MapBlockComponent)settle_block.getComponent(MapBlockComponent.class);
@@ -109,11 +98,36 @@ public class MapEditorSystem extends AbstractSystem {
 		}
 
 		if (keyboard.isKeyJustPressed(Keys.NUM_1)) { // Save
-			this.saveMap();
-			game.appendToLog("Map saved");
-		}
-
-		if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode
+			if (this.mode == Mode.SET_START_POS) {
+				setStartPos(0);
+			} else {
+				this.saveMap();
+				game.appendToLog("Map saved");
+			}
+		} else if (keyboard.isKeyJustPressed(Keys.NUM_2)) { // settle
+			if (this.mode == Mode.SET_START_POS) {
+				setStartPos(1);
+			} else {
+				if (game.physics_enabled == false) {
+					game.appendToLog("Physics must be enabled");
+				} else {
+					settleBlock();
+				}
+			}
+		} else if (keyboard.isKeyJustPressed(Keys.NUM_3)) { // Show pos
+			if (this.mode == Mode.SET_START_POS) {
+				setStartPos(2);
+			} else {
+				game.appendToLog("Cam pos: " + game.viewports[0].camera.position);
+			}
+		} else if (keyboard.isKeyJustPressed(Keys.NUM_4)) { // Set start pos
+			if (this.mode == Mode.SET_START_POS) {
+				setStartPos(3);
+			} else {
+				this.mode = Mode.SET_START_POS;
+				game.appendToLog("Set start pos: Enter number 1-4");
+			}
+		} else if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode
 			mode = Mode.POSITION;
 			game.appendToLog("Position mode selected");
 			if (this.selectedObject != null) {
@@ -151,7 +165,7 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
 			MapBlockComponent block = new MapBlockComponent();
 			block.size = new Vector3(1, 1, 1);
-			block.position = new Vector3(5, 5, 5);
+			block.position = new Vector3(0, 5, 0);
 			block.type = "cube";
 			block.name = "New cube " + NumberFunctions.rnd(1, 100);
 			block.mass = 0;
@@ -182,12 +196,6 @@ public class MapEditorSystem extends AbstractSystem {
 			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation/position/size
 				reAlignBlock();
 				game.appendToLog("Block re-aligned");
-			} else if (keyboard.isKeyJustPressed(Keys.NUM_2)) { // settle
-				if (game.physics_enabled == false) {
-					game.appendToLog("Physics must be enabled");
-				} else {
-					settleBlock();
-				}
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
 				switch (mode) {
 				case POSITION:
@@ -291,7 +299,22 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
+	private void setStartPos(int id) {
+		if (game.currentLevel.mapdata.start_positions == null) {
+			game.currentLevel.mapdata.start_positions = new HashMap<Integer, Vector3>();
+		}
+		Vector3 pos = game.players[0].camera.position;
+		game.currentLevel.mapdata.start_positions.put(id,  pos);
+		game.appendToLog("Start pos " + (id+1) + " set to " + pos);
+		this.mode = Mode.POSITION;
+	}
+	
+
 	private void settleBlock() {
+		if (selectedObject == null) {
+			game.appendToLog("No block selected");
+			return;
+		}
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		if (block.mass > 0) {
 			game.appendToLog("Block already has mass");

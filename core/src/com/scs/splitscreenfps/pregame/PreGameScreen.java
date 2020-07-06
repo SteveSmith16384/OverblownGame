@@ -91,7 +91,7 @@ public class PreGameScreen implements IModule {
 		logo = new Sprite(logoTex);
 		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 		logo.setColor(0.4f, 0.4f, 0.4f, 1);
-*/
+		 */
 	}
 
 
@@ -106,16 +106,21 @@ public class PreGameScreen implements IModule {
 		if (Settings.AUTO_START) {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
-			Array<Controller> allControllers = this.controllerManager.getAllControllers();
-			for (Controller c : allControllers) {
-				inputs.add(new ControllerInputMethod(c));
+			GameSelectionData gameSelectionData = null;
+			if (Settings.TWO_AUTOSTART_CHARACTERs) {
+				Array<Controller> allControllers = this.controllerManager.getAllControllers();
+				for (Controller c : allControllers) {
+					inputs.add(new ControllerInputMethod(c));
+				}
+				if (inputs.size() == 1) {
+					inputs.add(new NoInputMethod());
+				}
+				gameSelectionData = new GameSelectionData(2);
+				gameSelectionData.character[1] = Settings.AUTOSTART_CHARACTER;
+			} else {
+				gameSelectionData = new GameSelectionData(1);
 			}
-			if (inputs.size() == 1) {
-				inputs.add(new NoInputMethod());
-			}
-			GameSelectionData gameSelectionData = new GameSelectionData(2);
 			gameSelectionData.character[0] = Settings.AUTOSTART_CHARACTER;
-			gameSelectionData.character[1] = Settings.AUTOSTART_CHARACTER;//AvatarFactory.CHAR_PHARTA;
 			main.next_module = new Game(main, inputs, gameSelectionData);
 			return;
 		}

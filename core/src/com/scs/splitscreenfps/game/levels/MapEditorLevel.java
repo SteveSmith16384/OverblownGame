@@ -31,20 +31,22 @@ public class MapEditorLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		this.startPositions.add(new Vector3(1, 2f, 1));
-		this.startPositions.add(new Vector3(2, 2f, 2));
-		//this.startPositions.add(new Vector3(3, 2f, 3));
-		//this.startPositions.add(new Vector3(4, 2f, 4));
-
+/*
 		Wall floor = new Wall(game.ecs, "Floor", "textures/neon/tron_green_2x2.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
-		
+	*/	
 		try {
 			super.loadJsonFile("maps/default_map.json");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		
+		if (this.startPositions.size() == 0) {
+			// Add default start positions
+			this.startPositions.add(new Vector3(1, 2f, 1));
+			this.startPositions.add(new Vector3(2, 2f, 2));
 		}
 		
 	}
