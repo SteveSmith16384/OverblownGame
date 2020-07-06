@@ -104,7 +104,7 @@ public class Game implements IModule {
 	private btBroadphaseInterface broadphase;
 	private btCollisionDispatcher dispatcher;
 	public btDiscreteDynamicsWorld dynamicsWorld;
-	public boolean physics_enabled = true;
+	public static boolean physics_enabled = true;
 	private long startPhysicsTime;
 
 	// Temp vars
@@ -499,6 +499,7 @@ public class Game implements IModule {
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 
+		/* todo 
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.points += 1;
@@ -506,7 +507,7 @@ public class Game implements IModule {
 			if (shooterData.points >= Settings.POINTS_TO_WIN) {
 				playerHasWon(shooter);
 			}
-		}
+		}*/
 	}
 
 

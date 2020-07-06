@@ -137,45 +137,73 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	}
 
 
-	public void process() {
+	public void process() { // todo - move this to PlayerInputSystem
 		checkMovementInput();
 		cameraController.update();
 
 		// Position camera
-		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
-		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+		if (Game.physics_enabled) {
+			PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
+			camera.position.set(posData.position.x, posData.position.y + (PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 
-		tmpVec2.set(camera.direction.x, camera.direction.z);
-		posData.angle_y_degrees = -tmpVec2.angle();
+			// Set rotation based on camera
+			tmpVec2.set(camera.direction.x, camera.direction.z);
+			posData.angle_y_degrees = -tmpVec2.angle();
+		}
 	}
 
 
 	private void checkMovementInput() {
-		PlayerMovementData movementData = (PlayerMovementData)this.getComponent(PlayerMovementData.class);
+		if (Game.physics_enabled) {
+			PlayerMovementData movementData = (PlayerMovementData)this.getComponent(PlayerMovementData.class);
 
-		if (this.inputMethod.getForwards() > Settings.MIN_AXIS) {
-			//Settings.p("Fwd:" + this.inputMethod.isForwardsPressed());
-			tmpVector.set(camera.direction);
-			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(this.inputMethod.getForwards() * MOVE_SPEED));
-		} else if (this.inputMethod.getBackwards() > Settings.MIN_AXIS) {
-			//Settings.p("Back:" + this.inputMethod.isBackwardsPressed());
-			tmpVector.set(camera.direction);
-			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.getBackwards()));
-		}
-		if (this.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
-			tmpVector.set(camera.direction).crs(camera.up);
-			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.getStrafeLeft()));
-		} else if (this.inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
-			tmpVector.set(camera.direction).crs(camera.up);
-			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED * this.inputMethod.getStrafeRight()));
-		}
+			if (this.inputMethod.getForwards() > Settings.MIN_AXIS) {
+				//Settings.p("Fwd:" + this.inputMethod.isForwardsPressed());
+				tmpVector.set(camera.direction);
+				tmpVector.y = 0;
+				movementData.offset.add(tmpVector.nor().scl(this.inputMethod.getForwards() * MOVE_SPEED));
+			} else if (this.inputMethod.getBackwards() > Settings.MIN_AXIS) {
+				//Settings.p("Back:" + this.inputMethod.isBackwardsPressed());
+				tmpVector.set(camera.direction);
+				tmpVector.y = 0;
+				movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.getBackwards()));
+			}
+			if (this.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
+				tmpVector.set(camera.direction).crs(camera.up);
+				tmpVector.y = 0;
+				movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.getStrafeLeft()));
+			} else if (this.inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
+				tmpVector.set(camera.direction).crs(camera.up);
+				tmpVector.y = 0;
+				movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED * this.inputMethod.getStrafeRight()));
+			}
 
-		if (this.inputMethod.isJumpPressed()) {
-			movementData.jumpPressed = true;
+			if (this.inputMethod.isJumpPressed()) {
+				movementData.jumpPressed = true;
+			}
+		} else {
+			if (this.inputMethod.getForwards() > Settings.MIN_AXIS) {
+				tmpVector.set(camera.direction);
+				tmpVector.scl(0.01f);
+				camera.position.add(tmpVector);
+				//camera.update();
+			} else if (this.inputMethod.getBackwards() > Settings.MIN_AXIS) {
+				tmpVector.set(camera.direction);
+				tmpVector.scl(-0.01f);
+				camera.position.add(tmpVector);
+				//camera.update();
+			}
+			if (this.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
+				tmpVector.set(camera.direction).crs(camera.up);
+				tmpVector.y = 0;
+				tmpVector.scl(-0.01f);
+				camera.position.add(tmpVector);
+			} else if (this.inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
+				tmpVector.set(camera.direction).crs(camera.up);
+				tmpVector.y = 0;
+				tmpVector.scl(0.01f);
+				camera.position.add(tmpVector);
+			}
 		}
 	}
 
