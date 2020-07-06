@@ -43,7 +43,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
-		//game = _game;
 		inputMethod = _inputMethod;
 
 		PlayerMovementData md = new PlayerMovementData();
@@ -72,7 +71,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		camera = _viewportData.camera;
 		cameraController = new PersonCameraController(camera, inputMethod);
 		if (Game.physics_enabled == false) {
-			camera.position.set(5, 5, 5);
+			camera.position.set(0, 5, 0);
 		}
 		addComponent(new PlayerData(playerIdx));
 

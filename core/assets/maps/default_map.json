@@ -7,55 +7,55 @@
   },
   "blocks": [
     {
-      "id": 1,
-      "type": "",
-      "name": "Floor",
-      "texture_id": 3,
-      "model_filename": "",
-      "size": {
-        "x": 3.75,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.25,
-        "y": 1.5,
-        "z": 4.5
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
       "id": 2,
       "type": "",
       "name": "Floor_new",
       "texture_id": 1,
       "model_filename": "",
       "size": {
-        "x": 5.75,
-        "y": 5.0,
-        "z": 2.5
+        "x": 3.75,
+        "y": 2.5,
+        "z": 1.0
       },
       "position": {
-        "x": 10.5,
-        "y": 0.5,
-        "z": 7.5
+        "x": 7.249998,
+        "y": 1.2499998,
+        "z": 5.0
       },
       "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
-      "mass": 1.0
+      "mass": 0.0
     },
     {
       "id": 9,
       "type": "cube",
       "name": "",
+      "texture_id": 2,
+      "model_filename": "",
+      "size": {
+        "x": 3.5,
+        "y": 2.5,
+        "z": 2.5
+      },
+      "position": {
+        "x": 2.5,
+        "y": 1.25,
+        "z": 5.5
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 3.0
+    },
+    {
+      "id": 5,
+      "type": "cube",
+      "name": "New cube 8",
       "texture_id": 0,
       "model_filename": "",
       "size": {
@@ -64,9 +64,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 5.0,
-        "y": 0.5,
-        "z": 6.25
+        "x": 2.499998,
+        "y": 1.2499998,
+        "z": 1.75
       },
       "rotation": {
         "x": 0.0,

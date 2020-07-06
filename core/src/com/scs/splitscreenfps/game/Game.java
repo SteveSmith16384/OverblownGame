@@ -133,11 +133,6 @@ public class Game implements IModule {
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
-		if (Settings.DEBUG_PHYSICS) {
-			debugDrawer = new DebugDrawer();
-			debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
-			dynamicsWorld.setDebugDrawer(debugDrawer);
-		}
 		coll = new ProcessCollisionSystem(this);
 		new MyContactListener(coll);
 
@@ -317,6 +312,11 @@ public class Game implements IModule {
 			this.drawModelSystem.process(viewportData.camera, false);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
 			if (Settings.DEBUG_PHYSICS) {
+				if (debugDrawer == null) {
+					debugDrawer = new DebugDrawer();
+					debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
+					dynamicsWorld.setDebugDrawer(debugDrawer);
+				}
 				debugDrawer.begin(viewportData.camera);
 				dynamicsWorld.debugDrawWorld();
 				debugDrawer.end();
