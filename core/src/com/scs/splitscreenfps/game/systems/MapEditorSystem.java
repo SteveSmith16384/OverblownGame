@@ -28,13 +28,18 @@ import ssmith.lang.NumberFunctions;
 public class MapEditorSystem extends AbstractSystem {
 
 	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS};
-	
+
 	private float MOVE_INC = 0.25f;
 
 	private Game game;
 	private Mode mode = Mode.POSITION;
 	private AbstractEntity selectedObject;
 	private MouseAndKeyboardInputMethod keyboard;
+
+	// Settle stats
+	private float mass_cache;
+	private long settle_end_time;
+	private AbstractEntity settle_block;
 
 	public MapEditorSystem(BasicECS ecs, Game _game) {
 		super(ecs, PlayerData.class);
@@ -44,7 +49,7 @@ public class MapEditorSystem extends AbstractSystem {
 		game.physics_enabled = false;
 	}
 
-	
+
 	public void process() {
 		/*List<AbstractEvent> colls = ecs.getEvents(FallenOffEdgeEvent.class);
 		for (AbstractEvent evt : colls) {
@@ -55,11 +60,23 @@ public class MapEditorSystem extends AbstractSystem {
 				if (event.entity1 == block.e
 			}
 
-			
+
 		}*/
+
+		if (settle_block != null) {
+			if (this.settle_end_time < System.currentTimeMillis()) {
+				MapBlockComponent block = (MapBlockComponent)settle_block.getComponent(MapBlockComponent.class);
+				this.setBlockDataFromPhysicsData(settle_block, block);
+				block.mass = this.mass_cache;
+				this.settle_block.remove();
+				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+				this.settle_block = null;
+				game.appendToLog("Block settled.");
+			}
+		}
 		super.process();
 	}
-	
+
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
@@ -123,6 +140,10 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (keyboard.isKeyJustPressed(Keys.M)) { // Mass
 			mode = Mode.MASS;
 			game.appendToLog("Mass mode selected");
+			if (this.selectedObject != null) {
+				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+				game.appendToLog("Current mass: " + block.mass);
+			}
 		} else if (keyboard.isKeyJustPressed(Keys.G)) { // Toggle physics
 			game.physics_enabled = !game.physics_enabled;
 			Settings.DEBUG_PHYSICS = game.physics_enabled;
@@ -133,6 +154,7 @@ public class MapEditorSystem extends AbstractSystem {
 			block.position = new Vector3(5, 5, 5);
 			block.type = "cube";
 			block.name = "New cube " + NumberFunctions.rnd(1, 100);
+			block.mass = 0;
 			this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			game.currentLevel.mapdata.blocks.add(block);
 		}
@@ -157,9 +179,15 @@ public class MapEditorSystem extends AbstractSystem {
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 				this.selectedObject.remove();
 				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
-			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation
+			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation/position/size
 				reAlignBlock();
 				game.appendToLog("Block re-aligned");
+			} else if (keyboard.isKeyJustPressed(Keys.NUM_2)) { // settle
+				if (game.physics_enabled == false) {
+					game.appendToLog("Physics must be enabled");
+				} else {
+					settleBlock();
+				}
 			} else if (keyboard.isKeyJustPressed(Keys.LEFT)) {
 				switch (mode) {
 				case POSITION:
@@ -263,7 +291,27 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
+	private void settleBlock() {
+		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+		if (block.mass > 0) {
+			game.appendToLog("Block already has mass");
+			return;
+		}
+		this.settle_end_time = System.currentTimeMillis() + 3000;
+		this.mass_cache = block.mass;
+		block.mass = 1;
+		this.selectedObject.remove();
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		settle_block = this.selectedObject;
+		game.appendToLog("Settling block...");
+	}
+
+
 	private void moveBlock(Vector3 off) {
+		if (keyboard.isKeyPressed(Keys.CONTROL_LEFT)) {
+			off.scl(.1f);
+		}
+
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		Matrix4 mat = this.setBlockDataFromPhysicsData(selectedObject, block);
 		PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
@@ -271,10 +319,15 @@ public class MapEditorSystem extends AbstractSystem {
 		mat.setTranslation(block.position);
 		md.body.setWorldTransform(mat);
 		md.body.activate();
+		game.appendToLog("New position: " + block.position);
 	}
 
 
 	private void resizeBlock(Vector3 adj) {
+		if (keyboard.isKeyPressed(Keys.CONTROL_LEFT)) {
+			adj.scl(.1f);
+		}
+
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		//this.setBlockDataFromPhysicsData(block);
 
@@ -285,16 +338,23 @@ public class MapEditorSystem extends AbstractSystem {
 		}
 		this.selectedObject.remove();
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		game.appendToLog("New size: " + block.size);
 	}
 
 
 	private void rotateBlock(Vector3 adj) {
+		if (keyboard.isKeyPressed(Keys.CONTROL_LEFT)) {
+			adj.scl(.1f);
+		}
+
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		//this.setBlockDataFromPhysicsData(block);
 
 		block.rotation.add(adj);
 		this.selectedObject.remove();
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+
+		game.appendToLog("New Rotation: " + block.rotation);
 	}
 
 
@@ -320,7 +380,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 	private void changeMass(int off) {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-		//this.setBlockDataFromPhysicsData(block);
+		this.setBlockDataFromPhysicsData(this.selectedObject, block);
 
 		block.mass += off;
 		if (block.mass < 0) {
@@ -342,12 +402,12 @@ public class MapEditorSystem extends AbstractSystem {
 		block.position.x = Math.round(block.position.x)*MOVE_INC; 
 		block.position.y = Math.round(block.position.y)*MOVE_INC; 
 		block.position.z = Math.round(block.position.z)*MOVE_INC; 
-		
+
 		block.size.scl(1/MOVE_INC);
 		block.size.x = Math.round(block.size.x)*MOVE_INC; 
 		block.size.y = Math.round(block.size.y)*MOVE_INC; 
 		block.size.z = Math.round(block.size.z)*MOVE_INC; 
-		
+
 		block.rotation.set(0, 0, 0);
 		this.selectedObject.remove();
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
@@ -376,14 +436,6 @@ public class MapEditorSystem extends AbstractSystem {
 					this.setBlockDataFromPhysicsData(e, block);
 				}
 			}
-
-			// Remove blocks that have fallen ofd the edge
-			/*for (int i=game.currentLevel.mapdata.blocks.size()-1 ; i>= 0 ; i--) {
-				MapBlockComponent block = game.currentLevel.mapdata.blocks.get(i);
-				if (block.position.y < 0) {
-					game.currentLevel.mapdata.blocks.remove(i);
-				}
-			}*/
 
 			game.currentLevel.saveFile();
 			Settings.p("Map saved");

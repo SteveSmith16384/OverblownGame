@@ -67,7 +67,9 @@ public abstract class AbstractLevel implements ILevelInterface {
 			if (block.id == 0) {
 				block.id = MapBlockComponent.next_id++;
 			}
-			game.currentLevel.createAndAddEntityFromBlockData(block);
+			if (block.position.y >= 0) { // Skip any that have fallen off the edge
+				game.currentLevel.createAndAddEntityFromBlockData(block);
+			}
 		}
 
 	}

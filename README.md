@@ -23,6 +23,7 @@ Still looking for an actual game to make with it...
 
 ### Map Editor Controls
 * 1 - Save map
+* 2 - "Settle" position of selected entity
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block

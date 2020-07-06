@@ -16,7 +16,7 @@ public class MapBlockComponent {
 	public Vector3 position = new Vector3();
 	public Vector3 rotation = new Vector3();
 	
-	public float mass = 1;
+	public float mass = 0;
 
 	public MapBlockComponent() {
 		id = next_id++;

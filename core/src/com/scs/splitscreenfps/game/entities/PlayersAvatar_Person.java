@@ -33,8 +33,10 @@ import ssmith.libgdx.ModelFunctions;
 // This also moves the camera
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
+	
 	public static final float PLAYER_HEIGHT = 0.4f;
 	private static final float MOVE_SPEED = 15;//20;//25;//1.5f;
+	private static final float CAM_SPEED = 3f;
 
 	public PersonCameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
@@ -185,24 +187,24 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		} else {
 			if (this.inputMethod.getForwards() > Settings.MIN_AXIS) {
 				tmpVector.set(camera.direction);
-				tmpVector.scl(0.01f);
+				tmpVector.scl(Gdx.graphics.getDeltaTime()*CAM_SPEED);
 				camera.position.add(tmpVector);
 				//camera.update();
 			} else if (this.inputMethod.getBackwards() > Settings.MIN_AXIS) {
 				tmpVector.set(camera.direction);
-				tmpVector.scl(-0.01f);
+				tmpVector.scl(-Gdx.graphics.getDeltaTime()*CAM_SPEED);
 				camera.position.add(tmpVector);
 				//camera.update();
 			}
 			if (this.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
 				tmpVector.set(camera.direction).crs(camera.up);
 				tmpVector.y = 0;
-				tmpVector.scl(-0.01f);
+				tmpVector.scl(-Gdx.graphics.getDeltaTime()*CAM_SPEED);
 				camera.position.add(tmpVector);
 			} else if (this.inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
 				tmpVector.set(camera.direction).crs(camera.up);
 				tmpVector.y = 0;
-				tmpVector.scl(0.01f);
+				tmpVector.scl(Gdx.graphics.getDeltaTime()*CAM_SPEED);
 				camera.position.add(tmpVector);
 			}
 		}
