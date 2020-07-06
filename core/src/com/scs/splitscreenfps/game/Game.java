@@ -263,12 +263,10 @@ public class Game implements IModule {
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			//this.mapBuilderSystem.saveMap();
 			if (Settings.AUTO_START) {
 				System.exit(0);
 				return;
 			}
-			//BillBoardFPS_Main.audio.stopMusic();
 			this.main.next_module = new PreGameScreen(main);
 		}
 

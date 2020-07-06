@@ -6,6 +6,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.FallenOffEdgeEvent;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
@@ -40,8 +41,9 @@ public class PhysicsSystem extends AbstractSystem {
 		float height = pc.getTranslation().y;
 		if (height < -4) {
 			if (pc.removeIfFallen) {
-				//Settings.p("Removed " + e + " since it has fallen off");
+				Settings.p("Removed " + e + " since it has fallen off");
 				e.remove();
+				game.ecs.events.add(new FallenOffEdgeEvent(e));
 			} else {
 				// Is it a player?
 				PlayerData player = (PlayerData)e.getComponent(PlayerData.class);

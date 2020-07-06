@@ -1,21 +1,26 @@
 package com.scs.splitscreenfps.game.systems;
 
 import java.util.Iterator;
+import java.util.List;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.FallenOffEdgeEvent;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
+
+import ssmith.lang.NumberFunctions;
 
 /**
  * Limitations of the map editor:-
@@ -38,9 +43,25 @@ public class MapEditorSystem extends AbstractSystem {
 
 		game = _game;
 
-		//game.physics_enabled = false;
+		game.physics_enabled = false;
 	}
 
+	
+	public void process() {
+		/*List<AbstractEvent> colls = ecs.getEvents(FallenOffEdgeEvent.class);
+		for (AbstractEvent evt : colls) {
+			FallenOffEdgeEvent event = (FallenOffEdgeEvent)evt;
+
+			for (int i=game.currentLevel.mapdata.blocks.size()-1 ; i>= 0 ; i--) {
+				MapBlockComponent block = game.currentLevel.mapdata.blocks.get(i);
+				if (event.entity1 == block.e
+			}
+
+			
+		}*/
+		super.process();
+	}
+	
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
@@ -76,13 +97,13 @@ public class MapEditorSystem extends AbstractSystem {
 			game.appendToLog("Map saved");
 		}
 
-		if (keyboard.isKeyJustPressed(Keys.P)) {
+		if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode
 			mode = Mode.POSITION;
 			game.appendToLog("Position mode selected");
-		} else if (keyboard.isKeyJustPressed(Keys.B)) {
+		} else if (keyboard.isKeyJustPressed(Keys.B)) { // Size mode
 			mode = Mode.SIZE;
 			game.appendToLog("Sizen mode selected");
-		} else if (keyboard.isKeyJustPressed(Keys.R)) {
+		} else if (keyboard.isKeyJustPressed(Keys.R)) { // rotation mode
 			mode = Mode.ROTATION;
 			game.appendToLog("Rotation mode selected");
 		} else if (keyboard.isKeyJustPressed(Keys.T)) { // Textures
@@ -97,6 +118,9 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
 			MapBlockComponent block = new MapBlockComponent();
 			block.size = new Vector3(1, 1, 1);
+			block.position = new Vector3(5, 5, 5);
+			block.type = "cube";
+			block.name = "New cube " + NumberFunctions.rnd(1, 100);
 			this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			game.currentLevel.mapdata.blocks.add(block);
 		}
@@ -140,7 +164,7 @@ public class MapEditorSystem extends AbstractSystem {
 				default:
 					game.appendToLog("Unknown mode: " + mode);
 				}
-			} else if (keyboard.isKeyJustPressed(Keys.PAGE_UP)) {
+			} else if (keyboard.isKeyJustPressed(Keys.UP)) {
 				switch (mode) {
 				case POSITION:
 					this.moveBlock(new Vector3(0, 0, MOVE_INC));
@@ -171,7 +195,7 @@ public class MapEditorSystem extends AbstractSystem {
 				default:
 					game.appendToLog("Unknown mode: " + mode);
 				}
-			} else if (keyboard.isKeyJustPressed(Keys.PAGE_DOWN)) {
+			} else if (keyboard.isKeyJustPressed(Keys.DOWN)) {
 				switch (mode) {
 				case POSITION:
 					this.moveBlock(new Vector3(0, 0, -MOVE_INC));
@@ -185,7 +209,7 @@ public class MapEditorSystem extends AbstractSystem {
 				default:
 					game.appendToLog("Unknown mode: " + mode);
 				}
-			} else if (keyboard.isKeyJustPressed(Keys.UP)) {
+			} else if (keyboard.isKeyJustPressed(Keys.PAGE_UP)) {
 				switch (mode) {
 				case POSITION:
 					this.moveBlock(new Vector3(0, MOVE_INC, 0));
@@ -202,7 +226,7 @@ public class MapEditorSystem extends AbstractSystem {
 				default:
 					game.appendToLog("Unknown mode: " + mode);
 				}
-			} else if (keyboard.isKeyJustPressed(Keys.DOWN)) {
+			} else if (keyboard.isKeyJustPressed(Keys.PAGE_DOWN)) {
 				switch (mode) {
 				case POSITION:
 					this.moveBlock(new Vector3(0, -MOVE_INC, 0));
@@ -320,6 +344,14 @@ public class MapEditorSystem extends AbstractSystem {
 				MapBlockComponent block = (MapBlockComponent)e.getComponent(MapBlockComponent.class);
 				if (block != null) {
 					this.setBlockDataFromPhysicsData(block);
+				}
+			}*/
+
+			// Remove blocks that have fallen ofd the edge
+			/*for (int i=game.currentLevel.mapdata.blocks.size()-1 ; i>= 0 ; i--) {
+				MapBlockComponent block = game.currentLevel.mapdata.blocks.get(i);
+				if (block.position.y < 0) {
+					game.currentLevel.mapdata.blocks.remove(i);
 				}
 			}*/
 
