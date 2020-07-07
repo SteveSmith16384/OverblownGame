@@ -74,7 +74,7 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.WEAPON_PUNCH:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 1, 60, 0f, 0f);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, .5f, 60, 0f, 0f);
 			//weapon.kickback_force = 5f;
 			break;
 

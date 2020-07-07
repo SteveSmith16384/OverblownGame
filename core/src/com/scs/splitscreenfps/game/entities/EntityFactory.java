@@ -215,7 +215,6 @@ public class EntityFactory {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
 
-		// scs new hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
@@ -447,7 +446,6 @@ public class EntityFactory {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
 
-		// scs new hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);

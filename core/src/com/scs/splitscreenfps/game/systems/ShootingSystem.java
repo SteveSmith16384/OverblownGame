@@ -29,9 +29,9 @@ public class ShootingSystem extends AbstractSystem {
 		CanShoot cc = (CanShoot)entity.getComponent(CanShoot.class);
 		WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
 
-		long interval = weapon.shot_interval;//300;
+		long interval = weapon.shot_interval;
 		if (cc.ammo == 0) {
-			interval = weapon.reload_interval;//1500;
+			interval = weapon.reload_interval;
 		}
 		
 		if (cc.lastShotTime + interval > System.currentTimeMillis()) {
