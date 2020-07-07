@@ -12,7 +12,7 @@ public class AvatarFactory {
 	public static final int CHAR_PHARTA = 0;
 	public static final int CHAR_BOOMFIST = 1;
 	public static final int CHAR_WINSTON = 2;
-	public static final int CHAR_TRACY = 3;
+	//public static final int CHAR_TRACY = 3;
 	public static final int CHAR_BASTION = 4;
 
 	public static final int MAX_CHARS = 5;
@@ -38,10 +38,11 @@ public class AvatarFactory {
 		switch (character) {
 		case CHAR_PHARTA:
 			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER;
+			avatar.addComponent(new SecondaryAbilityComponent(Type.JetPac, 6000));
 			break;
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_PUNCH;
-			avatar.addComponent(new SecondaryAbilityComponent(Type.Boost, 3000, 3));
+			avatar.addComponent(new SecondaryAbilityComponent(Type.PowerPunch, 3000, 1.5f));
 			break;
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;

@@ -48,6 +48,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 				case Jump:
 					performPowerJump(entity, player);
 					break;
+				case JetPac:
+					performJetPac(entity, player);
+					break;
 				default:
 					//throw new RuntimeException("Unknown ability: " + ability.type);
 				}
@@ -66,7 +69,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		ability.lastShotTime = System.currentTimeMillis();
 
 		switch (ability.type) {
-		case Boost:
+		case PowerPunch:
 			performBoost(entity, player, ability.power);
 			break;
 		default:
@@ -80,7 +83,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();				
 		//pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(30));
-		float pow = power*20;
+		float pow = power*30;
 		Settings.p("Performing boost with pow=" + pow);
 		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
 
@@ -89,8 +92,18 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 	private void performPowerJump(AbstractEntity entity, AbstractPlayersAvatar player) {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		//pc.body.activate();
-		//pc.body.applyCentralForce(new Vector3(0, 500, 0));
+		//pc.body.applyCentralImpulse(new Vector3(0, 30, 0));
+		Vector3 dir = new Vector3(player.camera.direction);
+		dir.y += .2f;
+		dir.nor().scl(30);
+		pc.body.applyCentralImpulse(dir);
+		Settings.p("Power jump!");
+
+	}
+
+
+	private void performJetPac(AbstractEntity entity, AbstractPlayersAvatar player) {
+		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.applyCentralImpulse(new Vector3(0, 30, 0));
 		Settings.p("Power jump!");
 

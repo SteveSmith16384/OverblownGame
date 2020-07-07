@@ -338,11 +338,11 @@ public class Game implements IModule {
 			float yOff = font_med.getLineHeight() * 1.2f;
 			font_med.setColor(1, 1, 1, 1);
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-			//font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
-			//font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
+			font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
+			font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
 			//font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
 
-			//if (currentViewId == 1 ) {
+			if (currentViewId == 1) {
 				// Draw log
 				font_small.setColor(1,  1,  1,  1);
 				int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
@@ -350,7 +350,7 @@ public class Game implements IModule {
 					font_small.draw(batch2d, s, 10, y);
 					y -= this.font_small.getLineHeight();
 				}
-			//}
+			}
 			if (Settings.TEST_SCREEN_COORDS) {
 				font_small.draw(batch2d, "50", 50, 50);
 				font_small.draw(batch2d, "150", 150, 150);
