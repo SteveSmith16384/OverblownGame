@@ -13,6 +13,10 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
+/**
+ * This needs chaning so the texture is on the inside
+ *
+ */
 public class SkyboxSphere extends AbstractEntity {
 
 	// Positions are from the centre

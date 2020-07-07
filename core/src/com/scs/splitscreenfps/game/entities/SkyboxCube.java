@@ -18,11 +18,11 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 public class SkyboxCube extends AbstractEntity {
 
 	// Positions are from the centre
-	public SkyboxCube(BasicECS ecs, String name, String tex_filename, float w, float h, float d, boolean tile) {
+	public SkyboxCube(BasicECS ecs, String name, String tex_filename, float w, float h, float d) {
 		super(ecs, name);
 
 		//Texture tex = new Texture(tex_filename);
-		Texture tex = new Texture("textures/sky.png");
+		Texture tex = new Texture("textures/sky3.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();
@@ -46,13 +46,13 @@ public class SkyboxCube extends AbstractEntity {
 
 		Model box_model = modelBuilder.end();
 		
-		if (tile) {
+		/*if (tile) {
 			Matrix3 mat = new Matrix3();
 			float max2 = Math.max(w, h);
 			float max = Math.max(max2, d);
 			mat.scl(max);//new Vector2(h, d));//, h));
 			box_model.meshes.get(0).transformUV(mat);
-		}
+		}*/
 		
 		ModelInstance instance = new ModelInstance(box_model);
 		

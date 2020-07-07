@@ -78,8 +78,8 @@ public class MapEditorSystem extends AbstractSystem {
 		keyboard = (MouseAndKeyboardInputMethod)player.inputMethod;
 
 		if (keyboard.isMouseClicked()) {
-			btCollisionObject obj = game.rayTestByDir(player.camera.position, player.camera.direction, 100);
 			selectedObject = null;
+			btCollisionObject obj = game.rayTestByDir(player.camera.position, player.camera.direction, 100);
 			if (obj != null) {
 				selectedObject = (AbstractEntity)obj.userData;
 
@@ -99,14 +99,14 @@ public class MapEditorSystem extends AbstractSystem {
 
 		if (keyboard.isKeyJustPressed(Keys.NUM_1)) { // Save
 			if (this.mode == Mode.SET_START_POS) {
-				setStartPos(0);
+				setStartPos(0, player.camera.position);
 			} else {
 				this.saveMap();
 				game.appendToLog("Map saved");
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_2)) { // settle
 			if (this.mode == Mode.SET_START_POS) {
-				setStartPos(1);
+				setStartPos(1, player.camera.position);
 			} else {
 				if (game.physics_enabled == false) {
 					game.appendToLog("Physics must be enabled");
@@ -116,13 +116,13 @@ public class MapEditorSystem extends AbstractSystem {
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_3)) { // Show pos
 			if (this.mode == Mode.SET_START_POS) {
-				setStartPos(2);
+				setStartPos(2, player.camera.position);
 			} else {
-				game.appendToLog("Cam pos: " + game.viewports[0].camera.position);
+				game.appendToLog("Cam pos: " + player.camera.position);
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_4)) { // Set start pos
 			if (this.mode == Mode.SET_START_POS) {
-				setStartPos(3);
+				setStartPos(3, player.camera.position);
 			} else {
 				this.mode = Mode.SET_START_POS;
 				game.appendToLog("Set start pos: Enter number 1-4");
@@ -173,6 +173,7 @@ public class MapEditorSystem extends AbstractSystem {
 			block.mass = 0;
 			this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 			game.currentLevel.mapdata.blocks.add(block);
+			this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
 		}
 
 		if (selectedObject != null) {
@@ -301,11 +302,11 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
-	private void setStartPos(int id) {
+	private void setStartPos(int id, Vector3 pos) {
 		if (game.currentLevel.mapdata.start_positions == null) {
 			game.currentLevel.mapdata.start_positions = new HashMap<Integer, Vector3>();
 		}
-		Vector3 pos = game.players[0].camera.position;
+		//Vector3 pos = player.camera.position;
 		game.currentLevel.mapdata.start_positions.put(id,  pos);
 		game.appendToLog("Start pos " + (id+1) + " set to " + pos);
 		this.mode = Mode.POSITION;
@@ -322,7 +323,7 @@ public class MapEditorSystem extends AbstractSystem {
 			game.appendToLog("Block already has mass");
 			return;
 		}
-		this.settle_end_time = System.currentTimeMillis() + 3000;
+		this.settle_end_time = System.currentTimeMillis() + 2000;
 		this.mass_cache = block.mass;
 		block.mass = 1;
 		this.selectedObject.remove();

@@ -3,7 +3,11 @@
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
-    "3": "colours/brown.png"
+    "3": "colours/brown.png",
+    "4": "textures/crate.png",
+    "5": "textures/crate1.png",
+    "6": "textures/crate2.png",
+    "7": "textures/bricks.png"
   },
   "blocks": [
     {
@@ -87,7 +91,7 @@
         "z": 1.25
       },
       "position": {
-        "x": 8.999998,
+        "x": 8.749998,
         "y": 2.25,
         "z": 9.0
       },
@@ -171,7 +175,7 @@
       "id": 8,
       "type": "cube",
       "name": "New cube 44",
-      "texture_id": 0,
+      "texture_id": 2,
       "model_filename": "",
       "size": {
         "x": 6.75,
@@ -189,6 +193,29 @@
         "z": -16.0
       },
       "mass": 0.0
+    },
+    {
+      "id": 10,
+      "type": "cube",
+      "name": "New cube 65",
+      "texture_id": 3,
+      "model_filename": "",
+      "size": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "position": {
+        "x": 5.75,
+        "y": 2.0,
+        "z": 9.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
     }
   ],
   "start_positions": {
