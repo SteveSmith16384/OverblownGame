@@ -22,7 +22,7 @@ public class AvatarFactory {
 		case CHAR_PHARTA: return "Pharta";
 		case CHAR_BOOMFIST: return "Boomfist";
 		case CHAR_WINSTON: return "Winston";
-		case CHAR_TRACY: return "Tracey";
+		//case CHAR_TRACY: return "Tracey";
 		case CHAR_BASTION: return "Bastion";
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -41,11 +41,11 @@ public class AvatarFactory {
 			break;
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_PUNCH;
-			avatar.addComponent(new SecondaryAbilityComponent(Type.Boost, 1000));
+			avatar.addComponent(new SecondaryAbilityComponent(Type.Boost, 3000, 3));
 			break;
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(Type.Jump, 1000));
+			avatar.addComponent(new SecondaryAbilityComponent(Type.Jump, 3000));
 			break;
 		/*case CHAR_TRACY:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
@@ -74,7 +74,7 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.WEAPON_PUNCH:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, .5f, 60, 0f, 0f);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 0.3f, 60, 0f, 0f);
 			//weapon.kickback_force = 5f;
 			break;
 

@@ -4,13 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.systems.MapEditorSystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 public class MapEditorLevel extends AbstractLevel {
-
-	private static final int FLOOR_SIZE = 20;
 
 	public MapEditorSystem mapBuilderSystem;
 

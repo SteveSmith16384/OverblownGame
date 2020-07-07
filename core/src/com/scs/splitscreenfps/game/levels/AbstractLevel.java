@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -98,7 +97,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 			}
 			Wall wall = new Wall(game.ecs, block.name, tex, block.position.x, block.position.y, block.position.z, 
 					block.size.x, block.size.y, block.size.z, 
-					block.mass,
+					block.mass * 5, // Hack to make walls heavier
 					block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
 			wall.addComponent(block);
 			game.ecs.addEntity(wall);

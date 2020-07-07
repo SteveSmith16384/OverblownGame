@@ -516,7 +516,7 @@ public class EntityFactory {
 		//instance.transform.scale(scale, scale, scale);
 		
 		HasModelComponent hasModel = new HasModelComponent(instance, 1f, true);
-		Vector3 origin = ModelFunctions.getOrigin(instance);
+		//Vector3 origin = ModelFunctions.getOrigin(instance);
 		entity.addComponent(hasModel);
 		
 		instance.transform.setTranslation(posX, posY, posZ); // Must be AFTER we've got the origin!

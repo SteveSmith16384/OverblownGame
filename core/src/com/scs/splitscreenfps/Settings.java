@@ -16,7 +16,7 @@ public class Settings {
 	// Debugging Hacks
 	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_WINSTON;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOOMFIST;
 	public static final boolean TWO_AUTOSTART_CHARACTERs = false;
 	public static final boolean DEBUG_PUNCH = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;

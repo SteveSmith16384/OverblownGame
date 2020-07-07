@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.systems;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -16,16 +17,16 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 	public SecondaryAbilitySystem(BasicECS ecs, Game _game) {
 		super(ecs, SecondaryAbilityComponent.class);
-		
+
 		game = _game;
 	}
 
-	
+
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		SecondaryAbilityComponent ability = (SecondaryAbilityComponent)entity.getComponent(SecondaryAbilityComponent.class);
 
-		long interval = ability.interval;
+		long interval = ability.cooldown;
 		if (ability.lastShotTime + interval > System.currentTimeMillis()) {
 			return;
 		}
@@ -33,71 +34,56 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
 		if (player.inputMethod.isAbilityPressed()) {
-			//Settings.p("Shoot at " + System.currentTimeMillis());
-			ability.lastShotTime = System.currentTimeMillis();
-
-			switch (ability.type) {
-			case Boost:
-				performBoost(entity, player);
-				break;
-			case Jump:
-				performPowerJump(entity, player);
-				break;
-			default:
-				throw new RuntimeException("Unknown ability: " + ability.type);
-			}
-			
-			/*
-			Vector3 dir = new Vector3();
-			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-			if (cc.shootInCameraDirection) {
-				dir.set(player.camera.direction);
+			if (ability.requiresBuildUp) {
+				ability.buildUpActivated = true;
+				ability.power += Gdx.graphics.getDeltaTime();
+				if (ability.power >= ability.max_power) {
+					this.performBuildUpAbility(entity, player, ability);
+				}
 			} else {
-				dir.set((float)Math.sin(Math.toRadians(posData.angle_Y_degs+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_Y_degs+90)));
+				//Settings.p("Shoot at " + System.currentTimeMillis());
+				ability.lastShotTime = System.currentTimeMillis();
+
+				switch (ability.type) {
+				case Jump:
+					performPowerJump(entity, player);
+					break;
+				default:
+					//throw new RuntimeException("Unknown ability: " + ability.type);
+				}
 			}
-			dir.nor();
-
-			Vector3 startPos = new Vector3();
-			startPos.set(posData.position);
-			startPos.mulAdd(dir, .5f);
-			//startPos.y += .3f;
-
-			switch (weapon.weapon_type) {
-			case WeaponSettingsComponent.WEAPON_BULLET:
-				AbstractEntity bullet = EntityFactory.createBullet(ecs, player, startPos, dir);
-				game.ecs.addEntity(bullet);
-				break;
-
-			case WeaponSettingsComponent.WEAPON_GRENADE:
-				AbstractEntity g = EntityFactory.createGrenade(ecs, player, startPos, dir);
-				game.ecs.addEntity(g);
-				break;
-
-			case WeaponSettingsComponent.WEAPON_ROCKET:
-				AbstractEntity r = EntityFactory.createRocket(ecs, player, startPos, dir);
-				game.ecs.addEntity(r);
-				break;
-
-			default:
-				throw new RuntimeException("Unknown weapon type: " + weapon.weapon_type);
+		} else { // Button released?
+			if (ability.buildUpActivated) {
+				this.performBuildUpAbility(entity, player, ability);
 			}
-			
-			if (weapon.kickback_force != 0) {
-				PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-				pc.body.activate();				
-				pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(-1 * weapon.kickback_force));
 
-			}
-			*/
 		}
 	}
+
 	
-	
-	private void performBoost(AbstractEntity entity, AbstractPlayersAvatar player) {
+	private void performBuildUpAbility(AbstractEntity entity, AbstractPlayersAvatar player, SecondaryAbilityComponent ability) {
+		ability.buildUpActivated = false;
+		ability.lastShotTime = System.currentTimeMillis();
+
+		switch (ability.type) {
+		case Boost:
+			performBoost(entity, player, ability.power);
+			break;
+		default:
+			//throw new RuntimeException("Unknown ability: " + ability.type);
+		}
+
+		ability.power = 0;
+	}
+
+	private void performBoost(AbstractEntity entity, AbstractPlayersAvatar player, float power) {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();				
-		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(30));
-		
+		//pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(30));
+		float pow = power*20;
+		Settings.p("Performing boost with pow=" + pow);
+		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
+
 	}
 
 
@@ -107,6 +93,6 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		//pc.body.applyCentralForce(new Vector3(0, 500, 0));
 		pc.body.applyCentralImpulse(new Vector3(0, 30, 0));
 		Settings.p("Power jump!");
-		
+
 	}
 }
