@@ -88,6 +88,16 @@ public class DrawModelSystem extends AbstractSystem {
 	//@Override
 	public void renderEntity(AbstractEntity entity, ModelBatch batch, boolean shadow) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
+		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+
+		if (pc != null) {
+			pc.body.getWorldTransform(tmpMat);
+
+			// Set model position data based on physics data - regardless of whether we draw them
+			tmpMat.getTranslation(posData.position);
+		}
+		
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
 		}
@@ -101,18 +111,12 @@ public class DrawModelSystem extends AbstractSystem {
 			return;
 		}
 
-		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		if (Settings.STRICT) {
 			if (posData == null) {
 				throw new RuntimeException(entity + " has no PositionComponent");
 			}
 		}
 		if (pc != null) {
-			pc.body.getWorldTransform(tmpMat);
-
-			//tmpOffset.add(model.positionOffsetToOrigin); // Adjust model position for origin
-
 			// Resets the matrix to avoid hangoffs
 			if (model.scale == 1f) {
 				model.model.transform.set(tmpMat);
@@ -133,12 +137,7 @@ public class DrawModelSystem extends AbstractSystem {
 				}
 			}
 
-			// Set model position data based on physics data
-			tmpMat.getTranslation(posData.position);
-
 		} else { // Non-physics entity
-			//tmpOffset.set(model.positionOffsetToOrigin);
-			//tmpOffset.set(posData.position);
 			model.model.transform.setToTranslation(posData.position);
 			model.model.transform.scl(model.scale);
 			model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
@@ -167,12 +166,5 @@ public class DrawModelSystem extends AbstractSystem {
 		batch.render(model.model, environment);
 	}
 
-
-	private void showModelDetails(Matrix4 mat) {
-		Vector3 v = new Vector3();
-		mat.getTranslation(v);
-		mat.getScale(v);
-		int dfgdfg = 454;
-	}
 
 }
