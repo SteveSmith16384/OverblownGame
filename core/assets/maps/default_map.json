@@ -16,6 +16,7 @@
       "name": "Floor",
       "texture_id": 1,
       "model_filename": "",
+      "tiled": true,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -39,6 +40,7 @@
       "name": "Floor_new",
       "texture_id": 1,
       "model_filename": "",
+      "tiled": true,
       "size": {
         "x": 3.75,
         "y": 1.75,
@@ -62,6 +64,7 @@
       "name": "",
       "texture_id": 2,
       "model_filename": "",
+      "tiled": true,
       "size": {
         "x": 3.7250009,
         "y": 1.75,
@@ -85,6 +88,7 @@
       "name": "New cube 63",
       "texture_id": 1,
       "model_filename": "",
+      "tiled": true,
       "size": {
         "x": 5.25,
         "y": 4.25,
@@ -108,6 +112,7 @@
       "name": "New cube 8",
       "texture_id": 1,
       "model_filename": "",
+      "tiled": true,
       "size": {
         "x": 1.0,
         "y": 0.25,
@@ -131,6 +136,7 @@
       "name": "Floor_new",
       "texture_id": 1,
       "model_filename": "",
+      "tiled": true,
       "size": {
         "x": 3.25,
         "y": 1.0,
@@ -154,6 +160,7 @@
       "name": "New cube 58",
       "texture_id": 3,
       "model_filename": "",
+      "tiled": true,
       "size": {
         "x": 14.75,
         "y": 0.5,
@@ -177,6 +184,7 @@
       "name": "New cube 44",
       "texture_id": 2,
       "model_filename": "",
+      "tiled": true,
       "size": {
         "x": 6.75,
         "y": 0.25,
@@ -197,18 +205,211 @@
     {
       "id": 10,
       "type": "cube",
-      "name": "New cube 65",
+      "name": "Crate",
       "texture_id": 4,
       "model_filename": "",
+      "tiled": false,
       "size": {
         "x": 0.5,
         "y": 0.5,
         "z": 0.5
       },
       "position": {
-        "x": 5.75,
-        "y": 2.0,
-        "z": 9.0
+        "x": 5.8749456,
+        "y": 1.9999992,
+        "z": 9.002594
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 10,
+      "type": "cube",
+      "name": "Crate_new",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "position": {
+        "x": 5.500222,
+        "y": 2.4999988,
+        "z": 9.00024
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 11,
+      "type": "cube",
+      "name": "Crate_new_new",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "position": {
+        "x": 5.312631,
+        "y": 1.9999993,
+        "z": 9.001013
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 12,
+      "type": "cube",
+      "name": "New cube 50",
+      "texture_id": 1,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 12.25,
+        "y": 0.5,
+        "z": 0.25
+      },
+      "position": {
+        "x": 9.75,
+        "y": 0.25,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 13,
+      "type": "cube",
+      "name": "New cube 50_new",
+      "texture_id": 1,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 12.25,
+        "y": 0.5,
+        "z": 0.25
+      },
+      "position": {
+        "x": 9.750069,
+        "y": 0.24999997,
+        "z": 16.748466
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 14,
+      "type": "cube",
+      "name": "Fence",
+      "texture_id": 3,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.75,
+        "y": 0.5,
+        "z": 0.12499998
+      },
+      "position": {
+        "x": 11.749997,
+        "y": 1.9999998,
+        "z": 5.4997497
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 15,
+      "type": "cube",
+      "name": "Fence_new",
+      "texture_id": 3,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.75,
+        "y": 0.5,
+        "z": 0.12499998
+      },
+      "position": {
+        "x": 10.97503,
+        "y": 1.9999985,
+        "z": 5.499876
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 16,
+      "type": "cube",
+      "name": "Fence_new_new",
+      "texture_id": 3,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.75,
+        "y": 0.5,
+        "z": 0.12499998
+      },
+      "position": {
+        "x": 10.225034,
+        "y": 1.9999958,
+        "z": 5.4996834
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 17,
+      "type": "cube",
+      "name": "Fence_new_new_new",
+      "texture_id": 3,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.75,
+        "y": 0.5,
+        "z": 0.12499998
+      },
+      "position": {
+        "x": 9.475043,
+        "y": 1.999996,
+        "z": 5.499628
       },
       "rotation": {
         "x": 0.0,

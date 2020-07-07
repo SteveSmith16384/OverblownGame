@@ -86,7 +86,7 @@ public class MapEditorSystem extends AbstractSystem {
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 				if (block != null) {
 					Settings.p(block.name + " selected");
-					game.appendToLog("Selected: " + block.name + "(" + block.id + ")");
+					game.appendToLog("Selected: " + block.name + " (" + block.id + ")");
 					game.appendToLog("Mass=" + block.mass);
 				} else {
 					selectedObject = null;
