@@ -127,6 +127,8 @@ public class MapEditorSystem extends AbstractSystem {
 				this.mode = Mode.SET_START_POS;
 				game.appendToLog("Set start pos: Enter number 1-4");
 			}
+		} else if (keyboard.isKeyJustPressed(Keys.NUM_5)) { // Draw physics
+			Settings.DRAW_PHYSICS = !Settings.DRAW_PHYSICS;
 		} else if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode
 			mode = Mode.POSITION;
 			game.appendToLog("Position mode selected");
@@ -160,7 +162,7 @@ public class MapEditorSystem extends AbstractSystem {
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.G)) { // Toggle physics
 			game.physics_enabled = !game.physics_enabled;
-			Settings.DEBUG_PHYSICS = game.physics_enabled;
+			//Settings.DEBUG_PHYSICS = game.physics_enabled;
 			game.appendToLog("Physics enabled: " + game.physics_enabled);
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
 			MapBlockComponent block = new MapBlockComponent();

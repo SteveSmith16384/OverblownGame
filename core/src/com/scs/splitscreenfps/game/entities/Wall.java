@@ -85,6 +85,7 @@ public class Wall extends AbstractEntity {
 		btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);
 		groundObject.userData = this;
 		groundObject.setRestitution(.2f);
+		//groundObject.setFriction(.1f);
 		groundObject.setCollisionShape(boxShape);
 		groundObject.setWorldTransform(instance.transform);
 		this.addComponent(new PhysicsComponent(groundObject));

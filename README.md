@@ -26,6 +26,7 @@ Still looking for an actual game to make with it...
 * 2 - "Settle" position of selected entity
 * 3 - Show our position
 * 4 - Set start position - then press 1-4
+* 5 - Show physics debug
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block
@@ -33,7 +34,7 @@ Still looking for an actual game to make with it...
 * N - New block
 * P - Position Mode
 * R - Rotation Mode
-* G - Toggle physics/gravity
+* G - Enable physics/gravity
 * U - Undo move
 * X - Remove block
 * Arrows & Pg Up/Pg Dn: Adjust model in dimensions depending on mode

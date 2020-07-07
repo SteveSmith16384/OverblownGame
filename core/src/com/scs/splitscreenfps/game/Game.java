@@ -311,7 +311,7 @@ public class Game implements IModule {
 
 			this.drawModelSystem.process(viewportData.camera, false);
 			this.ecs.getSystem(DrawDecalSystem.class).process();
-			if (Settings.DEBUG_PHYSICS) {
+			if (Settings.DRAW_PHYSICS) {
 				if (debugDrawer == null) {
 					debugDrawer = new DebugDrawer();
 					debugDrawer.setDebugMode(DebugDrawer.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
