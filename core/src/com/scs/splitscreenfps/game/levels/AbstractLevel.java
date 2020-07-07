@@ -69,6 +69,10 @@ public abstract class AbstractLevel implements ILevelInterface {
 				this.startPositions.add(mapdata.start_positions.get(i));
 			}
 		}
+		while (this.startPositions.size() < game.players.length) {
+			Settings.pe("Warning - adding default start position");
+			this.startPositions.add(new Vector3(10, 10, 10));
+		}
 
 		for (MapBlockComponent block : mapdata.blocks) {
 			if (block.id == 0) {

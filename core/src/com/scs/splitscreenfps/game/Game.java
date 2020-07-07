@@ -145,7 +145,7 @@ public class Game implements IModule {
 		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
 		currentLevel = new IncineratorLevel(this);
-		
+
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
 			ecs.addEntity(players[i]);
@@ -163,7 +163,7 @@ public class Game implements IModule {
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
 
-		//this.appendToLog("Game about to start...");
+		this.appendToLog("Game about to start...");
 
 		if (Settings.TEST_SCREEN_COORDS) {
 			TextEntity te = new TextEntity(ecs, "LINE 1", 300, 1000, new Color(0, 0, 1, 1), -1, 2);
@@ -240,7 +240,6 @@ public class Game implements IModule {
 
 		// Set start position of players
 		for (int idx=0 ; idx<players.length  ; idx++) {
-			//PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			Vector3 start_pos = currentLevel.getPlayerStartPoint(idx);
 
 			PhysicsComponent md = (PhysicsComponent)this.players[idx].getComponent(PhysicsComponent.class);
@@ -264,6 +263,15 @@ public class Game implements IModule {
 				return;
 			}
 			this.main.next_module = new PreGameScreen(main);
+		}
+
+		if (Settings.DEBUG_GUI_SPRITES) {
+			if (Gdx.input.isKeyPressed(Keys.T)) {
+				AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, 1);
+				redfilter.addComponent(new RemoveEntityAfterTimeComponent(10));
+				ecs.addEntity(redfilter);
+
+			}
 		}
 
 		if (this.game_stage == 1) {
@@ -334,20 +342,24 @@ public class Game implements IModule {
 			this.ecs.getSystem(DrawTextSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
+			// Draw HUD
 			currentLevel.renderUI(batch2d, currentViewId);
-			float yOff = font_med.getLineHeight() * 1.2f;
+			float yOff = font_med.getLineHeight() * 1f;
 			font_med.setColor(1, 1, 1, 1);
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-			font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
-			font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, (yOff*4));
+			//font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
+			font_med.draw(batch2d, "View ID: " + this.currentViewId, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*4));
+			font_med.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*3));
+			font_med.draw(batch2d, playerData.ability1text, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*2));
+			font_med.draw(batch2d, playerData.ability2text, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*1));
 			//font_med.draw(batch2d, this.scoreSystem.getHudText(playerData.side), 10, (yOff*5));
 
-			if (currentViewId == 1) {
+			if (currentViewId == 0) {
 				// Draw log
 				font_small.setColor(1,  1,  1,  1);
-				int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
+				int y = 10;//(int)(Gdx.graphics.getHeight()*0.4);// - 220;
 				for (String s :this.log) {
-					font_small.draw(batch2d, s, 10, y);
+					font_small.draw(batch2d, s, viewportData.viewPos.x+10, 	viewportData.viewPos.y+viewportData.viewPos.height-y);
 					y -= this.font_small.getLineHeight();
 				}
 			}

@@ -65,23 +65,22 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER, 600, 1500, 12, 20, 20, 3f, 6f);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER, 600, 1500, 12, 20, 20, 3f, 5f);
 			weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 900, 2000, 6, 20, 30, 2f, 15f);
+			float EXPLOSION_FORCE = 10f; // 15f
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 900, 2000, 6, 20, 30, 1.5f, EXPLOSION_FORCE);
 			weapon.kickback_force = 5f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_PUNCH:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 0.3f, 60, 0f, 0f);
-			//weapon.kickback_force = 5f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_CANNON:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_CANNON, 300, 500, 1500, 20, 60, 0f, 0f);
-			//weapon.kickback_force = 5f;
 			break;
 
 		default:

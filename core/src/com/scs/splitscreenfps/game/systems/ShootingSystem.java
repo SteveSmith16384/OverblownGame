@@ -8,6 +8,7 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -28,6 +29,8 @@ public class ShootingSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		CanShoot cc = (CanShoot)entity.getComponent(CanShoot.class);
 		WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
+		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
+		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 
 		long interval = weapon.shot_interval;
 		if (cc.ammo == 0) {
@@ -38,11 +41,12 @@ public class ShootingSystem extends AbstractSystem {
 			return;
 		}
 
-		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
+		playerData.ability1text = cc.ammo + "/" + weapon.max_ammo;
 
 		if (player.inputMethod.isShootPressed()) {
 			//Settings.p("Shoot at " + System.currentTimeMillis());
 			if (cc.ammo == 0) {
+				playerData.ability1text = "Reloading...";
 				BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
 				cc.ammo = weapon.max_ammo;
 			}

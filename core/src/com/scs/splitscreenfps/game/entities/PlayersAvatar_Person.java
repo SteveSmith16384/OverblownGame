@@ -81,13 +81,14 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new CanShoot());
 
+		/* todo - make it its own entity
 		// Add crosshairs
 		Texture weaponTex = new Texture(Gdx.files.internal("crosshairs.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0); // todo - fix
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent("Crosshairs", sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.45f, 0.45f, 0.1f, 0.1f));
 		addComponent(hgsc);
-
+*/
 	}
 
 

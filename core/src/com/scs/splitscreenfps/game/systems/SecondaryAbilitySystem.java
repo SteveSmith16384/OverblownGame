@@ -8,6 +8,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 
@@ -26,17 +27,23 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		SecondaryAbilityComponent ability = (SecondaryAbilityComponent)entity.getComponent(SecondaryAbilityComponent.class);
 
+		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
+		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
+		playerData.ability2text = ability.type + " Ready!";
+		
 		long interval = ability.cooldown;
 		if (ability.lastShotTime + interval > System.currentTimeMillis()) {
+			long cooldown_secs = ((ability.lastShotTime + interval) - System.currentTimeMillis()) / 1000;
+			playerData.ability2text = "Cooldown: " + (cooldown_secs+1) + "s";
 			return;
 		}
-
-		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
 		if (player.inputMethod.isAbilityPressed()) {
 			if (ability.requiresBuildUp) {
 				ability.buildUpActivated = true;
 				ability.power += Gdx.graphics.getDeltaTime();
+				int pcent = (int)(ability.power * 100 / ability.max_power);
+				playerData.ability2text = "Power: " + pcent + "%";
 				if (ability.power >= ability.max_power) {
 					this.performBuildUpAbility(entity, player, ability);
 				}

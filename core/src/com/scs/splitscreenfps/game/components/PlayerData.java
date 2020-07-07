@@ -10,6 +10,8 @@ public class PlayerData {
 	public long restartTime;
 	public int points;
 	public AbstractEntity last_person_to_hit_them;
+	public String ability1text = "";
+	public String ability2text = "";
 	
 	public PlayerData(int _playerIdx) {
 		playerIdx = _playerIdx;

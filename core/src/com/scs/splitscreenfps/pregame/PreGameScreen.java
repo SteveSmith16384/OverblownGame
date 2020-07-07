@@ -107,7 +107,7 @@ public class PreGameScreen implements IModule {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
 			GameSelectionData gameSelectionData = null;
-			if (Settings.TWO_AUTOSTART_CHARACTERs) {
+			if (Settings.TWO_AUTOSTART_CHARACTERS) {
 				Array<Controller> allControllers = this.controllerManager.getAllControllers();
 				for (Controller c : allControllers) {
 					inputs.add(new ControllerInputMethod(c));
