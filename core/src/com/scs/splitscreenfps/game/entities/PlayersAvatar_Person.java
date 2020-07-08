@@ -107,7 +107,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.YELLOW));
 				break;
 			default:
-				throw new RuntimeException("Todo");
+				throw new RuntimeException("Unknown side: " + i);
 			}
 		}
 	}

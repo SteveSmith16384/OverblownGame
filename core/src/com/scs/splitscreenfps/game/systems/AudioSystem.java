@@ -12,16 +12,9 @@ public class AudioSystem {
 
 	private Music music;
 	private HashMap<String, Sound> sounds; 
-	//private float musicVolume;
 
 	public AudioSystem() {
 		sounds = new HashMap<String, Sound>();
-
-		/*for(String s : preload) {
-			String filename = "audio/" +s+".wav";
-			Sound sfx = Gdx.audio.newSound(Gdx.files.internal(filename));
-			sounds.put(s, sfx);
-		}*/
 
 		//music = Gdx.audio.newMusic(Gdx.files.internal("audio/orbital_colossus.mp3"));
 		//music.setLooping(true);

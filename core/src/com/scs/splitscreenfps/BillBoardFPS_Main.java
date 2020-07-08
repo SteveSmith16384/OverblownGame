@@ -13,7 +13,6 @@ import ssmith.libgdx.GraphicsHelper;
 
 public class BillBoardFPS_Main extends ApplicationAdapter {
 
-	public static final GraphicsHelper art = new GraphicsHelper();
 	public static final AudioSystem audio = new AudioSystem();
 
 	private IModule current_module;

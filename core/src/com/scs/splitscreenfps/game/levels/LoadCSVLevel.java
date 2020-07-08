@@ -91,7 +91,7 @@ public class LoadCSVLevel extends AbstractLevel {
 		Vector3 size = new Vector3();
 		String tex = null;
 		float mass = 0;
-		String name = "Todo";
+		String name = "[Unknown]";
 
 		for (int i=1 ; i<items.length ; i++) {
 			String[] split = items[i].split(":");

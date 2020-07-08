@@ -81,7 +81,7 @@ public class Game implements IModule {
 	public AbstractPlayersAvatar[] players;
 	public List<IInputMethod> inputs;
 	public BasicECS ecs;
-	public AbstractLevel currentLevel; // todo - use ILevelInterface
+	public AbstractLevel currentLevel;
 
 	private int game_stage;
 	private long restartTime;
