@@ -12,8 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 
 public class ShapeHelper {
 
-	public static ModelInstance createRect(String tex_filename1, float w, float d) {
-		Texture tex = new Texture(tex_filename1);
+	public static ModelInstance createRect(Texture tex, float w, float d) {
+		//Texture tex = new Texture(tex_filename1);
 		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 
@@ -39,8 +39,8 @@ public class ShapeHelper {
 	}
 	
 
-	public static ModelInstance createSphere(String tex_filename1, float x, float y, float z, float size) {
-		Texture tex = new Texture(tex_filename1);
+	public static ModelInstance createSphere(Texture tex, float x, float y, float z, float size) {
+		//Texture tex = new Texture(tex_filename1);
 		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 
@@ -59,8 +59,8 @@ public class ShapeHelper {
 	}
 
 	
-	public static ModelInstance createCylinder(String tex_filename1, float x, float y, float z, float diam, float length) {
-		Texture tex = new Texture(tex_filename1);
+	public static ModelInstance createCylinder(Texture tex, float x, float y, float z, float diam, float length) {
+		//Texture tex = new Texture(tex_filename1);
 		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 

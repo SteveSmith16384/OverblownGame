@@ -10,18 +10,19 @@ import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class GenericSquare extends AbstractEntity {
 
-	public GenericSquare(BasicECS ecs, int map_x, int map_y, String filename) {
-		super(ecs, GenericSquare.class.getSimpleName());
+	public GenericSquare(Game game, int map_x, int map_y, String filename) {
+		super(game.ecs, GenericSquare.class.getSimpleName());
 
 		BlendingAttribute blendingAttribute = new BlendingAttribute();
 		blendingAttribute.opacity = 1f;
 		
-		Material material = new Material(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal(filename))), blendingAttribute);		
+		Texture tex = game.getTexture(filename);
+		Material material = new Material(TextureAttribute.createDiffuse(tex), blendingAttribute);		
 			ModelBuilder modelBuilder = new ModelBuilder();
 			Model floor = modelBuilder.createRect(
 					0f, 0f, 1,

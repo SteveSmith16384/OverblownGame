@@ -97,7 +97,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
 		
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);//)Vector3 pos = new Vector3();
-		GraphicsEntityFactory.createBlueExplosion(ecs, posData.position);
+		GraphicsEntityFactory.createBlueExplosion(game, posData.position);
 
 	}
 

@@ -11,8 +11,8 @@ public class GraphicsHelper {
 	}
 
 
-	public static TextureRegion[][] createSheet(String src, int numX, int numY){
-		Texture tex = new Texture(Gdx.files.internal(src));
+	public static TextureRegion[][] createSheet(Texture tex, int numX, int numY){
+		//Texture tex = new Texture(Gdx.files.internal(src));
 		int w = tex.getWidth()/numX;
 		int h = tex.getHeight()/numY;
 		TextureRegion reg[][]  = new TextureRegion[numX][numY];
@@ -28,8 +28,8 @@ public class GraphicsHelper {
 	}
 
 
-	public static Decal DecalHelper(String filename, float sizePcent) {
-		Texture tex = new Texture(Gdx.files.internal(filename));
+	public static Decal DecalHelper(Texture tex, float sizePcent) {
+		//Texture tex = new Texture(Gdx.files.internal(filename));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
 		Decal decal = Decal.newDecal(tr, true);
 		decal.setScale(sizePcent / tr.getRegionWidth());

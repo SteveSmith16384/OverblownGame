@@ -21,6 +21,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -38,8 +39,8 @@ import ssmith.libgdx.ShapeHelper;
 
 public class EntityFactory {
 
-	public static AbstractEntity createBullet(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
-		AbstractEntity e = new AbstractEntity(ecs, "Bullet");
+	public static AbstractEntity createBullet(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "Bullet");
 
 		e.addComponent(new PositionComponent());
 
@@ -48,13 +49,13 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.playerIdx == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
 		} else if (playerData.playerIdx == 2) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
 		} else if (playerData.playerIdx == 3) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
@@ -89,8 +90,8 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createRocket(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
-		AbstractEntity e = new AbstractEntity(ecs, "Rocket");
+	public static AbstractEntity createRocket(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "Rocket");
 
 		e.addComponent(new PositionComponent());
 
@@ -99,13 +100,13 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.playerIdx == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
 		} else if (playerData.playerIdx == 2) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
 		} else if (playerData.playerIdx == 3) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
@@ -141,8 +142,8 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createFist(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
-		AbstractEntity e = new AbstractEntity(ecs, "Punch");
+	public static AbstractEntity createFist(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "Punch");
 
 		e.addComponent(new PositionComponent());
 
@@ -152,13 +153,13 @@ public class EntityFactory {
 		if (Settings.DEBUG_PUNCH) {
 			HasDecal hasDecal = new HasDecal();
 			if (playerData.playerIdx == 0) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 			} else if (playerData.playerIdx == 1) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
+				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
 			} else if (playerData.playerIdx == 2) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
 			} else if (playerData.playerIdx == 3) {
-				hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 			} else {
 				throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 			}
@@ -194,8 +195,8 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createGrenade(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
-		AbstractEntity e = new AbstractEntity(ecs, "Grenade");
+	public static AbstractEntity createGrenade(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "Grenade");
 
 		e.addComponent(new PositionComponent());
 
@@ -204,13 +205,13 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.playerIdx == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
 		} else if (playerData.playerIdx == 2) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
 		} else if (playerData.playerIdx == 3) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
@@ -243,10 +244,11 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createCrate(BasicECS ecs, String tex_filename, float posX, float posY, float posZ, float w, float h, float d) {
-		AbstractEntity crate = new AbstractEntity(ecs, "Crate");
+	public static AbstractEntity createCrate(Game game, String tex_filename, float posX, float posY, float posZ, float w, float h, float d) {
+		AbstractEntity crate = new AbstractEntity(game.ecs, "Crate");
 
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
+		Texture tex = game.getTexture(tex_filename);
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();
 
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
@@ -286,11 +288,12 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createBall(BasicECS ecs, String tex_filename, float posX, float posY, float posZ, float diam, float mass_pre) {
-		AbstractEntity ball = new AbstractEntity(ecs, "Ball");
+	public static AbstractEntity createBall(Game game, String tex_filename, float posX, float posY, float posZ, float diam, float mass_pre) {
+		AbstractEntity ball = new AbstractEntity(game.ecs, "Ball");
 
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
-		//Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("textures/neon/tron_yellow.jpg")));
+		Texture tex = game.getTexture(tex_filename);
+
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
@@ -401,10 +404,11 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createCylinder(BasicECS ecs, String tex_filename, float x, float y, float z, float diam, float length, float mass_pre) {
-		AbstractEntity pillar = new AbstractEntity(ecs, "Cylinder");
+	public static AbstractEntity createCylinder(Game game, String tex_filename, float x, float y, float z, float diam, float length, float mass_pre) {
+		AbstractEntity pillar = new AbstractEntity(game.ecs, "Cylinder");
 
-		ModelInstance instance = ShapeHelper.createCylinder(tex_filename, x, y, z, diam, length);
+		Texture tex = game.getTexture(tex_filename);
+		ModelInstance instance = ShapeHelper.createCylinder(tex, x, y, z, diam, length);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, true);
 		pillar.addComponent(model);
@@ -426,8 +430,8 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createCannonball(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 dir) {
-		AbstractEntity e = new AbstractEntity(ecs, "Cannonball");
+	public static AbstractEntity createCannonball(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "Cannonball");
 
 		e.addComponent(new PositionComponent());
 
@@ -436,13 +440,13 @@ public class EntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		if (playerData.playerIdx == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_red.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_yellow.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
 		} else if (playerData.playerIdx == 2) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_magenta.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
 		} else if (playerData.playerIdx == 3) {
-			hasDecal.decal = GraphicsHelper.DecalHelper("laser_bolt_green.png", 0.2f);
+			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}

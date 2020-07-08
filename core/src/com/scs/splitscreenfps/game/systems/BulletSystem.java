@@ -56,7 +56,7 @@ public class BulletSystem extends AbstractSystem {
 					if (playerHitData.playerIdx != bullet.side) {
 						game.playerDamaged(coll.entity2, playerHitData, bullet.settings.damage, bullet.shooter);
 
-						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, physics.getTranslation(), 1);
+						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, physics.getTranslation(), 1);
 						ecs.addEntity(expl);
 
 						return;

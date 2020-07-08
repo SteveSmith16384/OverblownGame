@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +32,7 @@ public class SelectCharacterScreen implements IModule {
 	public List<IInputMethod> inputs;
 	private Sprite logo;
 	private GameSelectionData gameSelectionData;
+	public AssetManager assetManager = new AssetManager();
 
 	// Gfx pos data
 	private int spacing_x;
@@ -77,15 +79,18 @@ public class SelectCharacterScreen implements IModule {
 		font_large = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-		/*Texture logoTex = new Texture(Gdx.files.internal("logo1.png"));		
-		logo = new Sprite(logoTex);
-		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-		logo.setColor(0.4f, 0.4f, 0.4f, 1);
-		 */
-
-		arrow = new Sprite(new Texture(Gdx.files.internal("blue_arrow_down.png")));
+		Texture tex = getTexture("blue_arrow_down.png");
+		arrow = new Sprite(tex);
 	}
 
+
+	public Texture getTexture(String tex_filename) {
+		assetManager.load(tex_filename, Texture.class);
+		assetManager.finishLoading();
+		Texture tex = assetManager.get(tex_filename);
+		return tex;
+	}
+	
 
 	@Override
 	public void render() {
@@ -201,6 +206,7 @@ public class SelectCharacterScreen implements IModule {
 		this.frameBuffer.dispose();
 		this.font_small.dispose();
 		this.font_large.dispose();
+		assetManager.dispose();
 	}
 
 

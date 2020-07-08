@@ -32,9 +32,11 @@ public class Wall extends AbstractEntity {
 	public Wall(Game game, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
 		super(game.ecs, name);
 
-		game.assetManager.load(tex_filename, Texture.class);
-		game.assetManager.finishLoading();
-		Texture tex = game.assetManager.get(tex_filename);
+		//game.assetManager.load(tex_filename, Texture.class);
+		//game.assetManager.finishLoading();
+		//Texture tex = game.assetManager.get(tex_filename);
+		Texture tex = game.getTexture(tex_filename);
+		
 		//Texture tex = new Texture(tex_filename);
 		//Texture tex = new Texture("textures/neon/tron_green.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);

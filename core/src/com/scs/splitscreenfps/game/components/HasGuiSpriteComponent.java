@@ -3,7 +3,7 @@ package com.scs.splitscreenfps.game.components;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
-public class HasGuiSpriteComponent {
+public class HasGuiSpriteComponent { // todo - delete this?  Make gui sprites their own entity
 	
 	public static final int Z_FILTER = 99;
 	public static final int Z_CARRIED = 50;

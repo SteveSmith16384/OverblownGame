@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
@@ -22,10 +23,11 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createRedFilter(BasicECS ecs, int viewId) {
-		AbstractEntity entity = new AbstractEntity(ecs, "RedFilter");
+	public static AbstractEntity createRedFilter(Game game, int viewId) {
+		AbstractEntity entity = new AbstractEntity(game.ecs, "RedFilter");
 
-		Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
+		Texture weaponTex = game.getTexture("colours/red.png");
+		//Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setColor(1, 0, 0, .5f);
 
@@ -38,10 +40,11 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createWhiteFilter(BasicECS ecs, int viewId) {
-		AbstractEntity entity = new AbstractEntity(ecs, "WhiteFilter");
+	public static AbstractEntity createWhiteFilter(Game game, int viewId) {
+		AbstractEntity entity = new AbstractEntity(game.ecs, "WhiteFilter");
 
-		Texture weaponTex = new Texture(Gdx.files.internal("colours/white.png"));		
+		//Texture weaponTex = new Texture(Gdx.files.internal("colours/white.png"));		
+		Texture weaponTex = game.getTexture("colours/white.png");
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setColor(.8f, .8f, .8f, .3f);
 
@@ -54,14 +57,15 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createNormalExplosion(BasicECS ecs, Vector3 pos, float width_height) {
-		AbstractEntity entity = new AbstractEntity(ecs, "Explosion");
+	public static AbstractEntity createNormalExplosion(Game game, Vector3 pos, float width_height) {
+		AbstractEntity entity = new AbstractEntity(game.ecs, "Explosion");
 
 		//PositionComponent posData = new PositionComponent(pos.x, pos.y-(width_height/2), pos.z);
 		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
 		entity.addComponent(posData);
 
-		TextureRegion[][] trs = GraphicsHelper.createSheet("Explosion21.png", 4, 4);
+		Texture tex = game.getTexture("Explosion21.png");
+		TextureRegion[][] trs = GraphicsHelper.createSheet(tex, 4, 4);
 
 		HasDecal hasDecal = new HasDecal();
 		TextureRegion tr = trs[0][0];
@@ -89,13 +93,14 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createBlueExplosion(BasicECS ecs, Vector3 pos) {
-		AbstractEntity entity = new AbstractEntity(ecs, "BlueExplosion");
+	public static AbstractEntity createBlueExplosion(Game game, Vector3 pos) {
+		AbstractEntity entity = new AbstractEntity(game.ecs, "BlueExplosion");
 
 		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
 		entity.addComponent(posData);
 
-		TextureRegion[][] trs = GraphicsHelper.createSheet("Effect95.png", 4, 4);
+		Texture tex = game.getTexture("Effect95.png");
+		TextureRegion[][] trs = GraphicsHelper.createSheet(tex, 4, 4);
 
 		HasDecal hasDecal = new HasDecal();
 		TextureRegion tr = trs[0][0];

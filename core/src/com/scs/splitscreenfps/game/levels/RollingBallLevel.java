@@ -71,7 +71,7 @@ public class RollingBallLevel extends AbstractLevel {
 			this.last_ball_time = System.currentTimeMillis();
 			
 			float z = NumberFunctions.rndFloat(2,  8);
-			AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/set3_example_1.png", 13, 10, z, 1.5f, 100);
+			AbstractEntity ball = EntityFactory.createBall(game, "textures/set3_example_1.png", 13, 10, z, 1.5f, 100);
 			game.ecs.addEntity(ball);
 		}
 	}

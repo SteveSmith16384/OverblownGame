@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
@@ -20,11 +20,11 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 public class SkyboxSphere extends AbstractEntity {
 
 	// Positions are from the centre
-	public SkyboxSphere(BasicECS ecs, String name, String tex_filename, float diam) {
-		super(ecs, name);
+	public SkyboxSphere(Game game, String name, String tex_filename, float diam) {
+		super(game.ecs, name);
 
 		//Texture tex = new Texture(tex_filename);
-		Texture tex = new Texture("textures/sky.png");
+		Texture tex = game.getTexture("textures/sky.png");// new Texture("textures/sky.png");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();

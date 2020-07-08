@@ -44,7 +44,7 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 		for (int i=0 ; i<20 ; i++) {
 			int col = NumberFunctions.rnd(1,  10);
 			int row = NumberFunctions.rnd(1,  10);
-			AbstractEntity crate = EntityFactory.createCrate(game.ecs, "textures/crate.png", col, i+3, row, .4f, .4f, .4f);
+			AbstractEntity crate = EntityFactory.createCrate(game, "textures/crate.png", col, i+3, row, .4f, .4f, .4f);
 			game.ecs.addEntity(crate);
 		}
 
@@ -57,7 +57,7 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 			this.last_ball_time = System.currentTimeMillis();
 			
 			//float z = NumberFunctions.rndFloat(2,  8);
-			AbstractEntity ball = EntityFactory.createBall(game.ecs, "textures/neon/sun.jpg", FLOOR_SIZE/2, 10, FLOOR_SIZE/2, 1.5f, 100);
+			AbstractEntity ball = EntityFactory.createBall(game, "textures/neon/sun.jpg", FLOOR_SIZE/2, 10, FLOOR_SIZE/2, 1.5f, 100);
 			ball.addComponent(new HarmOnContactComponent("sfx/electric_explosion5.wav", 10));
 			game.ecs.addEntity(ball);
 		}

@@ -12,6 +12,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -268,7 +269,7 @@ public class Game implements IModule {
 
 		if (Settings.DEBUG_GUI_SPRITES) {
 			if (Gdx.input.isKeyPressed(Keys.T)) {
-				AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, 1);
+				AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(this, 1);
 				redfilter.addComponent(new RemoveEntityAfterTimeComponent(10));
 				ecs.addEntity(redfilter);
 
@@ -392,6 +393,14 @@ public class Game implements IModule {
 		this.loadAssetsForRescale();
 	}
 
+	
+	public Texture getTexture(String tex_filename) {
+		assetManager.load(tex_filename, Texture.class);
+		assetManager.finishLoading();
+		Texture tex = assetManager.get(tex_filename);
+		return tex;
+	}
+	
 
 	@Override
 	public void dispose() {
@@ -498,7 +507,7 @@ public class Game implements IModule {
 		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 		playerHitData.health -= amt;//bullet.settings.damage;
 
-		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, playerHitData.playerIdx);
+		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(this, playerHitData.playerIdx);
 		redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
 		ecs.addEntity(redfilter);
 
@@ -532,7 +541,7 @@ public class Game implements IModule {
 
 		main.audio.play("sfx/explosion1.mp3");
 
-		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(ecs, pos, width_height);
+		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(this, pos, width_height);
 		ecs.addEntity(expl);
 
 		// Temp vars
