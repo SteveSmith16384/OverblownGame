@@ -28,7 +28,7 @@ import ssmith.lang.NumberFunctions;
  */
 public class MapEditorSystem extends AbstractSystem {
 
-	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS, SET_START_POS};
+	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS, SET_START_POS, NEW_BLOCK};
 
 	private float MOVE_INC = 0.25f;
 
@@ -137,6 +137,9 @@ public class MapEditorSystem extends AbstractSystem {
 				game.appendToLog("Position: " + block.position);
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.B)) { // Size mode
+			if (mode == Mode.NEW_BLOCK) {
+				createNewBox();
+			} 
 			mode = Mode.SIZE;
 			game.appendToLog("Size mode selected");
 			if (this.selectedObject != null) {
@@ -165,15 +168,16 @@ public class MapEditorSystem extends AbstractSystem {
 			//Settings.DEBUG_PHYSICS = game.physics_enabled;
 			game.appendToLog("Physics enabled: " + game.physics_enabled);
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
-			MapBlockComponent block = new MapBlockComponent();
-			block.size = new Vector3(1, 1, 1);
-			block.position = new Vector3(0, 5, 0);
-			block.type = "cube";
-			block.name = "New cube " + NumberFunctions.rnd(1, 100);
-			block.mass = 0;
-			this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
-			game.currentLevel.mapdata.blocks.add(block);
-			this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
+			this.mode = Mode.NEW_BLOCK;
+			game.appendToLog("Press B, C or S.");
+		} else if (keyboard.isKeyJustPressed(Keys.C)) {  // New cylinder
+			if (mode == Mode.NEW_BLOCK) {
+				createNewCylinder();
+			}
+		} else if (keyboard.isKeyJustPressed(Keys.R)) {  // New sphere
+			if (mode == Mode.NEW_BLOCK) {
+				createNewSphere();
+			}
 		}
 
 		if (selectedObject != null) {
@@ -302,6 +306,48 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
+	private void createNewBox() {
+		MapBlockComponent block = new MapBlockComponent();
+		block.size = new Vector3(1, 1, 1);
+		block.position = new Vector3(0, 5, 0);
+		block.type = "cube";
+		block.name = "New cube " + NumberFunctions.rnd(1, 100);
+		block.mass = 0;
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		game.currentLevel.mapdata.blocks.add(block);
+		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
+		game.appendToLog(block.name + " created");
+	}
+	
+	
+	private void createNewSphere() {
+		MapBlockComponent block = new MapBlockComponent();
+		block.size = new Vector3(1, 1, 1);
+		block.position = new Vector3(0, 5, 0);
+		block.type = "sphere";
+		block.name = "New sphere " + NumberFunctions.rnd(1, 100);
+		block.mass = 0;
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		game.currentLevel.mapdata.blocks.add(block);
+		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
+		game.appendToLog(block.name + " created");
+	}
+	
+	
+	private void createNewCylinder() {
+		MapBlockComponent block = new MapBlockComponent();
+		block.size = new Vector3(1, 1, 1);
+		block.position = new Vector3(0, 5, 0);
+		block.type = "cylinder";
+		block.name = "New cylinder " + NumberFunctions.rnd(1, 100);
+		block.mass = 0;
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		game.currentLevel.mapdata.blocks.add(block);
+		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
+		game.appendToLog(block.name + " created");
+	}
+	
+	
 	private void setStartPos(int id, Vector3 pos) {
 		if (game.currentLevel.mapdata.start_positions == null) {
 			game.currentLevel.mapdata.start_positions = new HashMap<Integer, Vector3>();

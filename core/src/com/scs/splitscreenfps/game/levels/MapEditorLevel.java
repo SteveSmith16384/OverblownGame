@@ -40,12 +40,14 @@ public class MapEditorLevel extends AbstractLevel {
 			e.printStackTrace();
 		}
 		
-		if (this.startPositions.size() == 0) {
+		while (this.startPositions.size() < 4) {
 			// Add default start positions
+			game.appendToLog("Adding default start position");
 			this.startPositions.add(new Vector3(1, 2f, 1));
-			this.startPositions.add(new Vector3(2, 2f, 2));
 		}
-		
+
+		game.appendToLog("Map editor ready");
+
 	}
 
 

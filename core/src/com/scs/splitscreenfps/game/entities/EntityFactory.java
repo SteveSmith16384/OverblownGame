@@ -401,7 +401,7 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createPillar(BasicECS ecs, String tex_filename, float x, float y, float z, float diam, float length) {
+	public static AbstractEntity createCylinder(BasicECS ecs, String tex_filename, float x, float y, float z, float diam, float length, float mass_pre) {
 		AbstractEntity pillar = new AbstractEntity(ecs, "Cylinder");
 
 		ModelInstance instance = ShapeHelper.createCylinder(tex_filename, x, y, z, diam, length);
@@ -411,7 +411,6 @@ public class EntityFactory {
 
 		btCylinderShape boxShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
 		Vector3 local_inertia = new Vector3();
-		float mass_pre = 1f;
 		float mass = (float)(Math.PI * (diam/2) * (diam/2) + length) * mass_pre;
 		boxShape.calculateLocalInertia(1f, local_inertia);
 		btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);

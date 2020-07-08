@@ -57,13 +57,13 @@ public abstract class AbstractLevel implements ILevelInterface {
 
 		mapdata = gson.fromJson(new FileReader(filename), MapData.class);
 		mapdata.filename = filename;
-		
+
 		if (mapdata.textures == null) {
 			mapdata.textures = new HashMap<Integer, String>();
 			mapdata.textures.put(1, "[texture filename]");
 		}
 
-		
+
 		for (int i=0 ; i<4 ; i++) {
 			if (mapdata.start_positions.containsKey(i)) {
 				this.startPositions.add(mapdata.start_positions.get(i));
@@ -94,21 +94,30 @@ public abstract class AbstractLevel implements ILevelInterface {
 			model.addComponent(block);
 			game.ecs.addEntity(model);
 			return model;
-		} else if (block.type == null || block.type.length() == 0 || block.type.equalsIgnoreCase("cube")) {
+		} else {
 			String tex = "textures/neon/tron_green_2x2.png"; // Default
 			if (this.mapdata.textures.containsKey(block.texture_id)) {
 				tex = this.mapdata.textures.get(block.texture_id);
 			}
-			Wall wall = new Wall(game.ecs, block.name, tex, block.position.x, block.position.y, block.position.z, 
-					block.size.x, block.size.y, block.size.z, 
-					block.mass * 5, // Hack to make walls heavier
-					block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
+			AbstractEntity wall = null;
+			if (block.type == null || block.type.length() == 0 || block.type.equalsIgnoreCase("cube")) {
+				wall = new Wall(game.ecs, block.name, tex, block.position.x, block.position.y, block.position.z, 
+						block.size.x, block.size.y, block.size.z, 
+						block.mass * 5, // Hack to make walls heavier
+						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
+			} else if (block.type == "sphere") {
+				wall = EntityFactory.createBall(game.ecs, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
+			} else if (block.type == "cylinder") {
+				wall = EntityFactory.createCylinder(game.ecs, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.size.y, block.mass);
+			} else {
+				throw new RuntimeException("Unknown type: " + block.type);
+			}
 			wall.addComponent(block);
 			game.ecs.addEntity(wall);
 			return wall;
 		}
-		Settings.p("Ignoring line");
-		return null;
+		//Settings.p("Ignoring line");
+		//return null;
 	}
 
 

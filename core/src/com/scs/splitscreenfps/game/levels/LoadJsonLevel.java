@@ -39,10 +39,6 @@ public class LoadJsonLevel extends AbstractLevel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		AbstractEntity pillar = EntityFactory.createPillar(game.ecs, "textures/set3_example_1.png", 15, 5, 15, 1f, 10f);
-		game.ecs.addEntity(pillar);
-
 	}
 
 

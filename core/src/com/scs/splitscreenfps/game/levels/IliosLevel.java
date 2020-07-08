@@ -80,7 +80,7 @@ public class IliosLevel extends AbstractLevel {
 	private void addPillar(float x, float y, float z) {
 		//String tex = "textures/set3_example_1.png";
 		String tex = "colours/white.png";
-		AbstractEntity pillar = EntityFactory.createPillar(game.ecs, tex, x, y+PILLAR_HEIGHT/2, z, 1f, PILLAR_HEIGHT);
+		AbstractEntity pillar = EntityFactory.createCylinder(game.ecs, tex, x, y+PILLAR_HEIGHT/2, z, 1f, PILLAR_HEIGHT, 1f);
 		game.ecs.addEntity(pillar);
 	}
 

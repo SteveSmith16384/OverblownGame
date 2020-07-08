@@ -1,9 +1,5 @@
 # SUPER SMASH GANG BEASTS PHYSICS FPS
 
-Gameplay video: https://youtu.be/Ega4PZugBy0
-
-Still looking for an actual game to make with it...
-
 ## Controls
 * Mouse/keyboard
 * Tested with PS4 controllers
@@ -31,7 +27,7 @@ Still looking for an actual game to make with it...
 * B - Size mode
 * C - Clone current block
 * M - Mass mode
-* N - New block
+* N - New block - then bress B, C or R for Box, Cylinder or Sphere.
 * P - Position Mode
 * R - Rotation Mode
 * G - Enable physics/gravity
