@@ -420,6 +420,8 @@ public class EntityFactory {
 		groundObject.setWorldTransform(instance.transform);
 		pillar.addComponent(new PhysicsComponent(groundObject));
 
+		pillar.addComponent(new PositionComponent());
+
 		return pillar;
 	}
 

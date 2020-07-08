@@ -105,9 +105,9 @@ public abstract class AbstractLevel implements ILevelInterface {
 						block.size.x, block.size.y, block.size.z, 
 						block.mass * 5, // Hack to make walls heavier
 						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
-			} else if (block.type == "sphere") {
+			} else if (block.type.equalsIgnoreCase("sphere")) {
 				wall = EntityFactory.createBall(game.ecs, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
-			} else if (block.type == "cylinder") {
+			} else if (block.type.equalsIgnoreCase("cylinder")) {
 				wall = EntityFactory.createCylinder(game.ecs, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.size.y, block.mass);
 			} else {
 				throw new RuntimeException("Unknown type: " + block.type);

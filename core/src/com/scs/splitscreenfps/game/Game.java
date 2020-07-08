@@ -357,9 +357,9 @@ public class Game implements IModule {
 			if (currentViewId == 0) {
 				// Draw log
 				font_small.setColor(1,  1,  1,  1);
-				int y = 10;//(int)(Gdx.graphics.getHeight()*0.4);// - 220;
+				int y = viewportData.viewPos.y+viewportData.viewPos.height-20;//10;//(int)(Gdx.graphics.getHeight()*0.4);// - 220;
 				for (String s :this.log) {
-					font_small.draw(batch2d, s, viewportData.viewPos.x+10, 	viewportData.viewPos.y+viewportData.viewPos.height-y);
+					font_small.draw(batch2d, s, viewportData.viewPos.x+10, y);
 					y -= this.font_small.getLineHeight();
 				}
 			}
