@@ -22,8 +22,8 @@ public class SecondaryAbilityComponent {
 	/**
 	 * For power build-up abilities
 	 */
-	public SecondaryAbilityComponent(Type _type, long _interval, float _max_power) {
-		this(_type, _interval);
+	public SecondaryAbilityComponent(Type _type, long _cooldown, float _max_power) {
+		this(_type, _cooldown);
 		
 		this.requiresBuildUp = true;
 		max_power = _max_power;

@@ -40,7 +40,7 @@ public class AvatarFactory {
 			break;
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_PUNCH;
-			avatar.addComponent(new SecondaryAbilityComponent(Type.PowerPunch, 3000, 1.5f));
+			avatar.addComponent(new SecondaryAbilityComponent(Type.PowerPunch, 3000, 1f));
 			break;
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;

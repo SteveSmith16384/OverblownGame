@@ -90,11 +90,11 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 	private void performBoost(AbstractEntity entity, AbstractPlayersAvatar player, float power) {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		pc.body.activate();				
-		//pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(30));
+		pc.body.activate();
 		float pow = power*30;
 		Settings.p("Performing boost with pow=" + pow);
 		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
+		//pc.body.appl.applyCentralForce(player.camera.direction.cpy().scl(power*3000)); Doesn't do anything?
 		
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);//)Vector3 pos = new Vector3();
 		GraphicsEntityFactory.createBlueExplosion(game, posData.position);
@@ -116,7 +116,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 	private void performJetPac(AbstractEntity entity, AbstractPlayersAvatar player) {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		pc.body.applyCentralImpulse(new Vector3(0, 30, 0));
+		pc.body.applyCentralImpulse(new Vector3(0, 40, 0));
 		Settings.p("Power jump!");
 
 	}

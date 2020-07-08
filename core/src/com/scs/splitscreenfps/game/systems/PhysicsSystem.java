@@ -10,6 +10,7 @@ import com.scs.splitscreenfps.game.FallenOffEdgeEvent;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 
 public class PhysicsSystem extends AbstractSystem {
 
@@ -31,12 +32,23 @@ public class PhysicsSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity e) {
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-		if (pc.body.isDisposed()) {
-			Settings.pe("Body disposed for " + e);
+		if (Settings.STRICT) {
+			if (pc.body.isDisposed()) {
+				Settings.pe("Body disposed for " + e);
+			}
+			if (pc.body.getCollisionShape().isDisposed()) {
+				Settings.pe("Shapedisposed for " + e);
+			}
 		}
-		if (pc.body.getCollisionShape().isDisposed()) {
-			Settings.pe("Shapedisposed for " + e);
+
+		/*
+		if (e instanceof AbstractPlayersAvatar) {
+			Vector3 force = pc.body.getInterpolationLinearVelocity(); // seems to work
+			if (force.len2() > 1) {
+				Settings.p("Force: " + force);
+			}
 		}
+		 */
 
 		float height = pc.getTranslation().y;
 		if (height < -4) {
