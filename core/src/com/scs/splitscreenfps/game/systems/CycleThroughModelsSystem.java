@@ -10,13 +10,7 @@ import com.scs.splitscreenfps.game.components.HasModelCycle;
 public class CycleThroughModelsSystem extends AbstractSystem {
 
 	public CycleThroughModelsSystem(BasicECS ecs) {
-		super(ecs);
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return HasModelCycle.class;
+		super(ecs, HasModelCycle.class);
 	}
 
 

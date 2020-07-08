@@ -9,6 +9,7 @@ public class MapBlockComponent {
 	public int id;
 	public String type = "";
 	public String name = "";
+	public String tags = ""; // For codes etc...
 	public int texture_id;
 	public String model_filename = "";
 	public boolean tiled = true;

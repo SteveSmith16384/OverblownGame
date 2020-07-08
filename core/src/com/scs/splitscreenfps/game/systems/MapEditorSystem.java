@@ -169,13 +169,13 @@ public class MapEditorSystem extends AbstractSystem {
 			game.appendToLog("Physics enabled: " + game.physics_enabled);
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
 			this.mode = Mode.NEW_BLOCK;
-			game.appendToLog("Press B, C or S.");
+			game.appendToLog("Press B, C or R.");
 		} else if (keyboard.isKeyJustPressed(Keys.C)) {  // New cylinder
 			if (mode == Mode.NEW_BLOCK) {
 				createNewCylinder();
 				mode = Mode.POSITION;
 			}
-		} else if (keyboard.isKeyJustPressed(Keys.R)) {  // New sphere
+		} else if (keyboard.isKeyJustPressed(Keys.E)) {  // New sphere
 			if (mode == Mode.NEW_BLOCK) {
 				createNewSphere();
 				mode = Mode.POSITION;

@@ -13,6 +13,7 @@ public class AvatarFactory {
 	public static final int CHAR_BOOMFIST = 1;
 	public static final int CHAR_WINSTON = 2;
 	public static final int CHAR_BASTION = 3;
+	public static final int CHAR_JUNKRAT = 4;
 
 	public static final int MAX_CHARS = 4;
 
@@ -22,6 +23,7 @@ public class AvatarFactory {
 		case CHAR_BOOMFIST: return "Boomfist";
 		case CHAR_WINSTON: return "Winston";
 		case CHAR_BASTION: return "Bastion";
+		case CHAR_JUNKRAT: return "Junkrat";
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}
@@ -45,6 +47,10 @@ public class AvatarFactory {
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(Type.Jump, 3000));
+			break;
+		case CHAR_JUNKRAT:
+			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
+			avatar.addComponent(new SecondaryAbilityComponent(Type.StickyMine, 4000));
 			break;
 		/*case CHAR_TRACY:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;

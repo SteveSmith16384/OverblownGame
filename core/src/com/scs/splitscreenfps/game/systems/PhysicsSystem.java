@@ -10,15 +10,8 @@ import com.scs.splitscreenfps.game.FallenOffEdgeEvent;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 
 public class PhysicsSystem extends AbstractSystem {
-
-	// Flags
-	public static final short COLL_PLAYER = 8;
-	public static final short COLL_PLAYERS_BULLET = 9;
-	public static final short COLL_ALL = -1;
-
 
 	private Game game;
 

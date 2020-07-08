@@ -9,12 +9,13 @@ public abstract class AbstractSystem implements ISystem {
 	protected BasicECS ecs;
 	protected List<AbstractEntity> entities;
 	private String name;
-	protected Class<?> component_class;
+	private Class<?> component_class;
 
+	/*
 	public AbstractSystem(BasicECS _ecs) {
 		this(_ecs, null);
 	}
-	
+	*/
 	
 	/**
 	 * 
@@ -31,6 +32,8 @@ public abstract class AbstractSystem implements ISystem {
 
 		if (this.getComponentClass() != null) {
 			entities = new ArrayList<AbstractEntity>();
+		} else {
+			throw new RuntimeException("This should not happen!");
 		}
 	}
 
@@ -39,7 +42,7 @@ public abstract class AbstractSystem implements ISystem {
 	 * Note to future self: Do NOT change this to handle multiple component types.  If that is
 	 * needed, create a separate system!
 	 */
-	public Class<?> getComponentClass() {
+	public final Class<?> getComponentClass() {
 		return component_class;
 	}
 

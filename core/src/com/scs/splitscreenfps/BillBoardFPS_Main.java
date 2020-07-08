@@ -9,8 +9,6 @@ import com.badlogic.gdx.physics.bullet.Bullet;
 import com.scs.splitscreenfps.game.systems.AudioSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
-import ssmith.libgdx.GraphicsHelper;
-
 public class BillBoardFPS_Main extends ApplicationAdapter {
 
 	public static final AudioSystem audio = new AudioSystem();

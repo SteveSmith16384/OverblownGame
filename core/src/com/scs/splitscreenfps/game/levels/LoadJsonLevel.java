@@ -3,9 +3,7 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class LoadJsonLevel extends AbstractLevel {

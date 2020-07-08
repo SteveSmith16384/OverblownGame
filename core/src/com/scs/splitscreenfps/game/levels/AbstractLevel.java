@@ -79,7 +79,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 				block.id = MapBlockComponent.next_id++;
 			}
 			if (block.position.y >= -4f) { // Skip any that have fallen off the edge
-				game.currentLevel.createAndAddEntityFromBlockData(block);
+				game.currentLevel.createAndAddEntityFromBlockData(block, false);
 			}
 		}
 
@@ -87,11 +87,19 @@ public abstract class AbstractLevel implements ILevelInterface {
 
 
 	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block) {
+		return this.createAndAddEntityFromBlockData(block, true);
+	}
+	
+	
+	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block, boolean attachBlockData) {
 		if (block.model_filename != null && block.model_filename.length() > 0) {
 			AbstractEntity model = EntityFactory.createModel(game.ecs, block.name, block.model_filename, 
 					8, -2f, 7, 
 					block.mass, null);
-			model.addComponent(block);
+			model.tags = block.tags;
+			if (attachBlockData) {
+				model.addComponent(block);
+			}
 			game.ecs.addEntity(model);
 			return model;
 		} else {
@@ -112,12 +120,13 @@ public abstract class AbstractLevel implements ILevelInterface {
 			} else {
 				throw new RuntimeException("Unknown type: " + block.type);
 			}
-			wall.addComponent(block);
+			wall.tags = block.tags;
+			if (attachBlockData) {
+				wall.addComponent(block);
+			}
 			game.ecs.addEntity(wall);
 			return wall;
 		}
-		//Settings.p("Ignoring line");
-		//return null;
 	}
 
 

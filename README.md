@@ -27,7 +27,7 @@
 * B - Size mode
 * C - Clone current block
 * M - Mass mode
-* N - New block - then bress B, C or R for Box, Cylinder or Sphere.
+* N - New block - then bress B, C or E for Box, Cylinder or Sphere.
 * P - Position Mode
 * R - Rotation Mode
 * G - Enable physics/gravity

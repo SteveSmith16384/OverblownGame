@@ -10,13 +10,7 @@ import com.scs.splitscreenfps.game.components.HasDecalCycle;
 public class CycleThruDecalsSystem extends AbstractSystem {
 
 	public CycleThruDecalsSystem(BasicECS ecs) {
-		super(ecs);
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return HasDecalCycle.class;
+		super(ecs, HasDecalCycle.class);
 	}
 
 

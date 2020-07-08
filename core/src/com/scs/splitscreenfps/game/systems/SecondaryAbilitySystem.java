@@ -60,6 +60,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 				case JetPac:
 					performJetPac(entity, player);
 					break;
+				case StickyMine:
+					dropStickyMine(entity, player);
+					break;
 				default:
 					//throw new RuntimeException("Unknown ability: " + ability.type);
 				}
@@ -120,4 +123,10 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		Settings.p("Power jump!");
 
 	}
+
+
+	private void dropStickyMine(AbstractEntity entity, AbstractPlayersAvatar player) {
+		// todo
+	}
+	
 }
