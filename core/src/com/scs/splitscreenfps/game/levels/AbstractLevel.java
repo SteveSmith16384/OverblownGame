@@ -101,7 +101,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 			}
 			AbstractEntity wall = null;
 			if (block.type == null || block.type.length() == 0 || block.type.equalsIgnoreCase("cube")) {
-				wall = new Wall(game.ecs, block.name, tex, block.position.x, block.position.y, block.position.z, 
+				wall = new Wall(game, block.name, tex, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
 						block.mass * 5, // Hack to make walls heavier
 						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);

@@ -259,7 +259,8 @@ public class Game implements IModule {
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			if (Settings.AUTO_START) {
-				System.exit(0);
+				//app.System.exit(0);
+				Gdx.app.exit();
 				return;
 			}
 			this.main.next_module = new PreGameScreen(main);
@@ -398,6 +399,7 @@ public class Game implements IModule {
 			ViewportData viewportData = this.viewports[currentViewId];
 			viewportData.dispose();
 		}
+		
 		if (font_small != null) {
 			font_small.dispose();
 		}
@@ -407,7 +409,10 @@ public class Game implements IModule {
 		if (font_large != null) {
 			font_large.dispose();
 		}
+
 		batch2d.dispose();
+		
+		this.assetManager.dispose();
 	}
 
 

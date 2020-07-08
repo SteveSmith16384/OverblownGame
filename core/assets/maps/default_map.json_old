@@ -614,7 +614,7 @@
       "id": 27,
       "type": "cylinder",
       "name": "New cylinder 92_new",
-      "texture_id": 0,
+      "texture_id": 2,
       "model_filename": "",
       "tiled": true,
       "size": {

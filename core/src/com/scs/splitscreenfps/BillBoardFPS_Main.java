@@ -78,6 +78,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 				fullscreen = true;
 			}
 		} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			Gdx.app.exit();
 			/*if (this.current_module instanceof PreGameScreen) {
 				System.exit(0);
 			} else {
@@ -123,6 +124,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 	public void dispose() {
 		if (current_module != null) {
 			current_module.dispose();
+			current_module = null;
 		}
 		audio.dipose();
 	}

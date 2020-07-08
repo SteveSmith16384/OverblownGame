@@ -36,7 +36,7 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, FLOOR_SIZE-2));
 		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, 1));
 
-		Wall floor = new Wall(game.ecs, "Floor", "colours/white.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
+		Wall floor = new Wall(game, "Floor", "colours/white.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
 				0f, true, false);
 		game.ecs.addEntity(floor);

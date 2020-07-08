@@ -34,12 +34,12 @@ public class RollingBallLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(3, 2f, 3));
 		this.startPositions.add(new Vector3(4, 2f, 4));
 
-		Wall floor = new Wall(game.ecs, "Floor", "textures/set3_example_1.png", 5, -0.1f, 5, 
+		Wall floor = new Wall(game, "Floor", "textures/set3_example_1.png", 5, -0.1f, 5, 
 				10f, .2f, 10f, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
 
-		Wall tilt = new Wall(game.ecs, "Tilt", "textures/set3_example_1.png", 12.5f, 1.5f, 5, 
+		Wall tilt = new Wall(game, "Tilt", "textures/set3_example_1.png", 12.5f, 1.5f, 5, 
 				6f, .2f, 10f, 
 				0f, 
 				0, 0, 25, true, false);

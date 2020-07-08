@@ -133,7 +133,7 @@ public class LoadCSVLevel extends AbstractLevel {
 		}
 
 		Settings.p("Creating " + name + " at " + pos);
-		AbstractEntity entity = new Wall(game.ecs, name, tex, pos.x, pos.y, pos.z, size.x, size.y, size.z, mass, 0, 0, 0, false, true);
+		AbstractEntity entity = new Wall(game, name, tex, pos.x, pos.y, pos.z, size.x, size.y, size.z, mass, 0, 0, 0, false, true);
 		game.ecs.addEntity(entity);
 	}
 

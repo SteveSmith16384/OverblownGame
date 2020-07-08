@@ -15,23 +15,27 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class Wall extends AbstractEntity {
 
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
-		this(ecs, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
+	public Wall(Game game, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
+		this(game, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
 	}
 	
 	
 	// Note that the mass gets multiplied by the size
 	// Positions are from the centre
-	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
-		super(ecs, name);
+	public Wall(Game game, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
+		super(game.ecs, name);
 
-		Texture tex = new Texture(tex_filename);
+		game.assetManager.load(tex_filename, Texture.class);
+		game.assetManager.finishLoading();
+		Texture tex = game.assetManager.get(tex_filename);
+		//Texture tex = new Texture(tex_filename);
 		//Texture tex = new Texture("textures/neon/tron_green.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
