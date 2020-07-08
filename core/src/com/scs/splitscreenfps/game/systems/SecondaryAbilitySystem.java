@@ -9,8 +9,10 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 
 public class SecondaryAbilitySystem extends AbstractSystem {
 
@@ -93,6 +95,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		float pow = power*30;
 		Settings.p("Performing boost with pow=" + pow);
 		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
+		
+		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);//)Vector3 pos = new Vector3();
+		GraphicsEntityFactory.createBlueExplosion(ecs, posData.position);
 
 	}
 

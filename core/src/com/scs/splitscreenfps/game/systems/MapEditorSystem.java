@@ -173,10 +173,12 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (keyboard.isKeyJustPressed(Keys.C)) {  // New cylinder
 			if (mode == Mode.NEW_BLOCK) {
 				createNewCylinder();
+				mode = Mode.POSITION;
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.R)) {  // New sphere
 			if (mode == Mode.NEW_BLOCK) {
 				createNewSphere();
+				mode = Mode.POSITION;
 			}
 		}
 
