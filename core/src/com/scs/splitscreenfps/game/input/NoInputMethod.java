@@ -65,4 +65,19 @@ public class NoInputMethod implements IInputMethod {
 	public boolean isAbilityPressed() {
 		return false;
 	}
+
+	@Override
+	public boolean isMenuLeftPressed() {
+		return false;
+	}
+
+	@Override
+	public boolean isMenuRightPressed() {
+		return false;
+	}
+
+	@Override
+	public boolean isMenuSelectPressed() {
+		return false;
+	}
 }

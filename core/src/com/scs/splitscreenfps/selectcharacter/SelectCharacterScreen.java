@@ -24,6 +24,8 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class SelectCharacterScreen implements IModule {
 
+	private static final long READ_INPUTS_INTERVAL = 100;
+
 	private SpriteBatch batch2d;
 	private BitmapFont font_small, font_large;
 	private List<String> log = new LinkedList<String>();
@@ -33,6 +35,8 @@ public class SelectCharacterScreen implements IModule {
 	private Sprite logo;
 	private GameSelectionData gameSelectionData;
 	public AssetManager assetManager = new AssetManager();
+
+	private long next_input_check_time = 0;
 
 	// Gfx pos data
 	private int spacing_x;
@@ -90,7 +94,7 @@ public class SelectCharacterScreen implements IModule {
 		Texture tex = assetManager.get(tex_filename);
 		return tex;
 	}
-	
+
 
 	@Override
 	public void render() {
@@ -98,37 +102,13 @@ public class SelectCharacterScreen implements IModule {
 			System.exit(0);
 		}
 
-/*		if (Settings.AUTO_START) {
-			main.next_module = new Game(main, inputs);
-			return;
-		}
-*/
-		// Read inputs
-		boolean all_selected = true;
-		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
-			IInputMethod input = this.inputs.get(playerIdx);
-			if (this.gameSelectionData.selected_character[playerIdx] == false) {
-				all_selected = false;
-				if (input.getStrafeLeft() > .5f) {
-					this.gameSelectionData.character[playerIdx]--;
-					if (this.gameSelectionData.character[playerIdx] < 0) {
-						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS;
-					}
-				} else if (input.getStrafeRight() > .5f) {
-					this.gameSelectionData.character[playerIdx]++;
-					if (this.gameSelectionData.character[playerIdx] > AvatarFactory.MAX_CHARS) {
-						this.gameSelectionData.character[playerIdx] = 0;
-					}
-				} 
+		if (next_input_check_time < System.currentTimeMillis()) {
+			this.next_input_check_time = System.currentTimeMillis() + READ_INPUTS_INTERVAL;
+			boolean all_selected = this.readInputs();
+			if (all_selected) {
+				this.startGame();
+				return;
 			}
-			if (input.isShootPressed()) {
-				this.gameSelectionData.selected_character[playerIdx] = true;
-			}
-		}
-		
-		if (all_selected) {
-			this.startGame();
-			return;
 		}
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -193,6 +173,33 @@ public class SelectCharacterScreen implements IModule {
 		batch2d.end();
 	}
 
+
+	private boolean readInputs() {
+		// Read inputs
+		boolean all_selected = true;
+		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
+			IInputMethod input = this.inputs.get(playerIdx);
+			if (this.gameSelectionData.has_selected_character[playerIdx] == false) {
+				all_selected = false;
+				if (input.isMenuLeftPressed()) {
+					this.gameSelectionData.character[playerIdx]--;
+					if (this.gameSelectionData.character[playerIdx] < 0) {
+						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS;
+					}
+				} else if (input.isMenuRightPressed()) {
+					this.gameSelectionData.character[playerIdx]++;
+					if (this.gameSelectionData.character[playerIdx] > AvatarFactory.MAX_CHARS) {
+						this.gameSelectionData.character[playerIdx] = 0;
+					}
+				} 
+			}
+			if (input.isMenuSelectPressed()) {
+				this.gameSelectionData.has_selected_character[playerIdx] = true;
+				this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(this.gameSelectionData.character[playerIdx]));
+			}
+		}
+		return all_selected;
+	}
 
 	private void startGame() {
 		// Check all players have selected a character

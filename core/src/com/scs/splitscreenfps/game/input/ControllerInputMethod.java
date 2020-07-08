@@ -92,5 +92,38 @@ public class ControllerInputMethod implements IInputMethod {
 	}
 
 
+	@Override
+	public boolean isMenuLeftPressed() {
+		return this.controller.getButton(13);
+	}
+
+
+	@Override
+	public boolean isMenuRightPressed() {
+		// Code for testing buttons
+		/*for (int i=0 ; i<16 ; i++) {
+			if (this.controller.getButton(i)) {
+				Settings.p("Pressed! " + i);
+				break;
+			}
+		}*/
+		return this.controller.getButton(14);
+	}
+
+
+	@Override
+	public boolean isMenuSelectPressed() {
+		// Code for testing buttons
+		/*for (int i=0 ; i<16 ; i++) {
+			if (this.controller.getButton(i)) {
+				Settings.p("Pressed! " + i);
+				break;
+			}
+		}*/
+		return this.controller.getButton(0); // X
+	}
+
+
+
 
 }

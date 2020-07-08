@@ -1,7 +1,7 @@
 package com.scs.splitscreenfps.game.input;
 
 public interface IInputMethod {
-	
+
 	boolean isMouse(); // Mouse has extra features like capturing the window
 
 	float getForwards();
@@ -11,10 +11,16 @@ public interface IInputMethod {
 	float getStrafeLeft();
 
 	float getStrafeRight();
-	
+
 	float getLookLeft();
 
 	float getLookRight();
+
+	boolean isMenuLeftPressed();
+
+	boolean isMenuRightPressed();
+
+	boolean isMenuSelectPressed();
 
 	float getLookUp();
 
@@ -23,6 +29,7 @@ public interface IInputMethod {
 	boolean isJumpPressed();
 
 	boolean isShootPressed();
-	
+
 	boolean isAbilityPressed();
+
 }

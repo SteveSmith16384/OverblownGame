@@ -90,7 +90,20 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		return Gdx.input.isButtonJustPressed(Input.Buttons.LEFT);
 	}
 
+	@Override
+	public boolean isMenuLeftPressed() {
+		return this.getStrafeLeft() > 0.5f;
+	}
 
+	@Override
+	public boolean isMenuRightPressed() {
+		return this.getStrafeRight() > 0.5f;
+	}
+
+	@Override
+	public boolean isMenuSelectPressed() {
+		return Gdx.input.isKeyPressed(Keys.SPACE);
+	}
 
 
 }

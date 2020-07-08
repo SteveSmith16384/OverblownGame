@@ -45,7 +45,7 @@ import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.MapEditorLevel;
+import com.scs.splitscreenfps.game.levels.IncineratorLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -138,14 +138,14 @@ public class Game implements IModule {
 		new MyContactListener(coll);
 
 		//currentLevel = new RollingBallLevel(this);
-		currentLevel = new MapEditorLevel(this);
 		//currentLevel = new LoadMapLevel(this);
 		//currentLevel = new AvoidTheBallsLevel(this);
 		//currentLevel = new CastleLevel(this);
 		//currentLevel = new IliosLevel(this);
 		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
-		//currentLevel = new IncineratorLevel(this);
+		//currentLevel = new MapEditorLevel(this);
+		currentLevel = new IncineratorLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
@@ -350,7 +350,7 @@ public class Game implements IModule {
 			font_med.setColor(1, 1, 1, 1);
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 			//font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
-			font_med.draw(batch2d, "View ID: " + this.currentViewId, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*4));
+			//font_med.draw(batch2d, "View ID: " + this.currentViewId, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*4));
 			font_med.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*3));
 			font_med.draw(batch2d, playerData.ability1text, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*2));
 			font_med.draw(batch2d, playerData.ability2text, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*1));

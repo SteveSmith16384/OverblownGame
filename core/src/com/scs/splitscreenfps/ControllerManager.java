@@ -65,6 +65,7 @@ public class ControllerManager implements ControllerListener {
 	@Override
 	public void disconnected(Controller controller) {
 		synchronized (allControllers) {
+			Settings.pe("Controller disconnected!");
 			this.allControllers.removeValue(controller, true);
 			this.inGameControllers.remove(controller);
 		}

@@ -12,17 +12,15 @@ public class AvatarFactory {
 	public static final int CHAR_PHARTA = 0;
 	public static final int CHAR_BOOMFIST = 1;
 	public static final int CHAR_WINSTON = 2;
-	//public static final int CHAR_TRACY = 3;
-	public static final int CHAR_BASTION = 4;
+	public static final int CHAR_BASTION = 3;
 
-	public static final int MAX_CHARS = 5;
+	public static final int MAX_CHARS = 4;
 
 	public static String getName(int id) {
 		switch (id) {
 		case CHAR_PHARTA: return "Pharta";
 		case CHAR_BOOMFIST: return "Boomfist";
 		case CHAR_WINSTON: return "Winston";
-		//case CHAR_TRACY: return "Tracey";
 		case CHAR_BASTION: return "Bastion";
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
