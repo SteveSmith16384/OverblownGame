@@ -52,7 +52,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 	}
 
 
-	public void loadJsonFile(String filename, boolean attachBlockData) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+	public void loadJsonFile(String filename, boolean for_map_editor) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		Gson gson = new Gson();
 
 		mapdata = gson.fromJson(new FileReader(filename), MapData.class);
@@ -64,7 +64,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 		}
 
 
-		for (int i=0 ; i<4 ; i++) {
+		/*for (int i=0 ; i<4 ; i++) {
 			if (mapdata.start_positions.containsKey(i)) {
 				this.startPositions.add(mapdata.start_positions.get(i));
 			}
@@ -72,15 +72,25 @@ public abstract class AbstractLevel implements ILevelInterface {
 		while (this.startPositions.size() < game.players.length) {
 			Settings.pe("Warning - adding default start position");
 			this.startPositions.add(new Vector3(10, 10, 10));
-		}
+		}*/
 
 		for (MapBlockComponent block : mapdata.blocks) {
+			if (block.position.y < -4f) { // Skip any that have fallen off the edge
+				continue;
+			}
+			if (block.tags.contains("playerstartposition")) {
+				if (startPositions == null) {
+					startPositions = new ArrayList<Vector3>();
+				}
+				startPositions.add(block.position);
+				if (for_map_editor == false) {
+					continue; // Don't add player start sphere!
+				}
+			}
 			if (block.id == 0) {
 				block.id = MapBlockComponent.next_id++;
 			}
-			if (block.position.y >= -4f) { // Skip any that have fallen off the edge
-				game.currentLevel.createAndAddEntityFromBlockData(block, attachBlockData);
-			}
+			game.currentLevel.createAndAddEntityFromBlockData(block, for_map_editor);
 		}
 
 	}
@@ -89,15 +99,15 @@ public abstract class AbstractLevel implements ILevelInterface {
 	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block) {
 		return this.createAndAddEntityFromBlockData(block, true);
 	}
-	
-	
-	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block, boolean attachBlockData) {
+
+
+	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block, boolean for_map_editor) {
 		if (block.model_filename != null && block.model_filename.length() > 0) {
 			AbstractEntity model = EntityFactory.createModel(game.ecs, block.name, block.model_filename, 
 					8, -2f, 7, 
 					block.mass, null);
 			model.tags = block.tags;
-			if (attachBlockData) {
+			if (for_map_editor) {
 				model.addComponent(block);
 			}
 			game.ecs.addEntity(model);
@@ -121,7 +131,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 				throw new RuntimeException("Unknown type: " + block.type);
 			}
 			wall.tags = block.tags;
-			if (attachBlockData) {
+			if (for_map_editor) {
 				wall.addComponent(block);
 			}
 			game.ecs.addEntity(wall);

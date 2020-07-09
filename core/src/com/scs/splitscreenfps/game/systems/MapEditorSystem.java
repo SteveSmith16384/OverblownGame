@@ -28,7 +28,7 @@ import ssmith.lang.NumberFunctions;
  */
 public class MapEditorSystem extends AbstractSystem {
 
-	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS, SET_START_POS, NEW_BLOCK};
+	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS, NEW_BLOCK};
 
 	private float MOVE_INC = 0.25f;
 
@@ -98,35 +98,16 @@ public class MapEditorSystem extends AbstractSystem {
 		}
 
 		if (keyboard.isKeyJustPressed(Keys.NUM_1)) { // Save
-			if (this.mode == Mode.SET_START_POS) {
-				setStartPos(0, player.camera.position);
-			} else {
 				this.saveMap();
 				game.appendToLog("Map saved");
-			}
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_2)) { // settle
-			if (this.mode == Mode.SET_START_POS) {
-				setStartPos(1, player.camera.position);
-			} else {
 				if (game.physics_enabled == false) {
 					game.appendToLog("Physics must be enabled");
 				} else {
 					settleBlock();
 				}
-			}
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_3)) { // Show pos
-			if (this.mode == Mode.SET_START_POS) {
-				setStartPos(2, player.camera.position);
-			} else {
 				game.appendToLog("Cam pos: " + player.camera.position);
-			}
-		} else if (keyboard.isKeyJustPressed(Keys.NUM_4)) { // Set start pos
-			if (this.mode == Mode.SET_START_POS) {
-				setStartPos(3, player.camera.position);
-			} else {
-				this.mode = Mode.SET_START_POS;
-				game.appendToLog("Set start pos: Enter number 1-4");
-			}
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_5)) { // Draw physics
 			Settings.DRAW_PHYSICS = !Settings.DRAW_PHYSICS;
 		} else if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode
@@ -169,7 +150,7 @@ public class MapEditorSystem extends AbstractSystem {
 			game.appendToLog("Physics enabled: " + game.physics_enabled);
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
 			this.mode = Mode.NEW_BLOCK;
-			game.appendToLog("Press B, C or R.");
+			game.appendToLog("Press B, C or E.");
 		} else if (keyboard.isKeyJustPressed(Keys.C)) {  // New cylinder
 			if (mode == Mode.NEW_BLOCK) {
 				createNewCylinder();
@@ -349,7 +330,7 @@ public class MapEditorSystem extends AbstractSystem {
 		game.appendToLog(block.name + " created");
 	}
 	
-	
+	/*
 	private void setStartPos(int id, Vector3 pos) {
 		if (game.currentLevel.mapdata.start_positions == null) {
 			game.currentLevel.mapdata.start_positions = new HashMap<Integer, Vector3>();
@@ -359,7 +340,7 @@ public class MapEditorSystem extends AbstractSystem {
 		game.appendToLog("Start pos " + (id+1) + " set to " + pos);
 		this.mode = Mode.POSITION;
 	}
-	
+	*/
 
 	private void settleBlock() {
 		if (selectedObject == null) {

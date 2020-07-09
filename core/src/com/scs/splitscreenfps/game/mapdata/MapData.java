@@ -11,7 +11,6 @@ public class MapData {
 	public String filename;
 	public HashMap<Integer, String> textures;
 	public List<MapBlockComponent> blocks;
-	public HashMap<Integer, Vector3> start_positions;
 	
 	public MapData() {
 		blocks = new ArrayList<MapBlockComponent>();

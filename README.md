@@ -21,7 +21,6 @@
 * 1 - Save map
 * 2 - "Settle" position of selected entity
 * 3 - Show our position
-* 4 - Set start position - then press 1-4
 * 5 - Show physics debug
 * 0 - Reset rotation
 * B - Size mode

@@ -215,7 +215,7 @@
       "type": "cube",
       "name": "Crate",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 5,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -240,7 +240,7 @@
       "type": "cube",
       "name": "Crate_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 5,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -265,7 +265,7 @@
       "type": "cube",
       "name": "Crate_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 5,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -940,7 +940,7 @@
       "type": "sphere",
       "name": "New sphere 62",
       "tags": "controlpoint",
-      "texture_id": 0,
+      "texture_id": 1,
       "model_filename": "",
       "tiled": true,
       "size": {
