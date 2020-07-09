@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.util.Properties;
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 
 public class Settings {
@@ -15,7 +17,7 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_JUNKRAT;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_PHARTA;
 	public static final boolean TWO_AUTOSTART_CHARACTERS = false;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;
 	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
@@ -53,6 +55,22 @@ public class Settings {
 			//e.printStackTrace();
 		}
 
+	}
+
+
+	public static Color getColourForSide( int idx) {
+		switch (idx) {
+		case 0:
+			return Color.GREEN;
+		case 1:
+			return Color.YELLOW;
+		case 2:
+			return Color.RED;
+		case 3:
+			return Color.MAGENTA;
+		default:
+			throw new RuntimeException("Todo");
+		}
 	}
 
 

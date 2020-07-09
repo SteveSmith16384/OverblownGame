@@ -33,7 +33,7 @@ public class LoadJsonLevel extends AbstractLevel {
 		game.ecs.addEntity(floor);
 
 		try {
-			super.loadJsonFile("maps/testmap1.json");
+			super.loadJsonFile("maps/testmap1.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

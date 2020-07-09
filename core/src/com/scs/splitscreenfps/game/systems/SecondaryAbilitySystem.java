@@ -36,7 +36,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		long interval = ability.cooldown;
 		if (ability.lastShotTime + interval > System.currentTimeMillis()) {
 			long cooldown_secs = ((ability.lastShotTime + interval) - System.currentTimeMillis()) / 1000;
-			playerData.ability2text = "Cooldown: " + (cooldown_secs+1) + "s";
+			playerData.ability2text = "Cooldown: " + (cooldown_secs+1);
 			return;
 		}
 
@@ -112,16 +112,12 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		dir.y += .2f;
 		dir.nor().scl(30);
 		pc.body.applyCentralImpulse(dir);
-		Settings.p("Power jump!");
-
 	}
 
 
 	private void performJetPac(AbstractEntity entity, AbstractPlayersAvatar player) {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.applyCentralImpulse(new Vector3(0, 40, 0));
-		Settings.p("Power jump!");
-
 	}
 
 

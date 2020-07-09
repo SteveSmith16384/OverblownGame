@@ -24,8 +24,8 @@ public class Wall extends AbstractEntity {
 	public Wall(Game game, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
 		this(game, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
 	}
-	
-	
+
+
 	// Note that the mass gets multiplied by the size
 	// Positions are from the centre
 	public Wall(Game game, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
@@ -35,7 +35,7 @@ public class Wall extends AbstractEntity {
 		//game.assetManager.finishLoading();
 		//Texture tex = game.assetManager.get(tex_filename);
 		Texture tex = game.getTexture(tex_filename);
-		
+
 		//Texture tex = new Texture(tex_filename);
 		//Texture tex = new Texture("textures/neon/tron_green.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
@@ -46,20 +46,20 @@ public class Wall extends AbstractEntity {
 		modelBuilder.begin();
 
 		modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
+		.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
 		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
+		.rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
 		modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
+		.rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
 		modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
+		.rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
 		modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
+		.rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
 		modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
+		.rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
 
 		Model box_model = modelBuilder.end();
-		
+
 		if (tile) {
 			Matrix3 mat = new Matrix3();
 			float max2 = Math.max(w, h);
@@ -67,7 +67,7 @@ public class Wall extends AbstractEntity {
 			mat.scl(max);//new Vector2(h, d));//, h));
 			box_model.meshes.get(0).transformUV(mat);
 		}
-		
+
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		if (degreesX != 0) {
 			instance.transform.rotate(Vector3.X, degreesX);
@@ -78,22 +78,26 @@ public class Wall extends AbstractEntity {
 		if (degreesZ != 0) {
 			instance.transform.rotate(Vector3.Z, degreesZ);
 		}
-		
+
 		HasModelComponent model = new HasModelComponent(instance, 1f, cast_shadow);
 		this.addComponent(model);
 
-		float mass = mass_pre * w * h * d; 
+		float mass = mass_pre * w * h * d;
+		if (mass > 0 && mass < 1f) {
+			mass = 1; // Give a minimum mass for (e.g.) thin walls
+		}
 
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
 		Vector3 local_inertia = new Vector3();
 		boxShape.calculateLocalInertia(mass, local_inertia);
-		btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);
-		groundObject.userData = this;
-		groundObject.setRestitution(.2f);
+		btRigidBody body = new btRigidBody(mass, null, boxShape, local_inertia);
+		body.userData = this;
+		body.setRestitution(.2f);
+		body.setDamping(.5f,  .5f); // scs new
 		//groundObject.setFriction(.1f);
-		groundObject.setCollisionShape(boxShape);
-		groundObject.setWorldTransform(instance.transform);
-		this.addComponent(new PhysicsComponent(groundObject));
+		body.setCollisionShape(boxShape);
+		body.setWorldTransform(instance.transform);
+		this.addComponent(new PhysicsComponent(body));
 
 		this.addComponent(new PositionComponent());
 	}

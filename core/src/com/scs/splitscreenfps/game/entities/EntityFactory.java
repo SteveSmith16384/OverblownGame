@@ -302,7 +302,8 @@ public class EntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		ball.addComponent(model);
 
-		float mass = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
+		float volume = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
+		float mass = mass_pre * volume;
 
 		btSphereShape sphere_shape = new btSphereShape(diam/2);
 		Vector3 local_inertia = new Vector3();

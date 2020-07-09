@@ -74,7 +74,7 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER:
-			float EXPLOSION_FORCE = 10f; // 15f
+			float EXPLOSION_FORCE = 5f;// 10f; // 15f
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 900, 2000, 6, 20, 30, 1.5f, EXPLOSION_FORCE);
 			weapon.kickback_force = 5f;
 			break;

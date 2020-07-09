@@ -29,7 +29,7 @@ import ssmith.libgdx.ModelFunctions;
 // This also moves the camera
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
-	
+
 	public static final float PLAYER_HEIGHT = 0.4f;
 	private static final float MOVE_SPEED = 15;//20;//25;//1.5f;
 	private static final float CAM_SPEED = 3f;
@@ -85,26 +85,8 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		HasModelComponent hasModel = (HasModelComponent)e.getComponent(HasModelComponent.class);
 		ModelInstance instance = hasModel.model;
 		for (int i=0 ; i<instance.materials.size ; i++) {
-			switch (idx) {
-			case 0:
-				//instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.RED));
-				//instance.materials.get(i).set(ColorAttribute.createAmbient(Color.RED));
-				break;
-			case 1:
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.MAGENTA));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.MAGENTA));
-				break;
-			case 2:
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.RED));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.RED));
-				break;
-			case 3:
-				instance.materials.get(i).set(ColorAttribute.createDiffuse(Color.YELLOW));
-				instance.materials.get(i).set(ColorAttribute.createAmbient(Color.YELLOW));
-				break;
-			default:
-				throw new RuntimeException("Unknown side: " + i);
-			}
+			instance.materials.get(i).set(ColorAttribute.createDiffuse(Settings.getColourForSide(idx)));
+			instance.materials.get(i).set(ColorAttribute.createAmbient(Settings.getColourForSide(idx)));
 		}
 	}
 

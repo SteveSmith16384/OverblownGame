@@ -52,7 +52,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 	}
 
 
-	public void loadJsonFile(String filename) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+	public void loadJsonFile(String filename, boolean attachBlockData) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		Gson gson = new Gson();
 
 		mapdata = gson.fromJson(new FileReader(filename), MapData.class);
@@ -79,7 +79,7 @@ public abstract class AbstractLevel implements ILevelInterface {
 				block.id = MapBlockComponent.next_id++;
 			}
 			if (block.position.y >= -4f) { // Skip any that have fallen off the edge
-				game.currentLevel.createAndAddEntityFromBlockData(block, false);
+				game.currentLevel.createAndAddEntityFromBlockData(block, attachBlockData);
 			}
 		}
 

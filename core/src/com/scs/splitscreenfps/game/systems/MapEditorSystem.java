@@ -89,8 +89,8 @@ public class MapEditorSystem extends AbstractSystem {
 					game.appendToLog("Selected: " + block.name + " (" + block.id + ")");
 					game.appendToLog("Mass=" + block.mass);
 				} else {
-					selectedObject = null;
 					game.appendToLog("Block not found");
+					selectedObject = null;
 				}
 			} else {
 				game.appendToLog("Nothing selected");
