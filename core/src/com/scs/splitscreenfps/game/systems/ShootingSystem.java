@@ -12,7 +12,7 @@ import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
+import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
 
 public class ShootingSystem extends AbstractSystem {
 
@@ -70,27 +70,27 @@ public class ShootingSystem extends AbstractSystem {
 
 			switch (weapon.weapon_type) {
 			case WeaponSettingsComponent.WEAPON_RIFLE:
-				AbstractEntity bullet = EntityFactory.createBullet(game, player, startPos, dir);
+				AbstractEntity bullet = BulletEntityFactory.createBullet(game, player, startPos, dir);
 				game.ecs.addEntity(bullet);
 				break;
 
 			case WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER:
-				AbstractEntity g = EntityFactory.createGrenade(game, player, startPos, dir);
+				AbstractEntity g = BulletEntityFactory.createGrenade(game, player, startPos, dir);
 				game.ecs.addEntity(g);
 				break;
 
 			case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER:
-				AbstractEntity r = EntityFactory.createRocket(game, player, startPos, dir);
+				AbstractEntity r = BulletEntityFactory.createRocket(game, player, startPos, dir);
 				game.ecs.addEntity(r);
 				break;
 
 			case WeaponSettingsComponent.WEAPON_PUNCH:
-				AbstractEntity p = EntityFactory.createFist(game, player, startPos, dir);
+				AbstractEntity p = BulletEntityFactory.createFist(game, player, startPos, dir);
 				game.ecs.addEntity(p);
 				break;
 
 			case WeaponSettingsComponent.WEAPON_CANNON:
-				AbstractEntity c = EntityFactory.createCannonball(game, player, startPos, dir);
+				AbstractEntity c = BulletEntityFactory.createCannonball(game, player, startPos, dir);
 				game.ecs.addEntity(c);
 				break;
 

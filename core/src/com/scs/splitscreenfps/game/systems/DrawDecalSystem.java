@@ -57,7 +57,7 @@ public class DrawDecalSystem extends AbstractSystem {
 	private void updateTransform(AbstractEntity entity, Camera cam, HasDecal hasDecal) {
 		if (hasDecal.faceCamera) {
 			tmp.set(cam.direction).scl(-1);
-			if(!hasDecal.dontLockYAxis) {
+			if(hasDecal.dontLockYAxis == false) {
 				tmp.y = 0;
 			}
 			hasDecal.decal.setRotation(tmp, Vector3.Y);
