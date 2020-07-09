@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.gamemodes.ControlPointScoreSystem;
 
-public class IncineratorLevel extends AbstractLevel {
+public class FactoryLevel extends AbstractLevel {
 
 	private ControlPointScoreSystem cps;
 	
-	public IncineratorLevel(Game _game) {
+	public FactoryLevel(Game _game) {
 		super(_game);
 		
 		this.cps = new ControlPointScoreSystem(game);
@@ -25,7 +25,7 @@ public class IncineratorLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			super.loadJsonFile("maps/incinerator.json", false);
+			super.loadJsonFile("maps/factory.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
