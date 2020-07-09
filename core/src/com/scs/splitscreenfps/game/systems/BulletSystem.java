@@ -37,7 +37,7 @@ public class BulletSystem extends AbstractSystem {
 		// Check range
 		float dist = bullet.start.dst(physics.getTranslation());
 		if (dist > bullet.settings.range) {
-			Settings.p(entity + " reached range");
+			//Settings.p(entity + " reached range");
 			entity.remove();
 			return;
 		}

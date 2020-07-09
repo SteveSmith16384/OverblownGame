@@ -103,7 +103,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		this.addComponent(hasModel);
 
 		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
+		AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle", "AlienArmature|Alien_Death", "AlienArmature|Alien_Jump");
 		anim.animationController = animation;
 		this.addComponent(anim);
 

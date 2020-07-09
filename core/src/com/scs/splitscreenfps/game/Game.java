@@ -35,6 +35,8 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.AnimatedComponent;
+import com.scs.splitscreenfps.game.components.AnimatedComponent.AnimData;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
@@ -521,10 +523,13 @@ public class Game implements IModule {
 
 
 	public void playerDied(AbstractEntity player, PlayerData playerData, AbstractEntity shooter) {
+		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
+		anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
+		
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 
-		/* todo 
+		/* todo?
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.points += 1;

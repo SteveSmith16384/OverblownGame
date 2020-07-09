@@ -13,15 +13,20 @@ public class AnimationSystem extends AbstractSystem {
 	}
 
 
+	public void setNextAnim(String name, boolean loop) {
+		
+	}
+	
+	
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
 
-		if (anim.next_animation != null && anim.next_animation.length() > 0) {
+		if (anim.next_animation != null && anim.next_animation.name.length() > 0) {
 			if (anim.current_animation != anim.next_animation) {
 				//Settings.p("Setting anim for " + entity + "to " + anim.next_animation);
 				anim.current_animation = anim.next_animation;
-				anim.animationController.animate(anim.current_animation, -1, 2f, null, 0f);
+				anim.animationController.animate(anim.current_animation.name, anim.current_animation.loop?-1:1, 2f, null, 0f);
 				anim.next_animation = null;
 			}
 		}		
