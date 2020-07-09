@@ -1,8 +1,8 @@
 {
   "filename": "maps/default_map.json",
   "textures": {
-    "1": "colours/white.png",
-    "2": "colours/red.png",
+    "1": "textures/twoshades/white.png",
+    "2": "textures/twoshades/green.png",
     "3": "colours/brown.png",
     "4": "textures/crate.png",
     "5": "textures/crate1.png",
