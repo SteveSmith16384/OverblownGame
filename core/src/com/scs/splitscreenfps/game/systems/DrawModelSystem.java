@@ -19,6 +19,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 
 public class DrawModelSystem extends AbstractSystem {
 
@@ -50,7 +51,7 @@ public class DrawModelSystem extends AbstractSystem {
 		environment.shadowMap = shadowLight;
 		shadowBatch = new ModelBatch(new DepthShaderProvider());
 
-		//skybox = new SkyboxCube(ecs, "Skybox", "", 30, 30, 30);
+		//skybox = new SkyboxCube(game, "Skybox", "", 30, 30, 30);
 		//skybox = new SkyboxSphere(ecs, "Skybox", "", 20);
 
 	}
@@ -95,7 +96,7 @@ public class DrawModelSystem extends AbstractSystem {
 			// Set model position data based on physics data - regardless of whether we draw them
 			tmpMat.getTranslation(posData.position);
 		}
-		
+
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
 		}
@@ -136,9 +137,13 @@ public class DrawModelSystem extends AbstractSystem {
 			}
 
 		} else { // Non-physics entity
-			model.model.transform.setToTranslation(posData.position);
-			model.model.transform.scl(model.scale);
-			model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+			if (model.keep_player_in_centre) {
+				model.model.transform.setToTranslation(batch.getCamera().position);
+			} else {
+				model.model.transform.setToTranslation(posData.position);
+				model.model.transform.scl(model.scale);
+				model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+			}
 		}
 
 

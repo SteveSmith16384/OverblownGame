@@ -42,10 +42,11 @@ import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.IncineratorLevel;
+import com.scs.splitscreenfps.game.levels.MapEditorLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -144,8 +145,8 @@ public class Game implements IModule {
 		//currentLevel = new IliosLevel(this);
 		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
-		//currentLevel = new MapEditorLevel(this);
-		currentLevel = new IncineratorLevel(this);
+		currentLevel = new MapEditorLevel(this);
+		//currentLevel = new IncineratorLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
@@ -253,6 +254,8 @@ public class Game implements IModule {
 			this.viewports[idx].camera.direction.z = 1;
 			this.viewports[idx].camera.update();
 		}
+		
+		ecs.addEntity(new SkyboxCube(this, "Skybox", "", 30, 30, 30));
 	}
 
 

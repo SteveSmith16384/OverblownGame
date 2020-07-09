@@ -56,6 +56,7 @@ public class SkyboxCube extends AbstractEntity {
 		ModelInstance instance = new ModelInstance(box_model);
 		
 		HasModelComponent model = new HasModelComponent(instance, 1f, false);
+		model.keep_player_in_centre = true;
 		this.addComponent(model);
 
 		this.addComponent(new PositionComponent());

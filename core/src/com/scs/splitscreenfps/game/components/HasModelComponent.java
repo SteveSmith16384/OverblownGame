@@ -18,6 +18,7 @@ public class HasModelComponent {
 	public BoundingBox bb; // For checking if in frustum  
 	public boolean always_draw = false;
 	public boolean cast_shadow = true;
+	public boolean keep_player_in_centre = false; // For skybox
 
 	
 	public HasModelComponent(ModelInstance _model, float scale, boolean cast_shadow) {
