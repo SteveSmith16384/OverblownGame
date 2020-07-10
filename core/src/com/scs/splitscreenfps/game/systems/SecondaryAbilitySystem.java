@@ -120,7 +120,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 
 	private void performJetPac(AbstractEntity entity, AbstractPlayersAvatar player) {
-		BillBoardFPS_Main.audio.play("sfx/fart" + NumberFunctions.rnd(1,  4) + ".wav");
+		BillBoardFPS_Main.audio.play("sfx/fart" + NumberFunctions.rnd(1, 3) + ".wav");
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();

@@ -77,7 +77,6 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.body.setGravity(Vector3.Zero);
-		pc.body.clearForces(); // todo - doesn't work
 	}
 
 
@@ -111,6 +110,9 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			
 			AbstractEntity r = BulletEntityFactory.createRocket(game, player, startPos, dir);
 			game.ecs.addEntity(r);
+			
+			PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
+			pc.body.setLinearFactor(Vector3.Zero);
 		}
 	}
 	
@@ -132,6 +134,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.body.setGravity(Game.GRAVITY);
+		pc.body.setLinearFactor(new Vector3(1, 1, 1));
 	}
 	
 }
