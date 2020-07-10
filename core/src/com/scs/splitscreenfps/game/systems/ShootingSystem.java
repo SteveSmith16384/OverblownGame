@@ -94,7 +94,7 @@ public class ShootingSystem extends AbstractSystem {
 		
 		if (cc.ammo <= 0) {
 			//playerData.ability1text = "Reloading...";
-			BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
+			//BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
 			cc.ammo = weapon.max_ammo;
 			cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
 		}

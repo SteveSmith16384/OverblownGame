@@ -39,7 +39,7 @@ public class ControlPointScoreSystem implements ISystem {
 	@Override
 	public void process() {
 		if (controlpoint == null) {
-			// Find the control point entity
+			// Find the control point entity - 
 			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
 			while (it.hasNext()) {
 				AbstractEntity e = it.next();
@@ -50,7 +50,8 @@ public class ControlPointScoreSystem implements ISystem {
 			}
 
 			if (this.controlpoint == null) {
-				//throw new RuntimeException("No control point entity found");
+				// We won't find it straight away, or until the entities are loaded
+				return;
 			}
 		}
 
@@ -84,6 +85,9 @@ public class ControlPointScoreSystem implements ISystem {
 				}
 			}
 		}
+		
+		// Update HUD
+		
 
 	}
 

@@ -120,7 +120,7 @@ public class BulletEntityFactory {
 		pc.force = dir.scl(1f);
 		e.addComponent(pc);
 
-		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
 
 		return e;
 	}
