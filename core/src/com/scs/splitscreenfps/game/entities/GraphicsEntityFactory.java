@@ -106,7 +106,7 @@ public class GraphicsEntityFactory {
 		hasDecal.decal.setScale(1f / tr.getRegionWidth());
 		hasDecal.decal.setPosition(posData.position);
 		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = false;
+		hasDecal.dontLockYAxis = true;
 		entity.addComponent(hasDecal);
 
 		HasDecalCycle cycle = new HasDecalCycle(.03f, 4*4);

@@ -138,6 +138,7 @@ public class SelectCharacterScreen implements IModule {
 			y_pos = y_pos + (30*playerIdx);
 			int x_pos = spacing_x * (this.gameSelectionData.character[playerIdx]+1);
 
+			arrow.setColor(Settings.getColourForSide(playerIdx));
 			arrow.setBounds(x_pos,  y_pos , 30, 30);
 			arrow.draw(batch2d);
 		}

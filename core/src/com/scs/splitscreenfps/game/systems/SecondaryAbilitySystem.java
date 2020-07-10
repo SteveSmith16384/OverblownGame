@@ -102,9 +102,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
 		//pc.body.appl.applyCentralForce(player.camera.direction.cpy().scl(power*3000)); Doesn't do anything?
 		
-		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);//)Vector3 pos = new Vector3();
-		GraphicsEntityFactory.createBlueExplosion(game, posData.position);
-
+		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
+		game.ecs.addEntity(e);
 	}
 
 
@@ -125,6 +125,10 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.body.applyCentralImpulse(new Vector3(0, 40, 0));
+
+		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
+		game.ecs.addEntity(e);
 	}
 
 
