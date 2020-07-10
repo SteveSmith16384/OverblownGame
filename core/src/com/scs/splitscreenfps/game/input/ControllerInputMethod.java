@@ -123,6 +123,11 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(0); // X
 	}
 
+	@Override
+	public boolean isUltimatePressed() {
+		return this.controller.getButton(2); // todo - check
+	}
+
 
 
 

@@ -66,6 +66,7 @@ import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
 import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
+import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
 
@@ -74,6 +75,8 @@ import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
  *
  */
 public class Game implements IModule {
+	
+	public static final Vector3 GRAVITY = new Vector3(0, -10f, 0);
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
@@ -135,7 +138,7 @@ public class Game implements IModule {
 		broadphase = new btDbvtBroadphase();
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
+		dynamicsWorld.setGravity(GRAVITY);
 		coll = new ProcessCollisionSystem(this);
 		new MyContactListener(coll);
 
@@ -231,6 +234,7 @@ public class Game implements IModule {
 		this.respawnSystem = new RespawnPlayerSystem(ecs);
 		ecs.addSystem(new HarmOnContactSystem(this, ecs));
 		ecs.addSystem(new SecondaryAbilitySystem(ecs, this));
+		ecs.addSystem(new UltimateAbilitySystem(ecs, this));
 
 	}
 
@@ -291,6 +295,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();		
 		this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
+		this.ecs.processSystem(UltimateAbilitySystem.class); // Must be before player movement system
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 

@@ -12,6 +12,7 @@ public class PlayerData {
 	public AbstractEntity last_person_to_hit_them;
 	public String ability1text = "";
 	public String ability2text = "";
+	public String ultimateText = "";
 	
 	public PlayerData(int _playerIdx) {
 		playerIdx = _playerIdx;

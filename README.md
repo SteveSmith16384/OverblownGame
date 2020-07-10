@@ -1,23 +1,22 @@
 # SUPER SMASH GANG BEASTS PHYSICS FPS
 
 ## Controls
-* Mouse/keyboard
-* Tested with PS4 controllers
+
+### Mouse/keyboard
+* W, A, S, D - Forwards, backwards, strafe left, strafe right
+* Space - Jump
+* U - Ultimate
 
 
-### Implemented Weapons
-* Gun
-* Grenade launcher
-* Rocket Launcher
-* Power punch
-
-
-### Implemeted Abilities
-* Charge Boost
-* Power Jump
+### Tested with PS4 controllers
+* R1 - Shoot
+* L1 - Secondary Ability
+* Triangle - Ultimate
 
 
 ### Map Editor Controls
+The map editor is still in development.
+
 * 1 - Save map
 * 2 - "Settle" position of selected entity
 * 3 - Show our position
@@ -34,3 +33,8 @@
 * X - Remove block
 * Arrows & Pg Up/Pg Dn: Adjust model in dimensions depending on mode
 
+
+## Credits
+* All programming and level design by Stephen Smith (@stephencsmith)
+* Alien models by Quaternius
+* Music by Emma Andersson, taken from https://opengameart.org/content/megasong

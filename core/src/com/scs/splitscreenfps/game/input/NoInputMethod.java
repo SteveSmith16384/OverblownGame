@@ -80,4 +80,9 @@ public class NoInputMethod implements IInputMethod {
 	public boolean isMenuSelectPressed() {
 		return false;
 	}
+
+	@Override
+	public boolean isUltimatePressed() {
+		return false;
+	}
 }

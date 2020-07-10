@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.badlogic.gdx.math.Vector3;
-
 public class MapData {
 
 	public String filename;

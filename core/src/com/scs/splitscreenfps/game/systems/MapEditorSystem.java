@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.systems;
 
-import java.util.HashMap;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Input.Keys;

@@ -3,7 +3,9 @@ package com.scs.splitscreenfps.game.entities;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
-import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent.Type;
+import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent.SecondaryAbilityType;
+import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
+import com.scs.splitscreenfps.game.components.UltimateAbilityComponent.UltimateType;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
@@ -38,19 +40,20 @@ public class AvatarFactory {
 		switch (character) {
 		case CHAR_PHARTA:
 			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(Type.JetPac, 6000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 6000));
+			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 10000));
 			break;
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_PUNCH;
-			avatar.addComponent(new SecondaryAbilityComponent(Type.PowerPunch, 3000, 1f));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 3000, 1f));
 			break;
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(Type.Jump, 3000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Jump, 3000));
 			break;
 		case CHAR_JUNKRAT:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(Type.StickyMine, 4000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.StickyMine, 4000));
 			break;
 		/*case CHAR_TRACY:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;

@@ -48,7 +48,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 				int pcent = (int)(ability.power * 100 / ability.max_power);
 				playerData.ability2text = "Power: " + pcent + "%";
 				if (ability.power >= ability.max_power) {
-					this.performBuildUpAbility(entity, player, ability);
+					this.performBuildUpAbility(player, ability);
 				}
 			} else {
 				//Settings.p("Shoot at " + System.currentTimeMillis());
@@ -70,20 +70,20 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 			}
 		} else { // Button released?
 			if (ability.buildUpActivated) {
-				this.performBuildUpAbility(entity, player, ability);
+				this.performBuildUpAbility(player, ability);
 			}
 
 		}
 	}
 
 	
-	private void performBuildUpAbility(AbstractEntity entity, AbstractPlayersAvatar player, SecondaryAbilityComponent ability) {
+	private void performBuildUpAbility(AbstractPlayersAvatar player, SecondaryAbilityComponent ability) {
 		ability.buildUpActivated = false;
 		ability.lastShotTime = System.currentTimeMillis();
 
 		switch (ability.type) {
 		case PowerPunch:
-			performBoost(entity, player, ability.power);
+			performBoost(player, ability.power);
 			break;
 		default:
 			//throw new RuntimeException("Unknown ability: " + ability.type);
@@ -92,8 +92,8 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		ability.power = 0;
 	}
 
-	private void performBoost(AbstractEntity entity, AbstractPlayersAvatar player, float power) {
-		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+	private void performBoost(AbstractPlayersAvatar player, float power) {
+		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		float pow = power*30;
 		Settings.p("Performing boost with pow=" + pow);
