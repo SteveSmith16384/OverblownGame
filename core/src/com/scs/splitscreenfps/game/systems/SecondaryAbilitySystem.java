@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -116,6 +117,8 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 
 	private void performJetPac(AbstractEntity entity, AbstractPlayersAvatar player) {
+		BillBoardFPS_Main.audio.play("sfx/fart.wav");
+
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.applyCentralImpulse(new Vector3(0, 40, 0));
 	}
