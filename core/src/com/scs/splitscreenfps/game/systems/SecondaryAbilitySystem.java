@@ -15,6 +15,8 @@ import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 
+import ssmith.lang.NumberFunctions;
+
 public class SecondaryAbilitySystem extends AbstractSystem {
 
 	private Game game;
@@ -118,7 +120,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 
 	private void performJetPac(AbstractEntity entity, AbstractPlayersAvatar player) {
-		BillBoardFPS_Main.audio.play("sfx/fart.wav");
+		BillBoardFPS_Main.audio.play("sfx/fart" + NumberFunctions.rnd(1,  4) + ".wav");
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();

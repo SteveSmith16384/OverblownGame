@@ -77,8 +77,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.body.setGravity(Vector3.Zero);
-		pc.body.clearForces();
-		//pc.body.seta
+		pc.body.clearForces(); // todo - doesn't work
 	}
 
 

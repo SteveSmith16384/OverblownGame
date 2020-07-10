@@ -66,6 +66,7 @@ import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
 import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
+import com.scs.splitscreenfps.game.systems.SpeechSystem;
 import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
@@ -155,7 +156,10 @@ public class Game implements IModule {
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
 			ecs.addEntity(players[i]);
-
+			
+			SpeechSystem speech = (SpeechSystem)this.ecs.getSystem(SpeechSystem.class);
+			speech.addFile(SpeechSystem.getFileForCharacter(gameSelectionData.character[i]));
+			
 			Camera cam = players[i].camera;
 			//cam.lookAt(7, 0.4f, 7); //makes camera slightly slanted?
 			cam.update();
@@ -215,6 +219,7 @@ public class Game implements IModule {
 	private void createECS() {
 		ecs = new BasicECS();
 		ecs.addSystem(new PlayerInputSystem(this));
+		ecs.addSystem(new SpeechSystem());
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
@@ -294,6 +299,7 @@ public class Game implements IModule {
 		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();		
+		this.ecs.processSystem(SpeechSystem.class);
 		this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
 		this.ecs.processSystem(UltimateAbilitySystem.class); // Must be before player movement system
 		this.ecs.getSystem(PlayerInputSystem.class).process();
@@ -356,7 +362,7 @@ public class Game implements IModule {
 			font_med.setColor(1, 1, 1, 1);
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 			//font_med.draw(batch2d, "Points: " + (int)(playerData.points), 10, (yOff*2));
-			//font_med.draw(batch2d, "View ID: " + this.currentViewId, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*4));
+			font_med.draw(batch2d, playerData.ultimateText, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*4));
 			font_med.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*3));
 			font_med.draw(batch2d, playerData.ability1text, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*2));
 			font_med.draw(batch2d, playerData.ability2text, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*1));
