@@ -108,6 +108,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 	private void performPowerJump(AbstractEntity entity, AbstractPlayersAvatar player) {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		pc.body.activate();
 		//pc.body.applyCentralImpulse(new Vector3(0, 30, 0));
 		Vector3 dir = new Vector3(player.camera.direction);
 		dir.y += .2f;
@@ -120,6 +121,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		BillBoardFPS_Main.audio.play("sfx/fart.wav");
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		pc.body.activate();
 		pc.body.applyCentralImpulse(new Vector3(0, 40, 0));
 	}
 

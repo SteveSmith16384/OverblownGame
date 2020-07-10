@@ -71,7 +71,7 @@ public class GraphicsEntityFactory {
 		hasDecal.decal.setScale(width_height / tr.getRegionWidth());
 		hasDecal.decal.setPosition(posData.position);
 		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = false;
+		hasDecal.dontLockYAxis = true;
 		//hasDecal.decal.transformationOffset = new Vector2(0, pos.y/2);
 		entity.addComponent(hasDecal);
 
