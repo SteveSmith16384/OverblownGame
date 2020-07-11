@@ -7,11 +7,14 @@ public class EventCollision extends AbstractEvent {
 
 	public AbstractEntity entity1;
 	public AbstractEntity entity2;
-
-	public EventCollision(AbstractEntity e1, AbstractEntity e2) {
+	public float force;
+	
+	public EventCollision(AbstractEntity e1, AbstractEntity e2, float _force) {
 		entity1 = e1;
 		entity2 = e2;
+		force = _force;
 	}
+	
 
 	@Override
 	public boolean isForEntity(AbstractEntity e) {

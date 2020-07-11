@@ -29,10 +29,11 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.WaterDistortionEffect;
-import com.crashinvaders.vfx.effects.ZoomEffect;
+import com.crashinvaders.vfx.effects.BloomEffect;
+import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -192,8 +193,8 @@ public class Game implements IModule {
 		//vfxManager.addEffect(vfxEffect);
 		//FilmGrainEffect vfxFilmGrain = new FilmGrainEffect();
 		//vfxManager.addEffect(vfxFilmGrain); // No use
-		//vfxManager.addEffect(new LensFlareEffect()); // Good
-		//vfxManager.addEffect(new BloomEffect());
+		vfxManager.addEffect(new LensFlareEffect()); // Good
+		vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f)));
 		//vfxManager.addEffect(new FxaaEffect());
 		//vfxManager.addEffect(new LevelsEffect());
 		//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f));
@@ -318,7 +319,6 @@ public class Game implements IModule {
 
 		this.currentLevel.update();
 
-		this.ecs.events.clear();
 		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();		
@@ -328,6 +328,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 
+		this.ecs.events.clear();
 		if (physics_enabled) {
 			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
 				// This must be run after the player has made inputs, but before the systems that process collisions!
@@ -554,7 +555,9 @@ public class Game implements IModule {
 			// Already dead
 			return;
 		}
-
+		
+		main.audio.play("sfx/hit1.wav");
+		
 		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 		playerHitData.health -= amt;//bullet.settings.damage;
 
@@ -671,8 +674,16 @@ public class Game implements IModule {
 				//Settings.p(ob1.userData + " collided with " + ob2.userData);
 				AbstractEntity e1 = (AbstractEntity)ob1.userData;
 				AbstractEntity e2 = (AbstractEntity)ob2.userData;
-
-				coll.processCollision(e1, e2);
+				
+				float force = 0;
+				try {
+					btRigidBody rb1 = (btRigidBody)ob1;
+					btRigidBody rb2 = (btRigidBody)ob2;
+					force = rb1.getLinearVelocity().len() - rb2.getLinearVelocity().len();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				coll.processCollision(e1, e2, Math.abs(force));
 			} catch (Exception ex) {
 				Settings.pe(ex.getMessage());
 			}

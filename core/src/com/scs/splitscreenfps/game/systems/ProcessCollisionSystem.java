@@ -21,11 +21,11 @@ public class ProcessCollisionSystem {
 	}
 
 
-	public void processCollision(AbstractEntity e1, AbstractEntity e2) {
+	public void processCollision(AbstractEntity e1, AbstractEntity e2, float force) {
 		checkExplosion(e1, e2);
 		checkExplosion(e2, e1);
 
-		game.ecs.events.add(new EventCollision(e1, e2));
+		game.ecs.events.add(new EventCollision(e1, e2, force));
 
 	}
 

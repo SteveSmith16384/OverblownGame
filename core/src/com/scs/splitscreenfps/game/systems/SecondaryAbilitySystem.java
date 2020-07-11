@@ -40,6 +40,10 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		if (ability.lastShotTime + interval > System.currentTimeMillis()) {
 			long cooldown_secs = ((ability.lastShotTime + interval) - System.currentTimeMillis()) / 1000;
 			playerData.ability2text = "Cooldown: " + (cooldown_secs+1);
+			
+			if (cooldown_secs <= 0) {
+				BillBoardFPS_Main.audio.play("sfx/teleport.mp3");
+			}
 			return;
 		}
 

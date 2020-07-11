@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -20,7 +21,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 
 	private Game game;
 	private Vector3 tmpVec = new Vector3();
-	
+
 	public PlayerMovementSystem(Game _game, BasicECS ecs) {
 		super(ecs, PlayerMovementData.class);
 
@@ -38,24 +39,29 @@ public class PlayerMovementSystem extends AbstractSystem {
 			return;
 		}
 
+		// Check they are on ground
+		Matrix4 mat = physics.body.getWorldTransform();
+		mat.getTranslation(tmpVec);
+		btCollisionObject obj = game.rayTestByDir(tmpVec, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
+		boolean on_floor = (obj != null);
+
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
 				physics.body.activate(); // Need this!
 				physics.body.applyCentralForce(movementData.offset);
 				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
+				if (on_floor) {
+					if (movementData.next_footstep_sound < System.currentTimeMillis()) {
+						BillBoardFPS_Main.audio.play("sfx/footstep.wav");
+						movementData.next_footstep_sound = System.currentTimeMillis() + 350;
+					}
+				}
 			}
 		}
 
 		if (movementData.jumpPressed) {
-			// Check they are on ground
-			Matrix4 mat = physics.body.getWorldTransform();
-			mat.getTranslation(tmpVec);
-			btCollisionObject obj = game.rayTestByDir(tmpVec, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
-			if (obj != null) {
+			if (on_floor) {
 				physics.body.applyCentralForce(JUMP_FORCE);
-				//Settings.p("Jump!");
-			} else {
-				//Settings.p("Not on floor!");
 			}
 			movementData.jumpPressed = false;
 		}
@@ -64,9 +70,9 @@ public class PlayerMovementSystem extends AbstractSystem {
 		AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
 		if (anim != null) {
 			if (movementData.offset.len2() > 0) {
-				anim.next_animation = anim.new AnimData(anim.walk_anim_name, true);
+				anim.next_animation = anim.new AnimData(anim.walk_anim_name, true); // todo - cache AnimData
 			} else {
-				anim.next_animation = anim.new AnimData(anim.idle_anim_name, true);;
+				anim.next_animation = anim.new AnimData(anim.idle_anim_name, true);
 			}
 		}
 

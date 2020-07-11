@@ -55,7 +55,7 @@ public class PhysicsSystem extends AbstractSystem {
 				if (player != null) {
 					if (player.health > 0) {
 						game.playerDamaged(e, player, 999, player.last_person_to_hit_them);
-						BillBoardFPS_Main.audio.play("sfx/qubodup-PowerDrain.ogg");
+						BillBoardFPS_Main.audio.play("sfx/deathscream1.wav");
 					}
 				}
 			}

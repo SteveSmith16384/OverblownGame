@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -40,14 +41,20 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			}
 			return;
 		} 
-		ability.power += Gdx.graphics.getDeltaTime();
 
+		if (ability.power < ability.max_power) {
+			ability.power += Gdx.graphics.getDeltaTime();
+			if (ability.power > ability.max_power) {
+				BillBoardFPS_Main.audio.play("sfx/Replenish.mp3");
+			}
+		}
+		
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 
 		if (Settings.DEBUG_ULTIMATES) {
 			ability.power = ability.max_power;
 		}
-		
+
 		if (ability.power < ability.max_power) {
 			int level = (int)((ability.power / ability.max_power) * 100);
 			playerData.ultimateText = "Ultimate: " + level + "%";
@@ -89,7 +96,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			throw new RuntimeException("Unknown ability: " + ability.type);
 		}
 	}
-	
+
 
 	private void continueRocketBarrage(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
 		if (ability.next_shot < System.currentTimeMillis()) {
@@ -100,26 +107,26 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
 			startPos.mulAdd(player.camera.direction, .5f);
-			
+
 			Vector3 dir = new Vector3(player.camera.direction);
 			float DIFF = 0.1f;
 			dir.x += NumberFunctions.rndFloat(-DIFF, DIFF);
 			dir.y += NumberFunctions.rndFloat(-DIFF, DIFF);
 			dir.z += NumberFunctions.rndFloat(-DIFF, DIFF);
 			dir.nor();
-			
+
 			AbstractEntity r = BulletEntityFactory.createRocket(game, player, startPos, dir);
 			game.ecs.addEntity(r);
-			
+
 			PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 			pc.body.setLinearFactor(Vector3.Zero);
 		}
 	}
-	
-	
+
+
 	private void abilityEnded(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
 		ability.in_progress = false;
-		
+
 		switch (ability.type) {
 		case RocketBarrage:
 			endRocketBarrage(player, ability);
@@ -136,5 +143,5 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		pc.body.setGravity(Game.GRAVITY);
 		pc.body.setLinearFactor(new Vector3(1, 1, 1));
 	}
-	
+
 }

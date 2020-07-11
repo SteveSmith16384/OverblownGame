@@ -1,12 +1,19 @@
 package com.scs.splitscreenfps.game.systems;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -24,8 +31,8 @@ public class PlayerInputSystem implements ISystem {
 
 	public PlayerInputSystem(Game _game) {
 		game = _game;
-		
-		
+
+
 	}
 
 
@@ -40,24 +47,17 @@ public class PlayerInputSystem implements ISystem {
 
 
 	private void process(AbstractPlayersAvatar player) {
-		// Check for collision events
-		/* todo - List<AbstractEvent> events = ecs.getEventsForEntity(EventCollision.class, this);
+		// Check for collision events to play thud
+		List<AbstractEvent> events = game.ecs.getEventsForEntity(EventCollision.class, player);
 		for (AbstractEvent evt : events) {
 			EventCollision coll = (EventCollision)evt;
-			if (coll.entity2 instanceof AbstractPlayersAvatar) {
-				AbstractPlayersAvatar player = (AbstractPlayersAvatar)coll.entity2;
-				if (this.last_player_to_touch != player) {
-					//Settings.p("Player " + )
-					this.last_player_to_touch = player;
-					this.time_to_change = System.currentTimeMillis() + CHANGE_DURATION;
-					Color col = Color.GRAY;//Settings.getColourForSide(last_player_to_touch.playerIdx);
-					this.changeTex(col);
 
-				}
+			if (coll.force > 3) {
+				BillBoardFPS_Main.audio.play("sfx/bump1.wav");
+				break;
 			}
-		}*/
+		}
 
-		
 		checkMovementInput(player);
 		player.cameraController.update();
 
@@ -75,7 +75,7 @@ public class PlayerInputSystem implements ISystem {
 
 	private void checkMovementInput(AbstractPlayersAvatar player) {
 		Camera camera = player.camera;
-		
+
 		if (Game.physics_enabled) {
 			PlayerMovementData movementData = (PlayerMovementData)player.getComponent(PlayerMovementData.class);
 
