@@ -1,10 +1,8 @@
 package com.scs.splitscreenfps.game.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
@@ -28,14 +26,7 @@ import ssmith.libgdx.ModelFunctions;
 // This also moves the camera
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
-
 	public static final float PLAYER_HEIGHT = 0.4f;
-	private static final float MOVE_SPEED = 15;//20;//25;//1.5f;
-	private static final float CAM_SPEED = 3f;
-
-	public PersonCameraController cameraController;
-	private Vector3 tmpVector = new Vector3();
-	private Vector2 tmpVec2 = new Vector2();
 
 	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
@@ -110,75 +101,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	}
 
 
-	public void process() { // todo - move this to PlayerInputSystem
-		checkMovementInput();
-		cameraController.update();
-
-		// Position camera
-		if (Game.physics_enabled) {
-			PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
-			camera.position.set(posData.position.x, posData.position.y + (PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
-
-			// Set rotation based on camera
-			tmpVec2.set(camera.direction.x, camera.direction.z);
-			posData.angle_y_degrees = -tmpVec2.angle();
-		}
-	}
-
-
-	private void checkMovementInput() {
-		if (Game.physics_enabled) {
-			PlayerMovementData movementData = (PlayerMovementData)this.getComponent(PlayerMovementData.class);
-
-			if (this.inputMethod.getForwards() > Settings.MIN_AXIS) {
-				//Settings.p("Fwd:" + this.inputMethod.isForwardsPressed());
-				tmpVector.set(camera.direction);
-				tmpVector.y = 0;
-				movementData.offset.add(tmpVector.nor().scl(this.inputMethod.getForwards() * MOVE_SPEED));
-			} else if (this.inputMethod.getBackwards() > Settings.MIN_AXIS) {
-				//Settings.p("Back:" + this.inputMethod.isBackwardsPressed());
-				tmpVector.set(camera.direction);
-				tmpVector.y = 0;
-				movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.getBackwards()));
-			}
-			if (this.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
-				tmpVector.set(camera.direction).crs(camera.up);
-				tmpVector.y = 0;
-				movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.getStrafeLeft()));
-			} else if (this.inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
-				tmpVector.set(camera.direction).crs(camera.up);
-				tmpVector.y = 0;
-				movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED * this.inputMethod.getStrafeRight()));
-			}
-
-			if (this.inputMethod.isJumpPressed()) {
-				movementData.jumpPressed = true;
-			}
-		} else {
-			if (this.inputMethod.getForwards() > Settings.MIN_AXIS) {
-				tmpVector.set(camera.direction);
-				tmpVector.scl(Gdx.graphics.getDeltaTime()*CAM_SPEED);
-				camera.position.add(tmpVector);
-				//camera.update();
-			} else if (this.inputMethod.getBackwards() > Settings.MIN_AXIS) {
-				tmpVector.set(camera.direction);
-				tmpVector.scl(-Gdx.graphics.getDeltaTime()*CAM_SPEED);
-				camera.position.add(tmpVector);
-				//camera.update();
-			}
-			if (this.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
-				tmpVector.set(camera.direction).crs(camera.up);
-				tmpVector.y = 0;
-				tmpVector.scl(-Gdx.graphics.getDeltaTime()*CAM_SPEED);
-				camera.position.add(tmpVector);
-			} else if (this.inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
-				tmpVector.set(camera.direction).crs(camera.up);
-				tmpVector.y = 0;
-				tmpVector.scl(Gdx.graphics.getDeltaTime()*CAM_SPEED);
-				camera.position.add(tmpVector);
-			}
-		}
-	}
 
 }
 

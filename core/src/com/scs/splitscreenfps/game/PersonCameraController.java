@@ -26,13 +26,6 @@ public class PersonCameraController {
 
 	public void update() {
 		if (this.input.isMouse()) {
-			/*if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-				Gdx.input.setCursorCatched(true);
-			}
-			if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-				Gdx.input.setCursorCatched(false);
-			}*/
-
 			if (Gdx.input.isCursorCatched()) {
 				float rx = Gdx.input.getDeltaX();
 				float ry = Gdx.input.getDeltaY();
