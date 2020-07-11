@@ -58,6 +58,9 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		if (ability.power < ability.max_power) {
 			int level = (int)((ability.power / ability.max_power) * 100);
 			playerData.ultimateText = "Ultimate: " + level + "%";
+			if (player.inputMethod.isUltimatePressed()) {
+				BillBoardFPS_Main.audio.play("sfx/type2.mp3");
+			}
 		} else {
 			playerData.ultimateText = "Ultimate Ready!";
 			if (player.inputMethod.isUltimatePressed()) {
