@@ -41,7 +41,7 @@ public class AvatarFactory {
 		case CHAR_PHARTA:
 			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 6000));
-			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 10000));
+			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 10));
 			break;
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_PUNCH;

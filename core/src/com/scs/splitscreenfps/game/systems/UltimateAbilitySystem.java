@@ -45,7 +45,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		if (ability.power < ability.max_power) {
 			ability.power += Gdx.graphics.getDeltaTime();
 			if (ability.power > ability.max_power) {
-				BillBoardFPS_Main.audio.play("sfx/Replenish.mp3");
+				BillBoardFPS_Main.audio.play("sfx/Replenish.wav");
 			}
 		}
 		
