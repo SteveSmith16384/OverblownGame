@@ -71,7 +71,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 
 	private void startRocketBarrage(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
 		ability.in_progress = true;
-		ability.end_time = System.currentTimeMillis() + 4000;
+		ability.end_time = System.currentTimeMillis() + 3000;
 
 		// Turn off gravity
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
@@ -93,7 +93,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 
 	private void continueRocketBarrage(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
 		if (ability.next_shot < System.currentTimeMillis()) {
-			ability.next_shot = System.currentTimeMillis() + 200;
+			ability.next_shot = System.currentTimeMillis() + 150;
 
 			// Fire rocket!
 			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);

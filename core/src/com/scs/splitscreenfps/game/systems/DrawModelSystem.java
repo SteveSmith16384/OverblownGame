@@ -61,8 +61,6 @@ public class DrawModelSystem extends AbstractSystem {
 		if (!shadows) {
 			this.modelBatch.begin(cam);
 
-			//this.renderEntity(skybox, modelBatch, false);
-
 			Iterator<AbstractEntity> it = entities.iterator();
 			while (it.hasNext()) {
 				AbstractEntity entity = it.next();

@@ -64,6 +64,8 @@ project(":core") {
 		compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 		compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
 		implementation 'com.google.code.gson:gson:2.8.6'
+		implementation 'com.crashinvaders.vfx:gdx-vfx-core:0.5.0'
+		implementation 'com.crashinvaders.vfx:gdx-vfx-effects:0.5.0'
     }
 }
 

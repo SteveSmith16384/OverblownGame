@@ -12,6 +12,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,8 +29,10 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
-import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
+import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.WaterDistortionEffect;
+import com.crashinvaders.vfx.effects.ZoomEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -77,7 +80,7 @@ import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
  *
  */
 public class Game implements IModule {
-	
+
 	public static final Vector3 GRAVITY = new Vector3(0, -10f, 0);
 
 	private BillBoardFPS_Main main;
@@ -114,6 +117,8 @@ public class Game implements IModule {
 	public btDiscreteDynamicsWorld dynamicsWorld;
 	public static boolean physics_enabled = true;
 	private long startPhysicsTime;
+
+	private VfxManager vfxManager;
 
 	// Temp vars
 	private Vector3 tmp_from = new Vector3();
@@ -157,10 +162,10 @@ public class Game implements IModule {
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
 			ecs.addEntity(players[i]);
-			
+
 			SpeechSystem speech = (SpeechSystem)this.ecs.getSystem(SpeechSystem.class);
 			speech.addFile(SpeechSystem.getFileForCharacter(gameSelectionData.character[i]));
-			
+
 			Camera cam = players[i].camera;
 			//cam.lookAt(7, 0.4f, 7); //makes camera slightly slanted?
 			cam.update();
@@ -181,6 +186,23 @@ public class Game implements IModule {
 			te = new TextEntity(ecs, "LINE 3", 500, 1000, new Color(0, 0, 1, 1), -1, 2);
 			ecs.addEntity(te);
 		}
+
+		vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
+		//GaussianBlurEffect vfxEffect = new GaussianBlurEffect();
+		//vfxManager.addEffect(vfxEffect);
+		//FilmGrainEffect vfxFilmGrain = new FilmGrainEffect();
+		//vfxManager.addEffect(vfxFilmGrain); // No use
+		//vfxManager.addEffect(new LensFlareEffect()); // Good
+		//vfxManager.addEffect(new BloomEffect());
+		//vfxManager.addEffect(new FxaaEffect());
+		//vfxManager.addEffect(new LevelsEffect());
+		//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f));
+		//vfxManager.addEffect(new NfaaEffect(true));
+		//vfxManager.addEffect(new RadialBlurEffect(3));
+		//vfxManager.addEffect(new RadialDistortionEffect());
+		//vfxManager.addEffect(new VignettingEffect(false)); // Puts in a window
+		//vfxManager.addEffect(new WaterDistortionEffect(2, 2));
+		//vfxManager.addEffect(new ZoomEffect()); // No effect?
 	}
 
 
@@ -262,7 +284,7 @@ public class Game implements IModule {
 			this.viewports[idx].camera.direction.z = 1;
 			this.viewports[idx].camera.update();
 		}
-		
+
 		ecs.addEntity(new SkyboxCube(this, "Skybox", "", 30, 30, 30));
 	}
 
@@ -349,10 +371,25 @@ public class Game implements IModule {
 
 			viewportData.frameBuffer.end();
 
+			// Clean up internal buffers, as we don't need any information from the last render.
+			vfxManager.cleanUpBuffers();
+			// Begin render to an off-screen buffer.
+			vfxManager.beginInputCapture();
+
 			batch2d.begin();
 			// Draw the 3D buffer
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+			batch2d.end();
+			
+			// End render to an off-screen buffer.
+	        vfxManager.endInputCapture();
+	        // Apply the effects chain to the captured frame.
+	        // In our case, only one effect (gaussian blur) will be applied.
+	        vfxManager.applyEffects();
+	        // Render result to the screen.
+	        vfxManager.renderToScreen();
 
+			batch2d.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
 			this.ecs.getSystem(DrawTextSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
@@ -404,16 +441,17 @@ public class Game implements IModule {
 	@Override
 	public void resize(int w, int h) {
 		this.loadAssetsForRescale();
+		vfxManager.resize(w, h);
 	}
 
-	
+
 	public Texture getTexture(String tex_filename) {
 		assetManager.load(tex_filename, Texture.class);
 		assetManager.finishLoading();
 		Texture tex = assetManager.get(tex_filename);
 		return tex;
 	}
-	
+
 
 	@Override
 	public void dispose() {
@@ -421,7 +459,7 @@ public class Game implements IModule {
 			ViewportData viewportData = this.viewports[currentViewId];
 			viewportData.dispose();
 		}
-		
+
 		if (font_small != null) {
 			font_small.dispose();
 		}
@@ -433,7 +471,7 @@ public class Game implements IModule {
 		}
 
 		batch2d.dispose();
-		
+
 		this.assetManager.dispose();
 	}
 
@@ -536,7 +574,7 @@ public class Game implements IModule {
 	public void playerDied(AbstractEntity player, PlayerData playerData, AbstractEntity shooter) {
 		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
 		anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
-		
+
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 
@@ -633,7 +671,7 @@ public class Game implements IModule {
 				//Settings.p(ob1.userData + " collided with " + ob2.userData);
 				AbstractEntity e1 = (AbstractEntity)ob1.userData;
 				AbstractEntity e2 = (AbstractEntity)ob2.userData;
-				
+
 				coll.processCollision(e1, e2);
 			} catch (Exception ex) {
 				Settings.pe(ex.getMessage());
