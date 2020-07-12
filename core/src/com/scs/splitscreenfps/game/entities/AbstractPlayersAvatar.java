@@ -19,7 +19,4 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 		playerIdx = _playerIdx;
 	}
 
-	
-	//public abstract void process();
-	
 }

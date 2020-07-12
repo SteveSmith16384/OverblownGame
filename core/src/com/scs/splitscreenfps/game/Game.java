@@ -193,8 +193,8 @@ public class Game implements IModule {
 		//vfxManager.addEffect(vfxEffect);
 		//FilmGrainEffect vfxFilmGrain = new FilmGrainEffect();
 		//vfxManager.addEffect(vfxFilmGrain); // No use
-		vfxManager.addEffect(new LensFlareEffect()); // Good
-		vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f)));
+		//vfxManager.addEffect(new LensFlareEffect()); // Good
+		//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f)));
 		//vfxManager.addEffect(new FxaaEffect());
 		//vfxManager.addEffect(new LevelsEffect());
 		//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f));
@@ -346,6 +346,8 @@ public class Game implements IModule {
 		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
 		this.ecs.getSystem(HarmOnContactSystem.class).process();
 
+		vfxManager.cleanUpBuffers();
+
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
 
@@ -372,9 +374,6 @@ public class Game implements IModule {
 
 			viewportData.frameBuffer.end();
 
-			// Clean up internal buffers, as we don't need any information from the last render.
-			vfxManager.cleanUpBuffers();
-			// Begin render to an off-screen buffer.
 			vfxManager.beginInputCapture();
 
 			batch2d.begin();
@@ -382,14 +381,6 @@ public class Game implements IModule {
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 			batch2d.end();
 			
-			// End render to an off-screen buffer.
-	        vfxManager.endInputCapture();
-	        // Apply the effects chain to the captured frame.
-	        // In our case, only one effect (gaussian blur) will be applied.
-	        vfxManager.applyEffects();
-	        // Render result to the screen.
-	        vfxManager.renderToScreen();
-
 			batch2d.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
 			this.ecs.getSystem(DrawTextSystem.class).process();
@@ -435,7 +426,13 @@ public class Game implements IModule {
 
 			batch2d.end();
 
+	        vfxManager.endInputCapture();
+	        vfxManager.applyEffects();
+
+	        vfxManager.renderToScreen();
+
 		}
+
 	}
 
 

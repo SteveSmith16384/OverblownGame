@@ -11,7 +11,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class AvatarFactory {
 
-	public static final int CHAR_PHARTA = 0;
+	public static final int CHAR_PHARTAH = 0;
 	public static final int CHAR_BOOMFIST = 1;
 	public static final int CHAR_WINSTON = 2;
 	public static final int CHAR_BASTION = 3;
@@ -21,7 +21,7 @@ public class AvatarFactory {
 
 	public static String getName(int id) {
 		switch (id) {
-		case CHAR_PHARTA: return "Phartah";
+		case CHAR_PHARTAH: return "Phartah";
 		case CHAR_BOOMFIST: return "Boomfist";
 		case CHAR_WINSTON: return "Winston";
 		case CHAR_BASTION: return "Bastion";
@@ -38,7 +38,7 @@ public class AvatarFactory {
 		WeaponSettingsComponent weapon;
 		int weapon_type = -1;
 		switch (character) {
-		case CHAR_PHARTA:
+		case CHAR_PHARTAH:
 			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 6000));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 10));

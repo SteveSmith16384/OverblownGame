@@ -89,7 +89,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 		switch (ability.type) {
 		case PowerPunch:
-			performBoost(player, ability.power);
+			performPowerPunch(player, ability.power);
 			break;
 		default:
 			//throw new RuntimeException("Unknown ability: " + ability.type);
@@ -98,7 +98,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		ability.power = 0;
 	}
 
-	private void performBoost(AbstractPlayersAvatar player, float power) {
+	private void performPowerPunch(AbstractPlayersAvatar player, float power) {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		float pow = power*30;
@@ -109,6 +109,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
 		game.ecs.addEntity(e);
+
+		PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
+		playerData.performing_power_punch = true;
 	}
 
 

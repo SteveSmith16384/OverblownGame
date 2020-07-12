@@ -40,7 +40,7 @@ public class SpeechSystem implements ISystem {
 
 	public static String getFileForCharacter(int ch) {
 		switch (ch) {
-		case AvatarFactory.CHAR_PHARTA:
+		case AvatarFactory.CHAR_PHARTAH:
 			return "speech/forgottentraining.wav";
 		default:
 			return "";

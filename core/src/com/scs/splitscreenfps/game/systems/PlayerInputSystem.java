@@ -6,12 +6,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -21,6 +24,7 @@ public class PlayerInputSystem implements ISystem {
 
 	private static final float MOVE_SPEED = 15;//20;//25;//1.5f;
 	private static final float CAM_SPEED = 3f;
+	private static final float LINEAR_VELOCITY_CUTOFF = 4f;
 
 	private Game game;
 
@@ -45,16 +49,59 @@ public class PlayerInputSystem implements ISystem {
 
 
 	private void process(AbstractPlayersAvatar player) {
+		PhysicsComponent ourPhysics = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
+		PlayerData ourPlayerData = (PlayerData)player.getComponent(PlayerData.class);
+
 		// Check for collision events to play thud
 		List<AbstractEvent> events = game.ecs.getEventsForEntity(EventCollision.class, player);
 		for (AbstractEvent evt : events) {
 			EventCollision coll = (EventCollision)evt;
 
-			if (coll.force > 3) {
+			if (coll.force >= LINEAR_VELOCITY_CUTOFF) {
 				BillBoardFPS_Main.audio.play("sfx/bump1.wav");
-				break;
+
+				// Check if we're boomfist or wrecking ball
+				AbstractEntity e2 = (AbstractEntity)coll.entity2;
+				if (e2 instanceof AbstractPlayersAvatar) { // Have we hit another player?
+					if (ourPlayerData.performing_power_punch) {
+						float force = ourPhysics.body.getLinearVelocity().len();
+						if (force > LINEAR_VELOCITY_CUTOFF) { // Did we hit them really hard, i.e. are we Boomfist?
+							Settings.p("Punched!");
+
+							// Calc force and direction
+							/*PositionComponent ourPosData = (PositionComponent)player.getComponent(PositionComponent.class);
+							PositionComponent theirPosData = (PositionComponent)e2.getComponent(PositionComponent.class);
+							Vector3 dir = new Vector3(ourPosData.position);
+							dir.sub(theirPosData.position);
+							dir.nor();
+							dir.scl(-20);*/
+							Vector3 dir = ourPhysics.body.getLinearVelocity();
+							dir.scl(1);
+
+							PhysicsComponent theirPhysics = (PhysicsComponent)e2.getComponent(PhysicsComponent.class);
+							theirPhysics.body.activate();
+							theirPhysics.body.applyCentralImpulse(dir);
+							theirPhysics.body.setDamping(0.2f, 0.2f);
+							break;
+						}
+					}
+				}
 			}
 		}
+
+		// Check still powerpunch/damped
+		float force = ourPhysics.body.getLinearVelocity().len();
+		if (force < LINEAR_VELOCITY_CUTOFF) {
+			ourPlayerData.performing_power_punch = false;
+			if (ourPlayerData.has_been_punched) {
+				Settings.p("Re-aqdding damping");
+				ourPlayerData.has_been_punched = false;
+				ourPhysics.body.setDamping(PlayersAvatar_Person.DAMPING, PlayersAvatar_Person.DAMPING);
+			}
+
+		}
+
+
 
 		checkMovementInput(player);
 		player.cameraController.update();

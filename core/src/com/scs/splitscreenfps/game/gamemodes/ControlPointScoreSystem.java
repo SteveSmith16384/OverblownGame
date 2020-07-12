@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
@@ -59,6 +60,7 @@ public class ControlPointScoreSystem implements ISystem {
 			if (time_to_change < System.currentTimeMillis()) {
 				this.current_owner = this.last_player_to_touch;
 				this.changeTex(Settings.getColourForSide(current_owner.playerIdx));
+				BillBoardFPS_Main.audio.play("controlpoint.mp3");
 			}
 		}
 

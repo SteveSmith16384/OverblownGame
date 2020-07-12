@@ -13,6 +13,8 @@ public class PlayerData {
 	public String ability1text = "";
 	public String ability2text = "";
 	public String ultimateText = "";
+	public boolean performing_power_punch;
+	public boolean has_been_punched;
 	
 	public PlayerData(int _playerIdx) {
 		playerIdx = _playerIdx;

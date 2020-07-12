@@ -27,6 +27,7 @@ import ssmith.libgdx.ModelFunctions;
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 	public static final float PLAYER_HEIGHT = 0.4f;
+	public static final float DAMPING = 0.9f;
 
 	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
@@ -46,8 +47,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody player_body = new btRigidBody(2f, motionState, capsuleShape, inertia);
 		player_body.userData = this;
-		//player_body.setDamping(0.8f, 0.8f);
-		player_body.setDamping(.9f, .9f);
+		player_body.setDamping(DAMPING, DAMPING);
 		player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		PhysicsComponent physics = new PhysicsComponent(player_body);
 		physics.removeIfFallen = false;
