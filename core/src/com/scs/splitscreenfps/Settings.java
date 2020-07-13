@@ -16,7 +16,7 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOOMFIST;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOWLING_BALL;
 	public static final boolean DEBUG_ULTIMATES = false;
 	public static final int NUM_AUTOSTART_CHARACTERS = 2;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;

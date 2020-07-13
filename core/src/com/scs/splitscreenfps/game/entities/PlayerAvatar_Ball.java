@@ -1,14 +1,17 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
+import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
-import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
 import com.scs.splitscreenfps.game.ViewportData;
@@ -23,13 +26,12 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 import ssmith.libgdx.ModelFunctions;
 
-// This also moves the camera
-public class PlayersAvatar_Person extends AbstractPlayersAvatar {
+public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 
 	public static final float PLAYER_HEIGHT = 0.4f;
 	public static final float DAMPING = 0.9f;
 
-	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
+	public PlayerAvatar_Ball(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		inputMethod = _inputMethod;
@@ -37,18 +39,28 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		PlayerMovementData md = new PlayerMovementData();
 		this.addComponent(md);
 
+		float diam = .8f;
 		// Model stuff
-		this.addAlienModel(playerIdx);
+		Texture tex = game.getTexture("textures/set3_example_1.png");
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		ModelInstance instance = new ModelInstance(sphere_model);
+		HasModelComponent hasModel = new HasModelComponent(instance, 0, 0, 1f, true);
+		hasModel.dontDrawInViewId = playerIdx;
+		this.addComponent(hasModel);
 
-		btCapsuleShape capsuleShape = new btCapsuleShape(0.2f, PLAYER_HEIGHT);
+
+		btSphereShape capsuleShape = new btSphereShape(diam/2);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
 
 		btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody player_body = new btRigidBody(2f, motionState, capsuleShape, inertia);
 		player_body.userData = this;
-		player_body.setDamping(DAMPING, DAMPING);
-		player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
+		player_body.setDamping(.3f, .3f);
+		player_body.setRestitution(.8f);
+		//player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		PhysicsComponent physics = new PhysicsComponent(player_body);
 		physics.removeIfFallen = false;
 		physics.physicsControlsRotation = false;
@@ -92,4 +104,3 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 
 }
-

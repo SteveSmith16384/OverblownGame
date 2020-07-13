@@ -76,11 +76,9 @@ public class EntityFactory {
 		AbstractEntity ball = new AbstractEntity(game.ecs, "Ball");
 
 		Texture tex = game.getTexture(tex_filename);
-
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
-
 		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);

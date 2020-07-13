@@ -576,8 +576,10 @@ public class Game implements IModule {
 
 	public void playerDied(AbstractEntity player, PlayerData playerData, AbstractEntity shooter) {
 		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
+		if (anim != null) {
 		anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
-
+		}
+		
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 

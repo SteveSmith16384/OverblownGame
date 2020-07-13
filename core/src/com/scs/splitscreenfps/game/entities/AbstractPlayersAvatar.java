@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
@@ -16,10 +16,12 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 	public IInputMethod inputMethod;
 	public int playerIdx;
 	public PersonCameraController cameraController;
-
-	public AbstractPlayersAvatar(BasicECS _ecs, int _playerIdx, String _name) {
-		super(_ecs, _name);
+	protected Game game;
+	
+	public AbstractPlayersAvatar(Game _game, int _playerIdx, String _name) {
+		super(_game.ecs, _name);
 		
+		game = _game;
 		playerIdx = _playerIdx;
 	}
 

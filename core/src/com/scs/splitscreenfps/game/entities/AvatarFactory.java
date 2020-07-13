@@ -16,6 +16,7 @@ public class AvatarFactory {
 	public static final int CHAR_WINSTON = 2;
 	public static final int CHAR_BASTION = 3;
 	public static final int CHAR_JUNKRAT = 4;
+	public static final int CHAR_BOWLING_BALL = 5;
 
 	public static final int MAX_CHARS = 2;
 
@@ -26,6 +27,7 @@ public class AvatarFactory {
 		case CHAR_WINSTON: return "Winston";
 		case CHAR_BASTION: return "Bastion";
 		case CHAR_JUNKRAT: return "Junkrat";
+		case CHAR_BOWLING_BALL: return "Bowling Ball";
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}
@@ -33,8 +35,13 @@ public class AvatarFactory {
 
 
 	public static AbstractPlayersAvatar createAvatar(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int character) {
-		AbstractPlayersAvatar avatar = new PlayersAvatar_Person(_game, playerIdx, _viewportData, _inputMethod);
-
+		AbstractPlayersAvatar avatar = null;
+		if (character == CHAR_BOWLING_BALL) {
+			avatar = new PlayerAvatar_Ball(_game, playerIdx, _viewportData, _inputMethod);
+		} else {
+			avatar = new PlayersAvatar_Person(_game, playerIdx, _viewportData, _inputMethod);
+		}
+		
 		WeaponSettingsComponent weapon;
 		int weapon_type = -1;
 		switch (character) {
@@ -60,6 +67,9 @@ public class AvatarFactory {
 			break;*/
 		case CHAR_BASTION:
 			weapon_type = WeaponSettingsComponent.WEAPON_CANNON;
+			break;
+		case CHAR_BOWLING_BALL:
+			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
 			break;
 		default:
 			throw new RuntimeException("Unhandled character: " + character);
