@@ -32,7 +32,7 @@ public class ControlPointScoreSystem implements ISystem {
 	private long time_to_change;
 	private float[] time_on_point;
 	private TextEntity text;
-	
+
 	public ControlPointScoreSystem(Game _game) {
 		game = _game;
 
@@ -42,10 +42,18 @@ public class ControlPointScoreSystem implements ISystem {
 
 	@Override
 	public void process() {
+		if (game.game_stage > 0) {
+			return;
+		}
+
 		if (text == null) {
 			text = new TextEntity(game.ecs, "Point Unclaimed", Gdx.graphics.getBackBufferHeight()/2, -1, Color.WHITE, 0, 2);
 			game.ecs.addEntity(text);
+		/*} else if (text.isMarkedForRemoval()) {
+			text = null;
+			return;*/
 		}
+
 		if (controlpoint == null) {
 			// Find the control point entity - 
 			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
@@ -58,7 +66,7 @@ public class ControlPointScoreSystem implements ISystem {
 			}
 
 			if (this.controlpoint == null) {
-				// We won't find it straight away, or until the entities are loaded
+				// We won't find it straight away, at least until the entities are loaded
 				return;
 			}
 		}
@@ -72,9 +80,15 @@ public class ControlPointScoreSystem implements ISystem {
 		}
 
 		if (current_owner != null) {
-			this.time_on_point[current_owner.playerIdx] += Gdx.graphics.getDeltaTime();
-			if (this.time_on_point[current_owner.playerIdx] >= WINNING_TIME) {
-				game.playerHasWon(current_owner);
+			if (time_to_change < System.currentTimeMillis()) {
+				this.time_on_point[current_owner.playerIdx] += Gdx.graphics.getDeltaTime();
+				if (this.time_on_point[current_owner.playerIdx] >= WINNING_TIME) {
+					//text.remove();
+					DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
+					dtd.text = "Player " + current_owner + " has won!";
+					game.playerHasWon(current_owner);
+					return;
+				}
 			}
 		}
 
@@ -85,7 +99,6 @@ public class ControlPointScoreSystem implements ISystem {
 			if (coll.entity2 instanceof AbstractPlayersAvatar) {
 				AbstractPlayersAvatar player = (AbstractPlayersAvatar)coll.entity2;
 				if (this.last_player_to_touch != player) {
-					//Settings.p("Player " + )
 					this.last_player_to_touch = player;
 					this.time_to_change = System.currentTimeMillis() + CHANGE_DURATION;
 					Color col = Color.GRAY;//Settings.getColourForSide(last_player_to_touch.playerIdx);
@@ -94,7 +107,7 @@ public class ControlPointScoreSystem implements ISystem {
 				}
 			}
 		}
-		
+
 		// Update HUD
 		if (current_owner != null && current_owner.playerIdx >= 0) {
 			DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);

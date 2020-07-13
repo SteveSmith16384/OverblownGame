@@ -91,7 +91,7 @@ public class PlayerProcessSystem implements ISystem {
 			if (ourPlayerData.has_been_punched) {
 				//Settings.p("Re-adding damping");
 				ourPlayerData.has_been_punched = false;
-				ourPhysics.body.setDamping(PlayersAvatar_Person.DAMPING, PlayersAvatar_Person.DAMPING);
+				ourPhysics.body.setDamping(PlayersAvatar_Person.DAMPING, PlayersAvatar_Person.DAMPING); // todo - not right for Bowling Ball
 			}
 
 		}

@@ -93,7 +93,7 @@ public class Game implements IModule {
 	public BasicECS ecs;
 	public AbstractLevel currentLevel;
 
-	private int game_stage;
+	public int game_stage;
 	private long restartTime;
 	private List<AbstractEntity> losers = new ArrayList<AbstractEntity>();
 	private List<String> log = new LinkedList<String>();
@@ -177,7 +177,7 @@ public class Game implements IModule {
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
 
-		this.appendToLog("Game about to start...");
+		//this.appendToLog("Game about to start...");
 
 		if (Settings.TEST_SCREEN_COORDS) {
 			TextEntity te = new TextEntity(ecs, "LINE 1", 300, 1000, new Color(0, 0, 1, 1), -1, 2);
@@ -519,7 +519,7 @@ public class Game implements IModule {
 
 
 	private void loadWinLoseText() {
-		for (int i=0 ; i<this.players.length ; i++) {
+		/*for (int i=0 ; i<this.players.length ; i++) {
 			if (this.losers.contains(this.players[i])) {
 				TextEntity te = new TextEntity(ecs, "YOU HAVE LOST!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 0, 1, 1), i, 2);
 				ecs.addEntity(te);
@@ -527,7 +527,7 @@ public class Game implements IModule {
 				TextEntity te = new TextEntity(ecs, "YOU HAVE WON!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 1, 0, 1), i, 1);
 				ecs.addEntity(te);
 			}
-		}
+		}*/
 		this.game_stage = 1;
 		this.restartTime = System.currentTimeMillis() + 3000;
 	}
@@ -570,7 +570,11 @@ public class Game implements IModule {
 		playerHitData.health -= amt;//bullet.settings.damage;
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(this, playerHitData.playerIdx);
-		redfilter.addComponent(new RemoveEntityAfterTimeComponent(amt/20));
+		float duration = amt/20;
+		if (duration > 4) {
+			duration = 4;
+		}
+		redfilter.addComponent(new RemoveEntityAfterTimeComponent(duration));
 		ecs.addEntity(redfilter);
 
 		playerHitData.last_person_to_hit_them = shooter;
