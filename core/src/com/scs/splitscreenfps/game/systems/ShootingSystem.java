@@ -83,15 +83,19 @@ public class ShootingSystem extends AbstractSystem {
 			default:
 				throw new RuntimeException("Unknown weapon type: " + weapon.weapon_type);
 			}
-			
+
 			if (weapon.kickback_force != 0) {
 				PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 				pc.body.activate();				
 				pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(-1 * weapon.kickback_force));
-
 			}
+
+			// Recoil
+			Vector3 tmp = new Vector3();
+			tmp.set(player.camera.direction).crs(player.camera.up).nor();
+			player.camera.rotate(tmp, 2);
 		}
-		
+
 		if (cc.ammo <= 0) {
 			//playerData.ability1text = "Reloading...";
 			//BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
