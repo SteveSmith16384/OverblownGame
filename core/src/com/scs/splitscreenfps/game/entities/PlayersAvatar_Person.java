@@ -1,14 +1,14 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
 import com.scs.splitscreenfps.game.ViewportData;
@@ -22,6 +22,7 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 import ssmith.libgdx.ModelFunctions;
+import ssmith.libgdx.ShapeHelper;
 
 // This also moves the camera
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
@@ -67,6 +68,34 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		addComponent(new CanShoot());
 
+		//addWeapon();
+
+	}
+
+
+	private void addWeapon() {
+		AbstractEntity weapon = new AbstractEntity(game.ecs, "Weapon");
+
+		Texture tex = game.getTexture("textures/blackborder/purple1.png");
+		ModelInstance instance = ShapeHelper.createCylinder(tex, 0, 0, 0, .1f, 2f);
+		
+		// Mess about with nodes;
+		/*Node parent = new Node();
+		Node child = instance.nodes.removeIndex(0);
+		instance.nodes.add(parent);
+		child.attachTo(parent);
+		child.localTransform.setTranslation(1, 0, 0);
+		child.translation.set(1, 0, 0);
+		child.localTransform.rotate(Vector3.Z, 90);
+		*/
+		HasModelComponent model = new HasModelComponent(instance, 1, true);
+		weapon.addComponent(model);
+		model.relative_to_camera = true;
+		model.cast_shadow = false;
+		
+		weapon.addComponent(new PositionComponent());
+		
+		game.ecs.addEntity(weapon);
 	}
 
 

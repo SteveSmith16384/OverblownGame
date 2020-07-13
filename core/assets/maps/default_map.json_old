@@ -4,13 +4,13 @@
     "1": "colours/white.png",
     "2": "colours/red.png",
     "3": "colours/brown.png",
-    "4": "textures/crate.png",
+    "4": "textures/blackborder/white.png",
     "5": "textures/crate1.png",
     "6": "textures/crate2.png",
-    "7": "textures/tones/grey0.png",
-    "8": "textures/tones/grey1.png",
-    "9": "textures/tones/grey2.png",
-    "10": "textures/tones/grey3.png"
+    "7": "textures/blackborder/grey1.png",
+    "8": "textures/blackborder/grey2.png",
+    "9": "textures/blackborder/grey3.png",
+    "10": "textures/blackborder/purple1.png"
   },
   "blocks": [
     {
@@ -18,7 +18,7 @@
       "type": "",
       "name": "Floor",
       "tags": "",
-      "texture_id": 1,
+      "texture_id": 4,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -43,9 +43,9 @@
       "type": "",
       "name": "Floor_new",
       "tags": "",
-      "texture_id": 1,
+      "texture_id": 4,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 3.75,
         "y": 1.75,
@@ -70,7 +70,7 @@
       "tags": "",
       "texture_id": 8,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 3.7250009,
         "y": 1.75,
@@ -93,9 +93,9 @@
       "type": "cube",
       "name": "New cube 63",
       "tags": "",
-      "texture_id": 1,
+      "texture_id": 4,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 5.25,
         "y": 4.25,
@@ -118,9 +118,9 @@
       "type": "cube",
       "name": "New cube 8",
       "tags": "",
-      "texture_id": 1,
+      "texture_id": 4,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 1.0,
         "y": 0.25,
@@ -143,9 +143,9 @@
       "type": "",
       "name": "Floor_new",
       "tags": "",
-      "texture_id": 1,
+      "texture_id": 4,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 3.25,
         "y": 1.0,
@@ -168,7 +168,7 @@
       "type": "cube",
       "name": "New cube 58",
       "tags": "",
-      "texture_id": 6,
+      "texture_id": 7,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -193,9 +193,9 @@
       "type": "cube",
       "name": "New cube 44",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 8,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 6.75,
         "y": 0.25,
@@ -293,9 +293,9 @@
       "type": "cube",
       "name": "New cube 50",
       "tags": "",
-      "texture_id": 1,
+      "texture_id": 7,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 12.25,
         "y": 0.5,
@@ -318,9 +318,9 @@
       "type": "cube",
       "name": "New cube 50_new",
       "tags": "",
-      "texture_id": 1,
+      "texture_id": 7,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 12.25,
         "y": 0.5,
@@ -343,7 +343,7 @@
       "type": "cube",
       "name": "Fence",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -368,7 +368,7 @@
       "type": "cube",
       "name": "Fence_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -393,7 +393,7 @@
       "type": "cube",
       "name": "Fence_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -418,7 +418,7 @@
       "type": "cube",
       "name": "Fence_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -443,7 +443,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -468,7 +468,7 @@
       "type": "cube",
       "name": "Fence_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -493,7 +493,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -518,7 +518,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -543,7 +543,7 @@
       "type": "cube",
       "name": "Fence_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -568,7 +568,7 @@
       "type": "cube",
       "name": "Fence_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -593,7 +593,7 @@
       "type": "cube",
       "name": "Fence_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -618,7 +618,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -643,7 +643,7 @@
       "type": "cylinder",
       "name": "New cylinder 92_new",
       "tags": "",
-      "texture_id": 2,
+      "texture_id": 4,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -668,7 +668,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -693,7 +693,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new_new",
       "tags": "",
-      "texture_id": 3,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -718,7 +718,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -743,7 +743,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -768,7 +768,7 @@
       "type": "cube",
       "name": "Fence_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -793,7 +793,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -818,7 +818,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -843,7 +843,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -868,7 +868,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -893,7 +893,7 @@
       "type": "cube",
       "name": "Fence_new_new_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
@@ -1055,6 +1055,31 @@
         "x": 15.75,
         "y": 0.75,
         "z": 17.5
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 43,
+      "type": "sphere",
+      "name": "New sphere 2_new",
+      "tags": "cratespawnpoint",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.5,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 5.75,
+        "y": 4.0,
+        "z": 9.0
       },
       "rotation": {
         "x": 0.0,

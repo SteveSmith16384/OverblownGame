@@ -188,28 +188,28 @@ public class EntityFactory {
 
 
 	public static AbstractEntity createCylinder(Game game, String tex_filename, float x, float y, float z, float diam, float length, float mass_pre) {
-		AbstractEntity pillar = new AbstractEntity(game.ecs, "Cylinder");
+		AbstractEntity cylinder = new AbstractEntity(game.ecs, "Cylinder");
 
 		Texture tex = game.getTexture(tex_filename);
 		ModelInstance instance = ShapeHelper.createCylinder(tex, x, y, z, diam, length);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, true);
-		pillar.addComponent(model);
+		cylinder.addComponent(model);
 
-		btCylinderShape boxShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
+		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
 		Vector3 local_inertia = new Vector3();
 		float mass = (float)(Math.PI * (diam/2) * (diam/2) + length) * mass_pre;
-		boxShape.calculateLocalInertia(1f, local_inertia);
-		btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);
-		groundObject.userData = pillar;
-		groundObject.setRestitution(.5f);
-		groundObject.setCollisionShape(boxShape);
-		groundObject.setWorldTransform(instance.transform);
-		pillar.addComponent(new PhysicsComponent(groundObject));
+		cylinderShape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody body = new btRigidBody(mass, null, cylinderShape, local_inertia);
+		body.userData = cylinder;
+		body.setRestitution(.5f);
+		body.setCollisionShape(cylinderShape);
+		body.setWorldTransform(instance.transform);
+		cylinder.addComponent(new PhysicsComponent(body));
 
-		pillar.addComponent(new PositionComponent());
+		cylinder.addComponent(new PositionComponent());
 
-		return pillar;
+		return cylinder;
 	}
 
 

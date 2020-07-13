@@ -32,7 +32,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.BloomEffect;
+import com.crashinvaders.vfx.effects.FxaaEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -121,9 +121,9 @@ public class Game implements IModule {
 	private VfxManager vfxManager;
 
 	// Temp vars
-	private Vector3 tmp_from = new Vector3();
-	private Vector3 tmp_to = new Vector3();
-	private Vector3 tmp_to2 = new Vector3();
+	private final Vector3 tmp_from = new Vector3();
+	private final Vector3 tmp_to = new Vector3();
+	private final Vector3 tmp_to2 = new Vector3();
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs, GameSelectionData _gameSelectionData) {
 		main = _main;
@@ -169,8 +169,6 @@ public class Game implements IModule {
 			Camera cam = players[i].camera;
 			//cam.lookAt(7, 0.4f, 7); //makes camera slightly slanted?
 			cam.update();
-			
-			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, viewports[i].viewPos.width, viewports[i].viewPos.height);
 
 		}	
 
@@ -190,21 +188,25 @@ public class Game implements IModule {
 			ecs.addEntity(te);
 		}
 
-		//GaussianBlurEffect vfxEffect = new GaussianBlurEffect();
-		//vfxManager.addEffect(vfxEffect);
-		//FilmGrainEffect vfxFilmGrain = new FilmGrainEffect();
-		//vfxManager.addEffect(vfxFilmGrain); // No use
-		//vfxManager.addEffect(new LensFlareEffect()); // Good
-		vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f)));
-		//vfxManager.addEffect(new FxaaEffect());
-		//vfxManager.addEffect(new LevelsEffect());
-		//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f));
-		//vfxManager.addEffect(new NfaaEffect(true)); // No difference?
-		//vfxManager.addEffect(new RadialBlurEffect(3));
-		//vfxManager.addEffect(new RadialDistortionEffect());
-		//vfxManager.addEffect(new VignettingEffect(false)); // Puts in a window
-		//vfxManager.addEffect(new WaterDistortionEffect(2, 2)); // No use?
-		//vfxManager.addEffect(new ZoomEffect()); // No effect?
+		if (Settings.POST_EFFECTS) {
+			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
+			//GaussianBlurEffect vfxEffect = new GaussianBlurEffect();
+			//vfxManager.addEffect(vfxEffect);
+			//FilmGrainEffect vfxFilmGrain = new FilmGrainEffect();
+			//vfxManager.addEffect(vfxFilmGrain); // No use
+			//vfxManager.addEffect(new LensFlareEffect()); // Good
+			//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f)));
+			vfxManager.addEffect(new FxaaEffect());
+			//vfxManager.addEffect(new LevelsEffect());
+			//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f));
+			//vfxManager.addEffect(new NfaaEffect(true)); // No difference?
+			//vfxManager.addEffect(new RadialBlurEffect(3));
+			//vfxManager.addEffect(new RadialDistortionEffect());
+			//vfxManager.addEffect(new VignettingEffect(false)); // Puts in a window
+			//vfxManager.addEffect(new WaterDistortionEffect(2, 2)); // No use?
+			//vfxManager.addEffect(new ZoomEffect()); // No effect?
+
+		}
 	}
 
 
@@ -347,7 +349,9 @@ public class Game implements IModule {
 		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
 		this.ecs.getSystem(HarmOnContactSystem.class).process();
 
-		vfxManager.cleanUpBuffers();
+		if (Settings.POST_EFFECTS) {
+			vfxManager.cleanUpBuffers();
+		}
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
@@ -375,8 +379,9 @@ public class Game implements IModule {
 
 			viewportData.frameBuffer.end();
 
-			vfxManager.beginInputCapture();
-
+			if (Settings.POST_EFFECTS) {
+				vfxManager.beginInputCapture();
+			}
 			batch2d.begin();
 			// Draw the 3D buffer
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
@@ -421,29 +426,32 @@ public class Game implements IModule {
 
 			if (Settings.SHOW_FPS) {
 				if (font_small != null) {
-					font_small.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font_small.getLineHeight()*2);
+					font_small.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-100, font_small.getLineHeight()*2);
 				}
 			}
 
 			batch2d.end();
-			
-	        vfxManager.endInputCapture();
 
+			if (Settings.POST_EFFECTS) {
+				vfxManager.endInputCapture();
+			}
 
 		}
 
-        vfxManager.applyEffects();
-
-
-        vfxManager.renderToScreen();
+		if (Settings.POST_EFFECTS) {
+			vfxManager.applyEffects();
+			vfxManager.renderToScreen();
+		}
 	}
 
 
 	@Override
 	public void resize(int w, int h) {
 		this.loadAssetsForRescale();
+		if (Settings.POST_EFFECTS) {
 		vfxManager.resize(w, h);
-	}
+		}
+		}
 
 
 	public Texture getTexture(String tex_filename) {
@@ -555,9 +563,9 @@ public class Game implements IModule {
 			// Already dead
 			return;
 		}
-		
+
 		main.audio.play("sfx/hit1.wav");
-		
+
 		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 		playerHitData.health -= amt;//bullet.settings.damage;
 
@@ -577,9 +585,9 @@ public class Game implements IModule {
 	public void playerDied(AbstractEntity player, PlayerData playerData, AbstractEntity shooter) {
 		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
 		if (anim != null) {
-		anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
+			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
 		}
-		
+
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 
@@ -676,7 +684,7 @@ public class Game implements IModule {
 				//Settings.p(ob1.userData + " collided with " + ob2.userData);
 				AbstractEntity e1 = (AbstractEntity)ob1.userData;
 				AbstractEntity e2 = (AbstractEntity)ob2.userData;
-				
+
 				float force = 0;
 				try {
 					btRigidBody rb1 = (btRigidBody)ob1;

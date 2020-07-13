@@ -86,7 +86,10 @@ public class MapEditorSystem extends AbstractSystem {
 				if (block != null) {
 					Settings.p(block.name + " selected");
 					game.appendToLog("Selected: " + block.name + " (" + block.id + ")");
-					game.appendToLog("Mass=" + block.mass);
+					game.appendToLog("Mass: " + block.mass);
+					if (block.tags != null && block.tags.length() > 0) {
+						game.appendToLog("Tags: " + block.tags);
+					}
 				} else {
 					game.appendToLog("Block not found");
 					selectedObject = null;
@@ -216,6 +219,9 @@ public class MapEditorSystem extends AbstractSystem {
 				case MASS:
 					this.changeMass(1);
 					break;
+				case TEXTURE:
+					this.toggleTiled();
+					break;
 				default:
 					game.appendToLog("Unknown mode: " + mode);
 				}
@@ -249,6 +255,9 @@ public class MapEditorSystem extends AbstractSystem {
 					break;
 				case MASS:
 					this.changeMass(-1);
+					break;
+				case TEXTURE:
+					this.toggleTiled();
 					break;
 				default:
 					game.appendToLog("Unknown mode: " + mode);
@@ -433,6 +442,16 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
+	private void toggleTiled() {
+		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+
+		block.tiled = !block.tiled;
+
+		this.selectedObject.remove();
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+	}
+
+	
 	private void changeMass(int off) {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		this.setBlockDataFromPhysicsData(this.selectedObject, block);
