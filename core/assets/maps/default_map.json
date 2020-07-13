@@ -7,9 +7,9 @@
     "4": "textures/crate.png",
     "5": "textures/crate1.png",
     "6": "textures/crate2.png",
-    "7": "textures/tones/grey0.png",
-    "8": "textures/tones/grey1.png",
-    "9": "textures/tones/grey2.png",
+    "7": "textures/blackborder/grey1.png",
+    "8": "textures/blackborder/grey2.png",
+    "9": "textures/blackborder/grey3.png",
     "10": "textures/tones/grey3.png"
   },
   "blocks": [

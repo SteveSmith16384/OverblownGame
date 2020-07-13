@@ -102,20 +102,20 @@ public class PreGameScreen implements IModule {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
 			GameSelectionData gameSelectionData = null;
-			if (Settings.TWO_AUTOSTART_CHARACTERS) {
+			if (Settings.NUM_AUTOSTART_CHARACTERS > 1) {
 				Array<Controller> allControllers = this.controllerManager.getAllControllers();
 				for (Controller c : allControllers) {
 					inputs.add(new ControllerInputMethod(c));
 				}
-				if (inputs.size() == 1) {
+				while (inputs.size() < Settings.NUM_AUTOSTART_CHARACTERS) {
 					inputs.add(new NoInputMethod());
 				}
-				gameSelectionData = new GameSelectionData(2);
-				gameSelectionData.character[1] = Settings.AUTOSTART_CHARACTER;
-			} else {
-				gameSelectionData = new GameSelectionData(1);
+				//gameSelectionData.character[1] = Settings.AUTOSTART_CHARACTER;
 			}
-			gameSelectionData.character[0] = Settings.AUTOSTART_CHARACTER;
+			gameSelectionData = new GameSelectionData(Settings.NUM_AUTOSTART_CHARACTERS);
+			for (int i=0 ; i<Settings.NUM_AUTOSTART_CHARACTERS ; i++) {
+				gameSelectionData.character[i] = Settings.AUTOSTART_CHARACTER;
+			}
 			main.next_module = new Game(main, inputs, gameSelectionData);
 			return;
 		}

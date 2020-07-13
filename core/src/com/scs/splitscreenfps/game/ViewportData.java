@@ -15,7 +15,7 @@ import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 public class ViewportData {
 
 	public PerspectiveCamera camera;
-	public Rectangle viewPos;
+	public Rectangle viewPos; // todo - rename
 	public FrameBuffer frameBuffer;
 	public DecalBatch decalBatch;
 

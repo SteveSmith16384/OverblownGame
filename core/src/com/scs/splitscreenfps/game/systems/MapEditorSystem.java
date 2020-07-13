@@ -427,6 +427,7 @@ public class MapEditorSystem extends AbstractSystem {
 		} else if (block.texture_id > max) {
 			block.texture_id = 0;
 		}
+		game.appendToLog("Texture " + block.texture_id + " selected");
 		this.selectedObject.remove();
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 	}

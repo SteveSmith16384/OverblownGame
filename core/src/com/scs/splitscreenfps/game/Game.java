@@ -52,7 +52,7 @@ import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.FactoryLevel;
+import com.scs.splitscreenfps.game.levels.MapEditorLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -157,8 +157,8 @@ public class Game implements IModule {
 		//currentLevel = new IliosLevel(this);
 		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
-		//currentLevel = new MapEditorLevel(this);
-		currentLevel = new FactoryLevel(this);
+		currentLevel = new MapEditorLevel(this);
+		//currentLevel = new FactoryLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
@@ -170,6 +170,9 @@ public class Game implements IModule {
 			Camera cam = players[i].camera;
 			//cam.lookAt(7, 0.4f, 7); //makes camera slightly slanted?
 			cam.update();
+			
+			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, viewports[i].viewPos.width, viewports[i].viewPos.height);
+
 		}	
 
 		loadLevel();
@@ -188,21 +191,20 @@ public class Game implements IModule {
 			ecs.addEntity(te);
 		}
 
-		vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
 		//GaussianBlurEffect vfxEffect = new GaussianBlurEffect();
 		//vfxManager.addEffect(vfxEffect);
 		//FilmGrainEffect vfxFilmGrain = new FilmGrainEffect();
 		//vfxManager.addEffect(vfxFilmGrain); // No use
 		//vfxManager.addEffect(new LensFlareEffect()); // Good
-		//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f)));
+		vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f)));
 		//vfxManager.addEffect(new FxaaEffect());
 		//vfxManager.addEffect(new LevelsEffect());
 		//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f));
-		//vfxManager.addEffect(new NfaaEffect(true));
+		//vfxManager.addEffect(new NfaaEffect(true)); // No difference?
 		//vfxManager.addEffect(new RadialBlurEffect(3));
 		//vfxManager.addEffect(new RadialDistortionEffect());
 		//vfxManager.addEffect(new VignettingEffect(false)); // Puts in a window
-		//vfxManager.addEffect(new WaterDistortionEffect(2, 2));
+		//vfxManager.addEffect(new WaterDistortionEffect(2, 2)); // No use?
 		//vfxManager.addEffect(new ZoomEffect()); // No effect?
 	}
 
@@ -380,7 +382,7 @@ public class Game implements IModule {
 			// Draw the 3D buffer
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 			batch2d.end();
-			
+
 			batch2d.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
 			this.ecs.getSystem(DrawTextSystem.class).process();
@@ -425,14 +427,16 @@ public class Game implements IModule {
 			}
 
 			batch2d.end();
-
+			
 	        vfxManager.endInputCapture();
-	        vfxManager.applyEffects();
 
-	        vfxManager.renderToScreen();
 
 		}
 
+        vfxManager.applyEffects();
+
+
+        vfxManager.renderToScreen();
 	}
 
 
