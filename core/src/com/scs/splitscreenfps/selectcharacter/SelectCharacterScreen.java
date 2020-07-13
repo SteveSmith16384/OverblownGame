@@ -40,7 +40,7 @@ public class SelectCharacterScreen implements IModule {
 
 	// Gfx pos data
 	private int spacing_x;
-	private Sprite arrow;
+	private Sprite[] arrows;
 
 	public SelectCharacterScreen(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		super();
@@ -83,8 +83,12 @@ public class SelectCharacterScreen implements IModule {
 		font_large = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-		Texture tex = getTexture("blue_arrow_down.png");
-		arrow = new Sprite(tex);
+		Texture tex = getTexture("arrow_down_white.png");
+		arrows = new Sprite[this.inputs.size()];
+		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
+			arrows[playerIdx] = new Sprite(tex);
+			arrows[playerIdx].setColor(Settings.getColourForSide(playerIdx));
+		}
 	}
 
 
@@ -138,9 +142,9 @@ public class SelectCharacterScreen implements IModule {
 			y_pos = y_pos + (30*playerIdx);
 			int x_pos = spacing_x * (this.gameSelectionData.character[playerIdx]+1);
 
-			arrow.setColor(Settings.getColourForSide(playerIdx));
-			arrow.setBounds(x_pos,  y_pos , 30, 30);
-			arrow.draw(batch2d);
+			//arrow.setColor(Settings.getColourForSide(playerIdx));
+			arrows[playerIdx].setBounds(x_pos,  y_pos , 30, 30);
+			arrows[playerIdx].draw(batch2d);
 		}
 
 		// Draw log
@@ -185,11 +189,11 @@ public class SelectCharacterScreen implements IModule {
 				if (input.isMenuLeftPressed()) {
 					this.gameSelectionData.character[playerIdx]--;
 					if (this.gameSelectionData.character[playerIdx] < 0) {
-						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS;
+						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS-1;
 					}
 				} else if (input.isMenuRightPressed()) {
 					this.gameSelectionData.character[playerIdx]++;
-					if (this.gameSelectionData.character[playerIdx] > AvatarFactory.MAX_CHARS) {
+					if (this.gameSelectionData.character[playerIdx] >= AvatarFactory.MAX_CHARS) {
 						this.gameSelectionData.character[playerIdx] = 0;
 					}
 				} 
@@ -202,6 +206,7 @@ public class SelectCharacterScreen implements IModule {
 		return all_selected;
 	}
 
+	
 	private void startGame() {
 		// Check all players have selected a character
 		main.next_module = new Game(main, inputs, gameSelectionData);
