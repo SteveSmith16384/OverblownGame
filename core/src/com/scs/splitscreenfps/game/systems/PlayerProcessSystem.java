@@ -20,7 +20,7 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 
-public class PlayerInputSystem implements ISystem {
+public class PlayerProcessSystem implements ISystem {
 
 	private static final float MOVE_SPEED = 15;//20;//25;//1.5f;
 	private static final float CAM_SPEED = 3f;
@@ -31,7 +31,7 @@ public class PlayerInputSystem implements ISystem {
 	private Vector3 tmpVector = new Vector3();
 	private Vector2 tmpVec2 = new Vector2();
 
-	public PlayerInputSystem(Game _game) {
+	public PlayerProcessSystem(Game _game) {
 		game = _game;
 
 
@@ -61,27 +61,22 @@ public class PlayerInputSystem implements ISystem {
 				BillBoardFPS_Main.audio.play("sfx/bump1.wav");
 
 				// Check if we're boomfist or wrecking ball
-				AbstractEntity e2 = (AbstractEntity)coll.entity2;
-				if (e2 instanceof AbstractPlayersAvatar) { // Have we hit another player?
+				AbstractEntity entityHit = (AbstractEntity)coll.entity2;
+				if (entityHit instanceof AbstractPlayersAvatar) { // Have we hit another player?
 					if (ourPlayerData.performing_power_punch) {
 						float force = ourPhysics.body.getLinearVelocity().len();
 						if (force > LINEAR_VELOCITY_CUTOFF) { // Did we hit them really hard, i.e. are we Boomfist?
 							Settings.p("Punched!");
 
-							// Calc force and direction
-							/*PositionComponent ourPosData = (PositionComponent)player.getComponent(PositionComponent.class);
-							PositionComponent theirPosData = (PositionComponent)e2.getComponent(PositionComponent.class);
-							Vector3 dir = new Vector3(ourPosData.position);
-							dir.sub(theirPosData.position);
-							dir.nor();
-							dir.scl(-20);*/
 							Vector3 dir = ourPhysics.body.getLinearVelocity();
 							dir.scl(1);
-
-							PhysicsComponent theirPhysics = (PhysicsComponent)e2.getComponent(PhysicsComponent.class);
+							PhysicsComponent theirPhysics = (PhysicsComponent)entityHit.getComponent(PhysicsComponent.class);
 							theirPhysics.body.activate();
 							theirPhysics.body.applyCentralImpulse(dir);
 							theirPhysics.body.setDamping(0.2f, 0.2f);
+							
+							PlayerData theirPlayerData = (PlayerData)entityHit.getComponent(PlayerData.class);
+							game.playerDamaged(entityHit, theirPlayerData, 20, player);
 							break;
 						}
 					}

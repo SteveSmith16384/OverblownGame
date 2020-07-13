@@ -70,17 +70,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	}
 
 
-	private void setAvatarColour(AbstractEntity e, int idx) {
-		// Reset player colours
-		HasModelComponent hasModel = (HasModelComponent)e.getComponent(HasModelComponent.class);
-		ModelInstance instance = hasModel.model;
-		for (int i=0 ; i<instance.materials.size ; i++) {
-			instance.materials.get(i).set(ColorAttribute.createDiffuse(Settings.getColourForSide(idx)));
-			instance.materials.get(i).set(ColorAttribute.createAmbient(Settings.getColourForSide(idx)));
-		}
-	}
-
-
 	private ModelInstance addAlienModel(int playerIdx) {
 		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false, null, 1f);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);

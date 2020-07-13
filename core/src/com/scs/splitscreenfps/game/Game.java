@@ -33,7 +33,6 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.BloomEffect;
-import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -52,7 +51,7 @@ import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.MapEditorLevel;
+import com.scs.splitscreenfps.game.levels.FactoryLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -64,8 +63,8 @@ import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.HarmOnContactSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
-import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
+import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
@@ -157,8 +156,8 @@ public class Game implements IModule {
 		//currentLevel = new IliosLevel(this);
 		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
-		currentLevel = new MapEditorLevel(this);
-		//currentLevel = new FactoryLevel(this);
+		//currentLevel = new MapEditorLevel(this);
+		currentLevel = new FactoryLevel(this);
 
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
@@ -244,7 +243,7 @@ public class Game implements IModule {
 
 	private void createECS() {
 		ecs = new BasicECS();
-		ecs.addSystem(new PlayerInputSystem(this));
+		ecs.addSystem(new PlayerProcessSystem(this));
 		ecs.addSystem(new SpeechSystem());
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
@@ -327,7 +326,7 @@ public class Game implements IModule {
 		this.ecs.processSystem(SpeechSystem.class);
 		this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
 		this.ecs.processSystem(UltimateAbilitySystem.class); // Must be before player movement system
-		this.ecs.getSystem(PlayerInputSystem.class).process();
+		this.ecs.getSystem(PlayerProcessSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 
 		this.ecs.events.clear();
