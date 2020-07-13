@@ -14,8 +14,10 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.DrawTextData;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.TextEntity;
 
 public class ControlPointScoreSystem implements ISystem {
 
@@ -28,17 +30,22 @@ public class ControlPointScoreSystem implements ISystem {
 	private AbstractPlayersAvatar current_owner = null;
 	private AbstractPlayersAvatar last_player_to_touch = null;
 	private long time_to_change;
-	private long[] time_on_point;
-
+	private float[] time_on_point;
+	private TextEntity text;
+	
 	public ControlPointScoreSystem(Game _game) {
 		game = _game;
 
-		time_on_point = new long[game.players.length];
+		time_on_point = new float[game.players.length];
 	}
 
 
 	@Override
 	public void process() {
+		if (text == null) {
+			text = new TextEntity(game.ecs, "Point Unclaimed", Gdx.graphics.getBackBufferHeight()/2, -1, Color.WHITE, 0, 2);
+			game.ecs.addEntity(text);
+		}
 		if (controlpoint == null) {
 			// Find the control point entity - 
 			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
@@ -60,7 +67,7 @@ public class ControlPointScoreSystem implements ISystem {
 			if (time_to_change < System.currentTimeMillis()) {
 				this.current_owner = this.last_player_to_touch;
 				this.changeTex(Settings.getColourForSide(current_owner.playerIdx));
-				BillBoardFPS_Main.audio.play("controlpoint.mp3");
+				BillBoardFPS_Main.audio.play("sfx/controlpoint.mp3");
 			}
 		}
 
@@ -89,8 +96,10 @@ public class ControlPointScoreSystem implements ISystem {
 		}
 		
 		// Update HUD
-		
-
+		if (current_owner != null && current_owner.playerIdx >= 0) {
+			DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
+			dtd.text = "Time: " + (int)(this.time_on_point[current_owner.playerIdx]);
+		}
 	}
 
 
@@ -103,6 +112,8 @@ public class ControlPointScoreSystem implements ISystem {
 			instance.materials.get(i).set(ColorAttribute.createAmbient(col));
 		}
 
+		DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
+		dtd.colour = col;
 	}
 
 }

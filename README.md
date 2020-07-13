@@ -9,6 +9,8 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 
 ### Mouse/keyboard
 * W, A, S, D - Forwards, backwards, strafe left, strafe right
+* LMB - Shoot
+* RMB - Secondary ability
 * Space - Jump
 * U - Ultimate
 
@@ -16,6 +18,7 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 ### Tested with PS4 controllers
 * R1 - Shoot
 * L1 - Secondary Ability
+* X - Jump
 * Triangle - Ultimate
 
 

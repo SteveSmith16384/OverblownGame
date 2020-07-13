@@ -570,7 +570,7 @@ public class Game implements IModule {
 		playerHitData.health -= amt;//bullet.settings.damage;
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(this, playerHitData.playerIdx);
-		redfilter.addComponent(new RemoveEntityAfterTimeComponent(1));
+		redfilter.addComponent(new RemoveEntityAfterTimeComponent(amt/20));
 		ecs.addEntity(redfilter);
 
 		playerHitData.last_person_to_hit_them = shooter;

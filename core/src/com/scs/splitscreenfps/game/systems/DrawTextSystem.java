@@ -30,10 +30,11 @@ public class DrawTextSystem extends AbstractSystem {
 			return;
 		}
 
-		dtd.timeRemaining -= Gdx.graphics.getDeltaTime();
-		if (dtd.timeRemaining <= 0) {
+		/*
+		dtd.timeRemaining_secs -= Gdx.graphics.getDeltaTime();
+		if (dtd.remove_after_time && dtd.timeRemaining_secs <= 0) {
 			entity.remove();
-		} else {
+		} else {*/
 			BitmapFont font = null;
 			switch (dtd.size) {
 			case 1:
@@ -48,7 +49,7 @@ public class DrawTextSystem extends AbstractSystem {
 			default:
 				throw new RuntimeException("Unknown font size: " + dtd.size);
 			}
-			if (dtd.centre_x && dtd.x < 0) {
+			if (dtd.centre_x && dtd.x < 0) { // todo - cache this
 				GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
 				layout.setText(font, dtd.text);
 				float len = layout.width;// contains the width of the current set text
@@ -57,7 +58,7 @@ public class DrawTextSystem extends AbstractSystem {
 
 			font.setColor(dtd.colour);
 			font.draw(batch2d, dtd.text, dtd.x, dtd.y);
-		}
+		//}
 
 	}
 

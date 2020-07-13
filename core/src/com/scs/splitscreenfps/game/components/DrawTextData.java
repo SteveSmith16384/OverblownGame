@@ -6,11 +6,12 @@ public class DrawTextData {
 
 	public float x, y;
 	public String text;
-	public float timeRemaining;
+	//public float timeRemaining_secs;
 	public boolean centre_x;
 	public Color colour;
 	public int drawOnViewId = -1;
 	public int size; // 1, 2, 3 as in H1, H2 and H3
+	//public boolean remove_after_time;
 	
 	public DrawTextData(int _size) {
 		size = _size;
