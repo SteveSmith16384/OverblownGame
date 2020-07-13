@@ -1,4 +1,4 @@
-MIT Licence for []
+MIT Licence for OverblownGame
 
 Copyright 2020 Stephen Carlyle-Smith
 

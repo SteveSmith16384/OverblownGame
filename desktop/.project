@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>GangBeastsFPS-desktop</name>
-	<comment>Project GangBeastsFPS-desktop created by Buildship.</comment>
+	<name>OverblownGame-desktop</name>
+	<comment>Project OverblownGame-desktop created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -30,7 +30,7 @@
 	<variableList>
 		<variable>
 			<name>copy_PARENT</name>
-			<value>$%7BPARENT-2-PROJECT_LOC%7D/GangBeastsFPS</value>
+			<value>$%7BPARENT-2-PROJECT_LOC%7D/OverblownGame</value>
 		</variable>
 	</variableList>
 </projectDescription>
