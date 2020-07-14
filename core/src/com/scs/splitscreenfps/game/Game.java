@@ -206,6 +206,8 @@ public class Game implements IModule {
 			//vfxManager.addEffect(new ZoomEffect()); // No effect?
 
 		}
+		
+		BillBoardFPS_Main.audio.stopMusic();
 	}
 
 

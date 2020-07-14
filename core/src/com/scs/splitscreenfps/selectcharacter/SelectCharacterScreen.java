@@ -58,11 +58,11 @@ public class SelectCharacterScreen implements IModule {
 
 		loadAssetsForResize();
 
-		this.appendToLog("Welcome to " + Settings.TITLE);
+		this.appendToLog("CHOOSE A HERO!");
 
 		spacing_x = Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
 
-		//BillBoardFPS_Main.audio.startMusic("sfx/battleThemeA.mp3");
+		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
 	}
 
 

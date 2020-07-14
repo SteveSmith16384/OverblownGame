@@ -66,7 +66,7 @@ public class PreGameScreen implements IModule {
 		this.appendToLog("F1 to toggle full-screen");
 		this.appendToLog("To SPACE to start once all players have joined!");
 
-		//BillBoardFPS_Main.audio.startMusic("sfx/battleThemeA.mp3");
+		BillBoardFPS_Main.audio.startMusic("music/megasong.mp3");
 	}
 
 

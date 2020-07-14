@@ -30,9 +30,9 @@ public class AudioSystem {
 			music.stop();
 			music.dispose();
 		}
-		music = Gdx.audio.newMusic(Gdx.files.internal(filename));
-		music.setLooping(true);
 		try {
+			music = Gdx.audio.newMusic(Gdx.files.internal(filename));
+			music.setLooping(true);
 			music.play();
 			music.setVolume(1f);
 		} catch (GdxRuntimeException ex) {
