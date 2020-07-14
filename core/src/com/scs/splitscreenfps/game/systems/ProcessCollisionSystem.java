@@ -31,17 +31,21 @@ public class ProcessCollisionSystem {
 
 
 	private void checkForExplosion(AbstractEntity rocket, AbstractEntity hit) {
+		/*if (rocket.isMarkedForRemoval()) {
+			return; // Prevent two explosions
+		}*/
 		ExplodeOnContactComponent explodes = (ExplodeOnContactComponent)rocket.getComponent(ExplodeOnContactComponent.class);
 		if (explodes != null) {
 			IsBulletComponent bullet = (IsBulletComponent)rocket.getComponent(IsBulletComponent.class);
 			if (bullet != null && hit == bullet.shooter) {
 				return;
 			}
+			if (explodes.remove) {
+				rocket.remove();
+			}
 			//Settings.p("Rocket hit " + hit);
 			PhysicsComponent phys = (PhysicsComponent)rocket.getComponent(PhysicsComponent.class);
 			phys.body.getWorldTransform(mat);
-			//game.explosion(mat.getTranslation(vec), bullet.settings.expl_range, bullet.settings.expl_force, 4);
-			rocket.remove();
 			game.explosion(mat.getTranslation(vec), explodes.explData, explodes.shooter);
 		}
 

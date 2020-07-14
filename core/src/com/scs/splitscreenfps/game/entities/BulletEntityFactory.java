@@ -109,7 +109,7 @@ public class BulletEntityFactory {
 		e.addComponent(hasDecal);
 
 		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
-		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter));
+		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -307,7 +307,7 @@ public class BulletEntityFactory {
 		
 		e.addComponent(new PositionComponent());
 
-		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(3, 80, 5), shooter));
+		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(3, 80, 5), shooter, true));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f); // This is a lot smaller so the sphere goes through the ground before exploding

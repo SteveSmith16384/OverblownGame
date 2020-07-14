@@ -125,10 +125,14 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isUltimatePressed() {
-		return this.controller.getButton(2); // todo - check
+		/*for (int i=0 ; i<16 ; i++) {
+		if (this.controller.getButton(i)) {
+			Settings.p("Pressed! " + i);
+			break;
+		}
+	}*/
+		return this.controller.getButton(3);
 	}
-
-
 
 
 }
