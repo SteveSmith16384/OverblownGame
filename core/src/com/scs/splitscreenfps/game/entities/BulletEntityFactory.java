@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -41,7 +42,7 @@ public class BulletEntityFactory {
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
-		if (playerData.playerIdx == 0) {
+/*		if (playerData.playerIdx == 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 		} else if (playerData.playerIdx == 1) {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
@@ -51,8 +52,10 @@ public class BulletEntityFactory {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-		}
-		//scs new hasDecal.decal.setPosition(start);
+		}*/
+		
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
+
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
@@ -82,7 +85,14 @@ public class BulletEntityFactory {
 		return e;
 	}
 
+	
+	private static Decal getBulletDecal(Game game, int side) {
+		Decal decal = GraphicsHelper.DecalHelper(game.getTexture("particle.png"), 0.2f);
+		decal.setColor(Settings.getColourForSide(side));
+		return decal;
+	}
 
+	
 	public static AbstractEntity createRocket(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Rocket");
 
@@ -92,7 +102,7 @@ public class BulletEntityFactory {
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
-		if (playerData.playerIdx == 0) {
+		/*if (playerData.playerIdx == 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 		} else if (playerData.playerIdx == 1) {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
@@ -102,8 +112,10 @@ public class BulletEntityFactory {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-		}
-		//scs new hasDecal.decal.setPosition(start);
+		}*/
+		
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
+		
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
@@ -145,7 +157,7 @@ public class BulletEntityFactory {
 
 		if (Settings.DEBUG_PUNCH) {
 			HasDecal hasDecal = new HasDecal();
-			if (playerData.playerIdx == 0) {
+			/*if (playerData.playerIdx == 0) {
 				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 			} else if (playerData.playerIdx == 1) {
 				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
@@ -156,7 +168,8 @@ public class BulletEntityFactory {
 			} else {
 				throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 			}
-			hasDecal.decal.setPosition(start);
+			hasDecal.decal.setPosition(start);*/
+			hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
 			hasDecal.faceCamera = true;
 			hasDecal.dontLockYAxis = true;
 			e.addComponent(hasDecal);
@@ -197,7 +210,7 @@ public class BulletEntityFactory {
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
-		if (playerData.playerIdx == 0) {
+		/*if (playerData.playerIdx == 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 		} else if (playerData.playerIdx == 1) {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
@@ -207,7 +220,8 @@ public class BulletEntityFactory {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-		}
+		}*/
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
 
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
@@ -246,7 +260,7 @@ public class BulletEntityFactory {
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
-		if (playerData.playerIdx == 0) {
+		/*if (playerData.playerIdx == 0) {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
 		} else if (playerData.playerIdx == 1) {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
@@ -256,7 +270,8 @@ public class BulletEntityFactory {
 			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-		}
+		}*/
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
 
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
