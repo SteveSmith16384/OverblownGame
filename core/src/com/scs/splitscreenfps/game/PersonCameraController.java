@@ -15,7 +15,7 @@ public class PersonCameraController {
 	private float rotSpeedX = 220f;
 	private float rotSpeedY = 140f;
 
-	private float cursorSpeed = .15f;
+	private static final float mouseTurnSpeed = 15f;
 
 	private IInputMethod input;
 
@@ -25,6 +25,8 @@ public class PersonCameraController {
 	}
 
 	public void update() {
+		float dt = Gdx.graphics.getDeltaTime();
+
 		if (this.input.isMouse()) {
 			if (Gdx.input.isCursorCatched()) {
 				float rx = Gdx.input.getDeltaX();
@@ -32,16 +34,14 @@ public class PersonCameraController {
 
 				tmp.set(camera.direction).crs(camera.up).nor();
 				if ((ry>0 && camera.direction.y>-0.95) || (ry<0 && camera.direction.y < 0.95)) {
-					camera.rotate(tmp, -cursorSpeed * ry);
+					camera.rotate(tmp, -mouseTurnSpeed * ry * dt);
 				}
-				camera.rotate(Vector3.Y, -cursorSpeed  * rx);
+				camera.rotate(Vector3.Y, -mouseTurnSpeed * rx * dt);
 			}
 		} else if (input instanceof NoInputMethod) {
 			// Do nothing
 		} else {
 			//Rotation
-			float dt = Gdx.graphics.getDeltaTime();
-
 			if (input.getLookUp() > Settings.MIN_AXIS) { //if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 				if(camera.direction.y < 0.95) {
 					tmp.set(camera.direction).crs(camera.up).nor();

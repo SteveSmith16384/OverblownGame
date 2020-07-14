@@ -52,7 +52,6 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 		audio.update();
 
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-			Settings.p("F1");
 			if (fullscreen) {
 				Gdx.graphics.setWindowedMode(Settings.WINDOW_WIDTH_PIXELS, Settings.WINDOW_HEIGHT_PIXELS);
 				fullscreen = false;

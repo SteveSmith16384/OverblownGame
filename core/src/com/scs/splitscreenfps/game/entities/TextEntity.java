@@ -16,8 +16,6 @@ public class TextEntity extends AbstractEntity {
 		dtd.x = _x;
 		dtd.y = _y;
 		dtd.centre_x = _x < 0;
-		//dtd.remove_after_time = _duration_secs > 0;
-		//dtd.timeRemaining_secs = _duration_secs;
 		dtd.colour = col;
 		
 		this.addComponent(dtd);

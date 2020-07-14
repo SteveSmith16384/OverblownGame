@@ -30,36 +30,29 @@ public class DrawTextSystem extends AbstractSystem {
 			return;
 		}
 
-		/*
-		dtd.timeRemaining_secs -= Gdx.graphics.getDeltaTime();
-		if (dtd.remove_after_time && dtd.timeRemaining_secs <= 0) {
-			entity.remove();
-		} else {*/
-			BitmapFont font = null;
-			switch (dtd.size) {
-			case 1:
-				font = game.font_large;
-				break;
-			case 2:
-				font = game.font_med;
-				break;
-			case 3:
-				font = game.font_small;
-				break;
-			default:
-				throw new RuntimeException("Unknown font size: " + dtd.size);
-			}
-			if (dtd.centre_x && dtd.x < 0) { // todo - cache this
-				GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
-				layout.setText(font, dtd.text);
-				float len = layout.width;// contains the width of the current set text
-				dtd.x = Gdx.graphics.getWidth() / 2 - len/2;
-			}
+		BitmapFont font = null;
+		switch (dtd.size) {
+		case 1:
+			font = game.font_large;
+			break;
+		case 2:
+			font = game.font_med;
+			break;
+		case 3:
+			font = game.font_small;
+			break;
+		default:
+			throw new RuntimeException("Unknown font size: " + dtd.size);
+		}
+		if (dtd.centre_x && dtd.x < 0) { // todo - cache this
+			GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
+			layout.setText(font, dtd.text);
+			float len = layout.width;// contains the width of the current set text
+			dtd.x = Gdx.graphics.getWidth() / 2 - len/2;
+		}
 
-			font.setColor(dtd.colour);
-			font.draw(batch2d, dtd.text, dtd.x, dtd.y);
-		//}
-
+		font.setColor(dtd.colour);
+		font.draw(batch2d, dtd.text, dtd.x, dtd.y);
 	}
 
 }
