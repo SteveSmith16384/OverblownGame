@@ -44,7 +44,7 @@ public class DrawTextSystem extends AbstractSystem {
 		default:
 			throw new RuntimeException("Unknown font size: " + dtd.size);
 		}
-		/*if (dtd.centre_x && dtd.x < 0) { // todo - cache this
+		/*if (dtd.centre_x && dtd.x < 0) { // todo - re-add and cache this
 			GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
 			layout.setText(font, dtd.text);
 			float len = layout.width;// contains the width of the current set text

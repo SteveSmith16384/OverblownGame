@@ -22,25 +22,27 @@ public class ProcessCollisionSystem {
 
 
 	public void processCollision(AbstractEntity e1, AbstractEntity e2, float force) {
-		checkExplosion(e1, e2);
-		checkExplosion(e2, e1);
+		checkForExplosion(e1, e2);
+		checkForExplosion(e2, e1);
 
 		game.ecs.events.add(new EventCollision(e1, e2, force));
 
 	}
 
 
-	private void checkExplosion(AbstractEntity rocket, AbstractEntity hit) {
+	private void checkForExplosion(AbstractEntity rocket, AbstractEntity hit) {
 		ExplodeOnContactComponent explodes = (ExplodeOnContactComponent)rocket.getComponent(ExplodeOnContactComponent.class);
 		if (explodes != null) {
 			IsBulletComponent bullet = (IsBulletComponent)rocket.getComponent(IsBulletComponent.class);
-			if (hit != bullet.shooter) {
-				//Settings.p("Rocket hit " + hit);
-				PhysicsComponent phys = (PhysicsComponent)rocket.getComponent(PhysicsComponent.class);
-				phys.body.getWorldTransform(mat);
-				//game.explosion(mat.getTranslation(vec), bullet.settings.expl_range, bullet.settings.expl_force, 4);
-				game.explosion(mat.getTranslation(vec), explodes.explData);
+			if (bullet != null && hit == bullet.shooter) {
+				return;
 			}
+			//Settings.p("Rocket hit " + hit);
+			PhysicsComponent phys = (PhysicsComponent)rocket.getComponent(PhysicsComponent.class);
+			phys.body.getWorldTransform(mat);
+			//game.explosion(mat.getTranslation(vec), bullet.settings.expl_range, bullet.settings.expl_force, 4);
+			rocket.remove();
+			game.explosion(mat.getTranslation(vec), explodes.explData, explodes.shooter);
 		}
 
 

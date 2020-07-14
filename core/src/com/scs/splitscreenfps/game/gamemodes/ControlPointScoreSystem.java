@@ -80,9 +80,8 @@ public class ControlPointScoreSystem implements ISystem {
 			if (time_to_change < System.currentTimeMillis()) {
 				this.time_on_point[current_owner.playerIdx] += Gdx.graphics.getDeltaTime();
 				if (this.time_on_point[current_owner.playerIdx] >= WINNING_TIME) {
-					//text.remove();
 					DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
-					dtd.text = "Player " + current_owner + " has won!";
+					dtd.text = "Player " + current_owner.playerIdx + " has won!";
 					game.playerHasWon(current_owner);
 					return;
 				}

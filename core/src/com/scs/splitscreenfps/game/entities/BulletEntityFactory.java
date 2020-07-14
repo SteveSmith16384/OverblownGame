@@ -109,7 +109,7 @@ public class BulletEntityFactory {
 		e.addComponent(hasDecal);
 
 		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
-		e.addComponent(new ExplodeOnContactComponent(settings.explData));
+		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -215,7 +215,7 @@ public class BulletEntityFactory {
 
 		e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 
-		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData));
+		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f);
@@ -286,13 +286,16 @@ public class BulletEntityFactory {
 	}
 
 
-	public static AbstractEntity createCraterStrike(Game game, AbstractEntity shooter) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "CraterStriket");
+	public static AbstractEntity createCraterStrike(Game game, AbstractPlayersAvatar shooter) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "CraterStrike");
 
 		PositionComponent playerPosData = (PositionComponent)shooter.getComponent(PositionComponent.class);
 		Vector3 start = new Vector3(playerPosData.position);
+		start.x += shooter.camera.direction.x * 2;
+		start.y += 30f;
+		start.z += shooter.camera.direction.z * 2;
 		
-		float diam = 1f;
+		float diam = 3f;
 		
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
@@ -301,15 +304,17 @@ public class BulletEntityFactory {
 		ModelInstance instance = new ModelInstance(sphere_model);
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
-
+		
+		//e.addComponent(new DoesNotHarmComponent(shooter));
+		
 		e.addComponent(new PositionComponent());
 
-		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+		//PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 
-		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(4, 80, 10)));
+		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(4, 80, 10), shooter));
 
 		// Add physics
-		btSphereShape shape = new btSphereShape(diam/2);
+		btSphereShape shape = new btSphereShape(.1f); // This is a lot smaller so the sphere goes through the ground before exploding
 		btRigidBody body = new btRigidBody(1f, null, shape);
 		body.userData = e;
 		body.setCollisionShape(shape);
@@ -320,7 +325,7 @@ public class BulletEntityFactory {
 		pc.force = new Vector3(0, -5, 0);
 		e.addComponent(pc);
 
-		//todo BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
+		//No, we have a voice sfx  BillBoardFPS_Main.audio.play("sfx/launches/rlaunch.wav");
 
 		return e;
 	}

@@ -107,7 +107,7 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isUltimatePressed() {
-		return Gdx.input.isKeyPressed(Keys.U);
+		return Gdx.input.isKeyJustPressed(Keys.U);
 	}
 
 

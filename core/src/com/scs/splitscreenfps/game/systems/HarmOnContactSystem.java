@@ -34,7 +34,6 @@ public class HarmOnContactSystem extends AbstractSystem {
 
 			PlayerData playerHitData = (PlayerData)coll.entity2.getComponent(PlayerData.class);
 			if (playerHitData != null) {
-				//entity.remove();
 				if (playerHitData.health > 0) {
 					game.playerDamaged(coll.entity2, playerHitData, harm.damage, null);
 					BillBoardFPS_Main.audio.play(harm.sfx);

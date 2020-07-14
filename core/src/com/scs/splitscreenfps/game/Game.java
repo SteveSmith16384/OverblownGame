@@ -31,7 +31,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.FxaaEffect;
+import com.crashinvaders.vfx.effects.GaussianBlurEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -42,6 +42,7 @@ import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -178,7 +179,7 @@ public class Game implements IModule {
 
 		//this.appendToLog("Game about to start...");
 
-/*		if (Settings.TEST_SCREEN_COORDS) {
+		/*		if (Settings.TEST_SCREEN_COORDS) {
 			TextEntity te = new TextEntity(ecs, "LINE 1", 300, 1000, new Color(0, 0, 1, 1), -1, 2);
 			ecs.addEntity(te);
 			te = new TextEntity(ecs, "LINE 2", 360, 1000, new Color(0, 0, 1, 1), -1, 2);
@@ -186,14 +187,14 @@ public class Game implements IModule {
 			te = new TextEntity(ecs, "LINE 3", 500, 1000, new Color(0, 0, 1, 1), -1, 2);
 			ecs.addEntity(te);
 		}
-*/
+		 */
 		if (Settings.POST_EFFECTS) {
 			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
-			//vfxManager.addEffect(new GaussianBlurEffect()); // No effect?
+			vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
 			//vfxManager.addEffect(new LensFlareEffect()); // Good
 			//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
-			vfxManager.addEffect(new FxaaEffect()); // No effect?
+			//vfxManager.addEffect(new FxaaEffect()); // No effect?
 			//vfxManager.addEffect(new LevelsEffect());
 			//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f)); // A bit trippy
 			//vfxManager.addEffect(new NfaaEffect(true)); // No difference?
@@ -444,9 +445,9 @@ public class Game implements IModule {
 	public void resize(int w, int h) {
 		this.loadAssetsForRescale();
 		if (Settings.POST_EFFECTS) {
-		vfxManager.resize(w, h);
+			vfxManager.resize(w, h);
 		}
-		}
+	}
 
 
 	public Texture getTexture(String tex_filename) {
@@ -602,16 +603,16 @@ public class Game implements IModule {
 	}
 
 
-	public void explosion(final Vector3 pos, ExplosionData explData) {
+	public void explosion(final Vector3 explosionPos, ExplosionData explData, AbstractEntity shooter) {
 		//Settings.p("Explosion at " + pos);
 
 		main.audio.play("sfx/explosion1.mp3");
 
-		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(this, pos, explData.range);
+		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(this, explosionPos, explData.range);
 		ecs.addEntity(expl);
 
 		// Temp vars
-		Matrix4 mat = new Matrix4();
+		//Matrix4 mat = new Matrix4();
 		Vector3 vec = new Vector3();
 
 		Iterator<AbstractEntity> it = this.physicsSystem.getEntityIterator();
@@ -620,15 +621,24 @@ public class Game implements IModule {
 			if (e.isMarkedForRemoval()) {
 				continue;
 			}
-			PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-			if (pc.body.getInvMass() != 0) {
-				pc.body.getWorldTransform(mat);
-				mat.getTranslation(vec);
-				float distance = vec.dst(pos);
+			PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
+			if (posData != null) {
+				float distance = posData.position.dst(explosionPos);
 				if (distance <= explData.range) {
-					pc.body.activate();
-					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(explData.force));
-					//Settings.p("Moving " + e.name);
+					if (e instanceof AbstractPlayersAvatar) {
+						//DoesNotHarmComponent ignore = (DoesNotHarmComponent)explosionObject.getComponent(DoesNotHarmComponent.class);
+						if (shooter == e) {
+							continue;
+						}
+						PlayerData playerHitData = (PlayerData)e.getComponent(PlayerData.class);
+						this.playerDamaged(e, playerHitData, explData.damage, shooter);
+					}
+					PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+					if (pc.body.getInvMass() != 0) {
+						pc.body.activate();
+						pc.body.applyCentralImpulse(vec.cpy().sub(explosionPos).nor().scl(explData.force));
+						//Settings.p("Moving " + e.name);
+					}
 				}
 			}
 		}
@@ -678,7 +688,7 @@ public class Game implements IModule {
 		}
 
 		@Override
-		public void onContactStarted (btCollisionObject ob1, btCollisionObject ob2) {
+		public void onContactStarted (final btCollisionObject ob1, final btCollisionObject ob2) {
 			try {
 				//Settings.p(ob1.userData + " collided with " + ob2.userData);
 				AbstractEntity e1 = (AbstractEntity)ob1.userData;
@@ -692,9 +702,9 @@ public class Game implements IModule {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-				coll.processCollision(e1, e2, Math.abs(force));
+				coll.processCollision(e1, e2, Math.abs(force)); // todo - queue collisions
 			} catch (Exception ex) {
-				Settings.pe(ex.getMessage());
+				ex.printStackTrace();
 			}
 		}
 
