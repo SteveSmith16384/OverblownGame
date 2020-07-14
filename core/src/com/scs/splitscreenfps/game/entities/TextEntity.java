@@ -13,9 +13,9 @@ public class TextEntity extends AbstractEntity {
 
 		DrawTextData dtd = new DrawTextData(size);
 		dtd.text = text;
-		dtd.x = _x;
-		dtd.y = _y;
-		dtd.centre_x = _x < 0;
+		dtd.x_pcent = _x;
+		dtd.y_pcent = _y;
+
 		dtd.colour = col;
 		
 		this.addComponent(dtd);
@@ -25,9 +25,9 @@ public class TextEntity extends AbstractEntity {
 		}
 	}
 
-
+/*
 	public TextEntity(BasicECS ecs, String text, float _y, float _duration_secs, Color col, int _viewId, int size) {
 		this(ecs, text, -1, _y, _duration_secs, col, _viewId, size);
 	}
-
+*/
 }

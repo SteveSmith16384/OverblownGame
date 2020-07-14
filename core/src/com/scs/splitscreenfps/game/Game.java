@@ -10,7 +10,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,8 +31,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.MotionBlurEffect;
-import com.crashinvaders.vfx.effects.util.MixEffect;
+import com.crashinvaders.vfx.effects.FxaaEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -50,7 +48,6 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
-import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.FactoryLevel;
@@ -181,7 +178,7 @@ public class Game implements IModule {
 
 		//this.appendToLog("Game about to start...");
 
-		if (Settings.TEST_SCREEN_COORDS) {
+/*		if (Settings.TEST_SCREEN_COORDS) {
 			TextEntity te = new TextEntity(ecs, "LINE 1", 300, 1000, new Color(0, 0, 1, 1), -1, 2);
 			ecs.addEntity(te);
 			te = new TextEntity(ecs, "LINE 2", 360, 1000, new Color(0, 0, 1, 1), -1, 2);
@@ -189,20 +186,20 @@ public class Game implements IModule {
 			te = new TextEntity(ecs, "LINE 3", 500, 1000, new Color(0, 0, 1, 1), -1, 2);
 			ecs.addEntity(te);
 		}
-
+*/
 		if (Settings.POST_EFFECTS) {
 			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
 			//vfxManager.addEffect(new GaussianBlurEffect()); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
 			//vfxManager.addEffect(new LensFlareEffect()); // Good
 			//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
-			//vfxManager.addEffect(new FxaaEffect());
+			vfxManager.addEffect(new FxaaEffect()); // No effect?
 			//vfxManager.addEffect(new LevelsEffect());
-			vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f));
+			//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f)); // A bit trippy
 			//vfxManager.addEffect(new NfaaEffect(true)); // No difference?
-			//vfxManager.addEffect(new RadialBlurEffect(3));
-			//vfxManager.addEffect(new RadialDistortionEffect());
-			//vfxManager.addEffect(new VignettingEffect(false)); // Puts in a window
+			//vfxManager.addEffect(new RadialBlurEffect(2)); // Very blurry
+			//vfxManager.addEffect(new RadialDistortionEffect()); // Puts in a window
+			//vfxManager.addEffect(new VignettingEffect(false)); // Puts a shade around the edge
 			//vfxManager.addEffect(new WaterDistortionEffect(2, 2)); // No use?
 			//vfxManager.addEffect(new ZoomEffect()); // No effect?
 

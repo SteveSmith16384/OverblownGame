@@ -47,7 +47,7 @@ public class ControlPointScoreSystem implements ISystem {
 		}
 
 		if (text == null) {
-			text = new TextEntity(game.ecs, "Point Unclaimed", Settings.LOGICAL_SIZE_PIXELS/2, -1, Color.WHITE, 0, 2);
+			text = new TextEntity(game.ecs, "Point Unclaimed", 40, 52, -1, Color.WHITE, 0, 2);
 			game.ecs.addEntity(text);
 		}
 

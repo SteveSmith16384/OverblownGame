@@ -44,15 +44,17 @@ public class DrawTextSystem extends AbstractSystem {
 		default:
 			throw new RuntimeException("Unknown font size: " + dtd.size);
 		}
-		if (dtd.centre_x && dtd.x < 0) { // todo - cache this
+		/*if (dtd.centre_x && dtd.x < 0) { // todo - cache this
 			GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
 			layout.setText(font, dtd.text);
 			float len = layout.width;// contains the width of the current set text
 			dtd.x = Gdx.graphics.getWidth() / 2 - len/2;
-		}
+		}*/
 
 		font.setColor(dtd.colour);
-		font.draw(batch2d, dtd.text, dtd.x, dtd.y);
+		float x = Gdx.graphics.getBackBufferWidth() * dtd.x_pcent / 100;
+		float y = Gdx.graphics.getBackBufferHeight() * dtd.y_pcent / 100;
+		font.draw(batch2d, dtd.text, x, y);
 	}
 
 }
