@@ -7,10 +7,10 @@ import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
-import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HarmOnContactComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.events.EventCollision;
 
 public class HarmOnContactSystem extends AbstractSystem {
 

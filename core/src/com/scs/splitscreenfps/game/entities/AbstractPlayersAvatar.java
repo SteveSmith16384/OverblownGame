@@ -12,6 +12,8 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public abstract class AbstractPlayersAvatar extends AbstractEntity {
 
+	public static final float PLAYER_HEIGHT = 0.4f;
+
 	public Camera camera;
 	public IInputMethod inputMethod;
 	public int playerIdx;
@@ -35,6 +37,9 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 			instance.materials.get(i).set(ColorAttribute.createAmbient(Settings.getColourForSide(idx)));
 		}
 	}
+	
+	
+	public abstract float getDefaultDamping();
 
 
 

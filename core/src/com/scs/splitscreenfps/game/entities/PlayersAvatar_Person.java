@@ -26,8 +26,7 @@ import ssmith.libgdx.ShapeHelper;
 // This also moves the camera
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
-	public static final float PLAYER_HEIGHT = 0.4f;
-	public static final float DAMPING = 0.9f;
+	private static final float DAMPING = 0.9f;
 
 	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
@@ -72,32 +71,6 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	}
 
 
-	private void addWeapon() {
-		AbstractEntity weapon = new AbstractEntity(game.ecs, "Weapon");
-
-		Texture tex = game.getTexture("textures/blackborder/purple1.png");
-		ModelInstance instance = ShapeHelper.createCylinder(tex, 0, 0, 0, .1f, 2f);
-		
-		// Mess about with nodes;
-		/*Node parent = new Node();
-		Node child = instance.nodes.removeIndex(0);
-		instance.nodes.add(parent);
-		child.attachTo(parent);
-		child.localTransform.setTranslation(1, 0, 0);
-		child.translation.set(1, 0, 0);
-		child.localTransform.rotate(Vector3.Z, 90);
-		*/
-		HasModelComponent model = new HasModelComponent(instance, 1, true);
-		weapon.addComponent(model);
-		model.relative_to_camera = true;
-		model.cast_shadow = false;
-		
-		weapon.addComponent(new PositionComponent());
-		
-		game.ecs.addEntity(weapon);
-	}
-
-
 	private ModelInstance addAlienModel(int playerIdx) {
 		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false, null, 1f);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
@@ -115,6 +88,12 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		this.addComponent(anim);
 
 		return instance;
+	}
+
+
+	@Override
+	public float getDefaultDamping() {
+		return DAMPING;
 	}
 
 

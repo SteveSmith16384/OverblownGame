@@ -70,7 +70,7 @@ public class Settings {
 		case 3:
 			return Color.MAGENTA;
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown side: " + idx);
 		}
 	}
 

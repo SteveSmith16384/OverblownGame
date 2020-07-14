@@ -45,10 +45,10 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 			//sprite.setBounds(hgsc.scale.x * (Gdx.graphics.getWidth()), hgsc.scale.y * (Gdx.graphics.getHeight()), hgsc.scale.width * (Gdx.graphics.getWidth()), hgsc.scale.width * (Gdx.graphics.getHeight()));
 
 			ViewportData v = game.viewports[game.currentViewId];
-			float x = v.viewPos.x + (hgsc.scale.x * v.viewPos.width);
-			float y = v.viewPos.y + (hgsc.scale.y * v.viewPos.height);
-			float w = v.viewPos.x + (hgsc.scale.width * v.viewPos.width);
-			float h = v.viewPos.y + (hgsc.scale.height * v.viewPos.height);
+			float x = v.viewRect.x + (hgsc.scale.x * v.viewRect.width);
+			float y = v.viewRect.y + (hgsc.scale.y * v.viewRect.height);
+			float w = v.viewRect.x + (hgsc.scale.width * v.viewRect.width);
+			float h = v.viewRect.y + (hgsc.scale.height * v.viewRect.height);
 			sprite.setBounds(x, y, w, h);
 			//sprite.setBounds(hgsc.scale.x * v.viewPos.width, hgsc.scale.y * v.viewPos.height, hgsc.scale.width * v.viewPos.width, hgsc.scale.height * v.viewPos.height);
 			hgsc.dirty = false;

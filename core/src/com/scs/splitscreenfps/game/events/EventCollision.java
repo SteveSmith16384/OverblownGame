@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game;
+package com.scs.splitscreenfps.game.events;
 
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;

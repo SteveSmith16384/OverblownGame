@@ -11,7 +11,6 @@ import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
@@ -19,6 +18,7 @@ import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
+import com.scs.splitscreenfps.game.events.EventCollision;
 
 public class PlayerProcessSystem implements ISystem {
 
@@ -69,7 +69,7 @@ public class PlayerProcessSystem implements ISystem {
 							//Settings.p("Punched!");
 
 							Vector3 dir = ourPhysics.body.getLinearVelocity();
-							dir.scl(1);
+							//dir.scl(1);
 							PhysicsComponent theirPhysics = (PhysicsComponent)entityHit.getComponent(PhysicsComponent.class);
 							theirPhysics.body.activate();
 							theirPhysics.body.applyCentralImpulse(dir);
@@ -91,12 +91,9 @@ public class PlayerProcessSystem implements ISystem {
 			if (ourPlayerData.has_been_punched) {
 				//Settings.p("Re-adding damping");
 				ourPlayerData.has_been_punched = false;
-				ourPhysics.body.setDamping(PlayersAvatar_Person.DAMPING, PlayersAvatar_Person.DAMPING); // todo - not right for Bowling Ball
+				ourPhysics.body.setDamping(player.getDefaultDamping(), player.getDefaultDamping());
 			}
-
 		}
-
-
 
 		checkMovementInput(player);
 		player.cameraController.update();

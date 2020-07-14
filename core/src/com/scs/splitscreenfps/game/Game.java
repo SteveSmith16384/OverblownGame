@@ -31,7 +31,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.GaussianBlurEffect;
+import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -49,6 +49,7 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
+import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.FactoryLevel;
@@ -190,12 +191,12 @@ public class Game implements IModule {
 		 */
 		if (Settings.POST_EFFECTS) {
 			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
-			vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
+			//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
-			//vfxManager.addEffect(new LensFlareEffect()); // Good
+			vfxManager.addEffect(new LensFlareEffect()); // Good
 			//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
 			//vfxManager.addEffect(new FxaaEffect()); // No effect?
-			//vfxManager.addEffect(new LevelsEffect());
+			//vfxManager.addEffect(new LevelsEffect()); // No effect
 			//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f)); // A bit trippy
 			//vfxManager.addEffect(new NfaaEffect(true)); // No difference?
 			//vfxManager.addEffect(new RadialBlurEffect(2)); // Very blurry
@@ -354,7 +355,7 @@ public class Game implements IModule {
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
 
-			Gdx.gl.glViewport(viewportData.viewPos.x, viewportData.viewPos.y, viewportData.viewPos.width, viewportData.viewPos.height);
+			Gdx.gl.glViewport(viewportData.viewRect.x, viewportData.viewRect.y, viewportData.viewRect.width, viewportData.viewRect.height);
 
 			viewportData.frameBuffer.begin();
 
@@ -382,7 +383,7 @@ public class Game implements IModule {
 			}
 			batch2d.begin();
 			// Draw the 3D buffer
-			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewRect.x, viewportData.viewRect.y+viewportData.viewRect.height, viewportData.viewRect.width, -viewportData.viewRect.height);
 			batch2d.end();
 
 			batch2d.begin();
@@ -395,17 +396,17 @@ public class Game implements IModule {
 			float yOff = font_med.getLineHeight() * 1f;
 			font_med.setColor(1, 1, 1, 1);
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-			font_med.draw(batch2d, playerData.ultimateText, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*4));
-			font_med.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*3));
-			font_med.draw(batch2d, playerData.ability1text, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*2));
-			font_med.draw(batch2d, playerData.ability2text, viewportData.viewPos.x+10, viewportData.viewPos.y+(yOff*1));
+			font_med.draw(batch2d, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4));
+			font_med.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
+			font_med.draw(batch2d, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2));
+			font_med.draw(batch2d, playerData.ability2text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1));
 
 			if (currentViewId == 0) {
 				// Draw log
 				font_small.setColor(1,  1,  1,  1);
-				int y = viewportData.viewPos.y+viewportData.viewPos.height-20;
+				int y = viewportData.viewRect.y+viewportData.viewRect.height-20;
 				for (String s :this.log) {
-					font_small.draw(batch2d, s, viewportData.viewPos.x+10, y);
+					font_small.draw(batch2d, s, viewportData.viewRect.x+10, y);
 					y -= this.font_small.getLineHeight();
 				}
 			}
@@ -413,10 +414,10 @@ public class Game implements IModule {
 				font_small.draw(batch2d, "50", 50, 50);
 				font_small.draw(batch2d, "150", 150, 150);
 				font_small.draw(batch2d, "X", 350, 360);
-				font_small.draw(batch2d, "BL", viewportData.viewPos.x+40, viewportData.viewPos.y+40);
-				font_small.draw(batch2d, "BR", viewportData.viewPos.width-40, viewportData.viewPos.y+40);
-				font_small.draw(batch2d, "TL", viewportData.viewPos.x+20,  viewportData.viewPos.y+viewportData.viewPos.height-20);
-				font_small.draw(batch2d, "TR", viewportData.viewPos.width-40,  viewportData.viewPos.y+viewportData.viewPos.height-20);
+				font_small.draw(batch2d, "BL", viewportData.viewRect.x+40, viewportData.viewRect.y+40);
+				font_small.draw(batch2d, "BR", viewportData.viewRect.width-40, viewportData.viewRect.y+40);
+				font_small.draw(batch2d, "TL", viewportData.viewRect.x+20,  viewportData.viewRect.y+viewportData.viewRect.height-20);
+				font_small.draw(batch2d, "TR", viewportData.viewRect.width-40,  viewportData.viewRect.y+viewportData.viewRect.height-20);
 
 			}
 
@@ -591,7 +592,7 @@ public class Game implements IModule {
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 
-		/* todo?
+		/* 
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.points += 1;
@@ -613,7 +614,8 @@ public class Game implements IModule {
 
 		// Temp vars
 		//Matrix4 mat = new Matrix4();
-		Vector3 vec = new Vector3();
+		//Vector3 vec = new Vector3();
+		Vector3 frc = new Vector3();
 
 		Iterator<AbstractEntity> it = this.physicsSystem.getEntityIterator();
 		while (it.hasNext()) {
@@ -626,7 +628,6 @@ public class Game implements IModule {
 				float distance = posData.position.dst(explosionPos);
 				if (distance <= explData.range) {
 					if (e instanceof AbstractPlayersAvatar) {
-						//DoesNotHarmComponent ignore = (DoesNotHarmComponent)explosionObject.getComponent(DoesNotHarmComponent.class);
 						if (shooter == e) {
 							continue;
 						}
@@ -636,7 +637,15 @@ public class Game implements IModule {
 					PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 					if (pc.body.getInvMass() != 0) {
 						pc.body.activate();
-						pc.body.applyCentralImpulse(vec.cpy().sub(explosionPos).nor().scl(explData.force));
+						
+						// Calc force/dir
+						frc.set(posData.position);
+						frc.sub(explosionPos).nor();
+						frc.y += .2f;
+						frc.scl(explData.force);
+						
+						//pc.body.applyCentralImpulse(vec.cpy().sub(explosionPos).nor().scl(explData.force));
+						pc.body.applyCentralImpulse(frc);
 						//Settings.p("Moving " + e.name);
 					}
 				}

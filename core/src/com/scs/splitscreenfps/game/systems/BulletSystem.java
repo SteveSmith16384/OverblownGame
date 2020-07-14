@@ -7,12 +7,12 @@ import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
+import com.scs.splitscreenfps.game.events.EventCollision;
 
 /**
  * Handles bullets, grenades and rockets

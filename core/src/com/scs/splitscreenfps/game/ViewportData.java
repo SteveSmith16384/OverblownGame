@@ -15,7 +15,7 @@ import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 public class ViewportData {
 
 	public PerspectiveCamera camera;
-	public Rectangle viewPos; // todo - rename
+	public Rectangle viewRect;
 	public FrameBuffer frameBuffer;
 	public DecalBatch decalBatch;
 
@@ -92,10 +92,10 @@ public class ViewportData {
 
 
 	public void resize(int idx, boolean full_screen, int total) {
-		this.viewPos = this.getDimensions(idx, full_screen, total);
+		this.viewRect = this.getDimensions(idx, full_screen, total);
 
-		camera.viewportWidth = viewPos.width;
-		camera.viewportHeight = viewPos.height;
+		camera.viewportWidth = viewRect.width;
+		camera.viewportHeight = viewRect.height;
 
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
 		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);

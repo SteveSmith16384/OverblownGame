@@ -14,7 +14,6 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
 
 import ssmith.lang.NumberFunctions;
 

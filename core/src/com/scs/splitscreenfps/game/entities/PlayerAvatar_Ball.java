@@ -28,8 +28,8 @@ import ssmith.libgdx.ModelFunctions;
 
 public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 
-	public static final float PLAYER_HEIGHT = 0.4f;
-	public static final float DAMPING = 0.9f;
+	private static final float PLAYER_HEIGHT = 0.4f;
+	private static final float DAMPING = 0.3f;
 
 	public PlayerAvatar_Ball(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
@@ -58,7 +58,7 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 		btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody player_body = new btRigidBody(2f, motionState, capsuleShape, inertia);
 		player_body.userData = this;
-		player_body.setDamping(.3f, .3f);
+		player_body.setDamping(DAMPING, DAMPING);
 		player_body.setRestitution(.8f);
 		//player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		PhysicsComponent physics = new PhysicsComponent(player_body);
@@ -81,26 +81,10 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 
 	}
 
-
-	private ModelInstance addAlienModel(int playerIdx) {
-		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false, null, 1f);
-		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
-		instance.transform.scl(scale);
-		//Vector3 offset = ModelFunctions.getOrigin(instance);
-		//offset.y -= .9f; // Hack since model is too high
-
-		HasModelComponent hasModel = new HasModelComponent(instance, -0.4f, 90, scale, true);
-		hasModel.dontDrawInViewId = playerIdx;
-		this.addComponent(hasModel);
-
-		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle", "AlienArmature|Alien_Death", "AlienArmature|Alien_Jump");
-		anim.animationController = animation;
-		this.addComponent(anim);
-
-		return instance;
+	@Override
+	public float getDefaultDamping() {
+		return DAMPING;
 	}
-
 
 
 }

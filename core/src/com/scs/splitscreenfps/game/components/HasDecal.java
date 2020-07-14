@@ -6,7 +6,7 @@ public class HasDecal {
 
 	public Decal decal;
 	public boolean faceCamera = true;
-	public boolean dontLockYAxis = true; // Always look up/down to camera by default - - todo - rename
+	public boolean dontLockYAxis = true; // Always look up/down to camera by default
 	public float rotation = 0f;
 
 }

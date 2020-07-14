@@ -18,7 +18,6 @@ public class HasModelComponent {
 	public boolean always_draw = false;
 	public boolean cast_shadow = true;
 	public boolean keep_player_in_centre = false; // For skybox
-	public boolean relative_to_camera = false; // For weapons
 	
 	public HasModelComponent(ModelInstance _model, float scale, boolean cast_shadow) {
 		this(_model, 0f, 0, scale, cast_shadow);

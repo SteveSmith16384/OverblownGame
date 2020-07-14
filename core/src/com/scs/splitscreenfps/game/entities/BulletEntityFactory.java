@@ -305,13 +305,9 @@ public class BulletEntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
 		
-		//e.addComponent(new DoesNotHarmComponent(shooter));
-		
 		e.addComponent(new PositionComponent());
 
-		//PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
-
-		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(4, 80, 10), shooter));
+		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(3, 80, 5), shooter));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f); // This is a lot smaller so the sphere goes through the ground before exploding

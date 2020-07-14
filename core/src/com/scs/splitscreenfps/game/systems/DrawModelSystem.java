@@ -134,22 +134,6 @@ public class DrawModelSystem extends AbstractSystem {
 		} else { // Non-physics entity
 			if (model.keep_player_in_centre) { // i.e. a skyubox
 				model.model.transform.setToTranslation(batch.getCamera().position);
-			} else if (model.relative_to_camera) { // i.e. weapon
-
-				// todo - remove this?
-				model.model.transform.idt();
-				
-				model.model.transform.rotate(Vector3.Z, 90); // Rotate weapon horizontal
-
-				Vector3 v = new Vector3(batch.getCamera().position);
-				v.x += .1f;
-				v.y -= .1f;
-				v.z += .1f;
-				model.model.transform.setTranslation(v);
-				Quaternion q = new Quaternion();
-				batch.getCamera().view.getRotation(q);
-				//model.model.transform.rotate(q);
-				
 			} else {
 				model.model.transform.setToTranslation(posData.position);
 				model.model.transform.scl(model.scale);

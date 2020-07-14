@@ -12,12 +12,12 @@ import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextData;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
+import com.scs.splitscreenfps.game.events.EventCollision;
 
 public class ControlPointScoreSystem implements ISystem {
 
