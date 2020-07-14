@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.game.components;
 
+import com.scs.splitscreenfps.game.data.ExplosionData;
+
 public class WeaponSettingsComponent {
 
 	// Weapon types
@@ -15,20 +17,17 @@ public class WeaponSettingsComponent {
 	public int max_ammo;
 	public float range;
 	public int damage;
-	public float expl_force;
-	public float expl_range;
 	public float kickback_force = 0f;
+	public final ExplosionData explData;
 	
-	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, float _range, int _damage, 
-			float _expl_range, float _expl_force) {
+	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, float _range, int _damage, ExplosionData _explData) {
 		this.weapon_type = type;
 		this.max_ammo = ammo;
 		shot_interval = _shot_interval;
 		reload_interval = _reload_interval;
 		damage = _damage;
 		range = _range;
-		expl_range = _expl_range;
-		expl_force = _expl_force;
+		explData = _explData;
 	}
 	
 }

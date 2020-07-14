@@ -43,6 +43,7 @@ The map editor is still in development.
 
 
 ## Credits
-* All programming and level design by Stephen Smith (@stephencsmith)
+* Design and Programming Stephen Smith (@stephencsmith)
 * Alien models by Quaternius
 * Music by Emma Andersson, taken from https://opengameart.org/content/megasong
+* Voice talent by my kids.

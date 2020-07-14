@@ -21,8 +21,7 @@ public class ExplodeAfterTimeSystem extends AbstractSystem {
 		if (ex.explode_time < System.currentTimeMillis()) {
 			entity.remove();
 			PhysicsComponent phys = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-			//phys.body.getWorldTransform(mat);
-			game.explosion(phys.getTranslation(), 2, 12, ex.force);
+			game.explosion(phys.getTranslation(), ex.explData);
 		}
 	}
 	

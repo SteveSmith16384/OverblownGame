@@ -7,6 +7,7 @@ import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent.Secondar
 import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
 import com.scs.splitscreenfps.game.components.UltimateAbilityComponent.UltimateType;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
+import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class AvatarFactory {
@@ -54,6 +55,9 @@ public class AvatarFactory {
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 3000, 1f));
 			break;
+		case CHAR_BOWLING_BALL:
+			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
+			break;
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Jump, 3000));
@@ -62,14 +66,8 @@ public class AvatarFactory {
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.StickyMine, 4000));
 			break;
-		/*case CHAR_TRACY:
-			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
-			break;*/
 		case CHAR_BASTION:
 			weapon_type = WeaponSettingsComponent.WEAPON_CANNON;
-			break;
-		case CHAR_BOWLING_BALL:
-			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
 			break;
 		default:
 			throw new RuntimeException("Unhandled character: " + character);
@@ -77,27 +75,28 @@ public class AvatarFactory {
 
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_RIFLE:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_RIFLE, 300, 1200, 20, 20, 10, 0f, 0f);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_RIFLE, 300, 1200, 20, 20, 10, null);
 			weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER, 600, 1500, 12, 20, 20, 3f, 5f);
+			ExplosionData explData = new ExplosionData(1f, 10f, 2f);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER, 600, 1500, 12, 20, 20, explData);
 			weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER:
-			float EXPLOSION_FORCE = 5f;// 10f; // 15f
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 900, 2000, 6, 20, 30, 1.5f, EXPLOSION_FORCE);
+			ExplosionData explData2 = new ExplosionData(2f, 10f, 4f);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 900, 2000, 6, 20, 30, explData2);
 			weapon.kickback_force = 5f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_PUNCH:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 0.3f, 60, 0f, 0f);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 0.3f, 60, null);
 			break;
 
 		case WeaponSettingsComponent.WEAPON_CANNON:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_CANNON, 300, 500, 1500, 20, 60, 0f, 0f);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_CANNON, 300, 500, 1500, 20, 60, null);
 			break;
 
 		default:

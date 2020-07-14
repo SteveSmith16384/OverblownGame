@@ -1,13 +1,15 @@
 package com.scs.splitscreenfps.game.components;
 
+import com.scs.splitscreenfps.game.data.ExplosionData;
+
 public class ExplodeAfterTimeComponent {
 
 	public long explode_time;
-	public float force;
+	public ExplosionData explData;
 	
-	public ExplodeAfterTimeComponent(long time, float _force) {
+	public ExplodeAfterTimeComponent(long time, ExplosionData _explData) {
 		this.explode_time = System.currentTimeMillis() + time;
-		force = _force;
+		explData = _explData;
 	}
 	
 }

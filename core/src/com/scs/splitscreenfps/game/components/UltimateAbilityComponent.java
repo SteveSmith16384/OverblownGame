@@ -2,7 +2,7 @@ package com.scs.splitscreenfps.game.components;
 
 public class UltimateAbilityComponent {
 	
-	public enum UltimateType {RocketBarrage};
+	public enum UltimateType {RocketBarrage, CraterStrike};
 	
 	public UltimateType type;
 	public float power = 0;

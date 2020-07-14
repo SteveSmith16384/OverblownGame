@@ -3,7 +3,7 @@ package com.scs.splitscreenfps.game;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 
-public class FallenOffEdgeEvent extends AbstractEvent {
+public class FallenOffEdgeEvent extends AbstractEvent { // todo - move/delete
 
 	public AbstractEntity entity1;
 

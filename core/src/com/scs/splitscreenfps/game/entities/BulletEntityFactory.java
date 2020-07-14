@@ -1,5 +1,12 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -12,12 +19,14 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
+import com.scs.splitscreenfps.game.data.ExplosionData;
 
 import ssmith.libgdx.GraphicsHelper;
 
@@ -43,12 +52,12 @@ public class BulletEntityFactory {
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
-		hasDecal.decal.setPosition(start);
+		//scs new hasDecal.decal.setPosition(start);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, true));
+		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -94,13 +103,13 @@ public class BulletEntityFactory {
 		} else {
 			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
 		}
-		hasDecal.decal.setPosition(start);
+		//scs new hasDecal.decal.setPosition(start);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, true));
-		e.addComponent(new ExplodeOnContactComponent());
+		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		e.addComponent(new ExplodeOnContactComponent(settings.explData));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -153,7 +162,7 @@ public class BulletEntityFactory {
 			e.addComponent(hasDecal);
 		}
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, true));
+		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -204,9 +213,9 @@ public class BulletEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, false));
+		e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 
-		e.addComponent(new ExplodeAfterTimeComponent(3000, settings.expl_force));
+		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f);
@@ -253,7 +262,7 @@ public class BulletEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, playerData.playerIdx, start, settings, false));
+		e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 
 		e.addComponent(new RemoveEntityAfterTimeComponent(4));
 
@@ -272,6 +281,46 @@ public class BulletEntityFactory {
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+
+		return e;
+	}
+
+
+	public static AbstractEntity createCraterStrike(Game game, AbstractEntity shooter) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "CraterStriket");
+
+		PositionComponent playerPosData = (PositionComponent)shooter.getComponent(PositionComponent.class);
+		Vector3 start = new Vector3(playerPosData.position);
+		
+		float diam = 1f;
+		
+		Texture tex = game.getTexture("textures/sun.jpg");
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		ModelInstance instance = new ModelInstance(sphere_model);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		e.addComponent(model);
+
+		e.addComponent(new PositionComponent());
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+
+		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(4, 80, 10)));
+
+		// Add physics
+		btSphereShape shape = new btSphereShape(diam/2);
+		btRigidBody body = new btRigidBody(1f, null, shape);
+		body.userData = e;
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.force = new Vector3(0, -5, 0);
+		e.addComponent(pc);
+
+		//todo BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
 
 		return e;
 	}

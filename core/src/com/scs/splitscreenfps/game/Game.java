@@ -44,6 +44,7 @@ import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
+import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
@@ -607,12 +608,12 @@ public class Game implements IModule {
 	}
 
 
-	public void explosion(final Vector3 pos, float range, float force, float width_height) {
+	public void explosion(final Vector3 pos, ExplosionData explData) {
 		//Settings.p("Explosion at " + pos);
 
 		main.audio.play("sfx/explosion1.mp3");
 
-		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(this, pos, width_height);
+		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(this, pos, explData.range);
 		ecs.addEntity(expl);
 
 		// Temp vars
@@ -630,9 +631,9 @@ public class Game implements IModule {
 				pc.body.getWorldTransform(mat);
 				mat.getTranslation(vec);
 				float distance = vec.dst(pos);
-				if (distance <= range) {
+				if (distance <= explData.range) {
 					pc.body.activate();
-					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(force));
+					pc.body.applyCentralImpulse(vec.cpy().sub(pos).nor().scl(explData.force));
 					//Settings.p("Moving " + e.name);
 				}
 			}

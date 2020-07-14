@@ -38,7 +38,8 @@ public class ProcessCollisionSystem {
 				//Settings.p("Rocket hit " + hit);
 				PhysicsComponent phys = (PhysicsComponent)rocket.getComponent(PhysicsComponent.class);
 				phys.body.getWorldTransform(mat);
-				game.explosion(mat.getTranslation(vec), bullet.settings.expl_range, bullet.settings.expl_force, 4);
+				//game.explosion(mat.getTranslation(vec), bullet.settings.expl_range, bullet.settings.expl_force, 4);
+				game.explosion(mat.getTranslation(vec), explodes.explData);
 			}
 		}
 

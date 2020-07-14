@@ -101,8 +101,8 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	private void performPowerPunch(AbstractPlayersAvatar player, float power) {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
-		float pow = power*30;
-		Settings.p("Performing boost with pow=" + pow);
+		float pow = 15+(power*30);
+		//Settings.p("Performing boost with pow=" + pow);
 		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
 		//pc.body.appl.applyCentralForce(player.camera.direction.cpy().scl(power*3000)); Doesn't do anything?
 		
@@ -112,6 +112,8 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 		PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
 		playerData.performing_power_punch = true;
+
+		BillBoardFPS_Main.audio.play("speech/boom.wav");
 	}
 
 

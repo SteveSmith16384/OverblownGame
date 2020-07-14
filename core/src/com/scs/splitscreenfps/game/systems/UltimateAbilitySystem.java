@@ -14,6 +14,7 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 
 import ssmith.lang.NumberFunctions;
 
@@ -68,6 +69,9 @@ public class UltimateAbilitySystem extends AbstractSystem {
 				case RocketBarrage:
 					startRocketBarrage(player, ability);
 					break;
+				case CraterStrike:
+					startCraterStrike(player, ability);
+					break;
 				default:
 					throw new RuntimeException("Unknown ability: " + ability.type);
 				}
@@ -87,6 +91,15 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.body.setGravity(Vector3.Zero);
+
+		BillBoardFPS_Main.audio.play("speech/havesomerockets.wav");
+	}
+
+
+	private void startCraterStrike(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
+		BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
+		AbstractEntity crater = BulletEntityFactory.createCraterStrike(game, player);
+		game.ecs.addEntity(crater);
 	}
 
 
