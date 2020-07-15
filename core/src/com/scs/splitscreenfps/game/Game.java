@@ -417,6 +417,10 @@ public class Game implements IModule, ITextureProvider {
 				// Draw log
 				font_small.setColor(1,  1,  1,  1);
 				int y = viewportData.viewRect.y+viewportData.viewRect.height-20;
+				if (this.players.length == 3) {
+					// Put log in top-left
+					y = (viewportData.viewRect.height*2)-20;
+				}
 				for (String s :this.log) {
 					font_small.draw(batch2d, s, viewportData.viewRect.x+10, y);
 					y -= this.font_small.getLineHeight();
@@ -603,6 +607,13 @@ public class Game implements IModule, ITextureProvider {
 		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
 		if (anim != null) {
 			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
+		}
+		
+		if (shooter != null) {
+			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
+			this.appendToLog(playerData.playerName + " has been killed by " + shooterData.playerName);
+		} else {
+			this.appendToLog(playerData.playerName + " has been killed");
 		}
 
 		playerData.health = 0;

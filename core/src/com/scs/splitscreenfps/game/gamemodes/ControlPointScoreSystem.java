@@ -15,6 +15,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextData;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.events.EventCollision;
@@ -47,7 +48,7 @@ public class ControlPointScoreSystem implements ISystem {
 		}
 
 		if (text == null) {
-			text = new TextEntity(game.ecs, "Point Unclaimed", 40, 52, -1, Color.WHITE, 0, 2);
+			text = new TextEntity(game.ecs, "Point Unclaimed", 37, 49, -1, Color.WHITE, 0, 2);
 			game.ecs.addEntity(text);
 		}
 
@@ -81,7 +82,8 @@ public class ControlPointScoreSystem implements ISystem {
 				this.time_on_point[current_owner.playerIdx] += Gdx.graphics.getDeltaTime();
 				if (this.time_on_point[current_owner.playerIdx] >= WINNING_TIME) {
 					DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
-					dtd.text = "Player " + current_owner.playerIdx + " has won!";
+					PlayerData playerData = (PlayerData)current_owner.getComponent(PlayerData.class);
+					dtd.text = playerData.playerName + " HAS WON!";
 					game.playerHasWon(current_owner);
 					return;
 				}
@@ -97,7 +99,7 @@ public class ControlPointScoreSystem implements ISystem {
 				if (this.last_player_to_touch != player) {
 					this.last_player_to_touch = player;
 					this.time_to_change = System.currentTimeMillis() + CHANGE_DURATION;
-					Color col = Color.GRAY;//Settings.getColourForSide(last_player_to_touch.playerIdx);
+					Color col = Color.GRAY;
 					this.changeTex(col);
 
 				}
@@ -113,7 +115,6 @@ public class ControlPointScoreSystem implements ISystem {
 
 
 	private void changeTex(Color col) {
-		// change tex
 		HasModelComponent hasModel = (HasModelComponent)controlpoint.getComponent(HasModelComponent.class);
 		ModelInstance instance = hasModel.model;
 		for (int i=0 ; i<instance.materials.size ; i++) {

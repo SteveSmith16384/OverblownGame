@@ -18,7 +18,7 @@ public class Settings {
 	public static final boolean DEBUG_HEALTH_PAC = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_PHARTAH;
-	public static final int NUM_AUTOSTART_CHARACTERS = 1;
+	public static final int NUM_AUTOSTART_CHARACTERS = 3;
 	public static final boolean DEBUG_ULTIMATES = false;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;
 	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
