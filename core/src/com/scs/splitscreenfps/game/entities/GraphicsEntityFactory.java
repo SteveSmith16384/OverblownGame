@@ -61,7 +61,7 @@ public class GraphicsEntityFactory {
 		AbstractEntity entity = new AbstractEntity(game.ecs, "Explosion");
 
 		//PositionComponent posData = new PositionComponent(pos.x, pos.y-(width_height/2), pos.z);
-		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
+		PositionComponent posData = new PositionComponent(pos.x, pos.y-(width_height/2), pos.z);
 		entity.addComponent(posData);
 
 		Texture tex = game.getTexture("Explosion21.png");

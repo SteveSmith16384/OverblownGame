@@ -350,9 +350,9 @@ public class Game implements IModule, ITextureProvider {
 			}
 		}
 
+		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.processSystem(BulletSystem.class);
 		this.ecs.processSystem(ShootingSystem.class);
-		this.ecs.getSystem(PhysicsSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();

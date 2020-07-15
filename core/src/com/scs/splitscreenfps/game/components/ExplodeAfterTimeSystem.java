@@ -20,8 +20,9 @@ public class ExplodeAfterTimeSystem extends AbstractSystem {
 		ExplodeAfterTimeComponent ex = (ExplodeAfterTimeComponent)entity.getComponent(ExplodeAfterTimeComponent.class);
 		if (ex.explode_time < System.currentTimeMillis()) {
 			entity.remove();
-			PhysicsComponent phys = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-			game.explosion(phys.getTranslation(), ex.explData, ex.shooter);
+			//PhysicsComponent phys = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+			game.explosion(posData.position, ex.explData, ex.shooter);
 		}
 	}
 	

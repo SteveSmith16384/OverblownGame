@@ -66,7 +66,6 @@ public class PlayerProcessSystem implements ISystem {
 					if (ourPlayerData.performing_power_punch) {
 						float force = ourPhysics.body.getLinearVelocity().len();
 						if (force > LINEAR_VELOCITY_CUTOFF) { // Did we hit them really hard, i.e. are we Boomfist?
-							//Settings.p("Punched!");
 							Vector3 dir = ourPhysics.body.getLinearVelocity();
 							PhysicsComponent theirPhysics = (PhysicsComponent)entityHit.getComponent(PhysicsComponent.class);
 							theirPhysics.body.activate();
@@ -74,7 +73,9 @@ public class PlayerProcessSystem implements ISystem {
 							theirPhysics.body.setDamping(0.2f, 0.2f);
 
 							PlayerData theirPlayerData = (PlayerData)entityHit.getComponent(PlayerData.class);
-							game.playerDamaged(entityHit, theirPlayerData, 20, player);
+							theirPlayerData.has_been_punched = true;
+							game.playerDamaged(entityHit, theirPlayerData, 40, player);
+							Settings.p("Player " + theirPlayerData.playerIdx + " Punched!");
 							break;
 						}
 					}
@@ -87,7 +88,7 @@ public class PlayerProcessSystem implements ISystem {
 		if (force < LINEAR_VELOCITY_CUTOFF) {
 			ourPlayerData.performing_power_punch = false;
 			if (ourPlayerData.has_been_punched) {
-				//Settings.p("Re-adding damping");
+				Settings.p("Re-adding damping to player " + ourPlayerData.playerIdx);
 				ourPlayerData.has_been_punched = false;
 				ourPhysics.body.setDamping(player.getDefaultDamping(), player.getDefaultDamping());
 			}

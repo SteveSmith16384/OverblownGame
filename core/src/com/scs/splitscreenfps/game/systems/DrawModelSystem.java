@@ -26,13 +26,11 @@ public class DrawModelSystem extends AbstractSystem {
 	private ModelBatch modelBatch;
 	private Environment environment;
 
-	private Vector3 tmpOffset = new Vector3();
 	private Matrix4 tmpMat = new Matrix4();
+	private Vector3 tmpOffset = new Vector3();
 
 	private DirectionalShadowLight shadowLight;
 	private ModelBatch shadowBatch;
-
-	//private SkyboxCube skybox;
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
@@ -84,14 +82,20 @@ public class DrawModelSystem extends AbstractSystem {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-
-		if (pc != null) {
-			pc.body.getWorldTransform(tmpMat);
-
-			// Set model position data based on physics data - regardless of whether we draw them
-			tmpMat.getTranslation(posData.position);
+		
+		if (Settings.STRICT) {
+			if (posData == null) {
+				throw new RuntimeException(entity + " has no PositionComponent");
+			}
 		}
 
+/*		if (pc != null) {
+			//pc.body.getWorldTransform(tmpMat);
+
+			// Set model position data based on physics data - regardless of whether we draw them
+			//tmpMat.getTranslation(posData.position);
+		}
+*/
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
 		}
@@ -105,12 +109,8 @@ public class DrawModelSystem extends AbstractSystem {
 			return;
 		}
 
-		if (Settings.STRICT) {
-			if (posData == null) {
-				throw new RuntimeException(entity + " has no PositionComponent");
-			}
-		}
 		if (pc != null) {
+			pc.body.getWorldTransform(tmpMat);
 			// Resets the matrix to avoid hangoffs
 			if (model.scale == 1f) {
 				model.model.transform.set(tmpMat);

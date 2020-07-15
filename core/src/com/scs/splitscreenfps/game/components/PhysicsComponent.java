@@ -25,12 +25,12 @@ public class PhysicsComponent {
 	/*
 	 * Helper method to get position
 	 */
-	public Vector3 getTranslation() {
+/*	public Vector3 getTranslation_() {
 		body.getWorldTransform(mat);
 		mat.getTranslation(vec);
 		return vec;
 	}
-	
+	*/
 	
 	public void rotate(Vector3 axis, float degrees) {
 		body.getWorldTransform(mat);

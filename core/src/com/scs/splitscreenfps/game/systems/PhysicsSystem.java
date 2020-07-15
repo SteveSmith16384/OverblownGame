@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.systems;
 
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -9,11 +10,13 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.events.FallenOffEdgeEvent;
 
 public class PhysicsSystem extends AbstractSystem {
 
 	private Game game;
+	private Matrix4 tmpMat = new Matrix4();
 
 	public PhysicsSystem(Game _game, BasicECS ecs) {
 		super(ecs, PhysicsComponent.class);
@@ -34,6 +37,7 @@ public class PhysicsSystem extends AbstractSystem {
 			}
 		}
 
+		
 		/*
 		if (e instanceof AbstractPlayersAvatar) {
 			Vector3 force = pc.body.getInterpolationLinearVelocity(); // seems to work
@@ -43,7 +47,13 @@ public class PhysicsSystem extends AbstractSystem {
 		}
 		 */
 
-		float height = pc.getTranslation().y;
+		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
+
+		pc.body.getWorldTransform(tmpMat);
+		// Set model position data based on physics data - regardless of whether we draw them
+		tmpMat.getTranslation(posData.position);
+
+		float height = posData.position.y;
 		if (height < -4) {
 			if (pc.removeIfFallen) {
 				Settings.p("Removed " + e + " since it has fallen off");

@@ -6,11 +6,10 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
-import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.events.EventCollision;
 
@@ -32,10 +31,11 @@ public class BulletSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
-		PhysicsComponent physics = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-
+		//PhysicsComponent physics = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		PositionComponent bulletPos = (PositionComponent)entity.getComponent(PositionComponent.class);
+		
 		// Check range
-		float dist = bullet.start.dst(physics.getTranslation());
+		float dist = bullet.start.dst(bulletPos.position);
 		if (dist > bullet.settings.range) {
 			//Settings.p(entity + " reached range");
 			entity.remove();
@@ -58,7 +58,7 @@ public class BulletSystem extends AbstractSystem {
 				if (playerHitData.health > 0) {
 					game.playerDamaged(coll.entity2, playerHitData, bullet.settings.damage, bullet.shooter);
 
-					AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, physics.getTranslation(), 1);
+					AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, bulletPos.position, 1);
 					ecs.addEntity(expl);
 
 					return;
