@@ -49,11 +49,11 @@ public class CollectableSystem extends AbstractSystem {
 	private void handleHealthPack(AbstractEntity player, AbstractEntity coll) {
 		PlayerData playerHitData = (PlayerData)player.getComponent(PlayerData.class);
 		if (playerHitData != null) {
-			if (playerHitData.health < Settings.START_HEALTH) {
+			if (playerHitData.health < playerHitData.max_health) {
 				//BillBoardFPS_Main.audio.play("todo");
 				playerHitData.health += 50f;
-				if (playerHitData.health > Settings.START_HEALTH) {
-					playerHitData.health = Settings.START_HEALTH;
+				if (playerHitData.health > playerHitData.max_health) {
+					playerHitData.health = playerHitData.max_health;
 				}
 				coll.remove();
 			}

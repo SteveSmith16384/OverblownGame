@@ -49,7 +49,7 @@ public class RespawnPlayerSystem implements ISystem {
 
 				// Reset health
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);
-				playerData.health = Settings.START_HEALTH;
+				playerData.health = playerData.max_health;
 
 				e.removeComponent(WillRespawnComponent.class);
 				this.entities.remove(i);

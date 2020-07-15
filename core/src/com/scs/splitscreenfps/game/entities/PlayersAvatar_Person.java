@@ -25,7 +25,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 	private static final float DAMPING = 0.9f;
 
-	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
+	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int health) {
 		super(_game, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		inputMethod = _inputMethod;
@@ -57,7 +57,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		if (Game.physics_enabled == false) {
 			camera.position.set(0, 5, 0);
 		}
-		addComponent(new PlayerData(playerIdx));
+		addComponent(new PlayerData(playerIdx, health));
 
 		setAvatarColour(this, playerIdx);
 

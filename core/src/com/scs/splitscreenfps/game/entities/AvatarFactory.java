@@ -35,12 +35,26 @@ public class AvatarFactory {
 	}
 
 
+	private static int getHealth(int id) {
+		switch (id) {
+		case CHAR_PHARTAH: return 200;
+		case CHAR_BOOMFIST: return 300;
+		case CHAR_WINSTON: return 300;
+		case CHAR_BASTION: return 200;
+		case CHAR_JUNKRAT: return 200;
+		case CHAR_BOWLING_BALL: return 300;
+		default:
+			throw new RuntimeException("Unhandled character id: " + id);
+		}
+	}
+
+
 	public static AbstractPlayersAvatar createAvatar(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int character) {
 		AbstractPlayersAvatar avatar = null;
 		if (character == CHAR_BOWLING_BALL) {
-			avatar = new PlayerAvatar_Ball(_game, playerIdx, _viewportData, _inputMethod);
+			avatar = new PlayerAvatar_Ball(_game, playerIdx, _viewportData, _inputMethod, getHealth(character));
 		} else {
-			avatar = new PlayersAvatar_Person(_game, playerIdx, _viewportData, _inputMethod);
+			avatar = new PlayersAvatar_Person(_game, playerIdx, _viewportData, _inputMethod, getHealth(character));
 		}
 		
 		WeaponSettingsComponent weapon;
@@ -87,7 +101,7 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER:
-			ExplosionData explData2 = new ExplosionData(2f, 10f, 4f);
+			ExplosionData explData2 = new ExplosionData(1f, 10f, 3f);
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 900, 2000, 6, 20, 30, explData2);
 			weapon.kickback_force = 5f;
 			break;

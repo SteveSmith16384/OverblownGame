@@ -67,14 +67,12 @@ public class PlayerProcessSystem implements ISystem {
 						float force = ourPhysics.body.getLinearVelocity().len();
 						if (force > LINEAR_VELOCITY_CUTOFF) { // Did we hit them really hard, i.e. are we Boomfist?
 							//Settings.p("Punched!");
-
 							Vector3 dir = ourPhysics.body.getLinearVelocity();
-							//dir.scl(1);
 							PhysicsComponent theirPhysics = (PhysicsComponent)entityHit.getComponent(PhysicsComponent.class);
 							theirPhysics.body.activate();
 							theirPhysics.body.applyCentralImpulse(dir);
 							theirPhysics.body.setDamping(0.2f, 0.2f);
-							
+
 							PlayerData theirPlayerData = (PlayerData)entityHit.getComponent(PlayerData.class);
 							game.playerDamaged(entityHit, theirPlayerData, 20, player);
 							break;
@@ -95,8 +93,10 @@ public class PlayerProcessSystem implements ISystem {
 			}
 		}
 
-		checkMovementInput(player);
-		player.cameraController.update();
+		if (ourPlayerData.health > 0) {
+			checkMovementInput(player);
+			player.cameraController.update();
+		}
 
 		// Position camera
 		if (Game.physics_enabled) {

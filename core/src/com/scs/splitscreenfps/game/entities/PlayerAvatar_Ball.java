@@ -24,10 +24,10 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 
-	private static final float PLAYER_HEIGHT = 0.4f;
+	//private static final float PLAYER_HEIGHT = 0.4f;
 	private static final float DAMPING = 0.3f;
 
-	public PlayerAvatar_Ball(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
+	public PlayerAvatar_Ball(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int health) {
 		super(_game, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		inputMethod = _inputMethod;
@@ -69,7 +69,7 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 		if (Game.physics_enabled == false) {
 			camera.position.set(0, 5, 0);
 		}
-		addComponent(new PlayerData(playerIdx));
+		addComponent(new PlayerData(playerIdx, health));
 
 		setAvatarColour(this, playerIdx);
 

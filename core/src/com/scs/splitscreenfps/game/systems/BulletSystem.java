@@ -41,7 +41,7 @@ public class BulletSystem extends AbstractSystem {
 			entity.remove();
 			return;
 		}
-		
+
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
@@ -56,12 +56,12 @@ public class BulletSystem extends AbstractSystem {
 			if (playerHitData != null) {
 				entity.remove();
 				if (playerHitData.health > 0) {
-						game.playerDamaged(coll.entity2, playerHitData, bullet.settings.damage, bullet.shooter);
+					game.playerDamaged(coll.entity2, playerHitData, bullet.settings.damage, bullet.shooter);
 
-						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, physics.getTranslation(), 1);
-						ecs.addEntity(expl);
+					AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, physics.getTranslation(), 1);
+					ecs.addEntity(expl);
 
-						return;
+					return;
 				}
 			}
 		}

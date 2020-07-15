@@ -17,7 +17,7 @@ public class Settings {
 	// Debugging Hacks
 	public static final boolean DEBUG_HEALTH_PAC = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_PHARTAH;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOOMFIST;
 	public static final int NUM_AUTOSTART_CHARACTERS = 3;
 	public static final boolean DEBUG_ULTIMATES = false;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;
@@ -29,7 +29,7 @@ public class Settings {
 	public static final boolean STRICT = !RELEASE_MODE && true;
 
 	// Game settings
-	public static final int START_HEALTH = 100;
+	//public static final int START_HEALTH = 100;
 
 	// Other settings
 	public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
