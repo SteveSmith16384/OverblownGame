@@ -21,6 +21,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.pregame.PlayersJoinGameModule;
 
 public class SelectCharacterScreen implements IModule {
 
@@ -103,7 +104,8 @@ public class SelectCharacterScreen implements IModule {
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			System.exit(0);
+			main.next_module = new PlayersJoinGameModule(main);
+			return;
 		}
 
 		if (next_input_check_time < System.currentTimeMillis()) {
@@ -187,11 +189,13 @@ public class SelectCharacterScreen implements IModule {
 			if (this.gameSelectionData.has_selected_character[playerIdx] == false) {
 				all_selected = false;
 				if (input.isMenuLeftPressed()) {
+					main.audio.play("sfx/type2.mp3");
 					this.gameSelectionData.character[playerIdx]--;
 					if (this.gameSelectionData.character[playerIdx] < 0) {
 						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS-1;
 					}
 				} else if (input.isMenuRightPressed()) {
+					main.audio.play("sfx/type2.mp3");
 					this.gameSelectionData.character[playerIdx]++;
 					if (this.gameSelectionData.character[playerIdx] >= AvatarFactory.MAX_CHARS) {
 						this.gameSelectionData.character[playerIdx] = 0;
@@ -199,6 +203,7 @@ public class SelectCharacterScreen implements IModule {
 				} 
 			}
 			if (input.isMenuSelectPressed()) {
+				main.audio.play("sfx/controlpoint.mp3");
 				this.gameSelectionData.has_selected_character[playerIdx] = true;
 				this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(this.gameSelectionData.character[playerIdx]));
 			}

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
@@ -21,10 +23,10 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createRedFilter(Game game, int viewId) {
-		AbstractEntity entity = new AbstractEntity(game.ecs, "RedFilter");
+	public static AbstractEntity createRedFilter(BasicECS ecs, ITextureProvider texProv, int viewId) {
+		AbstractEntity entity = new AbstractEntity(ecs, "RedFilter");
 
-		Texture weaponTex = game.getTexture("colours/red.png");
+		Texture weaponTex = texProv.getTexture("colours/red.png");
 		//Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setColor(1, 0, 0, .5f);

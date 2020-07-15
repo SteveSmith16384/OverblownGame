@@ -13,9 +13,8 @@ import com.badlogic.gdx.math.Vector3;
 public class ShapeHelper {
 
 	public static ModelInstance createRect(Texture tex, float w, float d) {
-		//Texture tex = new Texture(tex_filename1);
 		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
+		Material material = new Material(TextureAttribute.createDiffuse(tex));		
 
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createRect(
@@ -25,16 +24,13 @@ public class ShapeHelper {
 				(float)-w/2, 0f,(float)-d/2,
 				
 				1f,1f,1f,
-				white_material,
+				material,
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 
 		Matrix3 mat = new Matrix3();
 		floor.meshes.get(0).transformUV(mat);
 
 		ModelInstance instance = new ModelInstance(floor);//, new Vector3(x, y, z));
-		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
-		//instance.calculateTransforms();
-
 		return instance;
 	}
 	

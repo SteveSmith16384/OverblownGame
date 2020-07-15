@@ -213,6 +213,34 @@ public class EntityFactory {
 	}
 
 
+	public static AbstractEntity createPlane(Game game, String tex_filename, float x, float y, float z, float w, float d) {
+		AbstractEntity plane = new AbstractEntity(game.ecs, "Plane");
+
+		Texture tex = game.getTexture(tex_filename);
+		ModelInstance instance = ShapeHelper.createRect(tex, w, d);
+
+		HasModelComponent model = new HasModelComponent(instance, 1, false);
+		plane.addComponent(model);
+/*
+		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
+		Vector3 local_inertia = new Vector3();
+		float mass = (float)(Math.PI * (diam/2) * (diam/2) + length) * mass_pre;
+		cylinderShape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody body = new btRigidBody(mass, null, cylinderShape, local_inertia);
+		body.userData = cylinder;
+		body.setRestitution(.5f);
+		body.setCollisionShape(cylinderShape);
+		body.setWorldTransform(instance.transform);
+		cylinder.addComponent(new PhysicsComponent(body));
+*/
+		PositionComponent pos = new PositionComponent();
+		pos.position.set(x, y, z);
+		plane.addComponent(pos);
+
+		return plane;
+	}
+
+
 /*
 	public static AbstractEntity playersWeapon(BasicECS ecs, AbstractEntity player) {
 		AbstractEntity weapon = new AbstractEntity(ecs, "PlayersWeapon");

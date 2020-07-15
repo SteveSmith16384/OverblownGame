@@ -11,6 +11,7 @@ import com.scs.splitscreenfps.Settings;
 public class AudioSystem {
 
 	private Music music;
+	private String music_filename;
 	private HashMap<String, Sound> sounds; 
 
 	public AudioSystem() {
@@ -26,6 +27,10 @@ public class AudioSystem {
 
 
 	public void startMusic(String filename) {
+		if (filename.equals(music_filename)) {
+			return;
+		}
+		
 		if (music != null) {
 			music.stop();
 			music.dispose();
@@ -35,6 +40,7 @@ public class AudioSystem {
 			music.setLooping(true);
 			music.play();
 			music.setVolume(1f);
+			music_filename = filename;
 		} catch (GdxRuntimeException ex) {
 			ex.printStackTrace();
 		}

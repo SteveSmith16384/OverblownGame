@@ -7,7 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.scs.splitscreenfps.game.systems.AudioSystem;
-import com.scs.splitscreenfps.pregame.PreGameScreen;
+import com.scs.splitscreenfps.pregame.IntroModule;
 
 public class BillBoardFPS_Main extends ApplicationAdapter {
 
@@ -25,7 +25,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 		if (Settings.RELEASE_MODE) {
 			this.setFullScreen();
 		}
-		current_module = new PreGameScreen(this);
+		//current_module = new PlayersJoinGameModule(this);
+		current_module = new IntroModule(this);
 	}
 
 
@@ -60,7 +61,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			}
 			this.current_module.setFullScreen(fullscreen);
 		} else if (Gdx.input.isKeyJustPressed(Keys.F2)) {
-			Settings.p("F2");
+			//Settings.p("F2");
 			if (fullscreen) {
 				Gdx.graphics.setUndecorated(true);
 				Gdx.graphics.setWindowedMode(Settings.WINDOW_WIDTH_PIXELS, Settings.WINDOW_HEIGHT_PIXELS);
@@ -74,17 +75,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 				fullscreen = true;
 			}
 		} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			Gdx.app.exit();
-			/*if (this.current_module instanceof PreGameScreen) {
-				System.exit(0);
-			} else {
-				if (Settings.CURRENT_MODE == Settings.MODE_START) {
-					this.next_module = new PreGameScreen(this);
-				} else {
-					Settings.CURRENT_MODE = Settings.MODE_START;
-					current_module = new Game(this, this.);
-				}
-			}*/
+			//Gdx.app.exit();
 		}
 
 

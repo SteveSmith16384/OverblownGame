@@ -37,6 +37,7 @@ import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
+import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
@@ -73,14 +74,14 @@ import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.game.systems.SpeechSystem;
 import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
-import com.scs.splitscreenfps.pregame.PreGameScreen;
+import com.scs.splitscreenfps.pregame.PlayersJoinGameModule;
 import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
 
 /**
  * This is the main game, where the players move about n'stuff.
  *
  */
-public class Game implements IModule {
+public class Game implements IModule, ITextureProvider {
 
 	public static final Vector3 GRAVITY = new Vector3(0, -10f, 0);
 
@@ -302,12 +303,12 @@ public class Game implements IModule {
 				Gdx.app.exit();
 				return;
 			}
-			this.main.next_module = new PreGameScreen(main);
+			this.main.next_module = new PlayersJoinGameModule(main);
 		}
 
 		if (Settings.DEBUG_GUI_SPRITES) {
 			if (Gdx.input.isKeyPressed(Keys.T)) {
-				AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(this, 1);
+				AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, 1);
 				redfilter.addComponent(new RemoveEntityAfterTimeComponent(10));
 				ecs.addEntity(redfilter);
 
@@ -568,7 +569,7 @@ public class Game implements IModule {
 		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 		playerHitData.health -= amt;//bullet.settings.damage;
 
-		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(this, playerHitData.playerIdx);
+		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
 		float duration = amt/20;
 		if (duration > 4) {
 			duration = 4;

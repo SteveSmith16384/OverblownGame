@@ -13,6 +13,9 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 * RMB - Secondary ability
 * Space - Jump
 * U - Ultimate
+* F1 - Toggle full-screen
+* F2 - Toggle windowed full-screen (useful for recording video).
+* Esc - Exit
 
 
 ### Tested with PS4 controllers

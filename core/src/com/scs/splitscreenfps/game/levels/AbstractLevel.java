@@ -127,6 +127,8 @@ public abstract class AbstractLevel implements ILevelInterface {
 				wall = EntityFactory.createBall(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
 			} else if (block.type.equalsIgnoreCase("cylinder")) {
 				wall = EntityFactory.createCylinder(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.size.y, block.mass);
+			} else if (block.type.equalsIgnoreCase("plane")) {
+				wall = EntityFactory.createPlane(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.size.y);
 			} else {
 				throw new RuntimeException("Unknown type: " + block.type);
 			}

@@ -100,19 +100,23 @@ public class MapEditorSystem extends AbstractSystem {
 		}
 
 		if (keyboard.isKeyJustPressed(Keys.NUM_1)) { // Save
-				this.saveMap();
-				game.appendToLog("Map saved");
+			this.saveMap();
+			game.appendToLog("Map saved");
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_2)) { // settle
-				if (game.physics_enabled == false) {
-					game.appendToLog("Physics must be enabled");
-				} else {
-					settleBlock();
-				}
+			if (game.physics_enabled == false) {
+				game.appendToLog("Physics must be enabled");
+			} else {
+				settleBlock();
+			}
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_3)) { // Show pos
-				game.appendToLog("Cam pos: " + player.camera.position);
+			game.appendToLog("Cam pos: " + player.camera.position);
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_5)) { // Draw physics
 			Settings.DRAW_PHYSICS = !Settings.DRAW_PHYSICS;
-		} else if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode
+		} else if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode or new Plane
+			/*if (mode == Mode.NEW_BLOCK) {
+				createNewPlane();
+				// drop stright into position mode
+			} */
 			mode = Mode.POSITION;
 			game.appendToLog("Position mode selected");
 			if (this.selectedObject != null) {
@@ -148,7 +152,6 @@ public class MapEditorSystem extends AbstractSystem {
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.G)) { // Toggle physics
 			game.physics_enabled = !game.physics_enabled;
-			//Settings.DEBUG_PHYSICS = game.physics_enabled;
 			game.appendToLog("Physics enabled: " + game.physics_enabled);
 		} else if (keyboard.isKeyJustPressed(Keys.N)) {  // New block
 			this.mode = Mode.NEW_BLOCK;
@@ -309,8 +312,22 @@ public class MapEditorSystem extends AbstractSystem {
 		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
 		game.appendToLog(block.name + " created");
 	}
-	
-	
+
+/*
+	private void createNewPlane() {
+		MapBlockComponent block = new MapBlockComponent();
+		block.size = new Vector3(1, 1, 1);
+		block.position = new Vector3(0, 5, 0);
+		block.type = "plane";
+		block.name = "New plane " + NumberFunctions.rnd(1, 100);
+		block.mass = 0;
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		game.currentLevel.mapdata.blocks.add(block);
+		//this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
+		game.appendToLog(block.name + " created");
+	}
+*/
+
 	private void createNewSphere() {
 		MapBlockComponent block = new MapBlockComponent();
 		block.size = new Vector3(1, 1, 1);
@@ -323,8 +340,8 @@ public class MapEditorSystem extends AbstractSystem {
 		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
 		game.appendToLog(block.name + " created");
 	}
-	
-	
+
+
 	private void createNewCylinder() {
 		MapBlockComponent block = new MapBlockComponent();
 		block.size = new Vector3(1, 1, 1);
@@ -337,18 +354,7 @@ public class MapEditorSystem extends AbstractSystem {
 		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
 		game.appendToLog(block.name + " created");
 	}
-	
-	/*
-	private void setStartPos(int id, Vector3 pos) {
-		if (game.currentLevel.mapdata.start_positions == null) {
-			game.currentLevel.mapdata.start_positions = new HashMap<Integer, Vector3>();
-		}
-		//Vector3 pos = player.camera.position;
-		game.currentLevel.mapdata.start_positions.put(id,  pos);
-		game.appendToLog("Start pos " + (id+1) + " set to " + pos);
-		this.mode = Mode.POSITION;
-	}
-	*/
+
 
 	private void settleBlock() {
 		if (selectedObject == null) {
@@ -451,7 +457,7 @@ public class MapEditorSystem extends AbstractSystem {
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 	}
 
-	
+
 	private void changeMass(int off) {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		this.setBlockDataFromPhysicsData(this.selectedObject, block);
