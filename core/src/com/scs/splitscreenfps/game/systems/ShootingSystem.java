@@ -26,16 +26,21 @@ public class ShootingSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		CanShoot cc = (CanShoot)entity.getComponent(CanShoot.class);
-		WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
-		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
+		if (playerData.health <= 0) {
+			return;
+		}
+
+		CanShoot cc = (CanShoot)entity.getComponent(CanShoot.class);
 
 		if (cc.nextShotTime > System.currentTimeMillis()) {
 			return;
 		}
 
+		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
+
 		if (player.inputMethod.isShootPressed()) {
+			WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
 			//Settings.p("Shoot at " + System.currentTimeMillis());
 			cc.ammo--;
 			cc.nextShotTime = System.currentTimeMillis() + weapon.shot_interval;
@@ -90,19 +95,19 @@ public class ShootingSystem extends AbstractSystem {
 			}
 
 			// Recoil
-			Vector3 tmp = new Vector3();
+			/*Vector3 tmp = new Vector3();
 			tmp.set(player.camera.direction).crs(player.camera.up).nor();
-			player.camera.rotate(tmp, 2);
-		}
+			player.camera.rotate(tmp, 2);*/
 
-		if (cc.ammo <= 0) {
-			//playerData.ability1text = "Reloading...";
-			//BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
-			cc.ammo = weapon.max_ammo;
-			cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
-		}
+			if (cc.ammo <= 0) {
+				//playerData.ability1text = "Reloading...";
+				//BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
+				cc.ammo = weapon.max_ammo;
+				cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
+			}
 
-		playerData.ability1text = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+			playerData.ability1text = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+		}
 
 	}
 

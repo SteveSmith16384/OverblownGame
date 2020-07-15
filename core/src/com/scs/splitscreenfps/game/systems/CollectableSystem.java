@@ -35,26 +35,29 @@ public class CollectableSystem extends AbstractSystem {
 
 			switch (collectable.type) {
 			case HealthPack:
-				this.handleHealthPack(coll.entity2);
+				this.handleHealthPack(coll.entity2, coll.entity1);
 				break;
 			default:
 				if (Settings.STRICT) {
 					throw new RuntimeException("todo");
 				}
 			}
+		}
+	}
 
-			if (collectable.disappearsWhenCollected) {
-				entity.remove();
+
+	private void handleHealthPack(AbstractEntity player, AbstractEntity coll) {
+		PlayerData playerHitData = (PlayerData)player.getComponent(PlayerData.class);
+		if (playerHitData != null) {
+			if (playerHitData.health < Settings.START_HEALTH) {
+				//BillBoardFPS_Main.audio.play("todo");
+				playerHitData.health += 50f;
+				if (playerHitData.health > Settings.START_HEALTH) {
+					playerHitData.health = Settings.START_HEALTH;
+				}
+				coll.remove();
 			}
 		}
 	}
-
-
-	private void handleHealthPack(AbstractEntity player) {
-		PlayerData playerHitData = (PlayerData)player.getComponent(PlayerData.class);
-		if (playerHitData != null) {
-			//BillBoardFPS_Main.audio.play("todo");
-			playerHitData.health += 10f;
-		}
-	}
+	
 }

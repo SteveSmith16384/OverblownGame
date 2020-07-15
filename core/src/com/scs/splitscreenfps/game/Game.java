@@ -197,7 +197,7 @@ public class Game implements IModule, ITextureProvider {
 			ecs.addEntity(te);
 		}
 		 */
-		if (Settings.POST_EFFECTS) {
+		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
 			//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
@@ -360,7 +360,7 @@ public class Game implements IModule, ITextureProvider {
 		this.ecs.getSystem(HarmOnContactSystem.class).process();
 		this.ecs.getSystem(CollectableSystem.class).process();
 		
-		if (Settings.POST_EFFECTS) {
+		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.cleanUpBuffers();
 		}
 
@@ -390,7 +390,7 @@ public class Game implements IModule, ITextureProvider {
 
 			viewportData.frameBuffer.end();
 
-			if (Settings.POST_EFFECTS) {
+			if (Settings.DISABLE_POST_EFFECTS == false) {
 				vfxManager.beginInputCapture();
 			}
 			batch2d.begin();
@@ -405,13 +405,13 @@ public class Game implements IModule, ITextureProvider {
 
 			// Draw HUD
 			currentLevel.renderUI(batch2d, currentViewId);
-			float yOff = font_med.getLineHeight() * 1f;
-			font_med.setColor(1, 1, 1, 1);
+			float yOff = font_small.getLineHeight() * 1f;
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-			font_med.draw(batch2d, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4));
-			font_med.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
-			font_med.draw(batch2d, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2));
-			font_med.draw(batch2d, playerData.ability2text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1));
+			font_small.setColor(1, 1, 1, 1);
+			font_small.draw(batch2d, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4));
+			font_small.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
+			font_small.draw(batch2d, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2));
+			font_small.draw(batch2d, playerData.ability2text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1));
 
 			if (currentViewId == 0) {
 				// Draw log
@@ -441,13 +441,13 @@ public class Game implements IModule, ITextureProvider {
 
 			batch2d.end();
 
-			if (Settings.POST_EFFECTS) {
+			if (Settings.DISABLE_POST_EFFECTS == false) {
 				vfxManager.endInputCapture();
 			}
 
 		}
 
-		if (Settings.POST_EFFECTS) {
+		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.applyEffects();
 			vfxManager.renderToScreen();
 		}
@@ -457,7 +457,7 @@ public class Game implements IModule, ITextureProvider {
 	@Override
 	public void resize(int w, int h) {
 		this.loadAssetsForRescale();
-		if (Settings.POST_EFFECTS) {
+		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.resize(w, h);
 		}
 	}
@@ -491,6 +491,10 @@ public class Game implements IModule, ITextureProvider {
 		batch2d.dispose();
 
 		this.assetManager.dispose();
+		
+		if (Settings.DISABLE_POST_EFFECTS == false) {
+			this.vfxManager.dispose();
+		}
 	}
 
 
