@@ -64,16 +64,6 @@ public abstract class AbstractLevel implements ILevelInterface {
 		}
 
 
-		/*for (int i=0 ; i<4 ; i++) {
-			if (mapdata.start_positions.containsKey(i)) {
-				this.startPositions.add(mapdata.start_positions.get(i));
-			}
-		}
-		while (this.startPositions.size() < game.players.length) {
-			Settings.pe("Warning - adding default start position");
-			this.startPositions.add(new Vector3(10, 10, 10));
-		}*/
-
 		for (MapBlockComponent block : mapdata.blocks) {
 			if (block.position.y < -4f) { // Skip any that have fallen off the edge
 				continue;
@@ -86,9 +76,10 @@ public abstract class AbstractLevel implements ILevelInterface {
 				if (for_map_editor == false) {
 					continue; // Don't add player start sphere!
 				}
-			}
-			if (block.id == 0) {
-				block.id = MapBlockComponent.next_id++;
+			} else if (block.tags.contains("healthpack")) {
+				AbstractEntity health = EntityFactory.createHealthPack(game, block.position);
+				game.ecs.addEntity(health);
+				continue;
 			}
 			game.currentLevel.createAndAddEntityFromBlockData(block, for_map_editor);
 		}
@@ -102,6 +93,9 @@ public abstract class AbstractLevel implements ILevelInterface {
 
 
 	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block, boolean for_map_editor) {
+		if (block.id == 0) {
+			block.id = MapBlockComponent.next_id++;
+		}
 		if (block.model_filename != null && block.model_filename.length() > 0) {
 			AbstractEntity model = EntityFactory.createModel(game.ecs, block.name, block.model_filename, 
 					8, -2f, 7, 

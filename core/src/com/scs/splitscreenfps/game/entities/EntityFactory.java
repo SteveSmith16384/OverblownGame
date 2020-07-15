@@ -19,15 +19,13 @@ import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
-import com.scs.splitscreenfps.game.components.IsBulletComponent;
+import com.scs.splitscreenfps.game.components.IsCollectableComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
-import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
+import com.scs.splitscreenfps.game.systems.CollectableSystem;
 
 import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
@@ -325,10 +323,12 @@ public class EntityFactory {
 	public static AbstractEntity createHealthPack(Game game, Vector3 start) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "HealthPack");
 
+		e.addComponent(new IsCollectableComponent(CollectableSystem.CollectableType.HealthPack));
+
 		e.addComponent(new PositionComponent());
 
 		HasDecal hasDecal = new HasDecal();
-		hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("textures/PowerUp/PowerUp_06.png"), 0.2f);
+		hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("textures/PowerUp/PowerUp_06.png"), 0.4f);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
