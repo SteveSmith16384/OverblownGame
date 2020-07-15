@@ -8,7 +8,7 @@ public class WillRespawnComponent {
 	public Vector3 respawnPoint;
 
 	public WillRespawnComponent(Vector3 _respawnPoint) {
-		this.respawn_time = System.currentTimeMillis() + 3000;
+		this.respawn_time = System.currentTimeMillis() + 4000;
 		respawnPoint = _respawnPoint;
 	}
 

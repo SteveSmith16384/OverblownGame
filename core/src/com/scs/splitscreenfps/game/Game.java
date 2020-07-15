@@ -587,9 +587,9 @@ public class Game implements IModule, ITextureProvider {
 		playerHitData.health -= amt;//bullet.settings.damage;
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
-		float duration = amt/20;
-		if (duration > 4) {
-			duration = 4;
+		float duration = amt/40;
+		if (duration > 3) {
+			duration = 3;
 		}
 		redfilter.addComponent(new RemoveEntityAfterTimeComponent(duration));
 		ecs.addEntity(redfilter);

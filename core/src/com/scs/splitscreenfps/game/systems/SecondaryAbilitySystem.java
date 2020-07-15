@@ -51,9 +51,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 			if (ability.requiresBuildUp) {
 				ability.buildUpActivated = true;
 				ability.power += Gdx.graphics.getDeltaTime();
-				int pcent = (int)(ability.power * 100 / ability.max_power);
+				int pcent = (int)(ability.power * 100 / ability.max_charge_duration);
 				playerData.ability2text = "Power: " + pcent + "%";
-				if (ability.power >= ability.max_power) {
+				if (ability.power >= ability.max_charge_duration) {
 					this.performBuildUpAbility(player, ability);
 				}
 			} else {

@@ -11,22 +11,22 @@ public class SecondaryAbilityComponent {
 	public boolean requiresBuildUp = false;
 	public boolean buildUpActivated = false;
 	public float power = 0;
-	public float max_power;
+	public float max_charge_duration;
 	
-	public SecondaryAbilityComponent(SecondaryAbilityType _type, long _interval) {
+	public SecondaryAbilityComponent(SecondaryAbilityType _type, long _cooldown) {
 		type = _type;
-		cooldown =_interval;
+		cooldown = _cooldown;
 	}
 	
 	
 	/**
 	 * For power build-up abilities
 	 */
-	public SecondaryAbilityComponent(SecondaryAbilityType _type, long _cooldown, float _max_power) {
+	public SecondaryAbilityComponent(SecondaryAbilityType _type, long _cooldown, float _max_charge_duration) {
 		this(_type, _cooldown);
 		
 		this.requiresBuildUp = true;
-		max_power = _max_power;
+		max_charge_duration = _max_charge_duration;
 	}
 
 }

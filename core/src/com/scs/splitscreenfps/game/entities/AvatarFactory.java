@@ -67,7 +67,7 @@ public class AvatarFactory {
 			break;
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 3000, 1f));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 3000, .5f));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.CraterStrike, 30));
 			break;
 		case CHAR_BOWLING_BALL:
