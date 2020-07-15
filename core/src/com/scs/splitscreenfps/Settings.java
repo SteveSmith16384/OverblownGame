@@ -15,8 +15,9 @@ public class Settings {
 	public static final String VERSION = "1.01";
 
 	// Debugging Hacks
-	public static final boolean POST_EFFECTS = !RELEASE_MODE && true;
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
+	public static final boolean DEBUG_HEALTH_PAC = !RELEASE_MODE && true;
+	public static final boolean POST_EFFECTS = !RELEASE_MODE && false;
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_PHARTAH;
 	public static final boolean DEBUG_ULTIMATES = false;
 	public static final int NUM_AUTOSTART_CHARACTERS = 1;

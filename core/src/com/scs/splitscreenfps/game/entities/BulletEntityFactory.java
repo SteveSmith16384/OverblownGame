@@ -42,18 +42,6 @@ public class BulletEntityFactory {
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
-/*		if (playerData.playerIdx == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
-		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
-		} else if (playerData.playerIdx == 2) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
-		} else if (playerData.playerIdx == 3) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
-		} else {
-			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-		}*/
-		
 		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
 
 		hasDecal.faceCamera = true;

@@ -121,7 +121,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
-			startPos.mulAdd(player.camera.direction, .5f);
+			startPos.mulAdd(player.camera.direction, .2f);
 
 			Vector3 dir = new Vector3(player.camera.direction);
 			float DIFF = 0.1f;

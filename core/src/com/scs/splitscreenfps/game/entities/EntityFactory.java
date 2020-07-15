@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
@@ -18,11 +19,17 @@ import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 
+import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
 import ssmith.libgdx.ShapeHelper;
 
@@ -315,5 +322,32 @@ public class EntityFactory {
 	}
 
 
+	public static AbstractEntity createHealthPack(Game game, Vector3 start) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "HealthPack");
+
+		e.addComponent(new PositionComponent());
+
+		HasDecal hasDecal = new HasDecal();
+		hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("textures/PowerUp/PowerUp_06.png"), 0.2f);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = true;
+		e.addComponent(hasDecal);
+
+		// Add physics
+		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
+		btRigidBody body = new btRigidBody(0, null, shape);
+		body.userData = e;
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.disable_gravity = true;
+		e.addComponent(pc);
+
+		return e;
+	}
+
+	
 
 }
