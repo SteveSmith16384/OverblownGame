@@ -36,8 +36,7 @@ public class HarmOnContactSystem extends AbstractSystem {
 			if (playerHitData != null) {
 				if (playerHitData.health > 0) {
 					game.playerDamaged(coll.entity2, playerHitData, harm.damage, null);
-					BillBoardFPS_Main.audio.play(harm.sfx);
-					
+					BillBoardFPS_Main.audio.play(harm.sfx);					
 				}
 			}
 		}

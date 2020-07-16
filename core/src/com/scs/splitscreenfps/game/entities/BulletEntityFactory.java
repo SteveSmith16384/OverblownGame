@@ -21,11 +21,11 @@ import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.HasRangeComponent;
 import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 
@@ -49,6 +49,7 @@ public class BulletEntityFactory {
 		e.addComponent(hasDecal);
 
 		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		e.addComponent(new HasRangeComponent(start, settings.range));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -90,18 +91,6 @@ public class BulletEntityFactory {
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
-		/*if (playerData.playerIdx == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
-		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
-		} else if (playerData.playerIdx == 2) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
-		} else if (playerData.playerIdx == 3) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
-		} else {
-			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-		}*/
-		
 		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
 		
 		hasDecal.faceCamera = true;
@@ -109,6 +98,7 @@ public class BulletEntityFactory {
 		e.addComponent(hasDecal);
 
 		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false));
 
 		// Add physics
@@ -145,18 +135,6 @@ public class BulletEntityFactory {
 
 		if (Settings.DEBUG_PUNCH) {
 			HasDecal hasDecal = new HasDecal();
-			/*if (playerData.playerIdx == 0) {
-				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
-			} else if (playerData.playerIdx == 1) {
-				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
-			} else if (playerData.playerIdx == 2) {
-				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
-			} else if (playerData.playerIdx == 3) {
-				hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
-			} else {
-				throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-			}
-			hasDecal.decal.setPosition(start);*/
 			hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
 			hasDecal.faceCamera = true;
 			hasDecal.dontLockYAxis = true;
@@ -164,6 +142,7 @@ public class BulletEntityFactory {
 		}
 
 		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		e.addComponent(new HasRangeComponent(start, settings.range));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -205,6 +184,7 @@ public class BulletEntityFactory {
 		e.addComponent(hasDecal);
 
 		e.addComponent(new IsBulletComponent(shooter, start, settings, false));
+		e.addComponent(new HasRangeComponent(start, settings.range));
 
 		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter));
 
@@ -237,17 +217,6 @@ public class BulletEntityFactory {
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
-		/*if (playerData.playerIdx == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
-		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
-		} else if (playerData.playerIdx == 2) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
-		} else if (playerData.playerIdx == 3) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
-		} else {
-			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-		}*/
 		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
 
 		hasDecal.faceCamera = true;
@@ -255,8 +224,7 @@ public class BulletEntityFactory {
 		e.addComponent(hasDecal);
 
 		e.addComponent(new IsBulletComponent(shooter, start, settings, false));
-
-		e.addComponent(new RemoveEntityAfterTimeComponent(4));
+		e.addComponent(new HasRangeComponent(start, settings.range));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.2f);
