@@ -5,17 +5,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.scs.splitscreenfps.game.systems.AudioSystem;
 import com.scs.splitscreenfps.pregame.IntroModule;
 
-public class BillBoardFPS_Main extends ApplicationAdapter {
+public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerConnectionListener {
 
 	public static final AudioSystem audio = new AudioSystem();
 
 	private IModule current_module;
 	public IModule next_module;
 	private boolean fullscreen = false;
+
+	public ControllerManager controllerManager;
 
 	@Override
 	public void create() {
@@ -25,8 +28,11 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 		if (Settings.RELEASE_MODE) {
 			this.setFullScreen();
 		}
-		//current_module = new PlayersJoinGameModule(this);
+
+		controllerManager = new ControllerManager(this, 4);
+
 		current_module = new IntroModule(this);
+		
 	}
 
 
@@ -38,6 +44,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {// && Gdx.input.isCursorCatched()) {
 			Gdx.input.setCursorCatched(false);
 		}
+
+		controllerManager.checkForControllers();
 
 		if (next_module != null) {
 			this.current_module.dispose();
@@ -114,6 +122,18 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			current_module = null;
 		}
 		audio.dipose();
+	}
+
+
+	@Override
+	public void connected(Controller controller) {
+		this.current_module.controlledAdded(controller);
+	}
+
+
+	@Override
+	public void disconnected(Controller controller) {
+		this.current_module.controlledRemoved(controller);
 	}
 
 }

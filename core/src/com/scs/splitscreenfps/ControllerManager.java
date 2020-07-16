@@ -17,13 +17,13 @@ public class ControllerManager implements ControllerListener {
 
 	private int max_controllers;
 	private long lastCheckTime;
+	private ControllerConnectionListener listener;
 
-	public ControllerManager(ControllerListener listener, int _max_controllers) {
-		if (listener != null) {
-			Controllers.addListener(listener);
-		}
+	public ControllerManager(ControllerConnectionListener _listener, int _max_controllers) {
+		listener = _listener;
+
 		max_controllers = _max_controllers;
-		
+
 		Controllers.addListener(this);
 	}
 
@@ -64,11 +64,13 @@ public class ControllerManager implements ControllerListener {
 
 	@Override
 	public void disconnected(Controller controller) {
+		Settings.pe("Controller disconnected!");
 		synchronized (allControllers) {
-			Settings.pe("Controller disconnected!");
 			this.allControllers.removeValue(controller, true);
-			this.inGameControllers.remove(controller);
 		}
+		this.inGameControllers.remove(controller);
+		
+		this.listener.disconnected(controller);
 
 	}
 
@@ -81,6 +83,7 @@ public class ControllerManager implements ControllerListener {
 					if (this.inGameControllers.contains(controller) == false) {
 						this.inGameControllers.add(controller);
 						BillBoardFPS_Main.audio.play("sfx/Plug-in.wav");
+						this.listener.connected(controller);
 					}
 				} else {
 					System.err.println("maximum controllers reached");

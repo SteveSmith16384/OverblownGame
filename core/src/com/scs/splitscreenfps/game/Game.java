@@ -9,6 +9,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -53,6 +54,7 @@ import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
+import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.FactoryLevel;
@@ -164,7 +166,7 @@ public class Game implements IModule, ITextureProvider {
 		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
 		//currentLevel = new MapEditorLevel(this);
 		currentLevel = new FactoryLevel(this);
-		
+
 		if (Settings.DEBUG_HEALTH_PAC) {
 			AbstractEntity hp = EntityFactory.createHealthPack(this, new Vector3(5, 1, 4));
 			ecs.addEntity(hp);
@@ -180,7 +182,7 @@ public class Game implements IModule, ITextureProvider {
 			Camera cam = players[i].camera;
 			//cam.lookAt(7, 0.4f, 7); //makes camera slightly slanted?
 			cam.update();
-			
+
 			AbstractEntity crosshairs = GraphicsEntityFactory.createCrosshairs(ecs, this, i);
 			ecs.addEntity(crosshairs);
 
@@ -219,7 +221,7 @@ public class Game implements IModule, ITextureProvider {
 			//vfxManager.addEffect(new ZoomEffect()); // No effect?
 
 		}
-		
+
 		BillBoardFPS_Main.audio.stopMusic();
 	}
 
@@ -283,7 +285,7 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new UltimateAbilitySystem(ecs, this));
 		ecs.addSystem(new CollectableSystem(this, ecs));
 		ecs.addSystem(new RespawnHealthPackSystem(ecs));
-		
+
 	}
 
 
@@ -366,7 +368,7 @@ public class Game implements IModule, ITextureProvider {
 		this.ecs.getSystem(HarmOnContactSystem.class).process();
 		this.ecs.getSystem(CollectableSystem.class).process();
 		this.ecs.getSystem(RespawnHealthPackSystem.class).process();
-		
+
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.cleanUpBuffers();
 		}
@@ -474,10 +476,10 @@ public class Game implements IModule, ITextureProvider {
 		font_small.draw(batch2d, text, x, y-2);
 		font_small.setColor(1, 1, 1, 1);
 		font_small.draw(batch2d, text, x, y);
-	
+
 	}
-	
-	
+
+
 	@Override
 	public void resize(int w, int h) {
 		this.loadAssetsForRescale();
@@ -515,7 +517,7 @@ public class Game implements IModule, ITextureProvider {
 		batch2d.dispose();
 
 		this.assetManager.dispose();
-		
+
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			this.vfxManager.dispose();
 		}
@@ -628,7 +630,7 @@ public class Game implements IModule, ITextureProvider {
 		if (anim != null) {
 			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
 		}
-		
+
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			this.appendToLog(playerData.playerName + " has been killed by " + shooterData.playerName);
@@ -641,7 +643,7 @@ public class Game implements IModule, ITextureProvider {
 
 		HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
 		model.dontDrawInViewId = -1; // So we draw the corpse
-		
+
 		/* 
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
@@ -687,13 +689,13 @@ public class Game implements IModule, ITextureProvider {
 					PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 					if (pc.body.getInvMass() != 0) {
 						pc.body.activate();
-						
+
 						// Calc force/dir
 						frc.set(posData.position);
 						frc.sub(explosionPos).nor();
 						frc.y += .2f;
 						frc.scl(explData.force);
-						
+
 						//pc.body.applyCentralImpulse(vec.cpy().sub(explosionPos).nor().scl(explData.force));
 						pc.body.applyCentralImpulse(frc);
 						//Settings.p("Moving " + e.name);
@@ -770,6 +772,39 @@ public class Game implements IModule, ITextureProvider {
 		@Override
 		public void onContactProcessed (int userValue0, int userValue1) {
 			//Settings.p("Here");
+		}
+
+	}
+
+
+	@Override
+	public void controlledAdded(Controller controller) {
+		for (AbstractPlayersAvatar player : this.players) {
+			if (player.inputMethod instanceof ControllerInputMethod) {
+				//ControllerInputMethod c = (ControllerInputMethod)player.inputMethod;
+				if (player.controlled_connected == false) {
+					player.inputMethod = new ControllerInputMethod(controller);
+					//player.cameraController = new PersonCameraController(player.camera, player.inputMethod);
+					player.controlled_connected = true;
+					this.appendToLog(player.name + " reconnected"); // todo - show player name
+					break;
+				}
+			}
+		}
+	}
+
+
+	@Override
+	public void controlledRemoved(Controller controller) {
+		for (AbstractPlayersAvatar player : this.players) {
+			if (player.inputMethod instanceof ControllerInputMethod) {
+				ControllerInputMethod c = (ControllerInputMethod)player.inputMethod;
+				if (c.controller.hashCode() == controller.hashCode()) {
+					player.controlled_connected = false;
+					this.appendToLog(player.name + " has DISCONNECTED!"); // todo - show player name
+					break;
+				}
+			}
 		}
 
 	}

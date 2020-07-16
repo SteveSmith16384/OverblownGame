@@ -53,7 +53,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		this.addComponent(new PositionComponent());
 
 		camera = _viewportData.camera;
-		cameraController = new PersonCameraController(camera, inputMethod);
+		cameraController = new PersonCameraController(camera);
 		if (Game.physics_enabled == false) {
 			camera.position.set(0, 5, 0);
 		}

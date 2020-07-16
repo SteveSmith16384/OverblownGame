@@ -19,6 +19,7 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 	public int playerIdx;
 	public PersonCameraController cameraController;
 	protected Game game;
+	public boolean controlled_connected = true;
 	
 	public AbstractPlayersAvatar(Game _game, int _playerIdx, String _name) {
 		super(_game.ecs, _name);

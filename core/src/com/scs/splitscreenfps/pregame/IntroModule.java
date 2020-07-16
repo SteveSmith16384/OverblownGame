@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.pregame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -137,6 +138,18 @@ public class IntroModule implements IModule {
 	@Override
 	public void resize(int w, int h) {
 		this.loadAssetsForResize();
+	}
+
+
+	@Override
+	public void controlledAdded(Controller controller) {
+		// Do nothing
+	}
+
+
+	@Override
+	public void controlledRemoved(Controller controller) {
+		// Do nothing
 	}
 
 }

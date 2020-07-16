@@ -96,7 +96,7 @@ public class PlayerProcessSystem implements ISystem {
 
 		if (ourPlayerData.health > 0) {
 			checkMovementInput(player);
-			player.cameraController.update();
+			player.cameraController.update(player.inputMethod);
 		}
 
 		// Position camera

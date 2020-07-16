@@ -17,17 +17,17 @@ public class PersonCameraController {
 
 	private static final float mouseTurnSpeed = 15f;
 
-	private IInputMethod input;
+	//private IInputMethod input;
 
-	public PersonCameraController(Camera cam, IInputMethod _input) {
+	public PersonCameraController(Camera cam) {
 		camera = cam;
-		input = _input;
+		//input = _input;
 	}
 
-	public void update() {
+	public void update( IInputMethod input) {
 		float dt = Gdx.graphics.getDeltaTime();
 
-		if (this.input.isMouse()) {
+		if (input.isMouse()) {
 			if (Gdx.input.isCursorCatched()) {
 				float rx = Gdx.input.getDeltaX();
 				float ry = Gdx.input.getDeltaY();

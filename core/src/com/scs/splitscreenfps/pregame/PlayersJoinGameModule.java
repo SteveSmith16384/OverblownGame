@@ -34,7 +34,6 @@ public class PlayersJoinGameModule implements IModule {
 
 	private SpriteBatch batch2d;
 	private BitmapFont font_small, font_large;
-	private ControllerManager controllerManager = new ControllerManager(null, 3);
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
@@ -53,10 +52,6 @@ public class PlayersJoinGameModule implements IModule {
 		this.appendToLog("Welcome to " + Settings.TITLE);
 
 		this.appendToLog("v" + Settings.VERSION);
-		/*if (Settings.RELEASE_MODE == false) {
-			this.appendToLog("WARNING! Game in debug mode!");
-		}*/
-		//this.appendToLog("Looking for controllers...");
 		this.appendToLog("Click mouse to play with keyboard/mouse");
 		this.appendToLog("Press X to play with controller");
 		this.appendToLog("F1 to toggle full-screen");
@@ -92,14 +87,12 @@ public class PlayersJoinGameModule implements IModule {
 			Gdx.app.exit();
 		}
 
-		controllerManager.checkForControllers();
-
 		if (Settings.AUTO_START) {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
 			GameSelectionData gameSelectionData = null;
 			if (Settings.NUM_AUTOSTART_CHARACTERS > 1) {
-				Array<Controller> allControllers = this.controllerManager.getAllControllers();
+				Array<Controller> allControllers = main.controllerManager.getAllControllers();
 				for (Controller c : allControllers) {
 					inputs.add(new ControllerInputMethod(c));
 				}
@@ -116,7 +109,7 @@ public class PlayersJoinGameModule implements IModule {
 			return;
 		}
 
-		controllerManager.checkForControllers();
+		//controllerManager.checkForControllers();
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -133,13 +126,13 @@ public class PlayersJoinGameModule implements IModule {
 
 		// Show controllers
 		int y = Gdx.graphics.getHeight()-10;// - (int)this.font_large.getLineHeight()*1;
-		Array<Controller> allControllers = this.controllerManager.getAllControllers();
+		Array<Controller> allControllers = main.controllerManager.getAllControllers();
 		int idx = 1;
 		for (Controller c : allControllers) {
 			font_large.setColor(1,  1,  1,  1);
 			font_large.draw(batch2d, "Controller " + idx, 10, y);
 
-			if (this.controllerManager.isControllerInGame(c)) {
+			if (main.controllerManager.isControllerInGame(c)) {
 				font_large.setColor(0,  1,  0,  1);
 				font_large.draw(batch2d, "IN GAME!", 10, y-this.font_large.getLineHeight());
 			} else {
@@ -182,11 +175,11 @@ public class PlayersJoinGameModule implements IModule {
 
 		batch2d.end();
 
-		readKeyboard();
+		readInputs();
 	}
 
 
-	private void readKeyboard() {
+	private void readInputs() {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && keyboard_player_joined == false) {
 			this.keyboard_player_joined = true;
 			this.appendToLog("Mouse/Keyboard player joined!");
@@ -202,10 +195,10 @@ public class PlayersJoinGameModule implements IModule {
 		if (keyboard_player_joined) {
 			inputs.add(new MouseAndKeyboardInputMethod());
 		}
-		for (Controller c : controllerManager.getInGameControllers()) {
-			if (inputs.size() <= 2) { // Max 2 players for now
+		for (Controller c : main.controllerManager.getInGameControllers()) {
+			//scs new ?? if (inputs.size() <= 2) { // Max 2 players for now
 				inputs.add(new ControllerInputMethod(c));
-			}
+			//}
 		}
 		if (inputs.size() > 0) {
 			//main.next_module = new Game(main, inputs);
@@ -242,6 +235,18 @@ public class PlayersJoinGameModule implements IModule {
 		while (log.size() > 6) {
 			log.remove(0);
 		}
+	}
+
+
+	@Override
+	public void controlledAdded(Controller controller) {
+		// Do nothing
+	}
+
+
+	@Override
+	public void controlledRemoved(Controller controller) {
+		// Do nothing
 	}
 
 }

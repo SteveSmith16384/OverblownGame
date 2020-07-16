@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -52,10 +53,6 @@ public class SelectCharacterScreen implements IModule {
 		this.gameSelectionData = new GameSelectionData(inputs.size());
 
 		batch2d = new SpriteBatch();
-
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
-		//frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		loadAssetsForResize();
 
@@ -245,6 +242,20 @@ public class SelectCharacterScreen implements IModule {
 		while (log.size() > 6) {
 			log.remove(0);
 		}
+	}
+
+
+	@Override
+	public void controlledAdded(Controller controller) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void controlledRemoved(Controller controller) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
