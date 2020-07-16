@@ -54,7 +54,7 @@ import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.FactoryLevel;
+import com.scs.splitscreenfps.game.levels.MapEditorLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
@@ -161,8 +161,8 @@ public class Game implements IModule, ITextureProvider {
 		//currentLevel = new IliosLevel(this);
 		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
-		//currentLevel = new MapEditorLevel(this);
-		currentLevel = new FactoryLevel(this);
+		currentLevel = new MapEditorLevel(this);
+		//currentLevel = new FactoryLevel(this);
 		
 		if (Settings.DEBUG_HEALTH_PAC) {
 			AbstractEntity hp = EntityFactory.createHealthPack(this, new Vector3(5, 1, 4));

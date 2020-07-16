@@ -25,8 +25,8 @@ public class FactoryLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			//super.loadJsonFile("maps/factory.json", false);
-			super.loadJsonFile("maps/default_map.json", false);
+			super.loadJsonFile("maps/factory.json", false);
+			//super.loadJsonFile("maps/default_map.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
