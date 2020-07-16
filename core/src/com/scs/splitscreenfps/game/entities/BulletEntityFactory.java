@@ -198,17 +198,6 @@ public class BulletEntityFactory {
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
 		HasDecal hasDecal = new HasDecal();
-		/*if (playerData.playerIdx == 0) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_red.png"), 0.2f);
-		} else if (playerData.playerIdx == 1) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_yellow.png"), 0.2f);
-		} else if (playerData.playerIdx == 2) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_magenta.png"), 0.2f);
-		} else if (playerData.playerIdx == 3) {
-			hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("laser_bolt_green.png"), 0.2f);
-		} else {
-			throw new RuntimeException("Invalid side: " + playerData.playerIdx);
-		}*/
 		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
 
 		hasDecal.faceCamera = true;
@@ -314,6 +303,47 @@ public class BulletEntityFactory {
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f); // This is a lot smaller so the sphere goes through the ground before exploding
+		btRigidBody body = new btRigidBody(1f, null, shape);
+		body.userData = e;
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.force = new Vector3(0, -5, 0);
+		e.addComponent(pc);
+
+		//No, we have a voice sfx  BillBoardFPS_Main.audio.play("sfx/launches/rlaunch.wav");
+
+		return e;
+	}
+
+
+	public static AbstractEntity createMine(Game game, AbstractPlayersAvatar shooter) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "Mine");
+
+		PositionComponent playerPosData = (PositionComponent)shooter.getComponent(PositionComponent.class);
+		Vector3 start = new Vector3(playerPosData.position);
+		//start.x += shooter.camera.direction.x * 2;
+		start.y += 1f;
+		//start.z += shooter.camera.direction.z * 2;
+		
+		float diam = .5f;
+		
+		Texture tex = game.getTexture("textures/sun.jpg");
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		ModelInstance instance = new ModelInstance(sphere_model);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		e.addComponent(model);
+		
+		e.addComponent(new PositionComponent());
+
+		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(.2f, 50, 2), shooter, true));
+
+		// Add physics
+		btSphereShape shape = new btSphereShape(diam); // This is a lot smaller so the sphere goes through the ground before exploding
 		btRigidBody body = new btRigidBody(1f, null, shape);
 		body.userData = e;
 		body.setCollisionShape(shape);

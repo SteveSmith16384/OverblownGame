@@ -14,12 +14,12 @@ public class AvatarFactory {
 
 	public static final int CHAR_PHARTAH = 0;
 	public static final int CHAR_BOOMFIST = 1;
-	public static final int CHAR_WINSTON = 2;
-	public static final int CHAR_BASTION = 3;
-	public static final int CHAR_JUNKRAT = 4;
-	public static final int CHAR_BOWLING_BALL = 5;
+	public static final int CHAR_BOWLING_BALL = 2;
+	public static final int CHAR_WINSTON = 3;
+	public static final int CHAR_BASTION = 4;
+	public static final int CHAR_JUNKRAT = 5;
 
-	public static final int MAX_CHARS = 2;
+	public static final int MAX_CHARS = 3;
 
 	public static String getName(int id) {
 		switch (id) {
@@ -65,26 +65,33 @@ public class AvatarFactory {
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10000));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 60));
 			break;
+			
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 6000, .5f));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.CraterStrike, 50));
 			break;
+			
 		case CHAR_BOWLING_BALL:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10000));
+			avatar.addComponent(new UltimateAbilityComponent(UltimateType.Minefield, 60));
 			break;
+			
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Jump, 3000));
 			break;
+			
 		case CHAR_JUNKRAT:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.StickyMine, 4000));
 			break;
+			
 		case CHAR_BASTION:
 			weapon_type = WeaponSettingsComponent.WEAPON_CANNON;
 			break;
+			
 		default:
 			throw new RuntimeException("Unhandled character: " + character);
 		}

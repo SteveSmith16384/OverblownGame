@@ -60,6 +60,7 @@ import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.VillageLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
+import com.scs.splitscreenfps.game.systems.CheckRangeSystem;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
@@ -285,7 +286,8 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new UltimateAbilitySystem(ecs, this));
 		ecs.addSystem(new CollectableSystem(this, ecs));
 		ecs.addSystem(new RespawnHealthPackSystem(ecs));
-
+		ecs.addSystem(new CheckRangeSystem(ecs));
+		
 	}
 
 
@@ -368,7 +370,9 @@ public class Game implements IModule, ITextureProvider {
 		this.ecs.getSystem(HarmOnContactSystem.class).process();
 		this.ecs.getSystem(CollectableSystem.class).process();
 		this.ecs.getSystem(RespawnHealthPackSystem.class).process();
-
+		this.ecs.getSystem(CheckRangeSystem.class).process();
+		
+		
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.cleanUpBuffers();
 		}

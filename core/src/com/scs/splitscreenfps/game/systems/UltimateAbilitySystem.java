@@ -71,6 +71,9 @@ public class UltimateAbilitySystem extends AbstractSystem {
 				case CraterStrike:
 					startCraterStrike(player, ability);
 					break;
+				case Minefield:
+					startMinefield(player, ability);
+					break;
 				default:
 					throw new RuntimeException("Unknown ability: " + ability.type);
 				}
@@ -99,6 +102,16 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
 		AbstractEntity crater = BulletEntityFactory.createCraterStrike(game, player);
 		game.ecs.addEntity(crater);
+	}
+
+
+	private void startMinefield(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
+		//todo BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
+		
+		for (int i=0 ; i<10 ; i++) {
+			AbstractEntity mine = BulletEntityFactory.createMine(game, player);
+			game.ecs.addEntity(mine);
+		}
 	}
 
 

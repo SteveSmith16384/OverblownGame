@@ -31,17 +31,8 @@ public class BulletSystem extends AbstractSystem { // todo - split this up into 
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
-		//PhysicsComponent physics = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		PositionComponent bulletPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 		
-		// Check range
-		float dist = bullet.start.dst(bulletPos.position);
-		if (dist > bullet.settings.range) {
-			//Settings.p(entity + " reached range");
-			entity.remove();
-			return;
-		}
-
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
