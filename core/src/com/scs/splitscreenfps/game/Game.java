@@ -410,11 +410,12 @@ public class Game implements IModule, ITextureProvider {
 			currentLevel.renderUI(batch2d, currentViewId);
 			float yOff = font_small.getLineHeight() * 1f;
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-			font_small.setColor(1, 1, 1, 1);
-			font_small.draw(batch2d, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4));
-			font_small.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
-			font_small.draw(batch2d, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2));
-			font_small.draw(batch2d, playerData.ability2text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1));
+			//font_small.setColor(1, 1, 1, 1);
+			drawText(playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4));
+			//font_small.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
+			drawText("Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
+			drawText(playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2));
+			drawText(playerData.ability2text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1));
 
 			if (currentViewId == 0) {
 				// Draw log
@@ -461,6 +462,18 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
+	private void drawText(String text, float x, float y) {
+		font_small.setColor(0, 0, 0, 1);
+		font_small.draw(batch2d, text, x+2, y);
+		font_small.draw(batch2d, text, x-2, y);
+		font_small.draw(batch2d, text, x, y+2);
+		font_small.draw(batch2d, text, x, y-2);
+		font_small.setColor(1, 1, 1, 1);
+		font_small.draw(batch2d, text, x, y);
+	
+	}
+	
+	
 	@Override
 	public void resize(int w, int h) {
 		this.loadAssetsForRescale();

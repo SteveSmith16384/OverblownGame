@@ -51,9 +51,15 @@ public class DrawTextSystem extends AbstractSystem {
 			dtd.x = Gdx.graphics.getWidth() / 2 - len/2;
 		}*/
 
-		font.setColor(dtd.colour);
 		float x = Gdx.graphics.getBackBufferWidth() * dtd.x_pcent / 100;
 		float y = Gdx.graphics.getBackBufferHeight() * dtd.y_pcent / 100;
+		font.setColor(0, 0, 0, 1);
+		font.draw(batch2d, dtd.text, x+2, y);
+		font.draw(batch2d, dtd.text, x-2, y);
+		font.draw(batch2d, dtd.text, x, y+2);
+		font.draw(batch2d, dtd.text, x, y-2);
+
+		font.setColor(dtd.colour);
 		font.draw(batch2d, dtd.text, x, y);
 	}
 
