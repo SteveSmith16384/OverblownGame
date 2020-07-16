@@ -41,6 +41,7 @@ import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -54,7 +55,7 @@ import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.MapEditorLevel;
+import com.scs.splitscreenfps.game.levels.FactoryLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
@@ -161,8 +162,8 @@ public class Game implements IModule, ITextureProvider {
 		//currentLevel = new IliosLevel(this);
 		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
-		currentLevel = new MapEditorLevel(this);
-		//currentLevel = new FactoryLevel(this);
+		//currentLevel = new MapEditorLevel(this);
+		currentLevel = new FactoryLevel(this);
 		
 		if (Settings.DEBUG_HEALTH_PAC) {
 			AbstractEntity hp = EntityFactory.createHealthPack(this, new Vector3(5, 1, 4));
@@ -422,14 +423,14 @@ public class Game implements IModule, ITextureProvider {
 
 			if (currentViewId == 0) {
 				// Draw log
-				font_small.setColor(1,  1,  1,  1);
+				//font_small.setColor(1,  1,  1,  1);
 				int y = viewportData.viewRect.y+viewportData.viewRect.height-20;
 				if (this.players.length == 3) {
 					// Put log in top-left
 					y = (viewportData.viewRect.height*2)-20;
 				}
 				for (String s :this.log) {
-					font_small.draw(batch2d, s, viewportData.viewRect.x+10, y);
+					drawText(s, viewportData.viewRect.x+10, y);
 					y -= this.font_small.getLineHeight();
 				}
 			}
@@ -602,8 +603,8 @@ public class Game implements IModule, ITextureProvider {
 
 		main.audio.play("sfx/hit1.wav");
 
-		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
-		playerHitData.health -= amt;//bullet.settings.damage;
+		//Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
+		playerHitData.health -= amt;
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
 		float duration = amt/40;
@@ -638,6 +639,9 @@ public class Game implements IModule, ITextureProvider {
 		playerData.health = 0;
 		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
 
+		HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
+		model.dontDrawInViewId = -1; // So we draw the corpse
+		
 		/* 
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);

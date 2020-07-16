@@ -9,9 +9,12 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WillRespawnComponent;
+import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 
 public class RespawnPlayerSystem implements ISystem {
 
@@ -50,6 +53,13 @@ public class RespawnPlayerSystem implements ISystem {
 				// Reset health
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);
 				playerData.health = playerData.max_health;
+				
+				AbstractPlayersAvatar player = (AbstractPlayersAvatar)e;
+				//player.camera.lookAt(new Vector3(15, .5f, 15));
+				//player.camera.update();
+				
+				HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
+				model.dontDrawInViewId = playerData.playerIdx; // Since we changed it to draw the corpse
 
 				e.removeComponent(WillRespawnComponent.class);
 				this.entities.remove(i);

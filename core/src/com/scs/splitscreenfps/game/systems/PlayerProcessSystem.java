@@ -100,13 +100,21 @@ public class PlayerProcessSystem implements ISystem {
 		}
 
 		// Position camera
-		if (Game.physics_enabled) {
+		if (Game.physics_enabled) { // Else free roaming camera
 			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
-			player.camera.position.set(posData.position.x, posData.position.y + (PlayersAvatar_Person.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+			if (ourPlayerData.health > 0) {
+				player.camera.position.set(posData.position.x, posData.position.y + (PlayersAvatar_Person.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+				// Set rotation based on camera
+				tmpVec2.set(player.camera.direction.x, player.camera.direction.z);
+				posData.angle_y_degrees = -tmpVec2.angle();
+			} else {
+				player.camera.position.set(posData.position.x, posData.position.y + 4, posData.position.z);
+				player.camera.update();
 
-			// Set rotation based on camera
-			tmpVec2.set(player.camera.direction.x, player.camera.direction.z);
-			posData.angle_y_degrees = -tmpVec2.angle();
+				player.camera.lookAt(posData.position);
+				player.camera.update();
+			}
+
 		}
 	}
 

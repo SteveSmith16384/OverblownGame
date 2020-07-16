@@ -26,7 +26,7 @@ public class ViewportData {
 		camera.position.set(10f, 0, 10f);
 		camera.lookAt(11f, 0, 10f);
 		camera.near = 0.1f;
-		camera.far = 30f;
+		camera.far = 100f;
 		camera.update();
 
 		ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
