@@ -178,6 +178,9 @@ public class Game implements IModule, ITextureProvider {
 			Camera cam = players[i].camera;
 			//cam.lookAt(7, 0.4f, 7); //makes camera slightly slanted?
 			cam.update();
+			
+			AbstractEntity crosshairs = GraphicsEntityFactory.createCrosshairs(ecs, this, i);
+			ecs.addEntity(crosshairs);
 
 		}	
 

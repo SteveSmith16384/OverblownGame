@@ -17,7 +17,7 @@ import com.scs.splitscreenfps.game.events.EventCollision;
  * Handles bullets, grenades and rockets
  *
  */
-public class BulletSystem extends AbstractSystem {
+public class BulletSystem extends AbstractSystem { // todo - split this up into other systems
 
 	private Game game;
 

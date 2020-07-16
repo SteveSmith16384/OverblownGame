@@ -31,7 +31,7 @@ public class GraphicsEntityFactory {
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setColor(1, 0, 0, .5f);
 
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent("Red Filter", sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1), false);
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
 		
@@ -48,7 +48,7 @@ public class GraphicsEntityFactory {
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setColor(.8f, .8f, .8f, .3f);
 
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent("White filter", sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1), false);
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
 
@@ -122,6 +122,21 @@ public class GraphicsEntityFactory {
 		}
 		entity.addComponent(cycle);
 
+		return entity;	
+
+	}
+
+
+	public static AbstractEntity createCrosshairs(BasicECS ecs, ITextureProvider texProv, int viewId) {
+		AbstractEntity entity = new AbstractEntity(ecs, "Crosshairs");
+
+		Texture weaponTex = texProv.getTexture("crosshairs2.png");
+		Sprite sprite = new Sprite(weaponTex);
+
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0.46f, .38f, .08f, .08f), true);
+		entity.addComponent(hgsc);
+		hgsc.onlyViewId = viewId;
+		
 		return entity;	
 
 	}
