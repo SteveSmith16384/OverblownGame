@@ -180,14 +180,15 @@ public class MapEditorSystem extends AbstractSystem {
 					game.currentLevel.mapdata.blocks.remove(block);
 					this.selectedObject.remove();
 					game.appendToLog("Block removed");
-					this.selectedObject = null;
+					//this.selectedObject = null; No!  So we can undo
 				} else {
-					game.appendToLog("Press Shift to remove block");
+					game.appendToLog("Press Shift-X to remove block");
 				}
 			} else if (keyboard.isKeyJustPressed(Keys.U)) { // Undo
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 				this.selectedObject.remove();
 				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+				game.appendToLog("Action undone");
 			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation/position/size
 				reAlignBlock();
 				game.appendToLog("Block re-aligned");

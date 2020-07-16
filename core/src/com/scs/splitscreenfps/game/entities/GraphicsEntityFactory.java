@@ -133,7 +133,7 @@ public class GraphicsEntityFactory {
 		Texture weaponTex = texProv.getTexture("crosshairs2.png");
 		Sprite sprite = new Sprite(weaponTex);
 
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0.46f, .38f, .08f, .08f), true);
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0.46f, .40f, .08f, .08f), true);
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
 		

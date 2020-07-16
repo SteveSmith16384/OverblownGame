@@ -62,16 +62,17 @@ public class AvatarFactory {
 		switch (character) {
 		case CHAR_PHARTAH:
 			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 6000));
-			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 30));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10000));
+			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 60));
 			break;
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 3000, .5f));
-			avatar.addComponent(new UltimateAbilityComponent(UltimateType.CraterStrike, 30));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 6000, .5f));
+			avatar.addComponent(new UltimateAbilityComponent(UltimateType.CraterStrike, 50));
 			break;
 		case CHAR_BOWLING_BALL:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10000));
 			break;
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
