@@ -56,5 +56,6 @@ public class RespawnPlayerSystem implements ISystem {
 			}
 		}
 	}
-
+	
+	
 }

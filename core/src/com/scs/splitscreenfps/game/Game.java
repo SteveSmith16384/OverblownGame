@@ -71,6 +71,7 @@ import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
+import com.scs.splitscreenfps.game.systems.RespawnHealthPackSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
 import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
@@ -280,6 +281,7 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new SecondaryAbilitySystem(ecs, this));
 		ecs.addSystem(new UltimateAbilitySystem(ecs, this));
 		ecs.addSystem(new CollectableSystem(this, ecs));
+		ecs.addSystem(new RespawnHealthPackSystem(ecs));
 		
 	}
 
@@ -362,6 +364,7 @@ public class Game implements IModule, ITextureProvider {
 		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
 		this.ecs.getSystem(HarmOnContactSystem.class).process();
 		this.ecs.getSystem(CollectableSystem.class).process();
+		this.ecs.getSystem(RespawnHealthPackSystem.class).process();
 		
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.cleanUpBuffers();
