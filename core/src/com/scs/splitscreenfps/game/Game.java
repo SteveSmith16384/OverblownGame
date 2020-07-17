@@ -33,6 +33,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.BloomEffect;
 import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
@@ -52,7 +53,6 @@ import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
@@ -211,7 +211,7 @@ public class Game implements IModule, ITextureProvider {
 			//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
 			vfxManager.addEffect(new LensFlareEffect()); // Good
-			//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
+			vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
 			//vfxManager.addEffect(new FxaaEffect()); // No effect?
 			//vfxManager.addEffect(new LevelsEffect()); // No effect
 			//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f)); // A bit trippy

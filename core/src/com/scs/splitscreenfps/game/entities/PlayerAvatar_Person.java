@@ -21,12 +21,12 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import ssmith.libgdx.ModelFunctions;
 
 // This also moves the camera
-public class PlayersAvatar_Person extends AbstractPlayersAvatar {
+public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 
 	private static final float DAMPING = 0.9f;
 
-	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int health) {
-		super(_game, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
+	public PlayerAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int health) {
+		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		inputMethod = _inputMethod;
 

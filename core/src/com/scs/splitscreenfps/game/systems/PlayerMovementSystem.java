@@ -12,7 +12,7 @@ import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
-import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
+import com.scs.splitscreenfps.game.entities.PlayerAvatar_Person;
 
 public class PlayerMovementSystem extends AbstractSystem {
 
@@ -42,7 +42,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 		// Check they are on ground
 		Matrix4 mat = physics.body.getWorldTransform();
 		mat.getTranslation(tmpVec);
-		btCollisionObject obj = game.rayTestByDir(tmpVec, V_DOWN, PlayersAvatar_Person.PLAYER_HEIGHT+ .2f);
+		btCollisionObject obj = game.rayTestByDir(tmpVec, V_DOWN, PlayerAvatar_Person.PLAYER_HEIGHT+ .2f);
 		boolean on_floor = (obj != null);
 
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {

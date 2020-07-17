@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.ITextureProvider;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
@@ -133,7 +134,11 @@ public class GraphicsEntityFactory {
 		Texture weaponTex = texProv.getTexture("crosshairs2.png");
 		Sprite sprite = new Sprite(weaponTex);
 
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0.46f, .40f, .08f, .08f), true);
+		float y = .4f;
+		if (Settings.USE_MAP_EDITOR) {
+			y = 0.45f;
+		}
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0.46f, y, .08f, .08f), true);
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
 		

@@ -28,7 +28,7 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 	private static final float DAMPING = 0.3f;
 
 	public PlayerAvatar_Ball(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int health) {
-		super(_game, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
+		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		inputMethod = _inputMethod;
 

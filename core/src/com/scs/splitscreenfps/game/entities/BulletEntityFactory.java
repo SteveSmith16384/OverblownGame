@@ -308,8 +308,9 @@ public class BulletEntityFactory {
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = new ModelBuilder();
-		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		Model sphere_model = modelBuilder.createSphere(diam, diam, diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
+		
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
 		
@@ -318,18 +319,19 @@ public class BulletEntityFactory {
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", 20, true, false));
 		e.addComponent(new RemoveEntityAfterTimeComponent(20));
 		
-		float mass = 1f;
 		// Add physics
+		float mass = 1f;
 		btSphereShape shape = new btSphereShape(diam/2); // This is a lot smaller so the sphere goes through the ground before exploding
 		Vector3 local_inertia = new Vector3();
 		shape.calculateLocalInertia(mass, local_inertia);
+		//scs new btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody body = new btRigidBody(mass, null, shape, local_inertia);
 		body.userData = e;
 		body.setRestitution(.5f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
-		body.setFriction(0);
+		body.setFriction(0.1f);
 		body.setWorldTransform(mat);
 		
 		PhysicsComponent pc = new PhysicsComponent(body);

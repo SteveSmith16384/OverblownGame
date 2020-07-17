@@ -94,7 +94,7 @@ public class EntityFactory {
 
 		btSphereShape sphere_shape = new btSphereShape(diam/2);
 		Vector3 local_inertia = new Vector3();
-		sphere_shape.calculateLocalInertia(1f, local_inertia);
+		sphere_shape.calculateLocalInertia(mass, local_inertia);
 		btRigidBody groundObject = new btRigidBody(mass, null, sphere_shape, local_inertia);
 		groundObject.userData = ball;
 		groundObject.setRestitution(.5f);

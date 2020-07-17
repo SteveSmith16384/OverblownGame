@@ -54,7 +54,7 @@ public class AvatarFactory {
 		if (character == CHAR_BOWLING_BALL) {
 			avatar = new PlayerAvatar_Ball(_game, playerIdx, _viewportData, _inputMethod, getHealth(character));
 		} else {
-			avatar = new PlayersAvatar_Person(_game, playerIdx, _viewportData, _inputMethod, getHealth(character));
+			avatar = new PlayerAvatar_Person(_game, playerIdx, _viewportData, _inputMethod, getHealth(character));
 		}
 		
 		WeaponSettingsComponent weapon;

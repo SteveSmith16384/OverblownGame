@@ -17,7 +17,7 @@ import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PlayerMovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
-import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
+import com.scs.splitscreenfps.game.entities.PlayerAvatar_Person;
 import com.scs.splitscreenfps.game.events.EventCollision;
 
 public class PlayerProcessSystem implements ISystem {
@@ -103,7 +103,7 @@ public class PlayerProcessSystem implements ISystem {
 		if (Game.physics_enabled) { // Else free roaming camera
 			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 			if (ourPlayerData.health > 0) {
-				player.camera.position.set(posData.position.x, posData.position.y + (PlayersAvatar_Person.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+				player.camera.position.set(posData.position.x, posData.position.y + (PlayerAvatar_Person.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 				// Set rotation based on camera
 				tmpVec2.set(player.camera.direction.x, player.camera.direction.z);
 				posData.angle_y_degrees = -tmpVec2.angle();
