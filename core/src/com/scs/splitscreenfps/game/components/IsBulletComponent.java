@@ -3,7 +3,7 @@ package com.scs.splitscreenfps.game.components;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 
-public class IsBulletComponent {
+public class IsBulletComponent { // todo - delete this
 
 	public AbstractEntity shooter;
 	public WeaponSettingsComponent settings;

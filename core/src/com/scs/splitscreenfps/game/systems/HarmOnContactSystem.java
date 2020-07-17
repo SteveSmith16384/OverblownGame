@@ -31,13 +31,16 @@ public class HarmOnContactSystem extends AbstractSystem {
 		}
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
+			if (coll.entity2 == harm.shooter) {
+				continue;
+			}
 
 			PlayerData playerHitData = (PlayerData)coll.entity2.getComponent(PlayerData.class);
-			if (playerHitData != null) {
-				if (playerHitData.health > 0) {
-					game.playerDamaged(coll.entity2, playerHitData, harm.damage, null);
+			if (playerHitData != null) { // Is it another player we hit?
+				//if (playerHitData.health > 0) {
+					game.playerDamaged(coll.entity2, playerHitData, harm.damage, harm.shooter);
 					BillBoardFPS_Main.audio.play(harm.sfx);					
-				}
+				//}
 			}
 		}
 	}

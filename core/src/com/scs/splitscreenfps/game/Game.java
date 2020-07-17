@@ -59,7 +59,6 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.VillageLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
-import com.scs.splitscreenfps.game.systems.BulletSystem;
 import com.scs.splitscreenfps.game.systems.CheckRangeSystem;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -69,12 +68,14 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
+import com.scs.splitscreenfps.game.systems.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.systems.HarmOnContactSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
 import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
+import com.scs.splitscreenfps.game.systems.RemoveOnContactSystem;
 import com.scs.splitscreenfps.game.systems.RespawnHealthPackSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
 import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
@@ -273,7 +274,7 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
 		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
-		ecs.addSystem(new BulletSystem(ecs, this));
+		//ecs.addSystem(new BulletSystem(ecs, this));
 		ecs.addSystem(new ShootingSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
@@ -287,6 +288,8 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new CollectableSystem(this, ecs));
 		ecs.addSystem(new RespawnHealthPackSystem(ecs));
 		ecs.addSystem(new CheckRangeSystem(ecs));
+		ecs.addSystem(new RemoveOnContactSystem(ecs));
+		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
 		
 	}
 
@@ -361,7 +364,7 @@ public class Game implements IModule, ITextureProvider {
 		}
 
 		this.ecs.getSystem(PhysicsSystem.class).process();
-		this.ecs.processSystem(BulletSystem.class);
+		//this.ecs.processSystem(BulletSystem.class);
 		this.ecs.processSystem(ShootingSystem.class);
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
@@ -371,6 +374,8 @@ public class Game implements IModule, ITextureProvider {
 		this.ecs.getSystem(CollectableSystem.class).process();
 		this.ecs.getSystem(RespawnHealthPackSystem.class).process();
 		this.ecs.getSystem(CheckRangeSystem.class).process();
+		this.ecs.getSystem(RemoveOnContactSystem.class).process();
+		this.ecs.getSystem(ExplodeOnContactSystem.class).process();
 		
 		
 		if (Settings.DISABLE_POST_EFFECTS == false) {

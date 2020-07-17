@@ -19,6 +19,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
+import com.scs.splitscreenfps.game.components.HarmOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.HasRangeComponent;
@@ -26,6 +27,7 @@ import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 
@@ -48,22 +50,20 @@ public class BulletEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
+		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
+		
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
 		btRigidBody body = new btRigidBody(.1f, null, shape);
 		body.userData = e;
-		//body.setFriction(0);
-		//body.setRestitution(.9f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
-		//body.applyCentralForce(offset.scl(100));
-		//body.applyCentralImpulse(offset.scl(10));
-		//body.setGravity(new Vector3());
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
 		pc.force = dir.scl(1.5f);
@@ -97,9 +97,10 @@ public class BulletEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false));
+		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, true));
+		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -141,8 +142,10 @@ public class BulletEntityFactory {
 			e.addComponent(hasDecal);
 		}
 
-		e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
+		e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
+		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -154,9 +157,6 @@ public class BulletEntityFactory {
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
-		//body.applyCentralForce(offset.scl(100));
-		//body.applyCentralImpulse(offset.scl(10));
-		//body.setGravity(new Vector3());
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
 		pc.force = dir.scl(100f);
@@ -183,8 +183,9 @@ public class BulletEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, start, settings, false));
+		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new HasRangeComponent(start, settings.range));
+		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
 
 		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter));
 
@@ -223,8 +224,10 @@ public class BulletEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		e.addComponent(new IsBulletComponent(shooter, start, settings, false));
+		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
+		e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
+		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.2f);
@@ -266,7 +269,6 @@ public class BulletEntityFactory {
 		e.addComponent(model);
 		
 		e.addComponent(new PositionComponent());
-
 		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(3, 80, 5), shooter, true));
 
 		// Add physics
@@ -307,7 +309,6 @@ public class BulletEntityFactory {
 		e.addComponent(model);
 		
 		e.addComponent(new PositionComponent());
-
 		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(.2f, 50, 2), shooter, true));
 
 		// Add physics

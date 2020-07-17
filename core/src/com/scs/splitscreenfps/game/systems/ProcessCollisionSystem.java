@@ -22,8 +22,8 @@ public class ProcessCollisionSystem {
 
 
 	public void processCollision(AbstractEntity e1, AbstractEntity e2, float force) {
-		checkForExplosion(e1, e2);
-		checkForExplosion(e2, e1);
+		//checkForExplosion(e1, e2); // todo - move this to new ExplodeOnContactSystem
+		//checkForExplosion(e2, e1);
 
 		game.ecs.events.add(new EventCollision(e1, e2, force));
 

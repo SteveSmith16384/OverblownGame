@@ -56,6 +56,9 @@ public class AudioSystem {
 
 	public void play(String name) {
 		try {
+			if (name.isEmpty()) {
+				return;
+			}
 			if (sounds.containsKey(name)) {
 				sounds.get(name).play();
 			} else {

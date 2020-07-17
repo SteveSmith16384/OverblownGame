@@ -73,9 +73,10 @@ public class DrawDecalSystem extends AbstractSystem {
 		} else {
 			PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			hasDecal.decal.setPosition(pos.position);
-			hasDecal.decal.translateY(.5f);
+			//hasDecal.decal.translateY(.5f);
 		}
 
+		//hasDecal.decal.getPosition().y -= hasDecal.decal.getHeight()/2;
 	}
 
 

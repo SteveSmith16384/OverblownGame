@@ -64,7 +64,7 @@ public class PlayerProcessSystem implements ISystem {
 				AbstractEntity entityHit = (AbstractEntity)coll.entity2;
 				if (entityHit instanceof AbstractPlayersAvatar) { // Have we hit another player?
 					if (ourPlayerData.performing_power_punch) {
-						float force = ourPhysics.body.getLinearVelocity().len();
+						float force = coll.force;//ourPhysics.body.getLinearVelocity().len();
 						if (force > LINEAR_VELOCITY_CUTOFF) { // Did we hit them really hard, i.e. are we Boomfist?
 							Vector3 dir = ourPhysics.body.getLinearVelocity();
 							PhysicsComponent theirPhysics = (PhysicsComponent)entityHit.getComponent(PhysicsComponent.class);
