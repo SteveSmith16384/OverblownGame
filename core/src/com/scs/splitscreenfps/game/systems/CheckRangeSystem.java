@@ -21,7 +21,7 @@ public class CheckRangeSystem extends AbstractSystem {
 		// Check range
 		float dist = rangeComp.start.dst(bulletPos.position);
 		if (dist > rangeComp.range) {
-			Settings.p(entity + " reached range");
+			//Settings.p(entity + " reached range");
 			entity.remove();
 		}
 

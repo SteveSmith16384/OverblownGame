@@ -31,4 +31,5 @@ public class AnimatedComponent {
 			loop = _loop;
 		}
 	}
+	
 }

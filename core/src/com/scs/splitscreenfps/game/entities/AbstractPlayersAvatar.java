@@ -3,10 +3,12 @@ package com.scs.splitscreenfps.game.entities;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PersonCameraController;
+import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
@@ -26,6 +28,10 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 		
 		game = _game;
 		playerIdx = _playerIdx;
+		
+		DrawTextIn3DSpaceComponent text = new DrawTextIn3DSpaceComponent("H: ", new Vector3(0, 1, 0), 4, playerIdx);
+		this.addComponent(text);
+
 	}
 
 	
