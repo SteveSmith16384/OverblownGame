@@ -427,8 +427,9 @@ public class Game implements IModule, ITextureProvider {
 			float yOff = font_small.getLineHeight() * 1f;
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 			//font_small.setColor(1, 1, 1, 1);
+			drawText("Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6));
+			drawText("Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5));
 			drawText(playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4));
-			//font_small.draw(batch2d, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
 			drawText("Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
 			drawText(playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2));
 			drawText(playerData.ability2text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1));
@@ -607,7 +608,7 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
-	public void playerDamaged(AbstractEntity player, PlayerData playerHitData, float amt, AbstractEntity shooter) {
+	public void playerDamaged(AbstractEntity player, PlayerData playerHitData, int amt, AbstractEntity shooter) {
 		if (playerHitData.health <= 0) {
 			// Already dead
 			return;
@@ -627,6 +628,11 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addEntity(redfilter);
 
 		playerHitData.last_person_to_hit_them = shooter;
+		
+		if (shooter != null) {
+			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
+			shooterData.damage_caused += amt;
+		}
 
 		if (playerHitData.health <= 0) {
 			playerDied(player, playerHitData, shooter);
@@ -635,7 +641,7 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
-	public void playerDied(AbstractEntity player, PlayerData playerData, AbstractEntity shooter) {
+	public void playerDied(AbstractEntity player, PlayerData playerDiedData, AbstractEntity shooter) {
 		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
 		if (anim != null) {
 			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
@@ -643,13 +649,14 @@ public class Game implements IModule, ITextureProvider {
 
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
-			this.appendToLog(playerData.playerName + " has been killed by " + shooterData.playerName);
+			this.appendToLog(playerDiedData.playerName + " has been killed by " + shooterData.playerName);
+				shooterData.num_kills++;
 		} else {
-			this.appendToLog(playerData.playerName + " has been killed");
+			this.appendToLog(playerDiedData.playerName + " has been killed");
 		}
 
-		playerData.health = 0;
-		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerData.playerIdx));
+		playerDiedData.health = 0;
+		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerDiedData.playerIdx));
 
 		HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
 		model.dontDrawInViewId = -1; // So we draw the corpse

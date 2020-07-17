@@ -103,13 +103,13 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER:
-			ExplosionData explData = new ExplosionData(1f, 10f, 2f);
+			ExplosionData explData = new ExplosionData(1f, 10, 2f);
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER, 600, 1500, 12, 20, 20, explData);
 			weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER: 
-			ExplosionData explData2 = new ExplosionData(1f, 10f, 3f);
+			ExplosionData explData2 = new ExplosionData(1f, 10, 3f);
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 800, 2000, 6, 20, 30, explData2);
 			weapon.kickback_force = 5f;
 			break;

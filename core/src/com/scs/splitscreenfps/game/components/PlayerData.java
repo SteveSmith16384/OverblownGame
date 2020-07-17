@@ -16,6 +16,7 @@ public class PlayerData {
 	public String ultimateText = "";
 	public boolean performing_power_punch;
 	public boolean has_been_punched;
+	public int damage_caused, num_kills;
 
 	public PlayerData(int _playerIdx, int _health) {
 		playerIdx = _playerIdx;

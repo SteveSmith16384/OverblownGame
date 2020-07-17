@@ -4,13 +4,13 @@ import com.scs.basicecs.AbstractEntity;
 
 public class HarmPlayerOnContactComponent {
 
-	public float damage;
+	public int damage;
 	public String sfx;
 	public AbstractEntity shooter;
 	public boolean remove;
 	public boolean show_explosion;
 	
-	public HarmPlayerOnContactComponent(AbstractEntity _shooter, String _sfx, float _damage, boolean _remove, boolean _show_explosion) {
+	public HarmPlayerOnContactComponent(AbstractEntity _shooter, String _sfx, int _damage, boolean _remove, boolean _show_explosion) {
 		shooter = _shooter;
 		sfx = _sfx;
 		damage = _damage;
