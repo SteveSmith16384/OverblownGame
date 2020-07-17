@@ -39,6 +39,8 @@ public class BulletEntityFactory {
 	public static AbstractEntity createBullet(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Bullet");
 
+		float size = 0.1f;
+		
 		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
@@ -54,11 +56,11 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true, true));
 		
 
 		// Add physics
-		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
+		btBoxShape shape = new btBoxShape(new Vector3(size/2, size/2, size/2));
 		btRigidBody body = new btRigidBody(.1f, null, shape);
 		body.userData = e;
 		body.setCollisionShape(shape);
@@ -86,6 +88,8 @@ public class BulletEntityFactory {
 	public static AbstractEntity createRocket(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Rocket");
 
+		float size = .1f;
+		
 		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
@@ -101,10 +105,10 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, true, false));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true, false));
 
 		// Add physics
-		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
+		btBoxShape shape = new btBoxShape(new Vector3(size/2, size/2, size/2));
 		btRigidBody body = new btRigidBody(.1f, null, shape);
 		body.userData = e;
 		//body.setFriction(0);
@@ -146,7 +150,7 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		//e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, false));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, false, true));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -186,7 +190,7 @@ public class BulletEntityFactory {
 
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true, false));
 		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true));
 	
@@ -195,7 +199,7 @@ public class BulletEntityFactory {
 		btRigidBody body = new btRigidBody(.1f, null, shape);
 		body.userData = e;
 		body.setFriction(0.9f);
-		body.setRestitution(.6f);
+		body.setRestitution(.7f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
@@ -228,10 +232,10 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true, true));
 
 		// Add physics
-		btSphereShape shape = new btSphereShape(.2f);
+		btSphereShape shape = new btSphereShape(.1f);
 		btRigidBody body = new btRigidBody(.2f, null, shape);
 		body.userData = e;
 		body.setFriction(0.6f);
@@ -255,9 +259,9 @@ public class BulletEntityFactory {
 
 		PositionComponent playerPosData = (PositionComponent)shooter.getComponent(PositionComponent.class);
 		Vector3 start = new Vector3(playerPosData.position);
-		start.x += shooter.camera.direction.x * 2;
-		start.y += 30f;
-		start.z += shooter.camera.direction.z * 2;
+		start.x += shooter.camera.direction.x * 1.5f;
+		start.y += 20f;
+		start.z += shooter.camera.direction.z * 1.5f;
 		
 		float diam = 3f;
 		
@@ -311,7 +315,7 @@ public class BulletEntityFactory {
 		
 		e.addComponent(new PositionComponent());
 		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(.2f, 10, 2), shooter, false, true));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", 20, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", 20, true, false));
 		e.addComponent(new RemoveEntityAfterTimeComponent(20));
 		
 		float mass = 1f;

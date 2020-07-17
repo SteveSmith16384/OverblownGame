@@ -289,7 +289,7 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new RemoveOnContactSystem(ecs));
 		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
-		
+
 	}
 
 
@@ -348,8 +348,10 @@ public class Game implements IModule, ITextureProvider {
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();		
 		this.ecs.processSystem(SpeechSystem.class);
-		this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
-		this.ecs.processSystem(UltimateAbilitySystem.class); // Must be before player movement system
+		if (this.game_stage == 0) {
+			this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
+			this.ecs.processSystem(UltimateAbilitySystem.class); // Must be before player movement system
+		}
 		this.ecs.getSystem(PlayerProcessSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 
@@ -362,19 +364,21 @@ public class Game implements IModule, ITextureProvider {
 			}
 		}
 
-		this.ecs.getSystem(PhysicsSystem.class).process();
-		this.ecs.processSystem(ShootingSystem.class);
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
-		this.ecs.getSystem(CollectableSystem.class).process();
-		this.ecs.getSystem(RespawnHealthPackSystem.class).process();
-		this.ecs.getSystem(HarmPlayerOnContactSystem.class).process();
-		this.ecs.getSystem(ExplodeOnContactSystem.class).process();
-		this.ecs.getSystem(RemoveOnContactSystem.class).process();		
-		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
+		this.ecs.getSystem(PhysicsSystem.class).process();
+		if (this.game_stage == 0) {
+			this.ecs.processSystem(ShootingSystem.class);
+			this.ecs.getSystem(CollectableSystem.class).process();
+			this.ecs.getSystem(RespawnHealthPackSystem.class).process();
+			this.ecs.getSystem(HarmPlayerOnContactSystem.class).process();
+			this.ecs.getSystem(ExplodeOnContactSystem.class).process();
+			this.ecs.getSystem(RemoveOnContactSystem.class).process();		
+			this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
+		}
 		this.ecs.getSystem(CheckRangeSystem.class).process();
-		
+
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.cleanUpBuffers();
 		}
@@ -698,10 +702,7 @@ public class Game implements IModule, ITextureProvider {
 						frc.sub(explosionPos).nor();
 						frc.y += .2f;
 						frc.scl(explData.force);
-
-						//pc.body.applyCentralImpulse(vec.cpy().sub(explosionPos).nor().scl(explData.force));
 						pc.body.applyCentralImpulse(frc);
-						//Settings.p("Moving " + e.name);
 					}
 				}
 			}
@@ -745,7 +746,7 @@ public class Game implements IModule, ITextureProvider {
 		public MyContactListener(ProcessCollisionSystem _coll) {
 			coll = _coll;
 		}
-*/
+		 */
 		@Override
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			return true;

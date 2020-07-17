@@ -8,12 +8,14 @@ public class HarmPlayerOnContactComponent {
 	public String sfx;
 	public AbstractEntity shooter;
 	public boolean remove;
+	public boolean show_explosion;
 	
-	public HarmPlayerOnContactComponent(AbstractEntity _shooter, String _sfx, float _damage, boolean _remove) {
+	public HarmPlayerOnContactComponent(AbstractEntity _shooter, String _sfx, float _damage, boolean _remove, boolean _show_explosion) {
 		shooter = _shooter;
 		sfx = _sfx;
 		damage = _damage;
 		remove = _remove;
+		show_explosion =_show_explosion;
 	}
 	
 }

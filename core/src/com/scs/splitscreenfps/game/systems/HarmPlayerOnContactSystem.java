@@ -10,6 +10,8 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.events.EventCollision;
 
 public class HarmPlayerOnContactSystem extends AbstractSystem {
@@ -42,6 +44,11 @@ public class HarmPlayerOnContactSystem extends AbstractSystem {
 				BillBoardFPS_Main.audio.play(harm.sfx);		
 				if (harm.remove) {
 					entity.remove();
+				}
+				if (harm.show_explosion) {
+					PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+					AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, posData.position, .3f);
+					game.ecs.addEntity(expl);
 				}
 				//}
 			}
