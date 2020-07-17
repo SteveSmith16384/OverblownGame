@@ -34,12 +34,14 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
-		playerData.ability2text = ability.type + " Ready!";
+		playerData.ability1text = ability.type + " Ready!";
+		playerData.ability1Ready = true;
 		
 		long interval = ability.cooldown;
 		if (ability.lastShotTime + interval > System.currentTimeMillis()) {
+			playerData.ability1Ready = false;
 			long cooldown_secs = ((ability.lastShotTime + interval) - System.currentTimeMillis()) / 1000;
-			playerData.ability2text = "Cooldown: " + (cooldown_secs+1);
+			playerData.ability1text = "Cooldown: " + (cooldown_secs+1);
 			
 			if (cooldown_secs <= 0) {
 				BillBoardFPS_Main.audio.play("sfx/teleport.mp3");
@@ -47,12 +49,12 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 			return;
 		}
 
-		if (player.inputMethod.isAbilityPressed()) {
+		if (player.inputMethod.isAbility1Pressed()) {
 			if (ability.requiresBuildUp) {
 				ability.buildUpActivated = true;
 				ability.power += Gdx.graphics.getDeltaTime();
 				int pcent = (int)(ability.power * 100 / ability.max_charge_duration);
-				playerData.ability2text = "Power: " + pcent + "%";
+				playerData.ability1text = "Power: " + pcent + "%";
 				if (ability.power >= ability.max_charge_duration) {
 					this.performBuildUpAbility(player, ability);
 				}

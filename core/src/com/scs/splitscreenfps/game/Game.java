@@ -11,6 +11,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -58,6 +59,7 @@ import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
+import com.scs.splitscreenfps.game.levels.MapEditorLevel;
 import com.scs.splitscreenfps.game.levels.VillageLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CheckRangeSystem;
@@ -159,19 +161,17 @@ public class Game implements IModule, ITextureProvider {
 		//coll = new ProcessCollisionSystem(this);
 		new MyContactListener();
 
-		//currentLevel = new RollingBallLevel(this);
-		//currentLevel = new LoadMapLevel(this);
-		//currentLevel = new AvoidTheBallsLevel(this);
-		//currentLevel = new IliosLevel(this);
-		//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
-		//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
-		//currentLevel = new FactoryLevel(this);
-		currentLevel = new VillageLevel(this);
-		//currentLevel = new MapEditorLevel(this);
-
-		if (Settings.DEBUG_HEALTH_PAC) {
-			AbstractEntity hp = EntityFactory.createHealthPack(this, new Vector3(5, 1, 4));
-			ecs.addEntity(hp);
+		if (Settings.USE_MAP_EDITOR) {
+			currentLevel = new MapEditorLevel(this);
+		} else {
+			//currentLevel = new RollingBallLevel(this);
+			//currentLevel = new LoadMapLevel(this);
+			//currentLevel = new AvoidTheBallsLevel(this);
+			//currentLevel = new IliosLevel(this);
+			//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
+			//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
+			//currentLevel = new FactoryLevel(this);
+			currentLevel = new VillageLevel(this);
 		}
 
 		for (int i=0 ; i<players.length ; i++) {
@@ -428,12 +428,12 @@ public class Game implements IModule, ITextureProvider {
 			float yOff = font_small.getLineHeight() * 1f;
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 			//font_small.setColor(1, 1, 1, 1);
-			drawText("Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6));
-			drawText("Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5));
-			drawText(playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4));
-			drawText("Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3));
-			drawText(playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2));
-			drawText(playerData.ability2text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1));
+			drawText("Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
+			drawText("Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
+			drawText(playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
+			drawText("Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
+			drawText(playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);
+			drawText(playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
 
 			if (currentViewId == 0) {
 				// Draw log
@@ -444,7 +444,7 @@ public class Game implements IModule, ITextureProvider {
 					y = (viewportData.viewRect.height*2)-20;
 				}
 				for (String s :this.log) {
-					drawText(s, viewportData.viewRect.x+10, y);
+					drawText(s, viewportData.viewRect.x+10, y, false);
 					y -= this.font_small.getLineHeight();
 				}
 			}
@@ -480,13 +480,17 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
-	private void drawText(String text, float x, float y) {
-		font_small.setColor(0, 0, 0, 1);
+	private void drawText(String text, float x, float y, boolean highlight) {
+		font_small.setColor(Color.BLACK);
 		font_small.draw(batch2d, text, x+2, y);
 		font_small.draw(batch2d, text, x-2, y);
 		font_small.draw(batch2d, text, x, y+2);
 		font_small.draw(batch2d, text, x, y-2);
-		font_small.setColor(1, 1, 1, 1);
+		if (highlight) {
+			font_small.setColor(Color.YELLOW);
+		} else {
+			font_small.setColor(Color.WHITE);
+		}
 		font_small.draw(batch2d, text, x, y);
 
 	}
@@ -622,12 +626,12 @@ public class Game implements IModule, ITextureProvider {
 		if (playerHitData.health < 0) {
 			playerHitData.health = 0;
 		}
-		
+
 		DrawTextIn3DSpaceComponent text = (DrawTextIn3DSpaceComponent)player.getComponent(DrawTextIn3DSpaceComponent.class);
 		if (text != null) {
 			text.text = "H: " + playerHitData.health;
 		}
-		
+
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
 		float duration = amt/40;
 		if (duration > 3) {
@@ -637,7 +641,7 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addEntity(redfilter);
 
 		playerHitData.last_person_to_hit_them = shooter;
-		
+
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.damage_caused += amt;
@@ -651,6 +655,10 @@ public class Game implements IModule, ITextureProvider {
 
 
 	public void playerDied(AbstractEntity player, PlayerData playerDiedData, AbstractEntity shooter) {
+		if (shooter == null) {
+			shooter = playerDiedData.last_person_to_hit_them; // In case they fell off the edge
+		}
+		
 		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
 		if (anim != null) {
 			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
@@ -663,7 +671,7 @@ public class Game implements IModule, ITextureProvider {
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			this.appendToLog(playerDiedData.playerName + " has been killed by " + shooterData.playerName);
-				shooterData.num_kills++;
+			shooterData.num_kills++;
 		} else {
 			this.appendToLog(playerDiedData.playerName + " has been killed");
 		}

@@ -62,7 +62,7 @@ public class NoInputMethod implements IInputMethod {
 
 
 	@Override
-	public boolean isAbilityPressed() {
+	public boolean isAbility1Pressed() {
 		return false;
 	}
 

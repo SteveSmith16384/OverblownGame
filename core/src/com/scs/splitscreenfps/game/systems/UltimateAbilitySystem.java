@@ -48,7 +48,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 				BillBoardFPS_Main.audio.play("sfx/Replenish.wav");
 			}
 		}
-		
+
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 
 		if (Settings.DEBUG_ULTIMATES) {
@@ -60,9 +60,12 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			playerData.ultimateText = "Ultimate: " + level + "%";
 			if (player.inputMethod.isUltimatePressed()) {
 				BillBoardFPS_Main.audio.play("sfx/type2.mp3");
+			} else {
+				playerData.ultimateReady = false;
 			}
 		} else {
 			playerData.ultimateText = "Ultimate Ready!";
+			playerData.ultimateReady = true;
 			if (player.inputMethod.isUltimatePressed()) {
 				switch (ability.type) {
 				case RocketBarrage:
@@ -107,7 +110,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 
 	private void startMinefield(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
 		//todo BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
-		
+
 		for (int i=0 ; i<20 ; i++) {
 			AbstractEntity mine = BulletEntityFactory.createMine(game, player);
 			game.ecs.addEntity(mine);

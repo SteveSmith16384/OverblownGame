@@ -71,7 +71,7 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 
 
 	@Override
-	public boolean isAbilityPressed() {
+	public boolean isAbility1Pressed() {
 		return Gdx.input.isButtonPressed(Input.Buttons.RIGHT);
 	}
 

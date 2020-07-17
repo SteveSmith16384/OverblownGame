@@ -106,7 +106,7 @@ public class ShootingSystem extends AbstractSystem {
 				cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
 			}
 
-			playerData.ability1text = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+			playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
 		}
 
 	}

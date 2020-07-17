@@ -70,7 +70,7 @@ public class IntroModule implements IModule {
 			Gdx.app.exit();
 		}
 
-		if (Settings.AUTO_START) {
+		if (Settings.AUTO_START || Settings.USE_MAP_EDITOR) {
 			showPlayersJoinModule();
 			return;
 		}

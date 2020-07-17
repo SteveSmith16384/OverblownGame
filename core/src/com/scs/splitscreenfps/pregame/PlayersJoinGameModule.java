@@ -86,21 +86,22 @@ public class PlayersJoinGameModule implements IModule {
 			Gdx.app.exit();
 		}
 
-		if (Settings.AUTO_START) {
+		if (Settings.AUTO_START || Settings.USE_MAP_EDITOR) {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
-			GameSelectionData gameSelectionData = null;
-			if (Settings.NUM_AUTOSTART_CHARACTERS > 1) {
-				Array<Controller> allControllers = main.controllerManager.getAllControllers();
-				for (Controller c : allControllers) {
-					inputs.add(new ControllerInputMethod(c));
+			if (Settings.USE_MAP_EDITOR == false) {
+				if (Settings.NUM_AUTOSTART_CHARACTERS > 1) {
+					Array<Controller> allControllers = main.controllerManager.getAllControllers();
+					for (Controller c : allControllers) {
+						inputs.add(new ControllerInputMethod(c));
+					}
+					while (inputs.size() < Settings.NUM_AUTOSTART_CHARACTERS) {
+						inputs.add(new NoInputMethod());
+					}
+					//gameSelectionData.character[1] = Settings.AUTOSTART_CHARACTER;
 				}
-				while (inputs.size() < Settings.NUM_AUTOSTART_CHARACTERS) {
-					inputs.add(new NoInputMethod());
-				}
-				//gameSelectionData.character[1] = Settings.AUTOSTART_CHARACTER;
 			}
-			gameSelectionData = new GameSelectionData(Settings.NUM_AUTOSTART_CHARACTERS);
+			GameSelectionData gameSelectionData = new GameSelectionData(Settings.NUM_AUTOSTART_CHARACTERS);
 			for (int i=0 ; i<Settings.NUM_AUTOSTART_CHARACTERS ; i++) {
 				gameSelectionData.character[i] = Settings.AUTOSTART_CHARACTER;
 			}
@@ -196,7 +197,7 @@ public class PlayersJoinGameModule implements IModule {
 		}
 		for (Controller c : main.controllerManager.getInGameControllers()) {
 			//scs new ?? if (inputs.size() <= 2) { // Max 2 players for now
-				inputs.add(new ControllerInputMethod(c));
+			inputs.add(new ControllerInputMethod(c));
 			//}
 		}
 		if (inputs.size() > 0) {

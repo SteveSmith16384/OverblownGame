@@ -30,7 +30,7 @@ public interface IInputMethod {
 
 	boolean isShootPressed();
 
-	boolean isAbilityPressed();
+	boolean isAbility1Pressed();
 
 	boolean isUltimatePressed();
 }

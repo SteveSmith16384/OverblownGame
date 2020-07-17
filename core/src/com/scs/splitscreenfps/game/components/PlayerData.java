@@ -11,9 +11,11 @@ public class PlayerData {
 	public long restartTime;
 	public int points;
 	public AbstractEntity last_person_to_hit_them;
+	public String gunText = "";
 	public String ability1text = "";
-	public String ability2text = "";
+	public boolean ability1Ready = false;
 	public String ultimateText = "";
+	public boolean ultimateReady = false;
 	public boolean performing_power_punch;
 	public boolean has_been_punched;
 	public int damage_caused, num_kills;
