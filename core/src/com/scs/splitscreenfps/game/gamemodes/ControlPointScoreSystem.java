@@ -29,10 +29,11 @@ public class ControlPointScoreSystem implements ISystem {
 	private AbstractEntity controlpoint;
 
 	private AbstractPlayersAvatar current_owner = null;
-	private AbstractPlayersAvatar last_player_to_touch = null;
-	private long time_to_change;
+	//private AbstractPlayersAvatar last_player_to_touch = null;
+	//private long time_to_change;
 	private float[] time_on_point;
 	private TextEntity text;
+	private StringBuilder str = new StringBuilder();
 
 	public ControlPointScoreSystem(Game _game) {
 		game = _game;
@@ -69,48 +70,51 @@ public class ControlPointScoreSystem implements ISystem {
 			}
 		}
 
-		if (this.last_player_to_touch != this.current_owner) {
-			if (time_to_change < System.currentTimeMillis()) {
-				this.current_owner = this.last_player_to_touch;
-				this.changeTex(Settings.getColourForSide(current_owner.playerIdx));
-				BillBoardFPS_Main.audio.play("sfx/controlpoint.mp3");
-			}
-		}
-
-		if (current_owner != null) {
-			if (time_to_change < System.currentTimeMillis()) {
-				this.time_on_point[current_owner.playerIdx] += Gdx.graphics.getDeltaTime();
-				if (this.time_on_point[current_owner.playerIdx] >= WINNING_TIME) {
-					DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
-					PlayerData playerData = (PlayerData)current_owner.getComponent(PlayerData.class);
-					dtd.text = playerData.playerName + " HAS WON!";
-					game.playerHasWon(current_owner);
-					return;
-				}
-			}
-		}
-
 		// Check for collision events
 		List<AbstractEvent> events = game.ecs.getEventsForEntity(EventCollision.class, this.controlpoint);
 		for (AbstractEvent evt : events) {
 			EventCollision coll = (EventCollision)evt;
 			if (coll.entity2 instanceof AbstractPlayersAvatar) {
 				AbstractPlayersAvatar player = (AbstractPlayersAvatar)coll.entity2;
-				if (this.last_player_to_touch != player) {
-					this.last_player_to_touch = player;
-					this.time_to_change = System.currentTimeMillis() + CHANGE_DURATION;
-					Color col = Color.GRAY;
-					this.changeTex(col);
-
+				if (this.current_owner != player) {
+					this.current_owner = player;
+					this.changeTex(Settings.getColourForSide(current_owner.playerIdx));
+					BillBoardFPS_Main.audio.play("sfx/controlpoint.mp3");
+					//this.last_player_to_touch = player;
+					//this.time_to_change = System.currentTimeMillis() + CHANGE_DURATION;
+					//Settings.p("Changing colour to grey");
+					//this.changeTex(Color.GRAY);
 				}
 			}
 		}
 
-		// Update HUD
-		if (current_owner != null && current_owner.playerIdx >= 0) {
+		/*if (time_to_change < System.currentTimeMillis()) {
+			if (this.last_player_to_touch != this.current_owner) {
+				this.current_owner = this.last_player_to_touch;
+				Settings.p("Changing colour to side " + current_owner.playerIdx);
+				this.changeTex(Settings.getColourForSide(current_owner.playerIdx));
+				BillBoardFPS_Main.audio.play("sfx/controlpoint.mp3");
+			}
+		 */
+		if (current_owner != null) {
+			// Update HUD
+			str.delete(0,  str.length());
+			for (int i=0 ; i<game.players.length ; i++) {
+				str.append(PlayerData.getName(i) + ": " + (int)(this.time_on_point[i]) + "  ");
+			}
 			DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
-			dtd.text = "Time: " + (int)(this.time_on_point[current_owner.playerIdx]);
+			dtd.text = str.toString();
+			this.time_on_point[current_owner.playerIdx] += Gdx.graphics.getDeltaTime();
+			if (this.time_on_point[current_owner.playerIdx] >= WINNING_TIME) {
+				//DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
+				PlayerData playerData = (PlayerData)current_owner.getComponent(PlayerData.class);
+				dtd.text = playerData.playerName + " HAS WON!";
+				game.playerHasWon(current_owner);
+				return;
+			}
 		}
+		//}
+
 	}
 
 

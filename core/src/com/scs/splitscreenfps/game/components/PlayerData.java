@@ -22,24 +22,24 @@ public class PlayerData {
 		playerIdx = _playerIdx;
 		health = _health;
 		this.max_health = health;
-
-		switch (playerIdx) {
-		case 0:
-			playerName = "GREEN";
-			break;
-		case 1:
-			playerName = "YELLOW";
-			break;
-		case 2:
-			playerName = "RED";
-			break;
-		case 3:
-			playerName = "PURPLE";
-			break;
-		default:
-			throw new RuntimeException("Unknown side: " + playerIdx);
-		}
+		this.playerName = getName(playerIdx);
 
 	}
 
+	
+	public static String getName(int p) {
+		switch (p) {
+		case 0:
+			return "GREEN";
+		case 1:
+			return "YELLOW";
+		case 2:
+			return "RED";
+		case 3:
+			return "PURPLE";
+		default:
+			throw new RuntimeException("Unknown side: " + p);
+		}
+
+	}
 }
