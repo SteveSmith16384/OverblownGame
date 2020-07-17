@@ -69,11 +69,10 @@ import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.ExplodeOnContactSystem;
-import com.scs.splitscreenfps.game.systems.HarmOnContactSystem;
+import com.scs.splitscreenfps.game.systems.HarmPlayerOnContactSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
-import com.scs.splitscreenfps.game.systems.ProcessCollisionSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RemoveOnContactSystem;
 import com.scs.splitscreenfps.game.systems.RespawnHealthPackSystem;
@@ -116,7 +115,7 @@ public class Game implements IModule, ITextureProvider {
 
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
-	private ProcessCollisionSystem coll;
+	//private ProcessCollisionSystem coll;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btSequentialImpulseConstraintSolver constraintSolver;
 	private final ClosestRayResultCallback callback = new ClosestRayResultCallback(new Vector3(), new Vector3());
@@ -156,8 +155,8 @@ public class Game implements IModule, ITextureProvider {
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(GRAVITY);
-		coll = new ProcessCollisionSystem(this);
-		new MyContactListener(coll);
+		//coll = new ProcessCollisionSystem(this);
+		new MyContactListener();
 
 		//currentLevel = new RollingBallLevel(this);
 		//currentLevel = new LoadMapLevel(this);
@@ -269,7 +268,6 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
 		ecs.addSystem(new PlayerMovementSystem(this, ecs));
-		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, this, batch2d));
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
@@ -282,7 +280,7 @@ public class Game implements IModule, ITextureProvider {
 		physicsSystem = new PhysicsSystem(this, ecs);
 		ecs.addSystem(physicsSystem);
 		this.respawnSystem = new RespawnPlayerSystem(ecs);
-		ecs.addSystem(new HarmOnContactSystem(this, ecs));
+		ecs.addSystem(new HarmPlayerOnContactSystem(this, ecs));
 		ecs.addSystem(new SecondaryAbilitySystem(ecs, this));
 		ecs.addSystem(new UltimateAbilitySystem(ecs, this));
 		ecs.addSystem(new CollectableSystem(this, ecs));
@@ -290,6 +288,7 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new CheckRangeSystem(ecs));
 		ecs.addSystem(new RemoveOnContactSystem(ecs));
 		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
+		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
 		
 	}
 
@@ -370,7 +369,7 @@ public class Game implements IModule, ITextureProvider {
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
-		this.ecs.getSystem(HarmOnContactSystem.class).process();
+		this.ecs.getSystem(HarmPlayerOnContactSystem.class).process();
 		this.ecs.getSystem(CollectableSystem.class).process();
 		this.ecs.getSystem(RespawnHealthPackSystem.class).process();
 		this.ecs.getSystem(CheckRangeSystem.class).process();
@@ -673,9 +672,6 @@ public class Game implements IModule, ITextureProvider {
 		AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(this, explosionPos, explData.range);
 		ecs.addEntity(expl);
 
-		// Temp vars
-		//Matrix4 mat = new Matrix4();
-		//Vector3 vec = new Vector3();
 		Vector3 frc = new Vector3();
 
 		Iterator<AbstractEntity> it = this.physicsSystem.getEntityIterator();
@@ -746,12 +742,12 @@ public class Game implements IModule, ITextureProvider {
 
 	class MyContactListener extends ContactListener {
 
-		private ProcessCollisionSystem coll;
+		/*private ProcessCollisionSystem coll;
 
 		public MyContactListener(ProcessCollisionSystem _coll) {
 			coll = _coll;
 		}
-
+*/
 		@Override
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			return true;
@@ -772,7 +768,9 @@ public class Game implements IModule, ITextureProvider {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-				coll.processCollision(e1, e2, Math.abs(force)); // todo - queue collisions
+				ecs.events.add(new EventCollision(e1, e2, force));
+
+				//coll.processCollision(e1, e2, Math.abs(force)); // todo - queue collisions
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

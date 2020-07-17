@@ -19,7 +19,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
-import com.scs.splitscreenfps.game.components.HarmOnContactComponent;
+import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.HasRangeComponent;
@@ -31,6 +31,7 @@ import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 
+import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GraphicsHelper;
 
 public class BulletEntityFactory {
@@ -53,7 +54,7 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true));
 		
 
 		// Add physics
@@ -99,8 +100,8 @@ public class BulletEntityFactory {
 
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, true));
-		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
+		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, true, false));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -143,9 +144,9 @@ public class BulletEntityFactory {
 		}
 
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
-		e.addComponent(new RemoveOnContactComponent(shooter));
+		//e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, false));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -185,10 +186,10 @@ public class BulletEntityFactory {
 
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
-
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true));
 		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter));
-
+		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true));
+	
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f);
 		btRigidBody body = new btRigidBody(.1f, null, shape);
@@ -227,7 +228,7 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmOnContactComponent(shooter, "", settings.damage));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", settings.damage, true));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.2f);
@@ -269,7 +270,7 @@ public class BulletEntityFactory {
 		e.addComponent(model);
 		
 		e.addComponent(new PositionComponent());
-		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(3, 80, 5), shooter, true));
+		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(3, 80, 5), shooter, true, false));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f); // This is a lot smaller so the sphere goes through the ground before exploding
@@ -294,9 +295,9 @@ public class BulletEntityFactory {
 
 		PositionComponent playerPosData = (PositionComponent)shooter.getComponent(PositionComponent.class);
 		Vector3 start = new Vector3(playerPosData.position);
-		//start.x += shooter.camera.direction.x * 2;
+		start.x += NumberFunctions.rndFloat(-.5f,  .5f);
 		start.y += 1f;
-		//start.z += shooter.camera.direction.z * 2;
+		start.z += NumberFunctions.rndFloat(-.5f,  .5f);
 		
 		float diam = .5f;
 		
@@ -309,18 +310,19 @@ public class BulletEntityFactory {
 		e.addComponent(model);
 		
 		e.addComponent(new PositionComponent());
-		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(.2f, 50, 2), shooter, true));
+		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(.2f, 10, 2), shooter, false, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", 20, true));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(diam); // This is a lot smaller so the sphere goes through the ground before exploding
-		btRigidBody body = new btRigidBody(1f, null, shape);
+		btRigidBody body = new btRigidBody(diam/2, null, shape);
 		body.userData = e;
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = new Vector3(0, -5, 0);
+		//pc.force = new Vector3(0, -5, 0);
 		e.addComponent(pc);
 
 		//No, we have a voice sfx  BillBoardFPS_Main.audio.play("sfx/launches/rlaunch.wav");

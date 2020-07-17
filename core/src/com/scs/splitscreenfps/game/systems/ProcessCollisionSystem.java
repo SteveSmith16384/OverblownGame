@@ -1,5 +1,5 @@
 package com.scs.splitscreenfps.game.systems;
-
+/*
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
@@ -22,33 +22,8 @@ public class ProcessCollisionSystem {
 
 
 	public void processCollision(AbstractEntity e1, AbstractEntity e2, float force) {
-		//checkForExplosion(e1, e2); // todo - move this to new ExplodeOnContactSystem
-		//checkForExplosion(e2, e1);
-
-		game.ecs.events.add(new EventCollision(e1, e2, force));
 
 	}
 
-
-	private void checkForExplosion(AbstractEntity rocket, AbstractEntity hit) {
-		/*if (rocket.isMarkedForRemoval()) {
-			return; // Prevent two explosions
-		}*/
-		ExplodeOnContactComponent explodes = (ExplodeOnContactComponent)rocket.getComponent(ExplodeOnContactComponent.class);
-		if (explodes != null) {
-			IsBulletComponent bullet = (IsBulletComponent)rocket.getComponent(IsBulletComponent.class);
-			if (bullet != null && hit == bullet.shooter) {
-				return;
-			}
-			if (explodes.remove) {
-				rocket.remove();
-			}
-			//Settings.p("Rocket hit " + hit);
-			PhysicsComponent phys = (PhysicsComponent)rocket.getComponent(PhysicsComponent.class);
-			phys.body.getWorldTransform(mat);
-			game.explosion(mat.getTranslation(vec), explodes.explData, explodes.shooter);
-		}
-
-
-	}
 }
+*/

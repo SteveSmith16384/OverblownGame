@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.HarmOnContactComponent;
+import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 
@@ -58,7 +58,7 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 			
 			//float z = NumberFunctions.rndFloat(2,  8);
 			AbstractEntity ball = EntityFactory.createBall(game, "textures/neon/sun.jpg", FLOOR_SIZE/2, 10, FLOOR_SIZE/2, 1.5f, 100);
-			ball.addComponent(new HarmOnContactComponent(null, "sfx/electric_explosion5.wav", 10));
+			ball.addComponent(new HarmPlayerOnContactComponent(null, "sfx/electric_explosion5.wav", 10, false));
 			game.ecs.addEntity(ball);
 		}
 	}

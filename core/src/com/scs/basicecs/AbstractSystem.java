@@ -72,18 +72,18 @@ public abstract class AbstractSystem implements ISystem {
 			Iterator<AbstractEntity> it = ecs.getEntityIterator();
 			while (it.hasNext()) {
 				AbstractEntity entity = it.next();
-				if (entity.isMarkedForRemoval()) {
+				/*if (entity.isMarkedForRemoval()) {
 					continue;
-				}
+				}*/
 				this.processEntity(entity);
 			}
 		} else {
 			Iterator<AbstractEntity> it = entities.iterator();
 			while (it.hasNext()) {
 				AbstractEntity entity = it.next();
-				if (entity.isMarkedForRemoval()) {
+				/*if (entity.isMarkedForRemoval()) {
 					continue;
-				}
+				}*/
 				this.processEntity(entity);
 			}
 		}

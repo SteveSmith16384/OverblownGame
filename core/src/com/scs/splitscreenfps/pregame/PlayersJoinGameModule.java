@@ -19,7 +19,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.Array;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
-import com.scs.splitscreenfps.ControllerManager;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;

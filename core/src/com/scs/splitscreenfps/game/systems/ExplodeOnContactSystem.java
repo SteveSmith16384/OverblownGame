@@ -9,15 +9,16 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.events.EventCollision;
 
 public class ExplodeOnContactSystem extends AbstractSystem {
 
 	private Game game;
-	
+
 	public ExplodeOnContactSystem(Game _game, BasicECS ecs) {
 		super(ecs, ExplodeOnContactComponent.class);
-		
+
 		game = _game;
 	}
 
@@ -33,12 +34,16 @@ public class ExplodeOnContactSystem extends AbstractSystem {
 				continue;
 			}
 
-			if (bullet.remove) {
-				entity.remove();
+			boolean is_player = coll.entity2 instanceof AbstractPlayersAvatar;
+
+			if (bullet.only_if_player == false || is_player) {
+				if (bullet.remove) {
+					entity.remove();
+				}
+				//Settings.p("Rocket hit " + hit);
+				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+				game.explosion(posData.position, bullet.explData, bullet.shooter);
 			}
-			//Settings.p("Rocket hit " + hit);
-			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-			game.explosion(posData.position, bullet.explData, bullet.shooter);
 
 		}
 
