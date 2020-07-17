@@ -363,19 +363,17 @@ public class Game implements IModule, ITextureProvider {
 		}
 
 		this.ecs.getSystem(PhysicsSystem.class).process();
-		//this.ecs.processSystem(BulletSystem.class);
 		this.ecs.processSystem(ShootingSystem.class);
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
-		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
-		this.ecs.getSystem(HarmPlayerOnContactSystem.class).process();
 		this.ecs.getSystem(CollectableSystem.class).process();
 		this.ecs.getSystem(RespawnHealthPackSystem.class).process();
-		this.ecs.getSystem(CheckRangeSystem.class).process();
-		this.ecs.getSystem(RemoveOnContactSystem.class).process();
+		this.ecs.getSystem(HarmPlayerOnContactSystem.class).process();
 		this.ecs.getSystem(ExplodeOnContactSystem.class).process();
-		
+		this.ecs.getSystem(RemoveOnContactSystem.class).process();		
+		this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
+		this.ecs.getSystem(CheckRangeSystem.class).process();
 		
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.cleanUpBuffers();

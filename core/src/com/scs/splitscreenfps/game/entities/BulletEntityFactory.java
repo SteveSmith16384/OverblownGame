@@ -23,10 +23,10 @@ import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.HasRangeComponent;
-import com.scs.splitscreenfps.game.components.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.RemoveOnContactComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
@@ -299,7 +299,7 @@ public class BulletEntityFactory {
 		start.y += 1f;
 		start.z += NumberFunctions.rndFloat(-.5f,  .5f);
 		
-		float diam = .5f;
+		float diam = .3f;
 		
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
@@ -312,17 +312,23 @@ public class BulletEntityFactory {
 		e.addComponent(new PositionComponent());
 		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(.2f, 10, 2), shooter, false, true));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, "", 20, true));
-
+		e.addComponent(new RemoveEntityAfterTimeComponent(20));
+		
+		float mass = 1f;
 		// Add physics
-		btSphereShape shape = new btSphereShape(diam); // This is a lot smaller so the sphere goes through the ground before exploding
-		btRigidBody body = new btRigidBody(diam/2, null, shape);
+		btSphereShape shape = new btSphereShape(diam/2); // This is a lot smaller so the sphere goes through the ground before exploding
+		Vector3 local_inertia = new Vector3();
+		shape.calculateLocalInertia(mass, local_inertia);
+		btRigidBody body = new btRigidBody(mass, null, shape, local_inertia);
 		body.userData = e;
+		body.setRestitution(.5f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
+		body.setFriction(0);
 		body.setWorldTransform(mat);
+		
 		PhysicsComponent pc = new PhysicsComponent(body);
-		//pc.force = new Vector3(0, -5, 0);
 		e.addComponent(pc);
 
 		//No, we have a voice sfx  BillBoardFPS_Main.audio.play("sfx/launches/rlaunch.wav");

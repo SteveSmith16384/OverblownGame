@@ -108,7 +108,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 	private void startMinefield(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
 		//todo BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
 		
-		for (int i=0 ; i<10 ; i++) {
+		for (int i=0 ; i<20 ; i++) {
 			AbstractEntity mine = BulletEntityFactory.createMine(game, player);
 			game.ecs.addEntity(mine);
 		}

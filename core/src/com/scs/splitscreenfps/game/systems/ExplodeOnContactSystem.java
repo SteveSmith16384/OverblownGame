@@ -6,6 +6,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -40,7 +41,7 @@ public class ExplodeOnContactSystem extends AbstractSystem {
 				if (bullet.remove) {
 					entity.remove();
 				}
-				//Settings.p("Rocket hit " + hit);
+				Settings.p(bullet + " hit " + coll.entity2);
 				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 				game.explosion(posData.position, bullet.explData, bullet.shooter);
 			}
