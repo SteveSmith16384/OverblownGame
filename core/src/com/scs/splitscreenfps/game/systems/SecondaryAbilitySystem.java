@@ -61,8 +61,11 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 				ability.lastShotTime = System.currentTimeMillis();
 
 				switch (ability.type) {
-				case Jump:
+				case JumpForwards:
 					performPowerJump(entity, player);
+					break;
+				case JumpUp:
+					performJumpUp(entity, player);
 					break;
 				case JetPac:
 					performJetPac(entity, player);
@@ -134,6 +137,19 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.body.applyCentralImpulse(new Vector3(0, 40, 0));
+
+		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
+		game.ecs.addEntity(e);
+	}
+
+
+	private void performJumpUp(AbstractEntity entity, AbstractPlayersAvatar player) {
+		BillBoardFPS_Main.audio.play("sfx/fart" + NumberFunctions.rnd(1, 5) + ".wav");
+
+		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		pc.body.activate();
+		pc.body.applyCentralImpulse(new Vector3(0, 20, 0));
 
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);

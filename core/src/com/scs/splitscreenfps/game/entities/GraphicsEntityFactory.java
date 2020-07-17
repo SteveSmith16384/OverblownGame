@@ -26,7 +26,7 @@ public class GraphicsEntityFactory {
 	public static AbstractEntity createRedFilter(BasicECS ecs, ITextureProvider texProv, int viewId) {
 		AbstractEntity entity = new AbstractEntity(ecs, "RedFilter");
 
-		Texture weaponTex = texProv.getTexture("colours/red.png");
+		Texture weaponTex = texProv.getTexture("blood.png");
 		//Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setColor(1, 0, 0, .5f);

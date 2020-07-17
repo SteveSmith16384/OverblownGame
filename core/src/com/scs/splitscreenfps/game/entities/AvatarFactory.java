@@ -74,13 +74,13 @@ public class AvatarFactory {
 			
 		case CHAR_BOWLING_BALL:
 			weapon_type = WeaponSettingsComponent.WEAPON_RIFLE;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpUp, 5000));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.Minefield, 60));
 			break;
 			
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Jump, 3000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpForwards, 5000));
 			break;
 			
 		case CHAR_JUNKRAT:
@@ -108,9 +108,9 @@ public class AvatarFactory {
 			weapon.kickback_force = 1f;
 			break;
 
-		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER:
+		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER: 
 			ExplosionData explData2 = new ExplosionData(1f, 10f, 3f);
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 900, 2000, 6, 20, 30, explData2);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 800, 2000, 6, 20, 30, explData2);
 			weapon.kickback_force = 5f;
 			break;
 

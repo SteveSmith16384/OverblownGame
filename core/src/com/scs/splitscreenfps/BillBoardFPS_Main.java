@@ -79,7 +79,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 				int h = Gdx.graphics.getDisplayMode().height;
 				Gdx.graphics.setUndecorated(true);
 				//Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-				Gdx.graphics.setWindowedMode(w, h);
+				Gdx.graphics.setWindowedMode(w-20, h-20);
 				fullscreen = true;
 			}
 		} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
