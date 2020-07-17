@@ -41,6 +41,7 @@ import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
+import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -618,7 +619,15 @@ public class Game implements IModule, ITextureProvider {
 
 		//Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 		playerHitData.health -= amt;
-
+		if (playerHitData.health < 0) {
+			playerHitData.health = 0;
+		}
+		
+		DrawTextIn3DSpaceComponent text = (DrawTextIn3DSpaceComponent)player.getComponent(DrawTextIn3DSpaceComponent.class);
+		if (text != null) {
+			text.text = "H: " + playerHitData.health;
+		}
+		
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
 		float duration = amt/40;
 		if (duration > 3) {
