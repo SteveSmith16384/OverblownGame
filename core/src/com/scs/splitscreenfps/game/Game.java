@@ -156,16 +156,13 @@ public class Game implements IModule, ITextureProvider {
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(GRAVITY);
-		//coll = new ProcessCollisionSystem(this);
 		new MyContactListener();
 
 		if (Settings.USE_MAP_EDITOR) {
 			currentLevel = new MapEditorLevel(this);
 		} else {
 			//currentLevel = new RollingBallLevel(this);
-			//currentLevel = new LoadMapLevel(this);
 			//currentLevel = new AvoidTheBallsLevel(this);
-			//currentLevel = new IliosLevel(this);
 			//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 			//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
 			//currentLevel = new FactoryLevel(this);
@@ -311,7 +308,7 @@ public class Game implements IModule, ITextureProvider {
 			this.viewports[idx].camera.update();
 		}
 
-		ecs.addEntity(new SkyboxCube(this, "Skybox", "", 30, 30, 30));
+		ecs.addEntity(new SkyboxCube(this, "Skybox", "", 90, 90, 90));
 	}
 
 

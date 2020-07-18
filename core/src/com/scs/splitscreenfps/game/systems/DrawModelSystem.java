@@ -89,13 +89,6 @@ public class DrawModelSystem extends AbstractSystem {
 			}
 		}
 
-/*		if (pc != null) {
-			//pc.body.getWorldTransform(tmpMat);
-
-			// Set model position data based on physics data - regardless of whether we draw them
-			//tmpMat.getTranslation(posData.position);
-		}
-*/
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
 		}

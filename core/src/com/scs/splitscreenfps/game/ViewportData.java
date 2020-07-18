@@ -23,8 +23,8 @@ public class ViewportData {
 		Rectangle d = this.getDimensions(idx, full_screen, total);
 
 		camera = new PerspectiveCamera(65, d.width, d.height);
-		camera.position.set(10f, 0, 10f);
-		camera.lookAt(11f, 0, 10f);
+		//camera.position.set(10f, 0, 10f);
+		camera.lookAt(10f, 0, 10f);
 		camera.near = 0.1f;
 		camera.far = 100f;
 		camera.update();
