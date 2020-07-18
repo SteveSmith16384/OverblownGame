@@ -2,8 +2,8 @@ package com.scs.splitscreenfps.game.data;
 
 public class ExplosionData {
 
-	public int damage;
-	public float range, force;
+	public final int damage;
+	public final float range, force;
 	
 	public ExplosionData(float _range, int _damage, float _force) {
 		range = _range;

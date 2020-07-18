@@ -615,10 +615,14 @@ public class Game implements IModule, ITextureProvider {
 			// Already dead
 			return;
 		}
+		if (amt <= 0) {
+			return;
+		}
 
 		main.audio.play("sfx/hit1.wav");
 
-		//Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
+		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
+
 		playerHitData.health -= amt;
 		if (playerHitData.health < 0) {
 			playerHitData.health = 0;
@@ -630,7 +634,7 @@ public class Game implements IModule, ITextureProvider {
 		}
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
-		float duration = amt/40;
+		float duration = amt/20;
 		if (duration > 3) {
 			duration = 3;
 		}

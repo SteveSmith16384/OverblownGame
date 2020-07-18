@@ -39,18 +39,23 @@ public class HarmPlayerOnContactSystem extends AbstractSystem {
 
 			PlayerData playerHitData = (PlayerData)coll.entity2.getComponent(PlayerData.class);
 			if (playerHitData != null) { // Is it another player we hit?
-				//if (playerHitData.health > 0) {
-				game.playerDamaged(coll.entity2, playerHitData, harm.damage, harm.shooter);
-				BillBoardFPS_Main.audio.play(harm.sfx);		
-				if (harm.remove) {
-					entity.remove();
-				}
-				if (harm.show_explosion) {
+				if (playerHitData.health > 0) {
+					int damage = harm.damage;
 					PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-					AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, posData.position, .3f);
-					game.ecs.addEntity(expl);
+					if (harm.dropoff_per_metre > 0) {
+						float len = harm.start_pos.dst(posData.position);
+						damage -= (len * harm.dropoff_per_metre);
+					}
+					game.playerDamaged(coll.entity2, playerHitData, damage, harm.shooter);
+					BillBoardFPS_Main.audio.play(harm.sfx);		
+					if (harm.remove) {
+						entity.remove();
+					}
+					if (harm.show_explosion) {
+						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, posData.position, .3f);
+						game.ecs.addEntity(expl);
+					}
 				}
-				//}
 			}
 		}
 	}

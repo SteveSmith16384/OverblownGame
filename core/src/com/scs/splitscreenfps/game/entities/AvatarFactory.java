@@ -99,37 +99,37 @@ public class AvatarFactory {
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER: 
 			ExplosionData explData2 = new ExplosionData(1f, 30, 3f);
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 750, 1500, 6, 50, 120, explData2);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 750, 1500, 6, 50, 120, 0, explData2);
 			weapon.kickback_force = 5f;
 			break;
 
 		case WeaponSettingsComponent.BOOMFIST_RIFLE:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.BOOMFIST_RIFLE, 300, 1200, 20, 20, 40, null);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.BOOMFIST_RIFLE, 300, 1200, 20, 20, 40, 1, null);
 			//weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.BOWLINGBALL_GUN:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.BOOMFIST_RIFLE, 100, 2100, 80, 20, 10, null);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.BOOMFIST_RIFLE, 100, 2100, 80, 20, 10, .2f, null);
 			//weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_RIFLE:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_RIFLE, 300, 1200, 20, 20, 10, null);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_RIFLE, 300, 1200, 20, 20, 30, .2f, null);
 			//weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER:
 			ExplosionData explData = new ExplosionData(1f, 10, 2f);
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER, 600, 1500, 12, 20, 20, explData);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER, 600, 1500, 12, 20, 20, 0, explData);
 			weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_PUNCH:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 0.3f, 60, null);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 0.3f, 60, 0, null);
 			break;
 
 		case WeaponSettingsComponent.WEAPON_CANNON:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_CANNON, 300, 500, 1500, 20, 60, null);
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_CANNON, 300, 500, 1500, 20, 60, 0, null);
 			break;
 
 		default:

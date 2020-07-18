@@ -20,15 +20,17 @@ public class WeaponSettingsComponent {
 	public int max_ammo;
 	public float range;
 	public int damage;
+	public float dropoff_per_metre;
 	public float kickback_force = 0f;
 	public final ExplosionData explData;
 	
-	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, float _range, int _damage, ExplosionData _explData) {
+	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, float _range, int _damage, float _dropoff_per_metre, ExplosionData _explData) {
 		this.weapon_type = type;
 		this.max_ammo = ammo;
 		shot_interval = _shot_interval;
 		reload_interval = _reload_interval;
 		damage = _damage;
+		dropoff_per_metre = _dropoff_per_metre;
 		range = _range;
 		explData = _explData;
 	}
