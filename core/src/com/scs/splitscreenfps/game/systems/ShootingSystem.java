@@ -13,6 +13,8 @@ import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
 
+import ssmith.lang.NumberFunctions;
+
 public class ShootingSystem extends AbstractSystem {
 
 	private Game game;
@@ -48,6 +50,9 @@ public class ShootingSystem extends AbstractSystem {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 			if (cc.shootInCameraDirection) {
 				dir.set(player.camera.direction);
+				float spread = .05f;
+				dir.x += NumberFunctions.rndFloat(-spread,spread);
+				dir.z += NumberFunctions.rndFloat(-spread, spread);
 			} else {
 				dir.set((float)Math.sin(Math.toRadians(posData.angle_y_degrees+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
 			}

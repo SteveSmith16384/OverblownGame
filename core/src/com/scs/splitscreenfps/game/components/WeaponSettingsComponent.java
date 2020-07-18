@@ -22,6 +22,7 @@ public class WeaponSettingsComponent {
 	public int damage;
 	public float dropoff_per_metre;
 	public float kickback_force = 0f;
+	public float spread_degrees;
 	public final ExplosionData explData;
 	
 	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, float _range, int _damage, float _dropoff_per_metre, ExplosionData _explData) {

@@ -11,12 +11,6 @@ public abstract class AbstractSystem implements ISystem {
 	private String name;
 	private Class<?> component_class;
 
-	/*
-	public AbstractSystem(BasicECS _ecs) {
-		this(_ecs, null);
-	}
-	*/
-	
 	/**
 	 * 
 	 * @param _ecs
