@@ -27,7 +27,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
-import com.scs.splitscreenfps.selectcharacter.SelectCharacterScreen;
+import com.scs.splitscreenfps.selectgame.SelectMapModule;
 
 public class PlayersJoinGameModule implements IModule {
 
@@ -108,8 +108,6 @@ public class PlayersJoinGameModule implements IModule {
 			main.next_module = new Game(main, inputs, gameSelectionData);
 			return;
 		}
-
-		//controllerManager.checkForControllers();
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -202,7 +200,8 @@ public class PlayersJoinGameModule implements IModule {
 		}
 		if (inputs.size() > 0) {
 			//main.next_module = new Game(main, inputs);
-			main.next_module = new SelectCharacterScreen(main, inputs);
+			//main.next_module = new SelectCharacterScreen(main, inputs);
+			main.next_module = new SelectMapModule(main, inputs);
 		} else {
 			this.appendToLog("No players have joined!");
 		}

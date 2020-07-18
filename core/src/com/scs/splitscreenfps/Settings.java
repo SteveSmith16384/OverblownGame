@@ -15,8 +15,8 @@ public class Settings {
 	public static final String VERSION = "1.01";
 
 	// Debugging Hacks
-	public static final boolean USE_MAP_EDITOR = !RELEASE_MODE && true;
-	public static final boolean AUTO_START = !RELEASE_MODE && true;
+	public static final boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
+	public static final boolean AUTO_START = !RELEASE_MODE && false;
 	public static final int NUM_AUTOSTART_CHARACTERS = 2;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOWLING_BALL;
 	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && true;
@@ -27,9 +27,6 @@ public class Settings {
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	public static final boolean DISABLE_POST_EFFECTS = !RELEASE_MODE && false;
 	public static final boolean STRICT = !RELEASE_MODE && true;
-
-	// Game settings
-	//public static final int START_HEALTH = 100;
 
 	// Other settings
 	public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored

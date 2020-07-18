@@ -20,6 +20,10 @@ public interface IInputMethod {
 
 	boolean isMenuRightPressed();
 
+	boolean isMenuUpPressed();
+
+	boolean isMenuDownPressed();
+
 	boolean isMenuSelectPressed();
 
 	float getLookUp();

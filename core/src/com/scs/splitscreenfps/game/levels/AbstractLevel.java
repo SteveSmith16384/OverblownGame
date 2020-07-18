@@ -26,7 +26,11 @@ import com.scs.splitscreenfps.game.mapdata.MapData;
 
 import ssmith.lang.IOFunctions;
 
-public abstract class AbstractLevel implements ILevelInterface {
+public abstract class AbstractLevel {
+
+	public static final int LEVEL_FACTORY = 0;
+	public static final int LEVEL_VILLAGE = 1;
+	public static final int MAX_LEVELS = 2;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -34,6 +38,30 @@ public abstract class AbstractLevel implements ILevelInterface {
 
 	public AbstractLevel(Game _game) {
 		game = _game;
+	}
+
+
+	public static final String getName(int i) {
+		switch (i) {
+		case LEVEL_FACTORY:
+			return "Deathmatch Factory";
+		case LEVEL_VILLAGE:
+			return "Control Point Village";
+		default:
+			throw new RuntimeException("Todo");
+		}
+	}
+
+
+	public static final AbstractLevel factory(int i, Game game) {
+		switch (i) {
+		case LEVEL_FACTORY:
+			return new FactoryLevel(game);
+		case LEVEL_VILLAGE:
+			return new VillageLevel(game);
+		default:
+			throw new RuntimeException("Todo");
+		}
 	}
 
 

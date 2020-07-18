@@ -2,17 +2,19 @@ package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.scs.basicecs.AbstractSystem;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.gamemodes.ControlPointScoreSystem;
+import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class FactoryLevel extends AbstractLevel {
 
-	private ControlPointScoreSystem cps;
+	private AbstractSystem cps;
 	
 	public FactoryLevel(Game _game) {
 		super(_game);
 		
-		this.cps = new ControlPointScoreSystem(game);
+		//this.cps = new ControlPointScoreSystem(game);
+		this.cps = new DeathmatchSystem(game, game.ecs);
 	}
 
 

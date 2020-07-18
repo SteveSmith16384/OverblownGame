@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.selectcharacter;
+package com.scs.splitscreenfps.selectgame;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,12 +19,13 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.pregame.PlayersJoinGameModule;
+import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
+import com.scs.splitscreenfps.selectcharacter.SelectHeroModule;
 
-public class SelectCharacterScreen implements IModule {
+public class SelectMapModule implements IModule {
 
 	private static final long READ_INPUTS_INTERVAL = 100;
 
@@ -37,14 +38,14 @@ public class SelectCharacterScreen implements IModule {
 	private Sprite logo;
 	private GameSelectionData gameSelectionData;
 	public AssetManager assetManager = new AssetManager();
-
 	private long next_input_check_time = 0;
 
-	// Gfx pos data
-	private int spacing_x;
-	private Sprite[] arrows;
 
-	public SelectCharacterScreen(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
+	// Gfx pos data
+	private int spacing_y;
+	private Sprite arrow;
+
+	public SelectMapModule(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		super();
 
 		main = _main;
@@ -56,9 +57,9 @@ public class SelectCharacterScreen implements IModule {
 
 		loadAssetsForResize();
 
-		this.appendToLog("CHOOSE A HERO!");
+		this.appendToLog("CHOOSE A MAP!");
 
-		spacing_x = Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
+		spacing_y = 20;//Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
 
 		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
 	}
@@ -81,12 +82,8 @@ public class SelectCharacterScreen implements IModule {
 		font_large = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-		Texture tex = getTexture("arrow_down_white.png");
-		arrows = new Sprite[this.inputs.size()];
-		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
-			arrows[playerIdx] = new Sprite(tex);
-			arrows[playerIdx].setColor(Settings.getColourForSide(playerIdx));
-		}
+		Texture tex = getTexture("arrow_right_white.png");
+		arrow = new Sprite(tex);
 	}
 
 
@@ -101,7 +98,7 @@ public class SelectCharacterScreen implements IModule {
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			main.next_module = new PlayersJoinGameModule(main);
+			main.next_module = new PlayersJoinGameModule(main);//, inputs, this.gameSelectionData);
 			return;
 		}
 
@@ -109,6 +106,7 @@ public class SelectCharacterScreen implements IModule {
 			this.next_input_check_time = System.currentTimeMillis() + READ_INPUTS_INTERVAL;
 			boolean all_selected = this.readInputs();
 			if (all_selected) {
+				main.audio.play("sfx/controlpoint.mp3");
 				this.startGame();
 				return;
 			}
@@ -129,22 +127,19 @@ public class SelectCharacterScreen implements IModule {
 
 		font_small.setColor(1,  1,  1,  1);
 
-		// Draw characters
-		int y_pos =  Settings.LOGICAL_SIZE_PIXELS/2;
-		for (int i=0 ; i<AvatarFactory.MAX_CHARS ; i++) {
-			int x_pos = spacing_x * (i+1);
-			font_small.draw(batch2d, AvatarFactory.getName(i), x_pos, y_pos);
+		// Draw levels
+		int x_pos = Settings.LOGICAL_SIZE_PIXELS/2;
+		int y_pos = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
+		for (int i=0 ; i<AbstractLevel.MAX_LEVELS ; i++) {
+			font_small.draw(batch2d, AbstractLevel.getName(i), x_pos, y_pos);
+			y_pos -= spacing_y;
 		}
 
 		// Draw arrows
-		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
-			y_pos = y_pos + (30*playerIdx);
-			int x_pos = spacing_x * (this.gameSelectionData.character[playerIdx]+1);
-
-			//arrow.setColor(Settings.getColourForSide(playerIdx));
-			arrows[playerIdx].setBounds(x_pos,  y_pos , 30, 30);
-			arrows[playerIdx].draw(batch2d);
-		}
+		x_pos = Settings.LOGICAL_SIZE_PIXELS/2 - 50;
+		y_pos = (int)( Gdx.graphics.getBackBufferHeight() * .6f) - (gameSelectionData.level * spacing_y) - 20;
+		arrow.setBounds(x_pos,  y_pos , 30, 30);
+		arrow.draw(batch2d);
 
 		// Draw log
 		int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
@@ -169,49 +164,40 @@ public class SelectCharacterScreen implements IModule {
 		//Draw buffer and FPS
 		batch2d.begin();
 		batch2d.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
-
 		/*if (Settings.SHOW_FPS) {
 			font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font.getLineHeight());
 		}*/
-
 		batch2d.end();
 	}
 
 
 	private boolean readInputs() {
 		// Read inputs
-		boolean all_selected = true;
-		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
-			IInputMethod input = this.inputs.get(playerIdx);
-			if (this.gameSelectionData.has_selected_character[playerIdx] == false) {
-				all_selected = false;
-				if (input.isMenuLeftPressed()) {
-					main.audio.play("sfx/type2.mp3");
-					this.gameSelectionData.character[playerIdx]--;
-					if (this.gameSelectionData.character[playerIdx] < 0) {
-						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS-1;
-					}
-				} else if (input.isMenuRightPressed()) {
-					main.audio.play("sfx/type2.mp3");
-					this.gameSelectionData.character[playerIdx]++;
-					if (this.gameSelectionData.character[playerIdx] >= AvatarFactory.MAX_CHARS) {
-						this.gameSelectionData.character[playerIdx] = 0;
-					}
-				} 
+		//boolean all_selected = true;
+		IInputMethod input = this.inputs.get(0);
+		if (input.isMenuUpPressed()) {
+			main.audio.play("sfx/type2.mp3");
+			this.gameSelectionData.level--;
+			if (this.gameSelectionData.level < 0) {
+				this.gameSelectionData.level = AbstractLevel.MAX_LEVELS-1;
 			}
-			if (input.isMenuSelectPressed()) {
-				main.audio.play("sfx/controlpoint.mp3");
-				this.gameSelectionData.has_selected_character[playerIdx] = true;
-				this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(this.gameSelectionData.character[playerIdx]));
+		} else if (input.isMenuDownPressed()) {
+			main.audio.play("sfx/type2.mp3");
+			this.gameSelectionData.level++;
+			if (this.gameSelectionData.level >= AbstractLevel.MAX_LEVELS) {
+				this.gameSelectionData.level = 0;
 			}
+		} else if (input.isMenuSelectPressed()) {
+			return true;
 		}
-		return all_selected;
+		return false;
 	}
 
-	
+
 	private void startGame() {
 		// Check all players have selected a character
-		main.next_module = new Game(main, inputs, gameSelectionData);
+		//main.next_module = new Game(main, inputs, gameSelectionData);
+		main.next_module = new SelectHeroModule(main, inputs, this.gameSelectionData);
 	}
 
 
@@ -248,14 +234,14 @@ public class SelectCharacterScreen implements IModule {
 	@Override
 	public void controlledAdded(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void controlledRemoved(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

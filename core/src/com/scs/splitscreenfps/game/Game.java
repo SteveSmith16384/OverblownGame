@@ -60,7 +60,6 @@ import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.MapEditorLevel;
-import com.scs.splitscreenfps.game.levels.VillageLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CheckRangeSystem;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
@@ -84,8 +83,8 @@ import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.game.systems.SpeechSystem;
 import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
-import com.scs.splitscreenfps.pregame.PlayersJoinGameModule;
 import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
+import com.scs.splitscreenfps.selectcharacter.SelectHeroModule;
 
 /**
  * This is the main game, where the players move about n'stuff.
@@ -118,7 +117,6 @@ public class Game implements IModule, ITextureProvider {
 
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
-	//private ProcessCollisionSystem coll;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btSequentialImpulseConstraintSolver constraintSolver;
 	private final ClosestRayResultCallback callback = new ClosestRayResultCallback(new Vector3(), new Vector3());
@@ -171,7 +169,8 @@ public class Game implements IModule, ITextureProvider {
 			//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
 			//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
 			//currentLevel = new FactoryLevel(this);
-			currentLevel = new VillageLevel(this);
+			//currentLevel = new VillageLevel(this);
+			this.currentLevel = AbstractLevel.factory(gameSelectionData.level, this);
 		}
 
 		for (int i=0 ; i<players.length ; i++) {
@@ -324,7 +323,8 @@ public class Game implements IModule, ITextureProvider {
 				Gdx.app.exit();
 				return;
 			}
-			this.main.next_module = new PlayersJoinGameModule(main);
+			this.main.next_module = new SelectHeroModule(main, this.inputs, this.gameSelectionData);
+			return;
 		}
 
 		if (Settings.DEBUG_GUI_SPRITES) {

@@ -92,12 +92,12 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isMenuLeftPressed() {
-		return this.getStrafeLeft() > 0.5f;
+		return Gdx.input.isKeyPressed(Keys.A);
 	}
 
 	@Override
 	public boolean isMenuRightPressed() {
-		return this.getStrafeRight() > 0.5f;
+		return Gdx.input.isKeyPressed(Keys.D);
 	}
 
 	@Override
@@ -107,7 +107,17 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isUltimatePressed() {
-		return Gdx.input.isKeyJustPressed(Keys.U);
+		return Gdx.input.isKeyPressed(Keys.U);
+	}
+
+	@Override
+	public boolean isMenuUpPressed() {
+		return Gdx.input.isKeyPressed(Keys.W);
+	}
+
+	@Override
+	public boolean isMenuDownPressed() {
+		return Gdx.input.isKeyPressed(Keys.S);
 	}
 
 

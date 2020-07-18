@@ -134,5 +134,17 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(3);
 	}
 
+	
+	@Override
+	public boolean isMenuUpPressed() {
+		return this.controller.getButton(15);
+	}
+
+	
+	@Override
+	public boolean isMenuDownPressed() {
+		return this.controller.getButton(16);
+	}
+
 
 }
