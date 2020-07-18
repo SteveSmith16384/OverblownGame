@@ -2,7 +2,7 @@ package com.scs.splitscreenfps.game.components;
 
 public class SecondaryAbilityComponent {
 
-	public enum SecondaryAbilityType {PowerPunch, JumpForwards, JetPac, JumpUp, StickyMine};
+	public enum SecondaryAbilityType {PowerPunch, JumpForwards, JetPac, JumpUp, StickyMine, TracerJump};
 		
 	public long cooldown;
 	public long lastShotTime;

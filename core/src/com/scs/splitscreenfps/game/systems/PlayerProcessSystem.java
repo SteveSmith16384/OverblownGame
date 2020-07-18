@@ -74,8 +74,9 @@ public class PlayerProcessSystem implements ISystem {
 
 							PlayerData theirPlayerData = (PlayerData)entityHit.getComponent(PlayerData.class);
 							theirPlayerData.has_been_punched = true;
-							game.playerDamaged(entityHit, theirPlayerData, 40, player);
-							Settings.p("Player " + theirPlayerData.playerIdx + " Punched!");
+							int damage = (int)(force * 10); // Doomfist
+							game.playerDamaged(entityHit, theirPlayerData, damage, player);
+							Settings.p("Player " + theirPlayerData.playerIdx + " Punched for " + damage + " damage");
 							break;
 						}
 					}

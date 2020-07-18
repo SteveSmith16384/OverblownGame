@@ -640,8 +640,10 @@ public class Game implements IModule, ITextureProvider {
 		redfilter.addComponent(new RemoveEntityAfterTimeComponent(duration));
 		ecs.addEntity(redfilter);
 
-		playerHitData.last_person_to_hit_them = shooter;
-
+		if (shooter != null) {
+			playerHitData.last_person_to_hit_them = shooter;
+		}
+		
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.damage_caused += amt;

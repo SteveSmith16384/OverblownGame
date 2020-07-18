@@ -102,6 +102,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 		ability.power = 0;
 	}
+	
 
 	private void performPowerPunch(AbstractPlayersAvatar player, float power) {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);

@@ -60,6 +60,8 @@ public class ShootingSystem extends AbstractSystem {
 
 			switch (weapon.weapon_type) {
 			case WeaponSettingsComponent.WEAPON_RIFLE:
+			case WeaponSettingsComponent.BOOMFIST_RIFLE:
+			case WeaponSettingsComponent.BOWLINGBALL_GUN:
 				AbstractEntity bullet = BulletEntityFactory.createBullet(game, player, startPos, dir);
 				game.ecs.addEntity(bullet);
 				break;

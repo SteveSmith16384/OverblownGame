@@ -10,6 +10,9 @@ public class WeaponSettingsComponent {
 	public static final int WEAPON_ROCKET_LAUNCHER = 3;
 	public static final int WEAPON_PUNCH = 4;
 	public static final int WEAPON_CANNON = 5;
+	public static final int BOOMFIST_RIFLE = 6;
+	public static final int BOWLINGBALL_GUN = 7;
+	
 	
 	public int weapon_type;
 	public long shot_interval;
