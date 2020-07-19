@@ -358,6 +358,7 @@ public class EntityFactory {
 		ModelInstance instance = ShapeHelper.createCylinder(tex, 1, 0, 0, .1f, .3f);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, true);
+		model.always_draw = true;
 		model.onlyDrawInViewId = playerIdx;
 		weapon.addComponent(model);
 

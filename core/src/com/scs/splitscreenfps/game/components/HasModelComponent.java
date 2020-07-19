@@ -1,7 +1,7 @@
 package com.scs.splitscreenfps.game.components;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.Settings;
 
 public class HasModelComponent {
@@ -14,8 +14,8 @@ public class HasModelComponent {
 	
 	public int dontDrawInViewId = -1; // Don't draw the player's own avatar!
 	public int onlyDrawInViewId = -1; // Don't draw the targetter for other players!
-	public BoundingBox bb; // For checking if in frustum  
-	public boolean always_draw = false;
+	public Vector3 dimensions; // For checking if in frustum
+	public boolean always_draw = false; // Mainly used for player's weapon
 	public boolean cast_shadow = true;
 	public boolean keep_player_in_centre = false; // For skybox
 	

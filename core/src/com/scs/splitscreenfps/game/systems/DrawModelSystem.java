@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -31,6 +32,8 @@ public class DrawModelSystem extends AbstractSystem {
 
 	private DirectionalShadowLight shadowLight;
 	private ModelBatch shadowBatch;
+
+	private int num_objects_drawn;
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
@@ -53,6 +56,7 @@ public class DrawModelSystem extends AbstractSystem {
 	//@Override
 	public void process(Camera cam, boolean shadows) {
 		long start = System.currentTimeMillis();
+		num_objects_drawn = 0;
 
 		if (!shadows) {
 			this.modelBatch.begin(cam);
@@ -76,8 +80,13 @@ public class DrawModelSystem extends AbstractSystem {
 			shadowBatch.end();
 			shadowLight.end();
 		}
+
 		long duration = System.currentTimeMillis() - start;
 		this.total_time += duration;
+		if (shadows == false) {
+			//Settings.p("num_objects_drawn=" + num_objects_drawn);
+
+		}
 	}
 
 
@@ -132,7 +141,6 @@ public class DrawModelSystem extends AbstractSystem {
 			return;
 		}
 
-
 		if (pc == null) { // Non-physics entity
 			if (model.keep_player_in_centre) { // i.e. a skybox
 				model.model.transform.setToTranslation(batch.getCamera().position);
@@ -148,22 +156,24 @@ public class DrawModelSystem extends AbstractSystem {
 		/*if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
 			//return; todo - check if bounds are in frustum!
 		}
-		/*} else {
-			if (model.always_draw == false) {
-				// Only draw if in frustum 
-				if (model.bb == null) {
-					model.bb = new BoundingBox();
-					model.model.calculateBoundingBox(model.bb);
-					model.bb.mul(model.model.transform);
-				}
-				if (!camera.frustum.boundsInFrustum(model.bb)) {
-					//return; todo - fix
-				}
+		} else {*/
+		if (model.always_draw == false) {
+			if (model.dimensions == null) {
+				model.dimensions = new Vector3();
+				BoundingBox bb = new BoundingBox();
+				model.model.calculateBoundingBox(bb);
+				bb.mul(model.model.transform);
+				bb.getDimensions(model.dimensions);
 			}
-		}*/
-		//}
+			if (!batch.getCamera().frustum.boundsInFrustum(posData.position, model.dimensions)) {
+				return;
+			}
+		}
 
 		batch.render(model.model, environment);
+		if (shadow == false) {
+			num_objects_drawn++;
+		}
 	}
 
 
