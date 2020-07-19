@@ -534,6 +534,8 @@ public class Game implements IModule, ITextureProvider {
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			this.vfxManager.dispose();
 		}
+		
+		ecs.dispose();
 	}
 
 

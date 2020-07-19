@@ -52,6 +52,8 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void process(Camera cam, boolean shadows) {
+		long start = System.currentTimeMillis();
+		
 		if (!shadows) {
 			this.modelBatch.begin(cam);
 
@@ -74,21 +76,15 @@ public class DrawModelSystem extends AbstractSystem {
 			shadowBatch.end();
 			shadowLight.end();
 		}
+		long duration = System.currentTimeMillis() - start;
+		this.total_time += duration;
 	}
 
 
 	//@Override
 	public void renderEntity(AbstractEntity entity, ModelBatch batch, boolean shadow) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
-		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		
-		if (Settings.STRICT) {
-			if (posData == null) {
-				throw new RuntimeException(entity + " has no PositionComponent");
-			}
-		}
-
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
 		}
@@ -102,6 +98,15 @@ public class DrawModelSystem extends AbstractSystem {
 			return;
 		}
 
+		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+
+		if (Settings.STRICT) {
+			if (posData == null) {
+				throw new RuntimeException(entity + " has no PositionComponent");
+			}
+		}
+
+		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		if (pc != null) {
 			pc.body.getWorldTransform(tmpMat);
 			// Resets the matrix to avoid hangoffs
@@ -133,7 +138,6 @@ public class DrawModelSystem extends AbstractSystem {
 				model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
 			}
 		}
-
 
 		// Only draw if in frustum 
 		/*if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {

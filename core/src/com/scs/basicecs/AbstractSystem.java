@@ -11,6 +11,8 @@ public abstract class AbstractSystem implements ISystem {
 	private String name;
 	private Class<?> component_class;
 
+	public long total_time;
+	
 	/**
 	 * 
 	 * @param _ecs
@@ -62,6 +64,8 @@ public abstract class AbstractSystem implements ISystem {
 	
 	
 	public void process() {
+		long start = System.currentTimeMillis();
+		
 		if (this.entities == null) {
 			Iterator<AbstractEntity> it = ecs.getEntityIterator();
 			while (it.hasNext()) {
@@ -81,6 +85,9 @@ public abstract class AbstractSystem implements ISystem {
 				this.processEntity(entity);
 			}
 		}
+		
+		long duration = System.currentTimeMillis() - start;
+		this.total_time += duration;
 	}
 
 

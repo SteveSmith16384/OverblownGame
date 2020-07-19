@@ -11,7 +11,7 @@ public class BasicECS {
 	private HashMap<Integer, AbstractEntity> entities = new HashMap<Integer, AbstractEntity>();
 	private List<AbstractEntity> to_add_entities = new ArrayList<AbstractEntity>();
 	public List<AbstractEvent> events = new ArrayList<AbstractEvent>();
-	
+
 	public BasicECS() {
 	}
 
@@ -30,15 +30,15 @@ public class BasicECS {
 		return this.systems.get(clazz);
 	}
 
-	
+
 	public void processSystem(Class<?> clazz) {
 		ISystem system = this.getSystem(clazz);
 		if (system != null) {
 			system.process();
 		}
 	}
-	
-	
+
+
 	/**
 	 * Do not call this directly.  It will be called automatically by AbstractEntity.
 	 */
@@ -56,8 +56,8 @@ public class BasicECS {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Do not call this directly.  It will be called automatically by AbstractEntity.
 	 */
@@ -75,8 +75,8 @@ public class BasicECS {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Call this in your main loop to avoid concurrency errors.
 	 */
@@ -128,11 +128,11 @@ public class BasicECS {
 		this.to_add_entities.add(e);
 	}
 
-	
+
 	public void removeEntity(AbstractEntity e) {
 		e.remove();
 	}
-	
+
 
 	public AbstractEntity get(int i) {
 		return this.entities.get(i);
@@ -143,7 +143,7 @@ public class BasicECS {
 		return this.entities.values().iterator();
 	}
 
-	
+
 	public List<AbstractEvent> getEvents(Class<? extends AbstractEvent> clazz) {
 		List<AbstractEvent> list = new ArrayList<AbstractEvent>();
 		Iterator<AbstractEvent> it = this.events.iterator();
@@ -156,7 +156,7 @@ public class BasicECS {
 		return list;
 	}
 
-	
+
 	public List<AbstractEvent> getEventsForEntity(Class<? extends AbstractEvent> clazz, AbstractEntity e) {
 		List<AbstractEvent> list = new ArrayList<AbstractEvent>();
 		Iterator<AbstractEvent> it = this.events.iterator();
@@ -171,15 +171,15 @@ public class BasicECS {
 		return list;
 	}
 
-	
+
 	public void removeAllEntities() {
 		for(AbstractEntity e : this.entities.values()) {
 			e.remove();
 		}
 		this.to_add_entities.clear();
 	}
-	
-	
+
+
 	public boolean containsEntity(AbstractEntity e) {
 		return this.entities.containsKey(e.entityId);
 	}
@@ -187,5 +187,19 @@ public class BasicECS {
 
 	public boolean containsEntity(int id) {
 		return this.entities.containsKey(id);
+	}
+
+
+	public void dispose() {
+		// Show total processing time
+		for (ISystem sys: this.systems.values()) {
+			if (sys instanceof AbstractSystem) {
+				AbstractSystem system = (AbstractSystem)sys;
+				if (system.total_time > 0) {
+					System.out.println(system.getClass().getSimpleName() + " = " + system.total_time);
+				}
+			}
+		}
+
 	}
 }
