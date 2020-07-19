@@ -17,7 +17,7 @@ public class AvatarFactory {
 	public static final int CHAR_BOWLING_BALL = 2;
 	public static final int CHAR_WINSTON = 3;
 	public static final int CHAR_BASTION = 4;
-	public static final int CHAR_JUNKRAT = 5;
+	public static final int CHAR_RUBBISHRODENT = 5;
 
 	public static final int MAX_CHARS = 3;
 
@@ -27,7 +27,7 @@ public class AvatarFactory {
 		case CHAR_BOOMFIST: return "Boomfist";
 		case CHAR_WINSTON: return "Winston";
 		case CHAR_BASTION: return "Bastion";
-		case CHAR_JUNKRAT: return "Junkrat";
+		case CHAR_RUBBISHRODENT: return "Rubbish Rodent";
 		case CHAR_BOWLING_BALL: return "Bowling Ball";
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -41,7 +41,7 @@ public class AvatarFactory {
 		case CHAR_BOOMFIST: return 300;
 		case CHAR_WINSTON: return 300;
 		case CHAR_BASTION: return 200;
-		case CHAR_JUNKRAT: return 200;
+		case CHAR_RUBBISHRODENT: return 200;
 		case CHAR_BOWLING_BALL: return 300;
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -83,7 +83,7 @@ public class AvatarFactory {
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpForwards, 5000));
 			break;
 			
-		case CHAR_JUNKRAT:
+		case CHAR_RUBBISHRODENT:
 			weapon_type = WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.StickyMine, 4000));
 			break;

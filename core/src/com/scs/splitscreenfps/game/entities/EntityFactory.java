@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
@@ -24,6 +25,7 @@ import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.IsCollectableComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.components.PlayersWeaponComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
 
@@ -349,5 +351,23 @@ public class EntityFactory {
 	}
 
 	
+	public static AbstractEntity createPlayersWeapon(Game game, int playerIdx, String tex_filename, Camera cam) {
+		AbstractEntity weapon = new AbstractEntity(game.ecs, "Weapon");
+
+		Texture tex = game.getTexture(tex_filename);
+		ModelInstance instance = ShapeHelper.createCylinder(tex, 1, 0, 0, .1f, .3f);
+
+		HasModelComponent model = new HasModelComponent(instance, 1, true);
+		model.onlyDrawInViewId = playerIdx;
+		weapon.addComponent(model);
+
+		weapon.addComponent(new PositionComponent());
+
+		weapon.addComponent(new PlayersWeaponComponent(cam));
+
+		return weapon;
+	}
+
+
 
 }

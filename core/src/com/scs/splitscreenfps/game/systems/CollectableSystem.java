@@ -37,7 +37,7 @@ public class CollectableSystem extends AbstractSystem {
 				break;
 			default:
 				if (Settings.STRICT) {
-					throw new RuntimeException("todo");
+					throw new RuntimeException("Unknown collectable: " + collectable.type);
 				}
 			}
 		}

@@ -53,7 +53,7 @@ public class DrawModelSystem extends AbstractSystem {
 	//@Override
 	public void process(Camera cam, boolean shadows) {
 		long start = System.currentTimeMillis();
-		
+
 		if (!shadows) {
 			this.modelBatch.begin(cam);
 
@@ -66,13 +66,13 @@ public class DrawModelSystem extends AbstractSystem {
 		} else {
 			shadowLight.begin(Vector3.Zero, cam.direction);
 			shadowBatch.begin(shadowLight.getCamera());
-			
+
 			Iterator<AbstractEntity> it2 = entities.iterator();
 			while (it2.hasNext()) {
 				AbstractEntity entity = it2.next();
 				this.renderEntity(entity, shadowBatch, true);
 			}
-			
+
 			shadowBatch.end();
 			shadowLight.end();
 		}
@@ -84,7 +84,41 @@ public class DrawModelSystem extends AbstractSystem {
 	//@Override
 	public void renderEntity(AbstractEntity entity, ModelBatch batch, boolean shadow) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
-		
+
+		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+		if (Settings.STRICT) {
+			if (posData == null) {
+				throw new RuntimeException(entity + " has no PositionComponent");
+			}
+		}
+
+		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+		if (game.currentViewId == 0 && shadow == false) { 
+			// Calc position.  Only need to do this bit once!
+			if (pc != null) {
+				pc.body.getWorldTransform(tmpMat);
+				// Resets the matrix to avoid hangoffs
+				if (model.scale == 1f) {
+					model.model.transform.set(tmpMat);
+				} else {
+					tmpMat.getTranslation(tmpOffset);
+					tmpOffset.y += model.yOff;
+					model.model.transform.setToTranslation(tmpOffset);
+					model.model.transform.scl(model.scale);
+
+					// Set rotation
+					if (pc.physicsControlsRotation == false) {
+						// Typically Avatars
+						model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+					} else {
+						Quaternion q = new Quaternion();
+						tmpMat.getRotation(q);
+						model.model.transform.rotate(q);
+					}
+				}
+			}
+		}
+
 		if (model.dontDrawInViewId == game.currentViewId) {
 			return;
 		}
@@ -98,41 +132,12 @@ public class DrawModelSystem extends AbstractSystem {
 			return;
 		}
 
-		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 
-		if (Settings.STRICT) {
-			if (posData == null) {
-				throw new RuntimeException(entity + " has no PositionComponent");
-			}
-		}
-
-		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		if (pc != null) {
-			pc.body.getWorldTransform(tmpMat);
-			// Resets the matrix to avoid hangoffs
-			if (model.scale == 1f) {
-				model.model.transform.set(tmpMat);
-			} else {
-				tmpMat.getTranslation(tmpOffset);
-				tmpOffset.y += model.yOff;
-				model.model.transform.setToTranslation(tmpOffset);
-				model.model.transform.scl(model.scale);
-
-				// Set rotation
-				if (pc.physicsControlsRotation == false) {
-					// Typically Avatars
-					model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
-				} else {
-					Quaternion q = new Quaternion();
-					tmpMat.getRotation(q);
-					model.model.transform.rotate(q);
-				}
-			}
-
-		} else { // Non-physics entity
-			if (model.keep_player_in_centre) { // i.e. a skyubox
+		if (pc == null) { // Non-physics entity
+			if (model.keep_player_in_centre) { // i.e. a skybox
 				model.model.transform.setToTranslation(batch.getCamera().position);
 			} else {
+				//int dfdf = 5654;
 				model.model.transform.setToTranslation(posData.position);
 				model.model.transform.scl(model.scale);
 				model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);

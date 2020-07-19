@@ -33,7 +33,6 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.BloomEffect;
 import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
@@ -53,6 +52,7 @@ import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
@@ -75,6 +75,7 @@ import com.scs.splitscreenfps.game.systems.HarmPlayerOnContactSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
+import com.scs.splitscreenfps.game.systems.PlayersWeaponSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RemoveOnContactSystem;
 import com.scs.splitscreenfps.game.systems.RespawnHealthPackSystem;
@@ -184,6 +185,11 @@ public class Game implements IModule, ITextureProvider {
 			AbstractEntity crosshairs = GraphicsEntityFactory.createCrosshairs(ecs, this, i);
 			ecs.addEntity(crosshairs);
 
+			AbstractEntity weapon = EntityFactory.createPlayersWeapon(this, i, "colours/red.png", cam);
+			ecs.addEntity(weapon);
+
+
+
 		}	
 
 		loadLevel();
@@ -260,6 +266,7 @@ public class Game implements IModule, ITextureProvider {
 	private void createECS() {
 		ecs = new BasicECS();
 		ecs.addSystem(new PlayerProcessSystem(this));
+		ecs.addSystem(new PlayersWeaponSystem(this, ecs));
 		ecs.addSystem(new SpeechSystem());
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
@@ -344,7 +351,7 @@ public class Game implements IModule, ITextureProvider {
 
 		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
-		this.ecs.addAndRemoveEntities();		
+		this.ecs.addAndRemoveEntities();
 		this.ecs.processSystem(SpeechSystem.class);
 		if (this.game_stage == 0) {
 			this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
@@ -352,7 +359,7 @@ public class Game implements IModule, ITextureProvider {
 		}
 		this.ecs.getSystem(PlayerProcessSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
-
+		this.ecs.getSystem(PlayersWeaponSystem.class).process();
 		this.ecs.events.clear();
 		if (physics_enabled) {
 			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
@@ -534,7 +541,7 @@ public class Game implements IModule, ITextureProvider {
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			this.vfxManager.dispose();
 		}
-		
+
 		ecs.dispose();
 	}
 
@@ -646,7 +653,7 @@ public class Game implements IModule, ITextureProvider {
 		if (shooter != null) {
 			playerHitData.last_person_to_hit_them = shooter;
 		}
-		
+
 		if (shooter != null) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.damage_caused += amt;
@@ -663,7 +670,7 @@ public class Game implements IModule, ITextureProvider {
 		if (shooter == null) {
 			shooter = playerDiedData.last_person_to_hit_them; // In case they fell off the edge
 		}
-		
+
 		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
 		if (anim != null) {
 			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
@@ -801,8 +808,6 @@ public class Game implements IModule, ITextureProvider {
 					ex.printStackTrace();
 				}
 				ecs.events.add(new EventCollision(e1, e2, force));
-
-				//coll.processCollision(e1, e2, Math.abs(force)); // todo - queue collisions
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

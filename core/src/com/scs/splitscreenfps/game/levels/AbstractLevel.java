@@ -106,7 +106,7 @@ public abstract class AbstractLevel {
 				}
 			} else if (block.tags.contains("healthpack")) {
 				AbstractEntity health = EntityFactory.createHealthPack(game, block.position);
-				game.ecs.addEntity(health);
+				//todo -re-add game.ecs.addEntity(health);
 				continue;
 			}
 			game.currentLevel.createAndAddEntityFromBlockData(block, for_map_editor);

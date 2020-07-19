@@ -27,9 +27,9 @@ public class DrawDecalSystem extends AbstractSystem {
 
 	@Override
 	public void process() {
-		int i = game.currentViewId;
-		Camera camera = game.players[i].camera;
-		DecalBatch batch = game.viewports[i].decalBatch;
+		int viewId = game.currentViewId;
+		Camera camera = game.players[viewId].camera;
+		DecalBatch batch = game.viewports[viewId].decalBatch;
 
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
@@ -44,7 +44,13 @@ public class DrawDecalSystem extends AbstractSystem {
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera, DecalBatch batch) {
 		HasDecal hasDecal = (HasDecal)entity.getComponent(HasDecal.class);
+
 		updateTransform(entity, camera, hasDecal);
+
+		if (game.currentViewId == 0) { // Only need to do this once!
+			PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
+			hasDecal.decal.setPosition(pos.position);
+		}
 
 		/*if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
 			return;
@@ -66,6 +72,7 @@ public class DrawDecalSystem extends AbstractSystem {
 			hasDecal.decal.setRotationY(hasDecal.rotation);
 		}
 
+		/*
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		if (pc != null) {
 			pc.body.getWorldTransform().getTranslation(tmp);
@@ -73,10 +80,8 @@ public class DrawDecalSystem extends AbstractSystem {
 		} else {
 			PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			hasDecal.decal.setPosition(pos.position);
-			//hasDecal.decal.translateY(.5f);
 		}
-
-		//hasDecal.decal.getPosition().y -= hasDecal.decal.getHeight()/2;
+*/
 	}
 
 
