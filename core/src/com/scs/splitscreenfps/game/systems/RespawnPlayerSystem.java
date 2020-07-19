@@ -9,11 +9,9 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WillRespawnComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 
@@ -55,10 +53,10 @@ public class RespawnPlayerSystem implements ISystem {
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);
 				playerData.health = playerData.max_health;
 				
-				DrawTextIn3DSpaceComponent text = (DrawTextIn3DSpaceComponent)e.getComponent(DrawTextIn3DSpaceComponent.class);
+				/*DrawTextIn3DSpaceComponent text = (DrawTextIn3DSpaceComponent)e.getComponent(DrawTextIn3DSpaceComponent.class);
 				if (text != null) {
 					text.text = "H: " + playerData.health;
-				}
+				}*/
 				
 				AbstractPlayersAvatar player = (AbstractPlayersAvatar)e;
 				//player.camera.lookAt(new Vector3(15, .5f, 15));

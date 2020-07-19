@@ -39,8 +39,6 @@ public class DrawTextIn3DSpaceSystem extends AbstractSystem {
 		tmp.set(posData.position);
 		tmp.add(data.offset);
 
-		//tmp.y += 0.3f;
-		
 		ViewportData viewport = game.viewports[game.currentViewId];
 		Camera camera = viewport.camera;
 		

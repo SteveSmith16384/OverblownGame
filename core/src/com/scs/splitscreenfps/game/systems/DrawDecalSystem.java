@@ -10,7 +10,6 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
-import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class DrawDecalSystem extends AbstractSystem {

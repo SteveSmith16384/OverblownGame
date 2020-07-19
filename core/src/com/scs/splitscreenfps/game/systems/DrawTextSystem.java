@@ -2,7 +2,6 @@ package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
