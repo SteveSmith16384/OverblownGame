@@ -48,7 +48,7 @@ public abstract class AbstractLevel {
 		case LEVEL_VILLAGE:
 			return "Control Point Village";
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown level: " + i);
 		}
 	}
 
@@ -60,7 +60,7 @@ public abstract class AbstractLevel {
 		case LEVEL_VILLAGE:
 			return new VillageLevel(game);
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown level: " + i);
 		}
 	}
 

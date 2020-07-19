@@ -233,14 +233,12 @@ public class SelectMapModule implements IModule {
 
 	@Override
 	public void controlledAdded(Controller controller) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	@Override
 	public void controlledRemoved(Controller controller) {
-		// TODO Auto-generated method stub
 
 	}
 

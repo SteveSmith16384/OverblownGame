@@ -88,13 +88,11 @@ public class NoInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isMenuUpPressed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isMenuDownPressed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
