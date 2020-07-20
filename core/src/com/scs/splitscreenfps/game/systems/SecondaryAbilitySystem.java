@@ -1,7 +1,9 @@
 package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -20,6 +22,8 @@ import ssmith.lang.NumberFunctions;
 public class SecondaryAbilitySystem extends AbstractSystem {
 
 	private Game game;
+	private Vector3 tmpVec = new Vector3();
+	private Matrix4 tmpMat = new Matrix4();
 
 	public SecondaryAbilitySystem(BasicECS ecs, Game _game) {
 		super(ecs, SecondaryAbilityComponent.class);
@@ -60,8 +64,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 				}
 			} else {
 				//Settings.p("Shoot at " + System.currentTimeMillis());
-				ability.lastShotTime = System.currentTimeMillis();
 
+				boolean success = true;
+				
 				switch (ability.type) {
 				case JumpForwards:
 					performPowerJump(entity, player);
@@ -73,7 +78,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 					performJetPac(entity, player);
 					break;
 				case TracerJump:
-					performTracerJump(player);
+					success = performTracerJump(player);
 					break;
 				case StickyMine:
 					dropStickyMine(entity, player);
@@ -83,6 +88,10 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 						throw new RuntimeException("Unknown ability: " + ability.type);
 					}
 				}
+
+				if (success) {
+				ability.lastShotTime = System.currentTimeMillis();
+			}
 			}
 		} else { // Button released?
 			if (ability.buildUpActivated) {
@@ -128,22 +137,31 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	}
 
 
-	private void performTracerJump(AbstractPlayersAvatar player) {
-		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
-		pc.body.activate();
-		float pow = 50;//15+(power*30);
-		//Settings.p("Performing boost with pow=" + pow);
-		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
-		//pc.body.appl.applyCentralForce(player.camera.direction.cpy().scl(power*3000)); Doesn't do anything?
-
+	private boolean performTracerJump(AbstractPlayersAvatar player) {
+		float dist = 5f;
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
-		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
-		game.ecs.addEntity(e);
+		btCollisionObject obj = game.rayTestByDir(posData.position, player.camera.direction, dist);
+		boolean clear = (obj == null);
 
-		//PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
-		//playerData.performing_power_punch = true;
+		if (clear) {
+			PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
+			pc.body.getWorldTransform(tmpMat);
+			tmpMat.getTranslation(tmpVec);
+			tmpVec.mulAdd(player.camera.direction, dist);
+			tmpMat.setTranslation(tmpVec);
+			pc.body.setWorldTransform(tmpMat);
+			
+			// f/x
+			AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
+			game.ecs.addEntity(e);
 
-		//BillBoardFPS_Main.audio.play("speech/boom.wav");
+			//todo BillBoardFPS_Main.audio.play("speech/boom.wav");
+
+			return true;
+		} else {
+			Settings.p(obj + " is in the way");
+			return false;
+		}
 	}
 
 
