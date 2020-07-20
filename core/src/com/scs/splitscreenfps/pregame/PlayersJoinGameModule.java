@@ -50,9 +50,9 @@ public class PlayersJoinGameModule implements IModule {
 
 		this.appendToLog("Welcome to " + Settings.TITLE);
 
-		this.appendToLog("v" + Settings.VERSION);
+		//this.appendToLog("v" + Settings.VERSION);
 		this.appendToLog("Click mouse to play with keyboard/mouse");
-		this.appendToLog("Press X to play with controller");
+		this.appendToLog("Press X to play with a controller");
 		this.appendToLog("F1 to toggle full-screen");
 		this.appendToLog("To SPACE to start once all players have joined!");
 
@@ -148,7 +148,7 @@ public class PlayersJoinGameModule implements IModule {
 
 		// Draw log
 		font_small.setColor(1,  1,  1,  1);
-		y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
+		y = (int)(Gdx.graphics.getHeight()*0.3);// - 220;
 		for (String s :this.log) {
 			font_small.draw(batch2d, s, 10, y);
 			y -= this.font_small.getLineHeight();

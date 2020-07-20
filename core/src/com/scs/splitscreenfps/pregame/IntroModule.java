@@ -59,7 +59,7 @@ public class IntroModule implements IModule {
 		Texture weaponTex = new Texture("overblown_logo.png");
 		//Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		logo = new Sprite(weaponTex);
-		logo.setBounds(0, 0, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		logo.setBounds(0, 0, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()*.25f);
 
 	}
 
@@ -91,7 +91,7 @@ public class IntroModule implements IModule {
 		// Draw game options
 		font_small.setColor(1,  1,  1,  1);
 		int x = (int)(Gdx.graphics.getWidth() * 0.45f);
-		int y = (int)(Gdx.graphics.getHeight()*.3f);
+		int y = (int)(Gdx.graphics.getHeight()*.4f);
 		font_small.draw(batch2d, "PRESS SPACE TO START!", x, y);
 
 		batch2d.end();

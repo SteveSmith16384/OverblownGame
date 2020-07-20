@@ -59,7 +59,7 @@ public class SelectMapModule implements IModule {
 
 		this.appendToLog("CHOOSE A MAP!");
 
-		spacing_y = 20;//Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
+		spacing_y = 30;//Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
 
 		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
 	}
@@ -142,7 +142,7 @@ public class SelectMapModule implements IModule {
 		arrow.draw(batch2d);
 
 		// Draw log
-		int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
+		int y = (int)(Gdx.graphics.getHeight()*0.98);// - 220;
 		for (String s :this.log) {
 			font_small.draw(batch2d, s, 10, y);
 			y -= this.font_small.getLineHeight();

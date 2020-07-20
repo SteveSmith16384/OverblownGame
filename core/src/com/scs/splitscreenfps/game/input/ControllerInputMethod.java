@@ -134,21 +134,27 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(3);
 	}
 
-	
+
 	@Override
 	public boolean isMenuUpPressed() {
-		return this.controller.getButton(15);
+		/*for (int i=0 ; i<16 ; i++) {
+			if (this.controller.getButton(i)) {
+				Settings.p("Pressed! " + i);
+				break;
+			}
+		}*/
+		return this.controller.getButton(11);
 	}
 
-	
+
 	@Override
 	public boolean isMenuDownPressed() {
-		return this.controller.getButton(16);
+		return this.controller.getButton(12);
 	}
 
 	@Override
 	public boolean isReloadPressed() {
-		return this.controller.getButton(1); // todo - check
+		return this.controller.getButton(1); // Circle
 	}
 
 

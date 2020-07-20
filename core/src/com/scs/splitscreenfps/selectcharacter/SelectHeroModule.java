@@ -209,6 +209,9 @@ public class SelectHeroModule implements IModule {
 				this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(this.gameSelectionData.character[playerIdx]));
 			}
 		}
+		if (all_selected) {
+			this.appendToLog("All Players have selected their hero!");
+		}
 		return all_selected;
 	}
 
