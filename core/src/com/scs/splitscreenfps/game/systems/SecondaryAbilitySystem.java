@@ -36,13 +36,13 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 		playerData.ability1text = ability.type + " Ready!";
 		playerData.ability1Ready = true;
-		
+
 		long interval = ability.cooldown;
 		if (ability.lastShotTime + interval > System.currentTimeMillis()) {
 			playerData.ability1Ready = false;
 			long cooldown_secs = ((ability.lastShotTime + interval) - System.currentTimeMillis()) / 1000;
 			playerData.ability1text = "Cooldown: " + (cooldown_secs+1);
-			
+
 			if (cooldown_secs <= 0) {
 				BillBoardFPS_Main.audio.play("sfx/teleport.mp3");
 			}
@@ -72,11 +72,16 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 				case JetPac:
 					performJetPac(entity, player);
 					break;
+				case TracerJump:
+					performTracerJump(player);
+					break;
 				case StickyMine:
 					dropStickyMine(entity, player);
 					break;
 				default:
-					//throw new RuntimeException("Unknown ability: " + ability.type);
+					if (Settings.STRICT) {
+						throw new RuntimeException("Unknown ability: " + ability.type);
+					}
 				}
 			}
 		} else { // Button released?
@@ -87,7 +92,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		}
 	}
 
-	
+
 	private void performBuildUpAbility(AbstractPlayersAvatar player, SecondaryAbilityComponent ability) {
 		ability.buildUpActivated = false;
 		ability.lastShotTime = System.currentTimeMillis();
@@ -102,7 +107,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 		ability.power = 0;
 	}
-	
+
 
 	private void performPowerPunch(AbstractPlayersAvatar player, float power) {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
@@ -111,7 +116,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		//Settings.p("Performing boost with pow=" + pow);
 		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
 		//pc.body.appl.applyCentralForce(player.camera.direction.cpy().scl(power*3000)); Doesn't do anything?
-		
+
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
 		game.ecs.addEntity(e);
@@ -120,6 +125,25 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		playerData.performing_power_punch = true;
 
 		BillBoardFPS_Main.audio.play("speech/boom.wav");
+	}
+
+
+	private void performTracerJump(AbstractPlayersAvatar player) {
+		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
+		pc.body.activate();
+		float pow = 50;//15+(power*30);
+		//Settings.p("Performing boost with pow=" + pow);
+		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
+		//pc.body.appl.applyCentralForce(player.camera.direction.cpy().scl(power*3000)); Doesn't do anything?
+
+		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
+		game.ecs.addEntity(e);
+
+		//PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
+		//playerData.performing_power_punch = true;
+
+		//BillBoardFPS_Main.audio.play("speech/boom.wav");
 	}
 
 
@@ -163,5 +187,5 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	private void dropStickyMine(AbstractEntity entity, AbstractPlayersAvatar player) {
 		// todo
 	}
-	
+
 }

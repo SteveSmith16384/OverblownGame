@@ -109,7 +109,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 
 	@Override
 	public void resize(int width, int height) {
-		if(this.current_module != null) {
+		Settings.p("Resize() called");
+		if (this.current_module != null) {
 			this.current_module.resize(width, height);
 		}
 	}

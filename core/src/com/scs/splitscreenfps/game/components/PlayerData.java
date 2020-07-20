@@ -5,7 +5,7 @@ import com.scs.splitscreenfps.Settings;
 
 public class PlayerData {
 
-	public int health, max_health;// = Settings.START_HEALTH;
+	public float health, max_health;// = Settings.START_HEALTH;
 	public int playerIdx;
 	public String playerName;
 	public long restartTime;

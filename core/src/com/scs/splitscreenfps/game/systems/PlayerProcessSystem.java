@@ -51,6 +51,12 @@ public class PlayerProcessSystem implements ISystem {
 	private void process(AbstractPlayersAvatar player) {
 		PhysicsComponent ourPhysics = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		PlayerData ourPlayerData = (PlayerData)player.getComponent(PlayerData.class);
+		
+		// Regen health
+		ourPlayerData.health += (Gdx.graphics.getDeltaTime()/2);
+		if (ourPlayerData.health > ourPlayerData.max_health) {
+			ourPlayerData.health = ourPlayerData.max_health;
+		}
 
 		// Check for collision events to play thud
 		List<AbstractEvent> events = game.ecs.getEventsForEntity(EventCollision.class, player);

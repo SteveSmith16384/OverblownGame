@@ -16,12 +16,12 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
+	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int NUM_AUTOSTART_CHARACTERS = 2;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOOMFIST;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_TRACEY;
 	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && false;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;
-	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
 	public static final boolean DEBUG_PUNCH = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;

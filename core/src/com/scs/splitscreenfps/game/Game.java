@@ -225,21 +225,23 @@ public class Game implements IModule, ITextureProvider {
 
 
 	private void loadAssetsForRescale() {
+		int height = Gdx.graphics.getBackBufferHeight();
+		Settings.p("Height: " + height);
 		//this.currentLevel.loadAssets();
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
+		parameter.size = height/30;
 		//Settings.p("Font size=" + parameter.size);
 		font_small = generator.generateFont(parameter);
 
 		parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferHeight()/20;
+		parameter.size = height/20;
 		//Settings.p("Font size=" + parameter.size);
 		font_med = generator.generateFont(parameter);
 
 		parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
+		parameter.size = height/10;
 		//Settings.p("Font size=" + parameter.size);
 		font_large = generator.generateFont(parameter);
 
@@ -423,15 +425,15 @@ public class Game implements IModule, ITextureProvider {
 
 			// Draw HUD
 			currentLevel.renderUI(batch2d, currentViewId);
-			float yOff = font_small.getLineHeight() * 1f;
+			float yOff = font_med.getLineHeight() * 1f;
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 			//font_small.setColor(1, 1, 1, 1);
-			drawText("Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
-			drawText("Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
-			drawText(playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
-			drawText("Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
-			drawText(playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);
-			drawText(playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
+			drawText(this.font_small, "Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
+			drawText(this.font_small, "Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
+			drawText(this.font_med, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
+			drawText(this.font_med, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
+			drawText(this.font_small, playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);
+			drawText(this.font_med, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
 
 			if (currentViewId == 0) {
 				// Draw log
@@ -442,7 +444,7 @@ public class Game implements IModule, ITextureProvider {
 					y = (viewportData.viewRect.height*2)-20;
 				}
 				for (String s :this.log) {
-					drawText(s, viewportData.viewRect.x+10, y, false);
+					drawText(font_small, s, viewportData.viewRect.x+10, y, false);
 					y -= this.font_small.getLineHeight();
 				}
 			}
@@ -482,18 +484,18 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
-	private void drawText(String text, float x, float y, boolean highlight) {
-		font_small.setColor(Color.BLACK);
-		font_small.draw(batch2d, text, x+2, y);
-		font_small.draw(batch2d, text, x-2, y);
-		font_small.draw(batch2d, text, x, y+2);
-		font_small.draw(batch2d, text, x, y-2);
+	private void drawText(BitmapFont font, String text, float x, float y, boolean highlight) {
+		font.setColor(Color.BLACK);
+		font.draw(batch2d, text, x+2, y);
+		font.draw(batch2d, text, x-2, y);
+		font.draw(batch2d, text, x, y+2);
+		font.draw(batch2d, text, x, y-2);
 		if (highlight) {
-			font_small.setColor(Color.YELLOW);
+			font.setColor(Color.YELLOW);
 		} else {
-			font_small.setColor(Color.WHITE);
+			font.setColor(Color.WHITE);
 		}
-		font_small.draw(batch2d, text, x, y);
+		font.draw(batch2d, text, x, y);
 
 	}
 

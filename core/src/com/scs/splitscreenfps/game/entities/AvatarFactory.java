@@ -15,20 +15,24 @@ public class AvatarFactory {
 	public static final int CHAR_PHARTAH = 0;
 	public static final int CHAR_BOOMFIST = 1;
 	public static final int CHAR_BOWLING_BALL = 2;
-	public static final int CHAR_WINSTON = 3;
-	public static final int CHAR_BASTION = 4;
-	public static final int CHAR_RUBBISHRODENT = 5;
+	public static final int CHAR_TRACEY = 3;
 
-	public static final int MAX_CHARS = 3;
+	public static final int CHAR_WINSTON = 4;
+	public static final int CHAR_BASTION = 5;
+	public static final int CHAR_RUBBISHRODENT = 6;
+	
+	
+	public static final int MAX_CHARS = 4;
 
 	public static String getName(int id) {
 		switch (id) {
 		case CHAR_PHARTAH: return "Phartah";
 		case CHAR_BOOMFIST: return "Boomfist";
+		case CHAR_BOWLING_BALL: return "Bowling Ball";
+		case CHAR_TRACEY: return "Tracey";
 		case CHAR_WINSTON: return "Winston";
 		case CHAR_BASTION: return "Bastion";
 		case CHAR_RUBBISHRODENT: return "Rubbish Rodent";
-		case CHAR_BOWLING_BALL: return "Bowling Ball";
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}
@@ -38,11 +42,12 @@ public class AvatarFactory {
 	private static int getHealth(int id) {
 		switch (id) {
 		case CHAR_PHARTAH: return 200;
-		case CHAR_BOOMFIST: return 300;
-		case CHAR_WINSTON: return 300;
+		case CHAR_BOOMFIST: return 250;
+		case CHAR_BOWLING_BALL: return 500;
+		case CHAR_TRACEY: return 150;
+		case CHAR_WINSTON: return 500;
 		case CHAR_BASTION: return 200;
 		case CHAR_RUBBISHRODENT: return 200;
-		case CHAR_BOWLING_BALL: return 350;
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}
@@ -76,6 +81,12 @@ public class AvatarFactory {
 			weapon_type = WeaponSettingsComponent.BOWLINGBALL_GUN;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpUp, 5000));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.Minefield, 60));
+			break;
+			
+		case CHAR_TRACEY:
+			weapon_type = WeaponSettingsComponent.TRACEY_PISTOLS;
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.TracerJump, 6000));
+			avatar.addComponent(new UltimateAbilityComponent(UltimateType.TraceyBomb, 50));
 			break;
 			
 		case CHAR_WINSTON:
@@ -113,15 +124,14 @@ public class AvatarFactory {
 		case WeaponSettingsComponent.BOWLINGBALL_GUN:
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.BOOMFIST_RIFLE, 100, 2100, 80, 25, 
 					12, 15, .2f, null);
-			//weapon.kickback_force = 1f;
+			weapon.kickback_force = .5f;
 			break;
 
-		/*case WeaponSettingsComponent.WEAPON_RIFLE:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_RIFLE, 300, 1200, 20, 20, 
-					30, .2f, null);
-			//weapon.kickback_force = 1f;
+		case WeaponSettingsComponent.TRACEY_PISTOLS:
+			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.TRACEY_PISTOLS, 100, 1150, 20, 20, 
+					6, 13, .2f, null);
 			break;
-*/
+
 		case WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER:
 			ExplosionData explData = new ExplosionData(2f, 40, 2f);
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER, 667, 1500, 5, 100, 

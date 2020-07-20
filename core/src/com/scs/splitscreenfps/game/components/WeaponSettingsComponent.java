@@ -12,7 +12,7 @@ public class WeaponSettingsComponent {
 	public static final int BASTION_CANNON = 5;
 	public static final int BOOMFIST_RIFLE = 6;
 	public static final int BOWLINGBALL_GUN = 7;
-	public static final int TRACER_GUN = 8;
+	public static final int TRACEY_PISTOLS = 8;
 		
 	public int weapon_type;
 	public long shot_interval;
@@ -26,7 +26,8 @@ public class WeaponSettingsComponent {
 	public float spread_degrees;
 	public final ExplosionData explData;
 	
-	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, float _range, int _damage, float _dropff_start, float _dropoff_per_metre, ExplosionData _explData) {
+	public WeaponSettingsComponent(int type, long _shot_interval, long _reload_interval, int ammo, float _range, 
+			int _damage, float _dropff_start, float _dropoff_per_metre, ExplosionData _explData) {
 		this.weapon_type = type;
 		this.max_ammo = ammo;
 		shot_interval = _shot_interval;
