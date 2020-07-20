@@ -34,7 +34,8 @@ public class DrawModelSystem extends AbstractSystem {
 	private ModelBatch shadowBatch;
 
 	private int num_objects_drawn;
-
+	private BoundingBox tmpBB = new BoundingBox();
+	
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
 		game = _game;
@@ -102,27 +103,30 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		if (game.currentViewId == 0 && shadow == false) { 
-			// Calc position.  Only need to do this bit once!
+		if (game.currentViewId == 0 && shadow == false) {
+			// Calc position.  Only need to do this bit once per game loop!
 			if (pc != null) {
-				pc.body.getWorldTransform(tmpMat);
-				// Resets the matrix to avoid hangoffs
-				if (model.scale == 1f) {
-					model.model.transform.set(tmpMat);
-				} else {
-					tmpMat.getTranslation(tmpOffset);
-					tmpOffset.y += model.yOff;
-					model.model.transform.setToTranslation(tmpOffset);
-					model.model.transform.scl(model.scale);
-
-					// Set rotation
-					if (pc.physicsControlsRotation == false) {
-						// Typically Avatars
-						model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+				if (pc.position_dity || pc.body.getInvMass() != 0) {
+					pc.position_dity = false;
+					pc.body.getWorldTransform(tmpMat);
+					// Resets the matrix to avoid hangoffs
+					if (model.scale == 1f) {
+						model.model.transform.set(tmpMat);
 					} else {
-						Quaternion q = new Quaternion();
-						tmpMat.getRotation(q);
-						model.model.transform.rotate(q);
+						tmpMat.getTranslation(tmpOffset);
+						tmpOffset.y += model.yOff;
+						model.model.transform.setToTranslation(tmpOffset);
+						model.model.transform.scl(model.scale);
+
+						// Set rotation
+						if (pc.physicsControlsRotation == false) {
+							// Typically Avatars
+							model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
+						} else {
+							Quaternion q = new Quaternion();
+							tmpMat.getRotation(q);
+							model.model.transform.rotate(q);
+						}
 					}
 				}
 			}
@@ -160,10 +164,9 @@ public class DrawModelSystem extends AbstractSystem {
 		if (model.always_draw == false) {
 			if (model.dimensions == null) {
 				model.dimensions = new Vector3();
-				BoundingBox bb = new BoundingBox();
-				model.model.calculateBoundingBox(bb);
-				bb.mul(model.model.transform);
-				bb.getDimensions(model.dimensions);
+				model.model.calculateBoundingBox(tmpBB);
+				tmpBB.mul(model.model.transform);
+				tmpBB.getDimensions(model.dimensions);
 			}
 			if (!batch.getCamera().frustum.boundsInFrustum(posData.position, model.dimensions)) {
 				return;

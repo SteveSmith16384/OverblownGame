@@ -464,7 +464,11 @@ public class Game implements IModule, ITextureProvider {
 
 			if (Settings.SHOW_FPS) {
 				if (font_small != null) {
-					font_small.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-100, font_small.getLineHeight()*2);
+					font_small.setColor(Color.WHITE);
+					if (Gdx.graphics.getFramesPerSecond() < 60) {
+						font_small.setColor(Color.RED);
+					}
+					font_small.draw(batch2d, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-100, font_small.getLineHeight()*2);
 				}
 			}
 
