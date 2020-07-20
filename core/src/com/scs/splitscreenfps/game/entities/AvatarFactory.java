@@ -42,7 +42,7 @@ public class AvatarFactory {
 		case CHAR_WINSTON: return 300;
 		case CHAR_BASTION: return 200;
 		case CHAR_RUBBISHRODENT: return 200;
-		case CHAR_BOWLING_BALL: return 300;
+		case CHAR_BOWLING_BALL: return 350;
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}
@@ -100,7 +100,7 @@ public class AvatarFactory {
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER: 
 			ExplosionData explData2 = new ExplosionData(1f, 30, 3f);
 			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 750, 1500, 6, 50, 
-					120, 0, 0, explData2);
+					90, 0, 0, explData2);
 			weapon.kickback_force = 5f;
 			break;
 

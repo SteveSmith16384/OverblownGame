@@ -23,7 +23,7 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 * R1 - Shoot
 * L1 - Secondary Ability
 * X - Jump
-* Circle - Reload
+* Square - Reload
 * Triangle - Ultimate
 
 

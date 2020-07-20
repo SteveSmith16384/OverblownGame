@@ -625,6 +625,10 @@ public class Game implements IModule, ITextureProvider {
 		if (amt <= 0) {
 			return;
 		}
+		if (playerHitData.invincible_until > System.currentTimeMillis()) {
+			// todo - special sfx
+			return;
+		}
 
 		main.audio.play("sfx/hit1.wav");
 
@@ -635,14 +639,13 @@ public class Game implements IModule, ITextureProvider {
 			playerHitData.health = 0;
 		}
 
-		if (shooter != null) {
+		if (shooter != null && shooter != player) {
 			playerHitData.last_person_to_hit_them = shooter;
 
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.damage_caused += amt;
 			
 			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
-
 			AbstractEntity text = GraphicsEntityFactory.createRisingHealth(ecs, shooterData.playerIdx, posData.position, ""+amt);
 			ecs.addEntity(text);
 		}
@@ -680,7 +683,7 @@ public class Game implements IModule, ITextureProvider {
 			ecs.addEntity(expl);
 		}
 
-		if (shooter != null) {
+		if (shooter != null && shooter != playerKilled) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			this.appendToLog(playerDiedData.playerName + " has been killed by " + shooterData.playerName);
 			shooterData.num_kills++;

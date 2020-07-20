@@ -66,10 +66,11 @@ public class PlayerProcessSystem implements ISystem {
 					if (ourPlayerData.performing_power_punch) {
 						float force = coll.force;//ourPhysics.body.getLinearVelocity().len();
 						if (force > LINEAR_VELOCITY_CUTOFF) { // Did we hit them really hard, i.e. are we Boomfist?
-							Vector3 dir = ourPhysics.body.getLinearVelocity();
+							tmpVector.set(ourPhysics.body.getLinearVelocity());
+							tmpVector.nor().scl(force);
 							PhysicsComponent theirPhysics = (PhysicsComponent)entityHit.getComponent(PhysicsComponent.class);
 							theirPhysics.body.activate();
-							theirPhysics.body.applyCentralImpulse(dir);
+							theirPhysics.body.applyCentralImpulse(tmpVector);
 							theirPhysics.body.setDamping(0.2f, 0.2f);
 
 							PlayerData theirPlayerData = (PlayerData)entityHit.getComponent(PlayerData.class);

@@ -131,7 +131,7 @@ public class ControllerInputMethod implements IInputMethod {
 			break;
 		}
 	}*/
-		return this.controller.getButton(3);
+		return this.controller.getButton(3); // Triangle
 	}
 
 
@@ -154,7 +154,7 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isReloadPressed() {
-		return this.controller.getButton(1); // Circle
+		return this.controller.getButton(2); // Square
 	}
 
 

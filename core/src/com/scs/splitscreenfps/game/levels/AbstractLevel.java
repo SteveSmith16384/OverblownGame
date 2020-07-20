@@ -104,7 +104,7 @@ public abstract class AbstractLevel {
 				if (for_map_editor == false) {
 					continue; // Don't add player start sphere!
 				}
-			} else if (block.tags.contains("healthpack")) {
+			} else if (for_map_editor == false && block.tags.contains("healthpack")) {
 				AbstractEntity health = EntityFactory.createHealthPack(game, block.position);
 				game.ecs.addEntity(health);
 				continue;

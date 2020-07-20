@@ -52,6 +52,7 @@ public class RespawnPlayerSystem implements ISystem {
 				// Reset health
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);
 				playerData.health = playerData.max_health;
+				playerData.invincible_until = System.currentTimeMillis() + 4000;
 				
 				/*DrawTextIn3DSpaceComponent text = (DrawTextIn3DSpaceComponent)e.getComponent(DrawTextIn3DSpaceComponent.class);
 				if (text != null) {
