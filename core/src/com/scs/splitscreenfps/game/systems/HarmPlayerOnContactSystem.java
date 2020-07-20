@@ -44,6 +44,7 @@ public class HarmPlayerOnContactSystem extends AbstractSystem {
 					PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 					if (harm.dropoff_per_metre > 0) {
 						float len = harm.start_pos.dst(posData.position);
+						len -= harm.dropoff_start;
 						damage -= (len * harm.dropoff_per_metre);
 					}
 					game.playerDamaged(coll.entity2, playerHitData, damage, harm.shooter);

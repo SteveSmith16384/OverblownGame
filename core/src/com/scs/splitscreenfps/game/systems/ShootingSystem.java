@@ -64,14 +64,14 @@ public class ShootingSystem extends AbstractSystem {
 			//startPos.y += .3f;
 
 			switch (weapon.weapon_type) {
-			case WeaponSettingsComponent.WEAPON_RIFLE:
+			//case WeaponSettingsComponent.WEAPON_RIFLE:
 			case WeaponSettingsComponent.BOOMFIST_RIFLE:
 			case WeaponSettingsComponent.BOWLINGBALL_GUN:
 				AbstractEntity bullet = BulletEntityFactory.createBullet(game, player, startPos, dir);
 				game.ecs.addEntity(bullet);
 				break;
 
-			case WeaponSettingsComponent.WEAPON_GRENADE_LAUNCHER:
+			case WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER:
 				AbstractEntity g = BulletEntityFactory.createGrenade(game, player, startPos, dir);
 				game.ecs.addEntity(g);
 				break;
@@ -86,7 +86,7 @@ public class ShootingSystem extends AbstractSystem {
 				game.ecs.addEntity(p);
 				break;
 
-			case WeaponSettingsComponent.WEAPON_CANNON:
+			case WeaponSettingsComponent.BASTION_CANNON:
 				AbstractEntity c = BulletEntityFactory.createCannonball(game, player, startPos, dir);
 				game.ecs.addEntity(c);
 				break;

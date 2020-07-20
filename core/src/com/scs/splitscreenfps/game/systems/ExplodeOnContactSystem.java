@@ -43,7 +43,7 @@ public class ExplodeOnContactSystem extends AbstractSystem {
 				}
 				Settings.p(bullet + " hit " + coll.entity2);
 				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-				game.explosion(posData.position, bullet.explData, bullet.shooter);
+				game.explosion(posData.position, bullet.explData, bullet.harm_shooter ? null : bullet.shooter);
 			}
 
 		}
