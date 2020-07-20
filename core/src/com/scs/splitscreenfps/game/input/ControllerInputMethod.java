@@ -146,5 +146,10 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(16);
 	}
 
+	@Override
+	public boolean isReloadPressed() {
+		return this.controller.getButton(1); // todo - check
+	}
+
 
 }

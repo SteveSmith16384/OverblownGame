@@ -11,14 +11,14 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PlayersWeaponComponent;
 
-public class PlayersWeaponSystem extends AbstractSystem {
+public class PositionPlayersWeaponSystem extends AbstractSystem {
 
 	private Game game;
 
 	private Vector3 tmpVector = new Vector3();
-	private Vector2 tmpVec2 = new Vector2();
+	//private Vector2 tmpVec2 = new Vector2();
 
-	public PlayersWeaponSystem(Game _game, BasicECS ecs) {
+	public PositionPlayersWeaponSystem(Game _game, BasicECS ecs) {
 		super(ecs, PlayersWeaponComponent.class);
 
 		game = _game;

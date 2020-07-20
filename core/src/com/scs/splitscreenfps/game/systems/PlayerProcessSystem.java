@@ -155,12 +155,10 @@ public class PlayerProcessSystem implements ISystem {
 				tmpVector.set(camera.direction);
 				tmpVector.scl(Gdx.graphics.getDeltaTime()*CAM_SPEED);
 				camera.position.add(tmpVector);
-				//camera.update();
 			} else if (player.inputMethod.getBackwards() > Settings.MIN_AXIS) {
 				tmpVector.set(camera.direction);
 				tmpVector.scl(-Gdx.graphics.getDeltaTime()*CAM_SPEED);
 				camera.position.add(tmpVector);
-				//camera.update();
 			}
 			if (player.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
 				tmpVector.set(camera.direction).crs(camera.up);

@@ -12,6 +12,7 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 * LMB - Shoot
 * RMB - Secondary ability
 * Space - Jump
+* R - Reload
 * U - Ultimate
 * F1 - Toggle full-screen
 * F2 - Toggle windowed full-screen (useful for recording video).
@@ -22,6 +23,7 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 * R1 - Shoot
 * L1 - Secondary Ability
 * X - Jump
+* Circle - Reload
 * Triangle - Ultimate
 
 

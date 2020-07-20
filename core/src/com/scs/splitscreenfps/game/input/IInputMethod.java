@@ -34,6 +34,8 @@ public interface IInputMethod {
 
 	boolean isShootPressed();
 
+	boolean isReloadPressed();
+
 	boolean isAbility1Pressed();
 
 	boolean isUltimatePressed();

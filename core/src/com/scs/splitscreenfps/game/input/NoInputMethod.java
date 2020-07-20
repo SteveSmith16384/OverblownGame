@@ -95,4 +95,9 @@ public class NoInputMethod implements IInputMethod {
 	public boolean isMenuDownPressed() {
 		return false;
 	}
+
+	@Override
+	public boolean isReloadPressed() {
+		return false;
+	}
 }

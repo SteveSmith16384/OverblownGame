@@ -34,15 +34,15 @@ public class ShootingSystem extends AbstractSystem {
 		}
 
 		CanShoot cc = (CanShoot)entity.getComponent(CanShoot.class);
-
 		if (cc.nextShotTime > System.currentTimeMillis()) {
 			return;
 		}
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
+		WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
+
 		if (player.inputMethod.isShootPressed()) {
-			WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
 			//Settings.p("Shoot at " + System.currentTimeMillis());
 			cc.ammo--;
 			cc.nextShotTime = System.currentTimeMillis() + weapon.shot_interval;
@@ -114,6 +114,12 @@ public class ShootingSystem extends AbstractSystem {
 			}
 
 			playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+		} else if (player.inputMethod.isReloadPressed()) {
+			if (cc.ammo < weapon.max_ammo) {
+				cc.ammo = weapon.max_ammo;
+				cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
+				playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+			}
 		}
 
 	}

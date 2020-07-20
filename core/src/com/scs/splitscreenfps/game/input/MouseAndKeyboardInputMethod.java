@@ -120,5 +120,10 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		return Gdx.input.isKeyPressed(Keys.S);
 	}
 
+	@Override
+	public boolean isReloadPressed() {
+		return Gdx.input.isKeyPressed(Keys.R);
+	}
+
 
 }

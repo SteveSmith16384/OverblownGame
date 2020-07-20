@@ -25,7 +25,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 
 	//private static final float PLAYER_HEIGHT = 0.4f;
-	private static final float DAMPING = 0.3f;
+	private static final float DAMPING = 0.5f;
 
 	public PlayerAvatar_Ball(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int health) {
 		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx);
@@ -46,7 +46,6 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 		hasModel.dontDrawInViewId = playerIdx;
 		this.addComponent(hasModel);
 
-
 		btSphereShape capsuleShape = new btSphereShape(diam/2);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
@@ -56,7 +55,6 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 		player_body.userData = this;
 		player_body.setDamping(DAMPING, DAMPING);
 		player_body.setRestitution(.8f);
-		//player_body.setAngularFactor(new Vector3(0, 0, 0)); // prevent the player from falling over
 		PhysicsComponent physics = new PhysicsComponent(player_body);
 		physics.removeIfFallen = false;
 		physics.physicsControlsRotation = false;

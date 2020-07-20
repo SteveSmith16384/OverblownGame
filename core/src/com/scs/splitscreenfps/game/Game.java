@@ -75,7 +75,7 @@ import com.scs.splitscreenfps.game.systems.HarmPlayerOnContactSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
-import com.scs.splitscreenfps.game.systems.PlayersWeaponSystem;
+import com.scs.splitscreenfps.game.systems.PositionPlayersWeaponSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RemoveOnContactSystem;
 import com.scs.splitscreenfps.game.systems.RespawnHealthPackSystem;
@@ -266,7 +266,7 @@ public class Game implements IModule, ITextureProvider {
 	private void createECS() {
 		ecs = new BasicECS();
 		ecs.addSystem(new PlayerProcessSystem(this));
-		ecs.addSystem(new PlayersWeaponSystem(this, ecs));
+		ecs.addSystem(new PositionPlayersWeaponSystem(this, ecs));
 		ecs.addSystem(new SpeechSystem());
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
@@ -359,7 +359,7 @@ public class Game implements IModule, ITextureProvider {
 		}
 		this.ecs.getSystem(PlayerProcessSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
-		this.ecs.getSystem(PlayersWeaponSystem.class).process();
+		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
 		this.ecs.events.clear();
 		if (physics_enabled) {
 			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
