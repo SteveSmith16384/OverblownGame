@@ -433,7 +433,7 @@ public class Game implements IModule, ITextureProvider {
 			drawText(this.font_med, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
 			drawText(this.font_med, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
 			drawText(this.font_small, playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);
-			drawText(this.font_med, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
+			drawText(this.font_med, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), true);
 
 			if (currentViewId == 0) {
 				// Draw log
@@ -637,9 +637,9 @@ public class Game implements IModule, ITextureProvider {
 		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 
 		playerHitData.health -= amt;
-		if (playerHitData.health < 0) {
+		/*if (playerHitData.health < 0) {
 			playerHitData.health = 0;
-		}
+		}*/
 
 		if (shooter != null && shooter != player) {
 			playerHitData.last_person_to_hit_them = shooter;
@@ -668,6 +668,12 @@ public class Game implements IModule, ITextureProvider {
 
 
 	public void playerDied(AbstractEntity playerKilled, PlayerData playerDiedData, AbstractEntity shooter) {
+		if (playerDiedData.dead) {
+			return; // Prevent calling multiple times
+		}
+		
+		playerDiedData.dead = true;
+		
 		if (shooter == null) {
 			shooter = playerDiedData.last_person_to_hit_them; // In case they fell off the edge
 		}

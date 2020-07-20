@@ -6,6 +6,7 @@ import com.scs.splitscreenfps.Settings;
 public class PlayerData {
 
 	public float health, max_health;// = Settings.START_HEALTH;
+	public boolean dead = false;
 	public int playerIdx;
 	public String playerName;
 	public long restartTime;
@@ -13,7 +14,7 @@ public class PlayerData {
 	public AbstractEntity last_person_to_hit_them;
 	public String gunText = "";
 	public String ability1text = "";
-	public boolean ability1Ready = false;
+	//public boolean ability1Ready = false;
 	public String ultimateText = "";
 	public boolean ultimateReady = false;
 	public boolean performing_power_punch;

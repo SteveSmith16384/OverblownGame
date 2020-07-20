@@ -73,30 +73,30 @@ public class AvatarFactory {
 			
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.BOOMFIST_RIFLE;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 6000, .5f));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 6, .5f));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.CraterStrike, 50));
 			break;
 			
 		case CHAR_BOWLING_BALL:
 			weapon_type = WeaponSettingsComponent.BOWLINGBALL_GUN;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpUp, 5000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpUp, 5));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.Minefield, 60));
 			break;
 			
 		case CHAR_TRACEY:
 			weapon_type = WeaponSettingsComponent.TRACEY_PISTOLS;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.TracerJump, 6000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.TracerJump, 6, 3));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.TraceyBomb, 50));
 			break;
 			
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpForwards, 5000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpForwards, 5));
 			break;
 			
 		case CHAR_RUBBISHRODENT:
 			weapon_type = WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.StickyMine, 4000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.StickyMine, 4));
 			break;
 			
 		case CHAR_BASTION:

@@ -63,7 +63,7 @@ public class PhysicsSystem extends AbstractSystem {
 				// Is it a player?
 				PlayerData player = (PlayerData)e.getComponent(PlayerData.class);
 				if (player != null) {
-					if (player.health > 0) {
+					if (player.dead == false) {
 						game.playerDied(e, player, null);
 						BillBoardFPS_Main.audio.play("sfx/deathscream1.wav");
 					}

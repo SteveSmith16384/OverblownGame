@@ -26,9 +26,9 @@ public class RespawnPlayerSystem implements ISystem {
 
 
 	public void addEntity(AbstractEntity e, Vector3 spawnPoint) {
+		// todo - check they aren't already in the list
 		e.addComponent(new WillRespawnComponent(spawnPoint));
 		this.entities.add(e);
-		//e.remove();
 	}	
 
 
@@ -53,7 +53,7 @@ public class RespawnPlayerSystem implements ISystem {
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);
 				playerData.health = playerData.max_health;
 				playerData.invincible_until = System.currentTimeMillis() + 4000;
-				
+				playerData.dead = false;
 				/*DrawTextIn3DSpaceComponent text = (DrawTextIn3DSpaceComponent)e.getComponent(DrawTextIn3DSpaceComponent.class);
 				if (text != null) {
 					text.text = "H: " + playerData.health;
