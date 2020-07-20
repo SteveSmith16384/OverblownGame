@@ -11,10 +11,12 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 import ssmith.libgdx.GraphicsHelper;
 
@@ -142,6 +144,22 @@ public class GraphicsEntityFactory {
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
 		
+		return entity;	
+
+	}
+
+
+	public static AbstractEntity createRisingHealth(BasicECS ecs, int viewId, Vector3 pos, String text) {
+		AbstractEntity entity = new AbstractEntity(ecs, "RisingHealth");
+
+		entity.addComponent(new RemoveEntityAfterTimeComponent(1));
+
+		DrawTextIn3DSpaceComponent dti3d = new DrawTextIn3DSpaceComponent(text, -1f, viewId, true);
+		entity.addComponent(dti3d);
+
+		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
+		entity.addComponent(posData);
+
 		return entity;	
 
 	}

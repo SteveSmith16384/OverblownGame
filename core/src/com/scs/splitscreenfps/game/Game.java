@@ -42,6 +42,7 @@ import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
+import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -640,10 +641,17 @@ public class Game implements IModule, ITextureProvider {
 			playerHitData.health = 0;
 		}
 
-		/*DrawTextIn3DSpaceComponent text = (DrawTextIn3DSpaceComponent)player.getComponent(DrawTextIn3DSpaceComponent.class);
-		if (text != null) {
-			text.text = "H: " + playerHitData.health;
-		}*/
+		if (shooter != null) {
+			playerHitData.last_person_to_hit_them = shooter;
+
+			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
+			shooterData.damage_caused += amt;
+			
+			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+
+			AbstractEntity text = GraphicsEntityFactory.createRisingHealth(ecs, shooterData.playerIdx, posData.position, ""+amt);
+			ecs.addEntity(text);
+		}
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
 		float duration = amt/20;
@@ -652,15 +660,6 @@ public class Game implements IModule, ITextureProvider {
 		}
 		redfilter.addComponent(new RemoveEntityAfterTimeComponent(duration));
 		ecs.addEntity(redfilter);
-
-		if (shooter != null) {
-			playerHitData.last_person_to_hit_them = shooter;
-		}
-
-		if (shooter != null) {
-			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
-			shooterData.damage_caused += amt;
-		}
 
 		if (playerHitData.health <= 0) {
 			playerDied(player, playerHitData, shooter);
@@ -680,6 +679,11 @@ public class Game implements IModule, ITextureProvider {
 		} else {
 			HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
 			model.invisible = true;
+
+			// Show explosion
+			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+			AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(this, posData.position, 2f);
+			ecs.addEntity(expl);
 		}
 
 		if (shooter != null) {
@@ -695,16 +699,6 @@ public class Game implements IModule, ITextureProvider {
 
 		HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
 		model.dontDrawInViewId = -1; // So we draw the corpse
-
-		/* 
-		if (shooter != null) {
-			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
-			shooterData.points += 1;
-
-			if (shooterData.points >= Settings.POINTS_TO_WIN) {
-				playerHasWon(shooter);
-			}
-		}*/
 	}
 
 

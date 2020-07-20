@@ -5,15 +5,16 @@ import com.badlogic.gdx.math.Vector3;
 public class DrawTextIn3DSpaceComponent {
 
 	public float range;
-	public Vector3 offset;
 	public String text;
-	public int dontDrawInViewId;
+	public int onlyDrawInViewId;
+	public boolean rise;
 	
-	public DrawTextIn3DSpaceComponent(String _text, Vector3 _offset, float _range, int _dontDrawInViewId) {
+	public DrawTextIn3DSpaceComponent(String _text, float _range, int _onlyDrawInViewId, boolean _rise) {
 		text = _text;
-		offset = new Vector3(_offset);
+		//offset = new Vector3(_offset);
 		range = _range;
-		dontDrawInViewId = _dontDrawInViewId;
+		onlyDrawInViewId = _onlyDrawInViewId;
+		rise = _rise;
 	}
 
 }
