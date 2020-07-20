@@ -18,6 +18,7 @@ public class HasModelComponent {
 	public boolean always_draw = false; // Mainly used for player's weapon
 	public boolean cast_shadow = true;
 	public boolean keep_player_in_centre = false; // For skybox
+	public boolean invisible = false;
 	
 	public HasModelComponent(ModelInstance _model, float scale, boolean cast_shadow) {
 		this(_model, 0f, 0, scale, cast_shadow);

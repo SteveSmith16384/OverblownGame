@@ -64,7 +64,8 @@ public class RespawnPlayerSystem implements ISystem {
 				
 				HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
 				model.dontDrawInViewId = playerData.playerIdx; // Since we changed it to draw the corpse
-
+				model.invisible = false;
+				
 				e.removeComponent(WillRespawnComponent.class);
 				this.entities.remove(i);
 			}

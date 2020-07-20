@@ -678,9 +678,8 @@ public class Game implements IModule, ITextureProvider {
 		if (anim != null) {
 			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
 		} else {
-			// todo - remove model?
-			//HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
-			//model.
+			HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
+			model.invisible = true;
 		}
 
 		if (shooter != null) {

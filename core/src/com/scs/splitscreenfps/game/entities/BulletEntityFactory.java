@@ -61,7 +61,7 @@ public class BulletEntityFactory {
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(size/2, size/2, size/2));
-		btRigidBody body = new btRigidBody(.1f, null, shape);
+		btRigidBody body = new btRigidBody(.07f, null, shape);
 		body.userData = e;
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
@@ -69,7 +69,8 @@ public class BulletEntityFactory {
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
-		pc.force = dir.scl(1.5f);
+		//pc.force = dir.scl(1.5f);
+		pc.force = dir.scl(.7f);
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");

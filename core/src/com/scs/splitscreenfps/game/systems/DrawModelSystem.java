@@ -140,6 +140,10 @@ public class DrawModelSystem extends AbstractSystem {
 				return;
 			}
 		}
+		
+		if (model.invisible) {
+			return;
+		}
 
 		if (shadow && model.cast_shadow == false) {
 			return;
