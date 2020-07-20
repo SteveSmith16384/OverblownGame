@@ -162,12 +162,6 @@ public class Game implements IModule, ITextureProvider {
 		if (Settings.USE_MAP_EDITOR) {
 			currentLevel = new MapEditorLevel(this);
 		} else {
-			//currentLevel = new RollingBallLevel(this);
-			//currentLevel = new AvoidTheBallsLevel(this);
-			//currentLevel = new LoadCSVLevel(this, "maps/building_site.csv");
-			//currentLevel = new LoadCSVLevel(this, "maps/xenko_map.csv");
-			//currentLevel = new FactoryLevel(this);
-			//currentLevel = new VillageLevel(this);
 			this.currentLevel = AbstractLevel.factory(gameSelectionData.level, this);
 		}
 

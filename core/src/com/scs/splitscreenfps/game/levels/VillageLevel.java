@@ -25,8 +25,8 @@ public class VillageLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			//super.loadJsonFile("maps/village.json", false);
-			super.loadJsonFile("maps/default_map.json", false);
+			super.loadJsonFile("maps/village.json", false);
+			//super.loadJsonFile("maps/default_map.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
