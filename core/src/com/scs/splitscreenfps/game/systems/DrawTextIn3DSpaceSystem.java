@@ -38,7 +38,6 @@ public class DrawTextIn3DSpaceSystem extends AbstractSystem {
 		
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		tmp.set(posData.position);
-		//tmp.add(data.offset);
 
 		ViewportData viewport = game.viewports[game.currentViewId];
 		Camera camera = viewport.camera;
@@ -52,7 +51,7 @@ public class DrawTextIn3DSpaceSystem extends AbstractSystem {
 			camera.project(tmp, viewport.viewRect.x, viewport.viewRect.y, viewport.viewRect.width, viewport.viewRect.height);
 			//Settings.p("Pos: " + pos);
 			BitmapFont font = game.font_med;
-			font.setColor(new Color(1f, .5f, .5f, 1f));
+			font.setColor(new Color(1f, 0, 0, 1f));
 			font.draw(batch2d, data.text, tmp.x-20, tmp.y + 40);
 		}
 		

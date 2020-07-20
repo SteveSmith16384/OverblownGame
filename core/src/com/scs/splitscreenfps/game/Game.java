@@ -668,20 +668,20 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
-	public void playerDied(AbstractEntity player, PlayerData playerDiedData, AbstractEntity shooter) {
+	public void playerDied(AbstractEntity playerKilled, PlayerData playerDiedData, AbstractEntity shooter) {
 		if (shooter == null) {
 			shooter = playerDiedData.last_person_to_hit_them; // In case they fell off the edge
 		}
 
-		AnimatedComponent anim = (AnimatedComponent)player.getComponent(AnimatedComponent.class);
+		AnimatedComponent anim = (AnimatedComponent)playerKilled.getComponent(AnimatedComponent.class);
 		if (anim != null) {
 			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
 		} else {
-			HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
+			HasModelComponent model = (HasModelComponent)playerKilled.getComponent(HasModelComponent.class);
 			model.invisible = true;
 
 			// Show explosion
-			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+			PositionComponent posData = (PositionComponent)playerKilled.getComponent(PositionComponent.class);
 			AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(this, posData.position, 2f);
 			ecs.addEntity(expl);
 		}
@@ -690,14 +690,19 @@ public class Game implements IModule, ITextureProvider {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			this.appendToLog(playerDiedData.playerName + " has been killed by " + shooterData.playerName);
 			shooterData.num_kills++;
+
+			PositionComponent posData = (PositionComponent)playerKilled.getComponent(PositionComponent.class);
+			AbstractEntity text = GraphicsEntityFactory.createRisingHealth(ecs, shooterData.playerIdx, posData.position, "KILLED");
+			ecs.addEntity(text);
+
 		} else {
 			this.appendToLog(playerDiedData.playerName + " has been killed");
 		}
 
 		playerDiedData.health = 0;
-		this.respawnSystem.addEntity(player, this.currentLevel.getPlayerStartPoint(playerDiedData.playerIdx));
+		this.respawnSystem.addEntity(playerKilled, this.currentLevel.getPlayerStartPoint(playerDiedData.playerIdx));
 
-		HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
+		HasModelComponent model = (HasModelComponent)playerKilled.getComponent(HasModelComponent.class);
 		model.dontDrawInViewId = -1; // So we draw the corpse
 	}
 
