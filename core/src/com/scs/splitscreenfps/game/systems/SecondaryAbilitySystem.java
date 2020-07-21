@@ -51,6 +51,8 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		playerData.ability1text = ability.type + " (" + ability.count_available + ") Ready!";
 		if (ability.count_available > 0) {
 			if (player.inputMethod.isAbility1Pressed()) {
+				if (ability.button_released) {
+					ability.button_released = false;
 				if (ability.requiresBuildUp) {
 					ability.buildUpActivated = true;
 					ability.power += Gdx.graphics.getDeltaTime();
@@ -90,7 +92,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 						ability.count_available--;
 					}
 				}
+				}
 			} else { // Button released?
+				ability.button_released = true;
 				if (ability.buildUpActivated) {
 					this.performBuildUpAbility(player, ability);
 				}

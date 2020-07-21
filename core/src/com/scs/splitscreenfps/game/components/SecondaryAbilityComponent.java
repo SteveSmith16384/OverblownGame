@@ -8,6 +8,7 @@ public class SecondaryAbilityComponent {
 	public float current_cooldown;
 	public SecondaryAbilityType type;
 
+	public boolean button_released = true; // Prevent using all abilities in one go
 	public boolean requiresBuildUp = false;
 	public boolean buildUpActivated = false;
 	public float power = 0;
