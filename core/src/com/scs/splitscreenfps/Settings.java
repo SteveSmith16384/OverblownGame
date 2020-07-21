@@ -16,7 +16,7 @@ public class Settings {
 	public static final String VERSION = "1.01";
 
 	// Debugging Hacks
-	public static final boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
+	public static final boolean USE_MAP_EDITOR = !RELEASE_MODE && true;
 	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int START_LEVEL = AbstractLevel.LEVEL_DUST2;

@@ -47,6 +47,8 @@ public abstract class AbstractLevel {
 			return "Factory - Deathmatch";
 		case LEVEL_VILLAGE:
 			return "Village - Control Point";
+		case LEVEL_DUST2:
+			return "Temple of the Noobies - Deathmatch";
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}

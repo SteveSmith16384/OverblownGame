@@ -3,7 +3,6 @@
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
-    "3": "colours/brown.png",
     "4": "textures/blackborder/white.png",
     "5": "textures/crate1.png",
     "6": "textures/crate2.png",
@@ -11,7 +10,9 @@
     "8": "textures/blackborder/grey2.png",
     "9": "textures/blackborder/grey3.png",
     "10": "textures/blackborder/purple1.png",
-    "11": "textures/skyscraper.png"
+    "11": "textures/yellowbricks1.png",
+    "12": "textures/yellowbricks2.png",
+    "13": "textures/yellowbricks3.png"
   },
   "blocks": [
     {
@@ -344,9 +345,9 @@
       "type": "",
       "name": "Floor_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 3.75,
         "y": 6.5,
@@ -369,9 +370,9 @@
       "type": "",
       "name": "Floor_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 12,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 3.75,
         "y": 6.0,
@@ -394,9 +395,9 @@
       "type": "",
       "name": "Floor_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 12,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 7.5,
         "y": 1.75,
@@ -569,9 +570,9 @@
       "type": "",
       "name": "Floor_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 12.75,
         "y": 5.5,
@@ -594,9 +595,9 @@
       "type": "",
       "name": "Floor_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.0,
         "y": 5.5,
@@ -619,9 +620,9 @@
       "type": "",
       "name": "Floor_new_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.0,
         "y": 5.5,
@@ -669,9 +670,9 @@
       "type": "",
       "name": "Floor_new_new_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.25,
         "y": 5.5,
@@ -769,9 +770,9 @@
       "type": "cube",
       "name": "_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 12,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 4.5750012,
         "y": 1.75,
@@ -1144,9 +1145,9 @@
       "type": "cube",
       "name": "_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 6.725001,
         "y": 1.0,
@@ -1169,18 +1170,18 @@
       "type": "cube",
       "name": "_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 4.225001,
         "y": 0.5,
-        "z": 13.75
+        "z": 6.75
       },
       "position": {
         "x": 7.5361743,
         "y": 2.4960027,
-        "z": 5.947626
+        "z": 9.197626
       },
       "rotation": {
         "x": 0.0,
@@ -1188,6 +1189,31 @@
         "z": 0.0
       },
       "mass": 0.0
+    },
+    {
+      "id": 48,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 9.716444,
+        "y": 1.499996,
+        "z": 0.8667462
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
     }
   ]
 }

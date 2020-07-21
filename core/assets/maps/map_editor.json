@@ -3,7 +3,6 @@
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
-    "3": "colours/brown.png",
     "4": "textures/blackborder/white.png",
     "5": "textures/crate1.png",
     "6": "textures/crate2.png",
@@ -11,7 +10,9 @@
     "8": "textures/blackborder/grey2.png",
     "9": "textures/blackborder/grey3.png",
     "10": "textures/blackborder/purple1.png",
-    "11": "textures/skyscraper.png"
+    "11": "textures/yellowbricks1.png",
+    "12": "textures/yellowbricks2.png",
+    "13": "textures/yellowbricks3.png"
   },
   "blocks": [
     {
@@ -19,9 +20,9 @@
       "type": "",
       "name": "Floor_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 3.75,
         "y": 4.75,
@@ -44,9 +45,9 @@
       "type": "cube",
       "name": "",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 3.7250009,
         "y": 4.75,
@@ -69,9 +70,9 @@
       "type": "cube",
       "name": "New cube 58",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 13,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 24.0,
         "y": 0.5,
@@ -103,9 +104,9 @@
         "z": 0.25
       },
       "position": {
-        "x": 6.012256,
+        "x": 6.0122557,
         "y": 2.9960022,
-        "z": 10.627592
+        "z": 10.627738
       },
       "rotation": {
         "x": 0.0,
@@ -128,9 +129,9 @@
         "z": 0.12499998
       },
       "position": {
-        "x": 2.5512366,
+        "x": 2.551264,
         "y": 0.25,
-        "z": 6.449787
+        "z": 6.449989
       },
       "rotation": {
         "x": 0.0,
@@ -153,9 +154,9 @@
         "z": 0.12499998
       },
       "position": {
-        "x": 5.4250345,
-        "y": 0.24999934,
-        "z": 6.168835
+        "x": 5.740454,
+        "y": 0.24999635,
+        "z": 6.047955
       },
       "rotation": {
         "x": 0.0,
@@ -178,9 +179,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 1.115646,
-        "y": 2.2501,
-        "z": 13.480354
+        "x": 1.1179551,
+        "y": 2.2500074,
+        "z": 13.4818735
       },
       "rotation": {
         "x": 0.0,
@@ -203,9 +204,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 15.25,
+        "x": 19.25,
         "y": 0.5,
-        "z": -1.5
+        "z": 2.25
       },
       "rotation": {
         "x": 0.0,
@@ -228,9 +229,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 10.25,
+        "x": 8.75,
         "y": 0.5,
-        "z": 15.5
+        "z": 17.0
       },
       "rotation": {
         "x": 0.0,
@@ -253,9 +254,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 4.5,
+        "x": 1.75,
         "y": 0.75,
-        "z": 3.5
+        "z": 3.25
       },
       "rotation": {
         "x": 0.0,
@@ -344,17 +345,17 @@
       "type": "",
       "name": "Floor_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 3.75,
         "y": 6.5,
         "z": 3.0
       },
       "position": {
-        "x": 5.6487856,
-        "y": 4.249999,
+        "x": 5.6487865,
+        "y": 4.2499995,
         "z": -2.4325078
       },
       "rotation": {
@@ -369,9 +370,9 @@
       "type": "",
       "name": "Floor_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 12,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 3.75,
         "y": 6.0,
@@ -394,9 +395,9 @@
       "type": "",
       "name": "Floor_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 12,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 7.5,
         "y": 1.75,
@@ -428,9 +429,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 6.839431,
-        "y": 0.4999999,
-        "z": 5.3398957
+        "x": 6.8407335,
+        "y": 0.49997422,
+        "z": 5.339735
       },
       "rotation": {
         "x": 0.0,
@@ -453,9 +454,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 6.723514,
-        "y": 0.49999988,
-        "z": 4.3431773
+        "x": 6.7260537,
+        "y": 0.49999928,
+        "z": 4.341817
       },
       "rotation": {
         "x": 0.0,
@@ -494,9 +495,9 @@
       "type": "cube",
       "name": "New cube 44_new_new",
       "tags": "",
-      "texture_id": 10,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 6.75,
         "y": 0.25,
@@ -528,9 +529,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 9.334467,
-        "y": 0.24998531,
-        "z": 6.6811433
+        "x": 9.334728,
+        "y": 0.24998613,
+        "z": 6.6813016
       },
       "rotation": {
         "x": 0.0,
@@ -553,9 +554,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.144182,
-        "y": 0.24997026,
-        "z": 6.6257577
+        "x": 8.144358,
+        "y": 0.24998347,
+        "z": 6.6261115
       },
       "rotation": {
         "x": 0.0,
@@ -569,18 +570,18 @@
       "type": "",
       "name": "Floor_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 12.75,
         "y": 5.5,
         "z": 1.5
       },
       "position": {
-        "x": 13.906336,
-        "y": 2.7499995,
-        "z": -4.3851247
+        "x": 13.906275,
+        "y": 2.7499998,
+        "z": -4.385352
       },
       "rotation": {
         "x": 0.0,
@@ -594,9 +595,9 @@
       "type": "",
       "name": "Floor_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.0,
         "y": 5.5,
@@ -619,9 +620,9 @@
       "type": "",
       "name": "Floor_new_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.0,
         "y": 5.5,
@@ -644,9 +645,9 @@
       "type": "",
       "name": "Floor_new_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 20.75,
         "y": 5.5,
@@ -669,9 +670,9 @@
       "type": "",
       "name": "Floor_new_new_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.25,
         "y": 5.5,
@@ -694,18 +695,18 @@
       "type": "cube",
       "name": "_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 13,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.2250009,
         "y": 1.75,
         "z": 0.75
       },
       "position": {
-        "x": 11.023983,
-        "y": 0.8749769,
-        "z": 8.748811
+        "x": 11.02321,
+        "y": 0.8749943,
+        "z": 8.748977
       },
       "rotation": {
         "x": 0.0,
@@ -719,18 +720,18 @@
       "type": "cube",
       "name": "_new_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 13,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.2250009,
         "y": 1.75,
         "z": 0.75
       },
       "position": {
-        "x": 13.274145,
-        "y": 0.8749906,
-        "z": 8.748282
+        "x": 13.2732,
+        "y": 0.87498885,
+        "z": 8.748579
       },
       "rotation": {
         "x": 0.0,
@@ -744,18 +745,18 @@
       "type": "cube",
       "name": "_new_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 13,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 3.4750009,
         "y": 1.75,
         "z": 0.75
       },
       "position": {
-        "x": 12.147027,
-        "y": 2.6249802,
-        "z": 8.747065
+        "x": 12.144908,
+        "y": 2.6249893,
+        "z": 8.747414
       },
       "rotation": {
         "x": 0.0,
@@ -769,9 +770,9 @@
       "type": "cube",
       "name": "_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 12,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 4.5750012,
         "y": 1.75,
@@ -794,9 +795,9 @@
       "type": "",
       "name": "Floor_new_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.5,
         "y": 0.5,
@@ -828,9 +829,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 1.619611,
-        "y": 3.2499907,
-        "z": 13.49023
+        "x": 1.6222129,
+        "y": 3.2499933,
+        "z": 13.496717
       },
       "rotation": {
         "x": 0.0,
@@ -853,9 +854,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 2.115918,
-        "y": 2.2499545,
-        "z": 13.491314
+        "x": 2.118445,
+        "y": 2.2499568,
+        "z": 13.49147
       },
       "rotation": {
         "x": 0.0,
@@ -878,9 +879,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 3.1188402,
-        "y": 2.2500043,
-        "z": 13.488008
+        "x": 3.1223814,
+        "y": 2.2499757,
+        "z": 13.488338
       },
       "rotation": {
         "x": 0.0,
@@ -903,9 +904,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 2.6210752,
-        "y": 3.2499309,
-        "z": 13.501601
+        "x": 2.624225,
+        "y": 3.249936,
+        "z": 13.505684
       },
       "rotation": {
         "x": 0.0,
@@ -928,9 +929,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 2.1235769,
-        "y": 4.249929,
-        "z": 13.498217
+        "x": 2.1270926,
+        "y": 4.2499366,
+        "z": 13.506398
       },
       "rotation": {
         "x": 0.0,
@@ -944,9 +945,9 @@
       "type": "",
       "name": "Floor_new_new_new_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 0.75,
         "y": 0.5,
@@ -969,9 +970,9 @@
       "type": "cube",
       "name": "_new_new_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 1.4750009,
         "y": 1.25,
@@ -1003,9 +1004,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.328838,
-        "y": 0.7499592,
-        "z": 6.6206093
+        "x": 8.329611,
+        "y": 0.7499657,
+        "z": 6.621225
       },
       "rotation": {
         "x": 0.0,
@@ -1028,9 +1029,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 9.128618,
-        "y": 0.7499629,
-        "z": 6.6767964
+        "x": 9.129025,
+        "y": 0.74997103,
+        "z": 6.6776037
       },
       "rotation": {
         "x": 0.0,
@@ -1053,9 +1054,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.703481,
-        "y": 0.24998945,
-        "z": 6.675764
+        "x": 8.703731,
+        "y": 0.24996923,
+        "z": 6.676148
       },
       "rotation": {
         "x": 0.0,
@@ -1078,9 +1079,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.710423,
-        "y": 1.2499359,
-        "z": 6.670349
+        "x": 8.711269,
+        "y": 1.2499228,
+        "z": 6.671617
       },
       "rotation": {
         "x": 0.0,
@@ -1103,9 +1104,9 @@
         "z": 0.25
       },
       "position": {
-        "x": 5.248929,
-        "y": 2.0000074,
-        "z": 12.874765
+        "x": 5.248943,
+        "y": 1.9999998,
+        "z": 12.874959
       },
       "rotation": {
         "x": 0.0,
@@ -1128,9 +1129,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 6.721801,
-        "y": 0.49996188,
-        "z": 3.1192918
+        "x": 6.721409,
+        "y": 0.4999958,
+        "z": 3.1212776
       },
       "rotation": {
         "x": 0.0,
@@ -1144,9 +1145,9 @@
       "type": "cube",
       "name": "_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 6.725001,
         "y": 1.0,
@@ -1169,9 +1170,9 @@
       "type": "cube",
       "name": "_new",
       "tags": "",
-      "texture_id": 8,
+      "texture_id": 11,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
         "x": 4.225001,
         "y": 0.5,
@@ -1196,7 +1197,7 @@
       "tags": "",
       "texture_id": 10,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 1.0,
         "y": 1.0,
