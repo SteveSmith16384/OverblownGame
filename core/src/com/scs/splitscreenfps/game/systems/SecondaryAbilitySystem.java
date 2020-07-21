@@ -136,17 +136,20 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 
 	private boolean performTracerJump(AbstractPlayersAvatar player) {
-		float dist = 7.5f;
+		float dist = 5f;
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
-		btCollisionObject obj = game.rayTestByDir(posData.position, player.camera.direction, dist);
-		// todo - set y-dir to be 0
+		Vector3 dir = new Vector3(player.camera.direction);
+		// set y-dir to be 0
+		dir.y = 0;
+		dir.nor();
+		btCollisionObject obj = game.rayTestByDir(posData.position, dir, dist);
 		boolean clear = (obj == null);
 		if (clear) {
 			// Teleport
 			PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 			pc.body.getWorldTransform(tmpMat);
 			tmpMat.getTranslation(tmpVec);
-			tmpVec.mulAdd(player.camera.direction, dist);
+			tmpVec.mulAdd(dir, dist);
 			tmpMat.setTranslation(tmpVec);
 			pc.body.setWorldTransform(tmpMat);
 			pc.body.activate();
