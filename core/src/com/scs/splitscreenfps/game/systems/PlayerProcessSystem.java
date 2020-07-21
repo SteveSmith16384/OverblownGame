@@ -51,13 +51,13 @@ public class PlayerProcessSystem implements ISystem {
 	private void process(AbstractPlayersAvatar player) {
 		PhysicsComponent ourPhysics = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		PlayerData ourPlayerData = (PlayerData)player.getComponent(PlayerData.class);
-		
+
 		// Regen health
 		if (ourPlayerData.dead == false) {
-		ourPlayerData.health += (Gdx.graphics.getDeltaTime()/2);
-		if (ourPlayerData.health > ourPlayerData.max_health) {
-			ourPlayerData.health = ourPlayerData.max_health;
-		}
+			ourPlayerData.health += (Gdx.graphics.getDeltaTime()/2);
+			if (ourPlayerData.health > ourPlayerData.max_health) {
+				ourPlayerData.health = ourPlayerData.max_health;
+			}
 		}
 
 		// Check for collision events to play thud
@@ -118,7 +118,7 @@ public class PlayerProcessSystem implements ISystem {
 				tmpVec2.set(player.camera.direction.x, player.camera.direction.z);
 				posData.angle_y_degrees = -tmpVec2.angle();
 			} else {
-				player.camera.position.set(posData.position.x, posData.position.y + 4, posData.position.z);
+				player.camera.position.set(posData.position.x, posData.position.y + 4, posData.position.z-1);
 				player.camera.update();
 
 				player.camera.lookAt(posData.position);

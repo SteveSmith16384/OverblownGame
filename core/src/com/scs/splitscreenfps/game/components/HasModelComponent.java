@@ -14,11 +14,13 @@ public class HasModelComponent {
 	
 	public int dontDrawInViewId = -1; // Don't draw the player's own avatar!
 	public int onlyDrawInViewId = -1; // Don't draw the targetter for other players!
-	public Vector3 dimensions; // For checking if in frustum
 	public boolean always_draw = false; // Mainly used for player's weapon
 	public boolean cast_shadow = true;
 	public boolean keep_player_in_centre = false; // For skybox
 	public boolean invisible = false;
+
+	public Vector3 dimensions; // For checking if in frustum
+	public float radius;
 	
 	public HasModelComponent(ModelInstance _model, float scale, boolean cast_shadow) {
 		this(_model, 0f, 0, scale, cast_shadow);

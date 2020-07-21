@@ -86,7 +86,6 @@ public class DrawModelSystem extends AbstractSystem {
 		this.total_time += duration;
 		if (shadows == false) {
 			//Settings.p("num_objects_drawn=" + num_objects_drawn);
-
 		}
 	}
 
@@ -161,18 +160,15 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		// Only draw if in frustum 
-		/*if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
-			//return; todo - check if bounds are in frustum!
-		}
-		} else {*/
 		if (model.always_draw == false) {
 			if (model.dimensions == null) {
 				model.dimensions = new Vector3();
 				model.model.calculateBoundingBox(tmpBB);
 				tmpBB.mul(model.model.transform);
 				tmpBB.getDimensions(model.dimensions);
+				model.radius = model.dimensions.len() / 2;
 			}
-			if (!batch.getCamera().frustum.boundsInFrustum(posData.position, model.dimensions)) {
+			if (!batch.getCamera().frustum.sphereInFrustum(posData.position, model.radius)) {
 				return;
 			}
 		}

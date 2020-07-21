@@ -692,7 +692,7 @@ public class Game implements IModule, ITextureProvider {
 
 		if (shooter != null && shooter != playerKilled) {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
-			this.appendToLog(playerDiedData.playerName + " has been killed by " + shooterData.playerName);
+			//this.appendToLog(playerDiedData.playerName + " has been killed by " + shooterData.playerName);
 			shooterData.num_kills++;
 
 			PositionComponent posData = (PositionComponent)playerKilled.getComponent(PositionComponent.class);
@@ -700,7 +700,7 @@ public class Game implements IModule, ITextureProvider {
 			ecs.addEntity(text);
 
 		} else {
-			this.appendToLog(playerDiedData.playerName + " has been killed");
+			//this.appendToLog(playerDiedData.playerName + " has been killed");
 		}
 
 		playerDiedData.health = 0;

@@ -7,7 +7,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 
-public class PersonCameraController {
+public class PersonCameraController { // todo - rename
 
 	private Camera camera;
 	private Vector3 tmp = new Vector3();
