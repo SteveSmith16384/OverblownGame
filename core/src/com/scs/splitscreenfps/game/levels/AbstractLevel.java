@@ -17,7 +17,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonWriter;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
@@ -30,7 +29,8 @@ public abstract class AbstractLevel {
 
 	public static final int LEVEL_FACTORY = 0;
 	public static final int LEVEL_VILLAGE = 1;
-	public static final int MAX_LEVELS = 2;
+	public static final int LEVEL_DUST2 = 2;
+	public static final int MAX_LEVELS = 3;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -59,6 +59,8 @@ public abstract class AbstractLevel {
 			return new FactoryLevel(game);
 		case LEVEL_VILLAGE:
 			return new VillageLevel(game);
+		case LEVEL_DUST2:
+			return new Dust2Level(game);
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}

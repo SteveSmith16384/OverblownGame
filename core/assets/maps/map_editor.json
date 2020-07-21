@@ -1,5 +1,5 @@
 {
-  "filename": "maps/default_map.json",
+  "filename": "maps/map_editor.json",
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
@@ -24,12 +24,12 @@
       "tiled": false,
       "size": {
         "x": 3.75,
-        "y": 3.75,
+        "y": 4.75,
         "z": 11.0
       },
       "position": {
         "x": 15.76165,
-        "y": 1.8749999,
+        "y": 2.375,
         "z": 6.6238165
       },
       "rotation": {
@@ -49,12 +49,12 @@
       "tiled": false,
       "size": {
         "x": 3.7250009,
-        "y": 3.75,
+        "y": 4.75,
         "z": 5.25
       },
       "position": {
         "x": 8.5248165,
-        "y": 1.8749999,
+        "y": 2.375,
         "z": 9.999047
       },
       "rotation": {
@@ -98,14 +98,14 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 0.75,
+        "x": 1.0,
         "y": 0.5,
-        "z": 0.12499998
+        "z": 0.25
       },
       "position": {
-        "x": 3.6136088,
-        "y": 0.0624999,
-        "z": 7.1149535
+        "x": 6.012256,
+        "y": 2.9960022,
+        "z": 10.627592
       },
       "rotation": {
         "x": 0.0,
@@ -128,9 +128,9 @@
         "z": 0.12499998
       },
       "position": {
-        "x": 3.732889,
-        "y": 0.24999923,
-        "z": 11.831817
+        "x": 2.5512366,
+        "y": 0.25,
+        "z": 6.449787
       },
       "rotation": {
         "x": 0.0,
@@ -153,9 +153,9 @@
         "z": 0.12499998
       },
       "position": {
-        "x": 4.7245083,
+        "x": 5.4250345,
         "y": 0.24999934,
-        "z": 8.098647
+        "z": 6.168835
       },
       "rotation": {
         "x": 0.0,
@@ -169,7 +169,7 @@
       "type": "cylinder",
       "name": "New cylinder 50_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -178,9 +178,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 2.7698433,
-        "y": 0.49999985,
-        "z": 5.7456875
+        "x": 1.115646,
+        "y": 2.2501,
+        "z": 13.480354
       },
       "rotation": {
         "x": 0.0,
@@ -253,9 +253,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 5.0,
+        "x": 4.5,
         "y": 0.75,
-        "z": 0.5
+        "z": 3.5
       },
       "rotation": {
         "x": 0.0,
@@ -303,9 +303,9 @@
         "z": 1.25
       },
       "position": {
-        "x": 9.5,
+        "x": 12.0,
         "y": 0.25,
-        "z": 18.25
+        "z": 17.0
       },
       "rotation": {
         "x": 0.0,
@@ -328,9 +328,9 @@
         "z": 1.25
       },
       "position": {
-        "x": 9.5,
+        "x": 19.0,
         "y": 0.25,
-        "z": -0.5
+        "z": 6.0
       },
       "rotation": {
         "x": 0.0,
@@ -349,13 +349,13 @@
       "tiled": false,
       "size": {
         "x": 3.75,
-        "y": 3.75,
+        "y": 6.5,
         "z": 3.0
       },
       "position": {
-        "x": 5.762354,
-        "y": 1.8749999,
-        "z": -2.3761826
+        "x": 5.6487856,
+        "y": 4.249999,
+        "z": -2.4325078
       },
       "rotation": {
         "x": 0.0,
@@ -374,12 +374,12 @@
       "tiled": false,
       "size": {
         "x": 3.75,
-        "y": 3.75,
+        "y": 6.0,
         "z": 3.0
       },
       "position": {
         "x": 2.012354,
-        "y": 1.8749999,
+        "y": 3.0,
         "z": 0.623826
       },
       "rotation": {
@@ -398,14 +398,14 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 3.75,
-        "y": 3.5,
-        "z": 3.0
+        "x": 7.5,
+        "y": 1.75,
+        "z": 5.75
       },
       "position": {
-        "x": 5.76165,
-        "y": 1.7499999,
-        "z": 14.123817
+        "x": 3.891437,
+        "y": 0.8749999,
+        "z": 15.517525
       },
       "rotation": {
         "x": 0.0,
@@ -419,7 +419,7 @@
       "type": "cylinder",
       "name": "New cylinder 50_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -428,9 +428,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 6.6540704,
-        "y": 0.4999902,
-        "z": 5.630486
+        "x": 6.839431,
+        "y": 0.4999999,
+        "z": 5.3398957
       },
       "rotation": {
         "x": 0.0,
@@ -444,7 +444,7 @@
       "type": "cylinder",
       "name": "New cylinder 50_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -453,9 +453,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 4.576024,
-        "y": 0.49999982,
-        "z": 1.405602
+        "x": 6.723514,
+        "y": 0.49999988,
+        "z": 4.3431773
       },
       "rotation": {
         "x": 0.0,
@@ -500,12 +500,12 @@
       "size": {
         "x": 6.75,
         "y": 0.25,
-        "z": 1.75
+        "z": 2.6499996
       },
       "position": {
-        "x": 23.75,
+        "x": 18.95,
         "y": 0.72500026,
-        "z": 3.5
+        "z": 7.375
       },
       "rotation": {
         "x": 0.0,
@@ -528,9 +528,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 9.127168,
-        "y": 0.24999987,
-        "z": 6.6767316
+        "x": 9.334467,
+        "y": 0.24998531,
+        "z": 6.6811433
       },
       "rotation": {
         "x": 0.0,
@@ -553,9 +553,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.324546,
-        "y": 0.24999987,
-        "z": 6.6234975
+        "x": 8.144182,
+        "y": 0.24997026,
+        "z": 6.6257577
       },
       "rotation": {
         "x": 0.0,
@@ -573,14 +573,14 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 12.5,
-        "y": 3.75,
+        "x": 12.75,
+        "y": 5.5,
         "z": 1.5
       },
       "position": {
-        "x": 14.011475,
-        "y": 1.875,
-        "z": -4.372805
+        "x": 13.906336,
+        "y": 2.7499995,
+        "z": -4.3851247
       },
       "rotation": {
         "x": 0.0,
@@ -599,13 +599,13 @@
       "tiled": false,
       "size": {
         "x": 1.0,
-        "y": 3.75,
-        "z": 10.75
+        "y": 5.5,
+        "z": 12.0
       },
       "position": {
         "x": 20.781305,
-        "y": 1.8749892,
-        "z": 1.0956922
+        "y": 2.749989,
+        "z": 1.7206922
       },
       "rotation": {
         "x": 0.0,
@@ -624,12 +624,12 @@
       "tiled": false,
       "size": {
         "x": 1.0,
-        "y": 3.75,
+        "y": 5.5,
         "z": 10.75
       },
       "position": {
         "x": 20.776253,
-        "y": 1.8892198,
+        "y": 2.7642198,
         "z": 13.095613
       },
       "rotation": {
@@ -649,12 +649,12 @@
       "tiled": false,
       "size": {
         "x": 20.75,
-        "y": 4.25,
+        "y": 5.5,
         "z": 1.5
       },
       "position": {
         "x": 10.530601,
-        "y": 2.0927367,
+        "y": 2.7177367,
         "z": 19.103107
       },
       "rotation": {
@@ -674,12 +674,12 @@
       "tiled": false,
       "size": {
         "x": 1.25,
-        "y": 3.75,
+        "y": 5.5,
         "z": 17.75
       },
       "position": {
         "x": -0.47084838,
-        "y": 1.8750026,
+        "y": 2.7500026,
         "z": 10.849103
       },
       "rotation": {
@@ -688,6 +688,531 @@
         "z": 0.0
       },
       "mass": 0.0
+    },
+    {
+      "id": 28,
+      "type": "cube",
+      "name": "_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 1.2250009,
+        "y": 1.75,
+        "z": 0.75
+      },
+      "position": {
+        "x": 11.023983,
+        "y": 0.8749769,
+        "z": 8.748811
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 29,
+      "type": "cube",
+      "name": "_new_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 1.2250009,
+        "y": 1.75,
+        "z": 0.75
+      },
+      "position": {
+        "x": 13.274145,
+        "y": 0.8749906,
+        "z": 8.748282
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 31,
+      "type": "cube",
+      "name": "_new_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 3.4750009,
+        "y": 1.75,
+        "z": 0.75
+      },
+      "position": {
+        "x": 12.147027,
+        "y": 2.6249802,
+        "z": 8.747065
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 32,
+      "type": "cube",
+      "name": "_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 4.5750012,
+        "y": 1.75,
+        "z": 5.25
+      },
+      "position": {
+        "x": 2.4748163,
+        "y": -0.025000004,
+        "z": 10.499043
+      },
+      "rotation": {
+        "x": -20.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 33,
+      "type": "",
+      "name": "Floor_new_new_new_new",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 1.5,
+        "y": 0.5,
+        "z": 3.25
+      },
+      "position": {
+        "x": 8.393144,
+        "y": 0.2499852,
+        "z": 14.267205
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 33,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 1.619611,
+        "y": 3.2499907,
+        "z": 13.49023
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 34,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 2.115918,
+        "y": 2.2499545,
+        "z": 13.491314
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 35,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 3.1188402,
+        "y": 2.2500043,
+        "z": 13.488008
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 36,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 2.6210752,
+        "y": 3.2499309,
+        "z": 13.501601
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 37,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 2.1235769,
+        "y": 4.249929,
+        "z": 13.498217
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 38,
+      "type": "",
+      "name": "Floor_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.75,
+        "y": 0.5,
+        "z": 3.25
+      },
+      "position": {
+        "x": 8.017659,
+        "y": 0.74997854,
+        "z": 14.2671995
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 39,
+      "type": "cube",
+      "name": "_new_new_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 1.4750009,
+        "y": 1.25,
+        "z": 2.5
+      },
+      "position": {
+        "x": 17.024048,
+        "y": 0.6249999,
+        "z": 17.073465
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 41,
+      "type": "cube",
+      "name": "Crate_new_new_new_new",
+      "tags": "",
+      "texture_id": 5,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "position": {
+        "x": 8.328838,
+        "y": 0.7499592,
+        "z": 6.6206093
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 42,
+      "type": "cube",
+      "name": "Crate_new_new_new",
+      "tags": "",
+      "texture_id": 5,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "position": {
+        "x": 9.128618,
+        "y": 0.7499629,
+        "z": 6.6767964
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 43,
+      "type": "cube",
+      "name": "Crate_new_new_new_new",
+      "tags": "",
+      "texture_id": 5,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "position": {
+        "x": 8.703481,
+        "y": 0.24998945,
+        "z": 6.675764
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 44,
+      "type": "cube",
+      "name": "Crate_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 5,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "position": {
+        "x": 8.710423,
+        "y": 1.2499359,
+        "z": 6.670349
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 46,
+      "type": "cube",
+      "name": "Fence_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 1.0,
+        "y": 0.5,
+        "z": 0.25
+      },
+      "position": {
+        "x": 5.248929,
+        "y": 2.0000074,
+        "z": 12.874765
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 47,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 6.721801,
+        "y": 0.49996188,
+        "z": 3.1192918
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 48,
+      "type": "cube",
+      "name": "_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 6.725001,
+        "y": 1.0,
+        "z": 5.25
+      },
+      "position": {
+        "x": 7.250443,
+        "y": 0.49999997,
+        "z": -0.99306023
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 47,
+      "type": "cube",
+      "name": "_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 4.225001,
+        "y": 0.5,
+        "z": 6.75
+      },
+      "position": {
+        "x": 7.5361743,
+        "y": 2.4960027,
+        "z": 9.197626
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 48,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 10,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 9.716444,
+        "y": 1.499996,
+        "z": 0.8667462
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
     }
   ]
 }

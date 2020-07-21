@@ -28,7 +28,7 @@ public class MapBlockComponent {
 	public MapBlockComponent clone() {
 		MapBlockComponent tmp = new MapBlockComponent();
 		tmp.type = this.type;
-		tmp.name = this.name + "_new";
+		tmp.name = this.name;// + "_new";
 		tmp.texture_id = this.texture_id;
 		tmp.model_filename = this.model_filename;
 		tmp.size = new Vector3(this.size);
