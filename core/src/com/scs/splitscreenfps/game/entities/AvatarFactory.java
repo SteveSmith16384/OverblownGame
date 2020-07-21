@@ -15,7 +15,7 @@ public class AvatarFactory {
 	public static final int CHAR_PHARTAH = 0;
 	public static final int CHAR_BOOMFIST = 1;
 	public static final int CHAR_BOWLING_BALL = 2;
-	public static final int CHAR_TRACEY = 3;
+	public static final int CHAR_RACER = 3;
 
 	public static final int CHAR_WINSTON = 4;
 	public static final int CHAR_BASTION = 5;
@@ -29,7 +29,7 @@ public class AvatarFactory {
 		case CHAR_PHARTAH: return "Phartah";
 		case CHAR_BOOMFIST: return "Boomfist";
 		case CHAR_BOWLING_BALL: return "Bowling Ball";
-		case CHAR_TRACEY: return "Tracey";
+		case CHAR_RACER: return "Racer";
 		case CHAR_WINSTON: return "Winston";
 		case CHAR_BASTION: return "Bastion";
 		case CHAR_RUBBISHRODENT: return "Rubbish Rodent";
@@ -44,7 +44,7 @@ public class AvatarFactory {
 		case CHAR_PHARTAH: return 200;
 		case CHAR_BOOMFIST: return 250;
 		case CHAR_BOWLING_BALL: return 500;
-		case CHAR_TRACEY: return 150;
+		case CHAR_RACER: return 150;
 		case CHAR_WINSTON: return 500;
 		case CHAR_BASTION: return 200;
 		case CHAR_RUBBISHRODENT: return 200;
@@ -83,7 +83,7 @@ public class AvatarFactory {
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.Minefield, 60));
 			break;
 			
-		case CHAR_TRACEY:
+		case CHAR_RACER:
 			weapon_type = WeaponSettingsComponent.TRACEY_PISTOLS;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.TracerJump, 6, 3));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.TraceyBomb, 50));

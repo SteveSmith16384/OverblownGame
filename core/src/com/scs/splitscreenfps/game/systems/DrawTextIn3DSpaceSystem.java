@@ -50,9 +50,16 @@ public class DrawTextIn3DSpaceSystem extends AbstractSystem {
 		if (data.range < 0 || dist <= data.range) {
 			camera.project(tmp, viewport.viewRect.x, viewport.viewRect.y, viewport.viewRect.width, viewport.viewRect.height);
 			//Settings.p("Pos: " + pos);
+			float x = tmp.x-20;
+			float y = tmp.y + 40;
 			BitmapFont font = game.font_med;
+			font.setColor(new Color(0f, 0, 0, 1f));
+			font.draw(batch2d, data.text, x+2, y);
+			font.draw(batch2d, data.text, x-2, y);
+			font.draw(batch2d, data.text, x, y+2);
+			font.draw(batch2d, data.text, x, y-2);
 			font.setColor(new Color(1f, 0, 0, 1f));
-			font.draw(batch2d, data.text, tmp.x-20, tmp.y + 40);
+			font.draw(batch2d, data.text, x, y);
 		}
 		
 		posData.position.y += Gdx.graphics.getDeltaTime();
