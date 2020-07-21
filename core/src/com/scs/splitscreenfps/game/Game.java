@@ -634,7 +634,7 @@ public class Game implements IModule, ITextureProvider {
 
 		main.audio.play("sfx/hit1.wav");
 
-		Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
+		//Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 
 		playerHitData.health -= amt;
 		/*if (playerHitData.health < 0) {
@@ -670,8 +670,7 @@ public class Game implements IModule, ITextureProvider {
 	public void playerDied(AbstractEntity playerKilled, PlayerData playerDiedData, AbstractEntity shooter) {
 		if (playerDiedData.dead) {
 			return; // Prevent calling multiple times
-		}
-		
+		}		
 		playerDiedData.dead = true;
 		
 		if (shooter == null) {
@@ -680,7 +679,7 @@ public class Game implements IModule, ITextureProvider {
 
 		AnimatedComponent anim = (AnimatedComponent)playerKilled.getComponent(AnimatedComponent.class);
 		if (anim != null) {
-			anim.next_animation = anim.new AnimData(anim.die_anim_name, false);
+			anim.setNextAnim(anim.die_anim_name);// anim.new AnimData(anim.die_anim_name, false);
 		} else {
 			HasModelComponent model = (HasModelComponent)playerKilled.getComponent(HasModelComponent.class);
 			model.invisible = true;

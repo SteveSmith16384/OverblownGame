@@ -12,6 +12,6 @@ public class MapData {
 	
 	public MapData() {
 		blocks = new ArrayList<MapBlockComponent>();
-		this.filename = "maps/default_map.json";
+		this.filename = "maps/map_editor.json";
 	}
 }

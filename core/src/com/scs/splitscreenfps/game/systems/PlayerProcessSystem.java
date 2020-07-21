@@ -53,9 +53,11 @@ public class PlayerProcessSystem implements ISystem {
 		PlayerData ourPlayerData = (PlayerData)player.getComponent(PlayerData.class);
 		
 		// Regen health
+		if (ourPlayerData.dead == false) {
 		ourPlayerData.health += (Gdx.graphics.getDeltaTime()/2);
 		if (ourPlayerData.health > ourPlayerData.max_health) {
 			ourPlayerData.health = ourPlayerData.max_health;
+		}
 		}
 
 		// Check for collision events to play thud

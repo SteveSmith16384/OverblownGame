@@ -5,19 +5,33 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 public class AnimatedComponent {
 
 	public AnimData current_animation;
-	public AnimData next_animation;
+	private AnimData next_animation;
 	public AnimationController animationController;
-	public String walk_anim_name, idle_anim_name;
-	public String die_anim_name, jump_anim_name;
+	
+	public final AnimData walk_anim_name, idle_anim_name; // todo - rename
+	public final AnimData die_anim_name, jump_anim_name; // todo - rename
 	
 	public AnimatedComponent(AnimationController _animationController, String _walk_anim_name, String _idle_anim_name, String _die_anim_name, String _jump_anim_name) {
 		animationController = _animationController;
 		next_animation = new AnimData(_idle_anim_name, true);
 		
-		walk_anim_name = _walk_anim_name;
-		idle_anim_name = _idle_anim_name;
-		die_anim_name = _die_anim_name;
-		this.jump_anim_name = _jump_anim_name;
+		walk_anim_name = new AnimData(_walk_anim_name, true);
+		idle_anim_name = new AnimData(_idle_anim_name, true);
+		die_anim_name = new AnimData(_die_anim_name, false);
+		this.jump_anim_name = new AnimData(_jump_anim_name, false);
+	}
+	
+	
+	public AnimData getNextAnim() {
+		return this.next_animation;
+		
+	}
+	
+	
+	public void setNextAnim(AnimData a) {
+		if (this.next_animation != a) {
+			this.next_animation = a;
+		}
 	}
 	
 	
@@ -29,6 +43,11 @@ public class AnimatedComponent {
 		public AnimData(String _name, boolean _loop) {
 			name = _name;
 			loop = _loop;
+		}
+		
+		@Override
+		public String toString() {
+			return "Anim:" + name;
 		}
 	}
 	

@@ -344,4 +344,53 @@ public class BulletEntityFactory {
 	}
 
 
+	public static AbstractEntity createTraceyBomb(Game game, AbstractEntity shooter) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "TraceyBomb");
+
+		AbstractPlayersAvatar player = (AbstractPlayersAvatar)shooter;
+		Vector3 dir = new Vector3(player.camera.direction);
+		
+		PositionComponent posData = (PositionComponent)shooter.getComponent(PositionComponent.class);
+		Vector3 start = new Vector3();
+		start.set(posData.position);
+		start.mulAdd(dir, .2f);
+
+		e.addComponent(new PositionComponent());
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+
+		HasDecal hasDecal = new HasDecal();
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
+
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = true;
+		e.addComponent(hasDecal);
+
+		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
+
+		//e.addComponent(new HasRangeComponent(start, settings.range));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter));
+		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
+	
+		// Add physics
+		btSphereShape shape = new btSphereShape(.1f);
+		btRigidBody body = new btRigidBody(.1f, null, shape);
+		body.userData = e;
+		body.setFriction(1);
+		body.setRestitution(0);
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.force = dir.scl(1f);
+		e.addComponent(pc);
+
+		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+
+		return e;
+	}
+
+
 }

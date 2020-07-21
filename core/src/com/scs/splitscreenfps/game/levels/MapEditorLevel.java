@@ -35,7 +35,7 @@ public class MapEditorLevel extends AbstractLevel {
 		game.ecs.addEntity(floor);
 	*/	
 		try {
-			super.loadJsonFile("maps/default_map.json", true);
+			super.loadJsonFile("maps/map_editor.json", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -72,10 +72,13 @@ public class UltimateAbilitySystem extends AbstractSystem {
 					startRocketBarrage(player, ability);
 					break;
 				case CraterStrike:
-					startCraterStrike(player, ability);
+					startCraterStrike(player);
 					break;
 				case Minefield:
-					startMinefield(player, ability);
+					startMinefield(player);
+					break;
+				case TraceyBomb:
+					throwTraceyBomb(player);
 					break;
 				default:
 					throw new RuntimeException("Unknown ability: " + ability.type);
@@ -101,14 +104,21 @@ public class UltimateAbilitySystem extends AbstractSystem {
 	}
 
 
-	private void startCraterStrike(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
+	private void startCraterStrike(AbstractPlayersAvatar player) {
 		BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
 		AbstractEntity crater = BulletEntityFactory.createCraterStrike(game, player);
 		game.ecs.addEntity(crater);
 	}
 
 
-	private void startMinefield(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
+	private void throwTraceyBomb(AbstractPlayersAvatar player) {
+		//todo BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
+		AbstractEntity crater = BulletEntityFactory.createTraceyBomb(game, player);
+		game.ecs.addEntity(crater);
+	}
+
+
+	private void startMinefield(AbstractPlayersAvatar player) {
 		//todo BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
 
 		for (int i=0 ; i<20 ; i++) {
@@ -160,7 +170,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 
 		switch (ability.type) {
 		case RocketBarrage:
-			endRocketBarrage(player, ability);
+			endRocketBarrage(player);
 			break;
 		default:
 			throw new RuntimeException("Unknown ability: " + ability.type);
@@ -168,7 +178,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 	}
 
 
-	private void endRocketBarrage(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
+	private void endRocketBarrage(AbstractPlayersAvatar player) {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.body.setGravity(Game.GRAVITY);

@@ -44,9 +44,9 @@ public abstract class AbstractLevel {
 	public static final String getName(int i) {
 		switch (i) {
 		case LEVEL_FACTORY:
-			return "Deathmatch Factory";
+			return "Factory - Deathmatch";
 		case LEVEL_VILLAGE:
-			return "Control Point Village";
+			return "Village - Control Point";
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}

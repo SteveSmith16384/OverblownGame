@@ -1,8 +1,24 @@
 # OVERBLOWN
 
-An Overwatch clone split-screen multiplayer FPS with physics.
+An Overwatch clone split-screen multiplayer FPS with physics.  Designed and programmed by Stephen Carlyle-Smith (stephen.carlylesmith@googlemail.com).
 
 Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-74KwOzu8khhYF_4Zb0pPF
+
+
+## Development Notes
+
+* In Settings.java, set RELEASE_MODE = true to disable all debugging & testing settings.
+
+
+## Heroes
+
+* Phartah - Has a rocket launcher and jetpac.
+* Boomfist - Can punch enemies away
+* Bowling Ball - Can roll around knocking enemies away.
+
+## Game Modes
+* Factory - Death Match
+* Village - Control Point
 
 
 ## Controls
@@ -27,8 +43,11 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 * Triangle - Ultimate
 
 
+## Map Editor
+The map editor is still in development.  To use it, edit the file Settings.java and set "USE_MAP_EDITOR" to "true".  The map editor will always edit the file "core/assets/maps/map_editor.json", so rename whatever map file you want to edit to that name.
+
+
 ### Map Editor Controls
-The map editor is still in development.
 
 * 1 - Save map
 * 2 - "Settle" position of selected entity
@@ -37,18 +56,18 @@ The map editor is still in development.
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block
-* M - Mass mode
+* M - Mass mode - Use arrow keys to change mass
 * N - New block - then bress B, C or E for Box, Cylinder or Sphere.
 * P - Position Mode
 * R - Rotation Mode
 * G - Enable physics/gravity
 * U - Undo move
-* X - Remove block
-* Arrows & Pg Up/Pg Dn: Adjust model in dimensions depending on mode
+* X - Remove block - press shift to confirm!
+* Arrows & Pg Up/Pg Dn: Adjust model size/position/rotation/mass/texture depending on mode
 
 
 ## Credits
-* Design and Programming Stephen Smith (@stephencsmith)
+* Design and programming Stephen Carlyle-Smith (@stephencsmith)
 * Alien models by Quaternius
 * Music by Emma Andersson, taken from https://opengameart.org/content/megasong
 * Voice talent by my kids.

@@ -70,9 +70,9 @@ public class PlayerMovementSystem extends AbstractSystem {
 		AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
 		if (anim != null) {
 			if (movementData.offset.len2() > 0) {
-				anim.next_animation = anim.new AnimData(anim.walk_anim_name, true); // todo - cache AnimData
+				anim.setNextAnim(anim.walk_anim_name);//anim.new AnimData(anim.walk_anim_name, true);
 			} else {
-				anim.next_animation = anim.new AnimData(anim.idle_anim_name, true);
+				anim.setNextAnim(anim.idle_anim_name);// anim.new AnimData(anim.idle_anim_name, true);
 			}
 		}
 

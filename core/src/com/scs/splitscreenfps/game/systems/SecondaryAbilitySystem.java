@@ -139,6 +139,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		float dist = 7.5f;
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 		btCollisionObject obj = game.rayTestByDir(posData.position, player.camera.direction, dist);
+		// todo - set y-dir to be 0
 		boolean clear = (obj == null);
 		if (clear) {
 			// Teleport
