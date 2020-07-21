@@ -36,70 +36,81 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		SecondaryAbilityComponent ability = (SecondaryAbilityComponent)entity.getComponent(SecondaryAbilityComponent.class);
 
-		ability.current_cooldown += Gdx.graphics.getDeltaTime();
-		if (ability.current_cooldown >= ability.cooldown_duration) {
-			BillBoardFPS_Main.audio.play("sfx/teleport.mp3");
-			ability.current_cooldown = 0;
-			ability.count_available++;
-			if (ability.count_available > ability.max_count) {
-				ability.count_available = ability.max_count;
+		if (ability.count_available < ability.max_count) {
+			ability.current_cooldown += Gdx.graphics.getDeltaTime();
+			if (ability.current_cooldown >= ability.cooldown_duration) {
+				BillBoardFPS_Main.audio.play("sfx/teleport.mp3");
+				ability.current_cooldown = 0;
+				ability.count_available++;
+				if (ability.count_available > ability.max_count) {
+					ability.count_available = ability.max_count;
+				}
 			}
+		} else {
+			//ability.current_cooldown = 0;
 		}
 
+		
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
-		playerData.ability1text = ability.type + " (" + ability.count_available + ") Ready!";
 		if (ability.count_available > 0) {
+			playerData.ability1Ready = true;
+			playerData.ability1text = ability.type + " (" + ability.count_available + ") Ready!";
 			if (player.inputMethod.isAbility1Pressed()) {
-				if (ability.button_released) {
+				if (ability.button_released || ability.requiresBuildUp) {
 					ability.button_released = false;
-				if (ability.requiresBuildUp) {
-					ability.buildUpActivated = true;
-					ability.power += Gdx.graphics.getDeltaTime();
-					int pcent = (int)(ability.power * 100 / ability.max_power_duration);
-					playerData.ability1text = "Power: " + pcent + "%";
-					if (ability.power >= ability.max_power_duration) {
-						this.performBuildUpAbility(player, ability);
-					}
-				} else {
-					//Settings.p("Shoot at " + System.currentTimeMillis());
+					if (ability.requiresBuildUp) {
+						ability.buildUpActivated = true;
+						ability.power += Gdx.graphics.getDeltaTime();
+						int pcent = (int)(ability.power * 100 / ability.max_power_duration);
+						playerData.ability1text = "Power: " + pcent + "%";
+						if (ability.power >= ability.max_power_duration) {
+							this.performBuildUpAbility(player, ability);
+							//ability.power = 0;
+						}
+					} else {
+						//Settings.p("Shoot at " + System.currentTimeMillis());
 
-					boolean success = true;
+						boolean success = true;
 
-					switch (ability.type) {
-					case JumpForwards:
-						performPowerJump(entity, player);
-						break;
-					case JumpUp:
-						performJumpUp(entity, player);
-						break;
-					case JetPac:
-						performJetPac(entity, player);
-						break;
-					case TracerJump:
-						success = performTracerJump(player);
-						break;
-					case StickyMine:
-						dropStickyMine(entity, player);
-						break;
-					default:
-						if (Settings.STRICT) {
-							throw new RuntimeException("Unknown ability: " + ability.type);
+						switch (ability.type) {
+						case JumpForwards:
+							performPowerJump(entity, player);
+							break;
+						case JumpUp:
+							performJumpUp(entity, player);
+							break;
+						case JetPac:
+							performJetPac(entity, player);
+							break;
+						case TracerJump:
+							success = performTracerJump(player);
+							break;
+						case StickyMine:
+							dropStickyMine(entity, player);
+							break;
+						default:
+							if (Settings.STRICT) {
+								throw new RuntimeException("Unknown ability: " + ability.type);
+							}
+						}
+
+						if (success) {
+							ability.count_available--;
 						}
 					}
-
-					if (success) {
-						ability.count_available--;
-					}
-				}
 				}
 			} else { // Button released?
 				ability.button_released = true;
 				if (ability.buildUpActivated) {
 					this.performBuildUpAbility(player, ability);
 				}
-
 			}
+		} else {			
+			playerData.ability1Ready = false;
+
+			int pcent = (int)((ability.current_cooldown / ability.cooldown_duration) * 100);
+			playerData.ability1text = ability.type + " " + pcent + "%";
 		}
 	}
 
@@ -117,6 +128,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		}
 
 		ability.power = 0;
+		ability.count_available--;
 	}
 
 
@@ -163,7 +175,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 			game.ecs.addEntity(e);
 
 			BillBoardFPS_Main.audio.play("sfx/boost-start.ogg");
-			Settings.p("Blink!");
+			//Settings.p("Blink!");
 			return true;
 		} else {
 			BillBoardFPS_Main.audio.play("sfx/enemyalert.mp3");

@@ -56,8 +56,8 @@ public class RespawnPlayerSystem implements ISystem {
 				
 				AbstractPlayersAvatar player = (AbstractPlayersAvatar)e;
 				//player.camera.direction.set(1, 0, 1);//.lookAt(new Vector3(15, .5f, 15));
-				player.camera.rotate(Vector3.X, -90);
-				player.camera.update();
+				//player.camera.rotate(Vector3.X, -90);
+				//player.camera.update();
 				
 				HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
 				model.dontDrawInViewId = playerData.playerIdx; // Since we changed it to draw the corpse

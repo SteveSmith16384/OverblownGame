@@ -25,7 +25,7 @@ public class AnimationSystem extends AbstractSystem {
 
 		if (anim.getNextAnim() != null) {
 			if (anim.current_animation != anim.getNextAnim()) {
-				Settings.p("Setting anim for " + entity + "to " + anim.getNextAnim());
+				//Settings.p("Setting anim for " + entity + " to " + anim.getNextAnim());
 				anim.current_animation = anim.getNextAnim();
 				anim.animationController.animate(anim.current_animation.name, anim.current_animation.loop?-1:1, 2f, null, 0f);
 				anim.setNextAnim(null);
