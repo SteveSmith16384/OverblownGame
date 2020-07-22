@@ -321,14 +321,14 @@ public class BulletEntityFactory {
 		e.addComponent(new RemoveEntityAfterTimeComponent(20));
 		
 		// Add physics
-		float mass = 1f;
+		float mass = .1f;
 		btSphereShape shape = new btSphereShape(diam/2); // This is a lot smaller so the sphere goes through the ground before exploding
 		Vector3 local_inertia = new Vector3();
 		shape.calculateLocalInertia(mass, local_inertia);
 		//scs new btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody body = new btRigidBody(mass, null, shape, local_inertia);
 		body.userData = e;
-		body.setRestitution(.5f);
+		body.setRestitution(1);//.5f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
@@ -387,7 +387,7 @@ public class BulletEntityFactory {
 		pc.force = dir.scl(2f);
 		e.addComponent(pc);
 
-		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+		BillBoardFPS_Main.audio.play("sfx/racerbomb.wav");
 
 		return e;
 	}

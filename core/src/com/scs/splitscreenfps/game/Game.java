@@ -627,7 +627,9 @@ public class Game implements IModule, ITextureProvider {
 		if (amt <= 0) {
 			return;
 		}
+		
 		if (playerHitData.invincible_until > System.currentTimeMillis()) {
+			// Show invincible text
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			PositionComponent posData = (PositionComponent)playerDamaged.getComponent(PositionComponent.class);
 			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, "INVINCIBLE");
@@ -640,9 +642,6 @@ public class Game implements IModule, ITextureProvider {
 		//Settings.p("Player " + playerHitData.playerIdx + " damaged " + amt);
 
 		playerHitData.health -= amt;
-		/*if (playerHitData.health < 0) {
-			playerHitData.health = 0;
-		}*/
 
 		if (shooter != null && shooter != playerDamaged) {
 			playerHitData.last_person_to_hit_them = shooter;
@@ -650,9 +649,11 @@ public class Game implements IModule, ITextureProvider {
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.damage_caused += amt;
 			
+			if (playerHitData.health > 0) { // Otherwise we'll show "KILLED" instead
 			PositionComponent posData = (PositionComponent)playerDamaged.getComponent(PositionComponent.class);
 			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, ""+amt);
 			ecs.addEntity(text);
+			}
 		}
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);

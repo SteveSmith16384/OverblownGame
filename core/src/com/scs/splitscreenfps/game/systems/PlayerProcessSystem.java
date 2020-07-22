@@ -86,6 +86,8 @@ public class PlayerProcessSystem implements ISystem {
 							int damage = (int)(force * 10); // Doomfist
 							game.playerDamaged(entityHit, theirPlayerData, damage, player);
 							Settings.p("Player " + theirPlayerData.playerIdx + " Punched for " + damage + " damage");
+
+							BillBoardFPS_Main.audio.play("sfx/boomfist_punch.wav");
 							break;
 						}
 					}

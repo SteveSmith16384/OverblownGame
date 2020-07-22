@@ -12,7 +12,7 @@ public class AudioSystem {
 
 	private Music music;
 	private String music_filename;
-	private HashMap<String, Sound> sounds; 
+	private HashMap<String, Sound> sounds;
 
 	public AudioSystem() {
 		sounds = new HashMap<String, Sound>();

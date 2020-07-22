@@ -67,7 +67,12 @@ The map editor is still in development.  To use it, edit the file Settings.java 
 
 
 ## Credits
-* Design and programming Stephen Carlyle-Smith (@stephencsmith)
-* Alien models by Quaternius
+* Design and programming Stephen Carlyle-Smith (stephen.carlylesmith@googlemail.com, @stephencsmith)
+* Alien model by Quaternius (https://www.patreon.com/quaternius)
 * Music by Emma Andersson, taken from https://opengameart.org/content/megasong
+* Post-processing library: https://github.com/crashinvaders/gdx-vfx
 * Voice talent by my kids.
+* Racer blink sfx by Iwan Gabovitch (qubodup@gmail.com) taken from https://opengameart.org/content/racing-speed-boost-sound
+* Shooting sfx by Michel Baradari taken from https://opengameart.org/content/4-projectile-launches
+* Bowling Ball jump sound taken from https://opengameart.org/content/jump-sounds
+* Racer's bomb beep taken from https://opengameart.org/content/7-space-sounds
