@@ -7,7 +7,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 
-public class PersonCameraController { // todo - rename
+public class PlayerCameraController {
 
 	private Camera camera;
 	private Vector3 tmp = new Vector3();
@@ -17,7 +17,7 @@ public class PersonCameraController { // todo - rename
 
 	private static final float mouseTurnSpeed = 15f;
 
-	public PersonCameraController(Camera cam) {
+	public PlayerCameraController(Camera cam) {
 		camera = cam;
 	}
 

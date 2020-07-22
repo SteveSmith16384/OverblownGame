@@ -226,7 +226,7 @@ public class Game implements IModule, ITextureProvider {
 
 	private void loadAssetsForRescale() {
 		int height = Gdx.graphics.getBackBufferHeight();
-		Settings.p("Height: " + height);
+		//Settings.p("Height: " + height);
 		//this.currentLevel.loadAssets();
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 

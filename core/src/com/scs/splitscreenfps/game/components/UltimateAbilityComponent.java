@@ -7,6 +7,7 @@ public class UltimateAbilityComponent {
 	public UltimateType type;
 	public float power = 0;
 	public float charge_duration;
+	public boolean button_released = true; // Prevent using all abilities in one go
 	
 	public boolean in_progress;
 	public long end_time;

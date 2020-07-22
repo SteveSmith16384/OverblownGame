@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.PersonCameraController;
+import com.scs.splitscreenfps.game.PlayerCameraController;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
@@ -63,7 +63,7 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 		this.addComponent(new PositionComponent());
 
 		camera = _viewportData.camera;
-		cameraController = new PersonCameraController(camera);
+		cameraController = new PlayerCameraController(camera);
 		if (Game.physics_enabled == false) {
 			camera.position.set(0, 5, 0);
 		}

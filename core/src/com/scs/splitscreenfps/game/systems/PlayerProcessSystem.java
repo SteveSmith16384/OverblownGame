@@ -118,10 +118,12 @@ public class PlayerProcessSystem implements ISystem {
 				tmpVec2.set(player.camera.direction.x, player.camera.direction.z);
 				posData.angle_y_degrees = -tmpVec2.angle();
 			} else {
+				// Show player's death from above
 				player.camera.position.set(posData.position.x, posData.position.y + 4, posData.position.z-1);
-				player.camera.update();
-
-				player.camera.lookAt(posData.position);
+				//player.camera.update();
+				tmpVector.set(posData.position).sub(player.camera.position).nor();
+				//player.camera.lookAt(posData.position);
+				player.camera.direction.set(tmpVector);
 				player.camera.update();
 			}
 

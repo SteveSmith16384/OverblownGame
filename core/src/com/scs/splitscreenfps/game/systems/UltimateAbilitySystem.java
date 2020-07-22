@@ -42,6 +42,10 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			return;
 		} 
 
+		if (Settings.DEBUG_ULTIMATES) {
+			ability.power = ability.charge_duration;
+		}
+
 		if (ability.power < ability.charge_duration) {
 			ability.power += Gdx.graphics.getDeltaTime();
 			if (ability.power > ability.charge_duration) {
@@ -50,10 +54,6 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		}
 
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
-
-		if (Settings.DEBUG_ULTIMATES) {
-			ability.power = ability.charge_duration;
-		}
 
 		if (ability.power < ability.charge_duration) {
 			int level = (int)((ability.power / ability.charge_duration) * 100);
@@ -67,23 +67,28 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			playerData.ultimateText = "Ultimate Ready!";
 			playerData.ultimateReady = true;
 			if (player.inputMethod.isUltimatePressed()) {
-				switch (ability.type) {
-				case RocketBarrage:
-					startRocketBarrage(player, ability);
-					break;
-				case CraterStrike:
-					startCraterStrike(player);
-					break;
-				case Minefield:
-					startMinefield(player);
-					break;
-				case TraceyBomb:
-					throwTraceyBomb(player);
-					break;
-				default:
-					throw new RuntimeException("Unknown ability: " + ability.type);
+				if (ability.button_released) {
+					ability.button_released = false;
+					switch (ability.type) {
+					case RocketBarrage:
+						startRocketBarrage(player, ability);
+						break;
+					case CraterStrike:
+						startCraterStrike(player);
+						break;
+					case Minefield:
+						startMinefield(player);
+						break;
+					case TraceyBomb:
+						throwTraceyBomb(player);
+						break;
+					default:
+						throw new RuntimeException("Unknown ability: " + ability.type);
+					}
+					ability.power = 0;
 				}
-				ability.power = 0;
+			} else {
+				ability.button_released = true;
 			}
 		}
 
