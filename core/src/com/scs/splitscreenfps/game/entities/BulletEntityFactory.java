@@ -73,7 +73,20 @@ public class BulletEntityFactory {
 		pc.force = dir.scl(.7f);
 		e.addComponent(pc);
 
-		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+		switch (settings.weapon_type) {
+		case WeaponSettingsComponent.BOWLINGBALL_GUN:
+			BillBoardFPS_Main.audio.play("sfx/launches/flaunch.wav");
+			break;
+		case WeaponSettingsComponent.BOOMFIST_RIFLE:
+			BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+			break;
+		case WeaponSettingsComponent.TRACEY_PISTOLS:
+			BillBoardFPS_Main.audio.play("sfx/launches/slimeball.wav");
+			break;
+		default:
+			BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+			break;
+		}
 
 		return e;
 	}
@@ -126,7 +139,7 @@ public class BulletEntityFactory {
 		pc.force = dir.scl(1f);
 		e.addComponent(pc);
 
-		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
+		BillBoardFPS_Main.audio.play("sfx/launches/rlaunch.wav");
 
 		return e;
 	}
@@ -209,7 +222,7 @@ public class BulletEntityFactory {
 		pc.force = dir.scl(1f);
 		e.addComponent(pc);
 
-		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
 
 		return e;
 	}
@@ -289,7 +302,7 @@ public class BulletEntityFactory {
 		pc.force = new Vector3(0, -5, 0);
 		e.addComponent(pc);
 
-		//No, we have a voice sfx  BillBoardFPS_Main.audio.play("sfx/launches/rlaunch.wav");
+		//No, we have a voice sfx  BillBoardFPS_Main.audio.play();
 
 		return e;
 	}

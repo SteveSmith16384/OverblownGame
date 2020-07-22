@@ -110,42 +110,42 @@ public class AvatarFactory {
 		switch (weapon_type) {
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER: 
 			ExplosionData explData2 = new ExplosionData(1f, 30, 3f);
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER, 750, 1500, 6, 50, 
+			weapon = new WeaponSettingsComponent(weapon_type, 750, 1500, 6, 50, 
 					90, 0, 0, explData2);
 			weapon.kickback_force = 5f;
 			break;
 
 		case WeaponSettingsComponent.BOOMFIST_RIFLE:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.BOOMFIST_RIFLE, 300, 1200, 20, 30, 
+			weapon = new WeaponSettingsComponent(weapon_type, 300, 1200, 20, 30, 
 					40, 15, 1, null);
 			//weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.BOWLINGBALL_GUN:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.BOOMFIST_RIFLE, 100, 2100, 80, 25, 
+			weapon = new WeaponSettingsComponent(weapon_type, 100, 2100, 80, 25, 
 					12, 15, .2f, null);
 			weapon.kickback_force = .5f;
 			break;
 
 		case WeaponSettingsComponent.TRACEY_PISTOLS:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.TRACEY_PISTOLS, 100, 1150, 20, 20, 
+			weapon = new WeaponSettingsComponent(weapon_type, 100, 1150, 20, 20, 
 					6, 13, .2f, null);
 			break;
 
 		case WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER:
 			ExplosionData explData = new ExplosionData(2f, 40, 2f);
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER, 667, 1500, 5, 100, 
+			weapon = new WeaponSettingsComponent(weapon_type, 667, 1500, 5, 100, 
 					130, 0, 0, explData);
 			weapon.kickback_force = 1f;
 			break;
 
 		case WeaponSettingsComponent.WEAPON_PUNCH:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.WEAPON_PUNCH, 500, 500, 1000, 0.3f, 
+			weapon = new WeaponSettingsComponent(weapon_type, 500, 500, 1000, 0.3f, 
 					60, 0, 0, null);
 			break;
 
 		case WeaponSettingsComponent.BASTION_CANNON:
-			weapon = new WeaponSettingsComponent(WeaponSettingsComponent.BASTION_CANNON, 300, 500, 1500, 20, 
+			weapon = new WeaponSettingsComponent(weapon_type, 300, 500, 1500, 20, 
 					60, 0, 0, null);
 			break;
 

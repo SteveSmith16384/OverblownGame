@@ -147,7 +147,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
 		playerData.performing_power_punch = true;
 
-		BillBoardFPS_Main.audio.play("speech/boom.wav");
+		BillBoardFPS_Main.audio.play("sfx/boomfist_punch.wav");
 	}
 
 
