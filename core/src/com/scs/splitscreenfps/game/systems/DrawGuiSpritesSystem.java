@@ -12,6 +12,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
+import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<AbstractEntity> {
 
@@ -58,7 +59,15 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 			//sprite.setBounds(hgsc.scale.x * v.viewPos.width, hgsc.scale.y * v.viewPos.height, hgsc.scale.width * v.viewPos.width, hgsc.scale.height * v.viewPos.height);
 			hgsc.dirty = false;
 		}
-		//hgsc.sprite.rotate(1);
+		
+		// If it's going to be removed, fade out
+		RemoveEntityAfterTimeComponent rem = (RemoveEntityAfterTimeComponent)entity.getComponent(RemoveEntityAfterTimeComponent.class);
+		if (rem != null) {
+			if (rem.timeRemaining_secs < 1) {
+				hgsc.sprite.setAlpha(rem.timeRemaining_secs/1);
+			}
+		}
+		
 		hgsc.sprite.draw(batch2d);
 	}
 
