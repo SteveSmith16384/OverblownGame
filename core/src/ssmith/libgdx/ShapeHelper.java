@@ -36,8 +36,6 @@ public class ShapeHelper {
 	
 
 	public static ModelInstance createSphere(Texture tex, float x, float y, float z, float size) {
-		//Texture tex = new Texture(tex_filename1);
-		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 
 		ModelBuilder modelBuilder = new ModelBuilder();
@@ -56,8 +54,6 @@ public class ShapeHelper {
 
 	
 	public static ModelInstance createCylinder(Texture tex, float x, float y, float z, float diam, float length) {
-		//Texture tex = new Texture(tex_filename1);
-		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 
 		ModelBuilder modelBuilder = new ModelBuilder();
@@ -74,15 +70,5 @@ public class ShapeHelper {
 		return instance;
 	}
 
-/*
-	public static ModelInstance createCube(String tex_filename1, float w, float h, float d) {
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename1)));
-		ModelBuilder modelBuilder = new ModelBuilder();
-		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-		ModelInstance instance = new ModelInstance(box_model);//, new Vector3(posX+(w/2), posY+(h/2), posZ+(d/2)));
-
-		return instance;
-	}
-*/
 }

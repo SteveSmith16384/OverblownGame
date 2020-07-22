@@ -149,7 +149,7 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createRisingHealth(BasicECS ecs, int viewId, Vector3 pos, String text) {
+	public static AbstractEntity createRisingText(BasicECS ecs, int viewId, Vector3 pos, String text) {
 		AbstractEntity entity = new AbstractEntity(ecs, "RisingHealth");
 
 		entity.addComponent(new RemoveEntityAfterTimeComponent(1));

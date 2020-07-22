@@ -17,6 +17,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonWriter;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
@@ -115,7 +116,10 @@ public abstract class AbstractLevel {
 			}
 			game.currentLevel.createAndAddEntityFromBlockData(block, for_map_editor);
 		}
-
+		
+		if (startPositions.size() < 4) {
+			Settings.pe("Warning: only " + startPositions.size() + " start positions");
+		}
 	}
 
 

@@ -619,7 +619,7 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
-	public void playerDamaged(AbstractEntity player, PlayerData playerHitData, int amt, AbstractEntity shooter) {
+	public void playerDamaged(AbstractEntity playerDamaged, PlayerData playerHitData, int amt, AbstractEntity shooter) {
 		if (playerHitData.health <= 0) {
 			// Already dead
 			return;
@@ -628,7 +628,10 @@ public class Game implements IModule, ITextureProvider {
 			return;
 		}
 		if (playerHitData.invincible_until > System.currentTimeMillis()) {
-			// todo - special sfx
+			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
+			PositionComponent posData = (PositionComponent)playerDamaged.getComponent(PositionComponent.class);
+			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, "INVINCIBLE");
+			ecs.addEntity(text);
 			return;
 		}
 
@@ -641,14 +644,14 @@ public class Game implements IModule, ITextureProvider {
 			playerHitData.health = 0;
 		}*/
 
-		if (shooter != null && shooter != player) {
+		if (shooter != null && shooter != playerDamaged) {
 			playerHitData.last_person_to_hit_them = shooter;
 
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.damage_caused += amt;
 			
-			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
-			AbstractEntity text = GraphicsEntityFactory.createRisingHealth(ecs, shooterData.playerIdx, posData.position, ""+amt);
+			PositionComponent posData = (PositionComponent)playerDamaged.getComponent(PositionComponent.class);
+			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, ""+amt);
 			ecs.addEntity(text);
 		}
 
@@ -661,7 +664,7 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addEntity(redfilter);
 
 		if (playerHitData.health <= 0) {
-			playerDied(player, playerHitData, shooter);
+			playerDied(playerDamaged, playerHitData, shooter);
 		}
 
 	}
@@ -696,7 +699,7 @@ public class Game implements IModule, ITextureProvider {
 			shooterData.num_kills++;
 
 			PositionComponent posData = (PositionComponent)playerKilled.getComponent(PositionComponent.class);
-			AbstractEntity text = GraphicsEntityFactory.createRisingHealth(ecs, shooterData.playerIdx, posData.position, "KILLED");
+			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, "KILLED");
 			ecs.addEntity(text);
 
 		} else {
