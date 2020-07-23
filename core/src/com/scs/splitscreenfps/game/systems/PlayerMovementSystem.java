@@ -8,6 +8,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -40,7 +41,6 @@ public class PlayerMovementSystem extends AbstractSystem {
 			return;
 		}
 
-		// Check they are on ground
 		boolean on_floor = false;
 		Matrix4 mat = physics.body.getWorldTransform();
 		mat.getTranslation(tmpVec);
@@ -50,8 +50,18 @@ public class PlayerMovementSystem extends AbstractSystem {
 			on_floor = (obj != null);
 			if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 				if (movementData.frozenUntil < System.currentTimeMillis()) {
+					tmpVec.set(movementData.offset);
+					float speed = physics.getRigidBody().getLinearVelocity().len();
+					Settings.p("Speed=" + speed);
+					if (speed > 0.1f && speed < 2f) {
+						float frac = 2 / speed;
+						//Settings.p("Frac=" + frac);
+						//if (frac > 1) {
+							tmpVec.scl(frac);
+						//}
+					}
 					physics.body.activate(); // Need this!
-					physics.getRigidBody().applyCentralForce(movementData.offset);
+					physics.getRigidBody().applyCentralForce(tmpVec);
 					//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
 					if (on_floor) {
 						if (movementData.next_footstep_sound < System.currentTimeMillis()) {

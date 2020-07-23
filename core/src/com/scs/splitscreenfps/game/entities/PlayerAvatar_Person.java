@@ -64,9 +64,6 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 		setAvatarColour(this, playerIdx);
 
 		addComponent(new CanShoot());
-
-		//addWeapon();
-
 	}
 
 
@@ -74,8 +71,6 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 		ModelInstance instance = ModelFunctions.loadModel("models/quaternius/Alien.g3db", false, null, 1f);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 		instance.transform.scl(scale);
-		//Vector3 offset = ModelFunctions.getOrigin(instance);
-		//offset.y -= .9f; // Hack since model is too high
 
 		HasModelComponent hasModel = new HasModelComponent(instance, -0.4f, 90, scale, true);
 		hasModel.dontDrawInViewId = playerIdx;
