@@ -57,7 +57,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 		if (ability.count_available > 0) {
 			playerData.ability1Ready = true;
-			playerData.ability1text = ability.type + " (" + ability.count_available + ") Ready!";
+			playerData.ability1text = ability.type + " Ready! (" + ability.count_available + ") ";
 			if (player.inputMethod.isAbility1Pressed()) {
 				if (ability.button_released || ability.requiresBuildUp) {
 					ability.button_released = false;

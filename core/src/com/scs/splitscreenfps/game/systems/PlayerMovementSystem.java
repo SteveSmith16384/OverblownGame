@@ -53,13 +53,10 @@ public class PlayerMovementSystem extends AbstractSystem {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
 				tmpVec.set(movementData.offset);
 				float speed = physics.getRigidBody().getLinearVelocity().len();
-				Settings.p("Speed=" + speed);
+				//Settings.p("Speed=" + speed);
 				if (speed > 0.1f && speed < 2f) {
 					float frac = 2 / speed;
-					//Settings.p("Frac=" + frac);
-					//if (frac > 1) {
 					tmpVec.scl(frac);
-					//}
 				}
 				physics.body.activate(); // Need this!
 				physics.getRigidBody().applyCentralForce(tmpVec);

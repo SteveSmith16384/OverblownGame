@@ -364,6 +364,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 		}
 		this.ecs.getSystem(CheckRangeSystem.class).process();
 
+		// Start of drawing code ---------------------------
+
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager.cleanUpBuffers();
 		}
@@ -404,11 +406,10 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 
 			batch2d.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
-			this.ecs.getSystem(DrawTextSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
 			// Draw HUD
-			currentLevel.renderUI(batch2d, currentViewId);
+			currentLevel.renderUI(batch2d, currentViewId); // todo - remove?
 			float yOff = font_med.getLineHeight() * 1f;
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 			//font_small.setColor(1, 1, 1, 1);
@@ -443,16 +444,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 
 			}
 
-			if (Settings.SHOW_FPS) {
-				if (font_small != null) {
-					font_small.setColor(Color.WHITE);
-					if (Gdx.graphics.getFramesPerSecond() < 60) {
-						font_small.setColor(Color.RED);
-					}
-					font_small.draw(batch2d, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-100, font_small.getLineHeight()*2);
-				}
-			}
-
 			batch2d.end();
 
 			if (Settings.DISABLE_POST_EFFECTS == false) {
@@ -465,6 +456,29 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 			vfxManager.applyEffects();
 			vfxManager.renderToScreen();
 		}
+
+		// Now draw text, which may pverlap the individual player screens
+
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+
+		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
+			batch2d.begin();
+			this.ecs.getSystem(DrawTextSystem.class).process();
+			batch2d.end();
+		}
+
+		if (Settings.SHOW_FPS) {
+			font_small.setColor(Color.WHITE);
+			if (Gdx.graphics.getFramesPerSecond() < 60) {
+				font_small.setColor(Color.RED);
+			}
+			batch2d.begin();
+			font_small.draw(batch2d, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-100, font_small.getLineHeight()*2);
+			batch2d.end();
+		}
+
+
+
 	}
 
 
@@ -526,7 +540,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 		broadphase.dispose();
 		dispatcher.dispose();
 		dynamicsWorld.dispose();
-}
+	}
 
 
 	@Override

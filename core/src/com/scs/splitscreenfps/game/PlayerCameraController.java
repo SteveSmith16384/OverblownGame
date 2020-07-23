@@ -36,7 +36,7 @@ public class PlayerCameraController {
 				}
 				camera.rotate(Vector3.Y, -mouseTurnSpeed * rx * dt);
 			}
-		} else if (input instanceof NoInputMethod) {
+	//	} else if (input instanceof NoInputMethod) {
 			// Do nothing
 		} else {
 			//Rotation

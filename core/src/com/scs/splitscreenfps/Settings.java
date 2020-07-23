@@ -31,7 +31,7 @@ public class Settings {
 	public static final boolean STRICT = !RELEASE_MODE && true;
 
 	// Other settings
-	public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
+	public static final float MIN_AXIS = 0.1f;//0.2f; // Movement less than this is ignored
 	public static final float CAM_OFFSET = -0.05f;//-0.2f;//0.14f;
 	public static final String TITLE = "Overblown";
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;

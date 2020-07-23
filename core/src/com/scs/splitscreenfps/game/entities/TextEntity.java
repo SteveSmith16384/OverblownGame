@@ -9,13 +9,13 @@ import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 public class TextEntity extends AbstractEntity {
 
-	public TextEntity(BasicECS ecs, String text, float _x, float _y, float _duration_secs, Color col, int _viewId, BitmapFont font) {
+	public TextEntity(BasicECS ecs, String text, float _xPcent, float _yPcent, float _duration_secs, Color col, int _viewId, BitmapFont font) {
 		super(ecs, "Text");
 
 		DrawTextData dtd = new DrawTextData(font, _viewId);
 		dtd.text = text;
-		dtd.x_pcent = _x;
-		dtd.y_pcent = _y;
+		dtd.x_pcent = _xPcent;
+		dtd.y_pcent = _yPcent;
 
 		dtd.colour = col;
 		
