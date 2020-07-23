@@ -48,26 +48,26 @@ public class PlayerMovementSystem extends AbstractSystem {
 		if (results != null) {
 			btCollisionObject obj = results.getCollisionObject();
 			on_floor = (obj != null);
-			if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
-				if (movementData.frozenUntil < System.currentTimeMillis()) {
-					tmpVec.set(movementData.offset);
-					float speed = physics.getRigidBody().getLinearVelocity().len();
-					Settings.p("Speed=" + speed);
-					if (speed > 0.1f && speed < 2f) {
-						float frac = 2 / speed;
-						//Settings.p("Frac=" + frac);
-						//if (frac > 1) {
-							tmpVec.scl(frac);
-						//}
-					}
-					physics.body.activate(); // Need this!
-					physics.getRigidBody().applyCentralForce(tmpVec);
-					//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
-					if (on_floor) {
-						if (movementData.next_footstep_sound < System.currentTimeMillis()) {
-							BillBoardFPS_Main.audio.play("sfx/footstep.wav");
-							movementData.next_footstep_sound = System.currentTimeMillis() + 350;
-						}
+		}
+		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
+			if (movementData.frozenUntil < System.currentTimeMillis()) {
+				tmpVec.set(movementData.offset);
+				float speed = physics.getRigidBody().getLinearVelocity().len();
+				Settings.p("Speed=" + speed);
+				if (speed > 0.1f && speed < 2f) {
+					float frac = 2 / speed;
+					//Settings.p("Frac=" + frac);
+					//if (frac > 1) {
+					tmpVec.scl(frac);
+					//}
+				}
+				physics.body.activate(); // Need this!
+				physics.getRigidBody().applyCentralForce(tmpVec);
+				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
+				if (on_floor) {
+					if (movementData.next_footstep_sound < System.currentTimeMillis()) {
+						BillBoardFPS_Main.audio.play("sfx/footstep.wav");
+						movementData.next_footstep_sound = System.currentTimeMillis() + 350;
 					}
 				}
 			}
