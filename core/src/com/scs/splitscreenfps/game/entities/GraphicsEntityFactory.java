@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -149,12 +150,12 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createRisingText(BasicECS ecs, int viewId, Vector3 pos, String text) {
+	public static AbstractEntity createRisingText(BasicECS ecs, int viewId, Vector3 pos, String text, Color colour) {
 		AbstractEntity entity = new AbstractEntity(ecs, "RisingHealth");
 
 		entity.addComponent(new RemoveEntityAfterTimeComponent(1));
 
-		DrawTextIn3DSpaceComponent dti3d = new DrawTextIn3DSpaceComponent(text, -1f, viewId, true);
+		DrawTextIn3DSpaceComponent dti3d = new DrawTextIn3DSpaceComponent(text, -1f, viewId, true, colour);
 		entity.addComponent(dti3d);
 
 		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);

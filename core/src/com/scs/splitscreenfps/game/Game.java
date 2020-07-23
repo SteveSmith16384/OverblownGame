@@ -196,17 +196,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
 
-		//this.appendToLog("Game about to start...");
-
-		/*		if (Settings.TEST_SCREEN_COORDS) {
-			TextEntity te = new TextEntity(ecs, "LINE 1", 300, 1000, new Color(0, 0, 1, 1), -1, 2);
-			ecs.addEntity(te);
-			te = new TextEntity(ecs, "LINE 2", 360, 1000, new Color(0, 0, 1, 1), -1, 2);
-			ecs.addEntity(te);
-			te = new TextEntity(ecs, "LINE 3", 500, 1000, new Color(0, 0, 1, 1), -1, 2);
-			ecs.addEntity(te);
-		}
-		 */
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
 			//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
@@ -629,7 +618,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 			// Show invincible text
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			PositionComponent posData = (PositionComponent)playerDamaged.getComponent(PositionComponent.class);
-			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, "INVINCIBLE");
+			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, "INVINCIBLE", Color.GREEN);
 			ecs.addEntity(text);
 			return;
 		}
@@ -648,7 +637,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 
 			if (playerHitData.health > 0) { // Otherwise we'll show "KILLED" instead
 				PositionComponent posData = (PositionComponent)playerDamaged.getComponent(PositionComponent.class);
-				AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, ""+amt);
+				AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, ""+amt, Color.YELLOW);
 				ecs.addEntity(text);
 			}
 		}
@@ -697,7 +686,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 			shooterData.num_kills++;
 
 			PositionComponent posData = (PositionComponent)playerKilled.getComponent(PositionComponent.class);
-			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, "KILLED");
+			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, "KILLED", Color.RED);
 			ecs.addEntity(text);
 
 		} else {

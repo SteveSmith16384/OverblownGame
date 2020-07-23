@@ -53,12 +53,12 @@ public class DrawTextIn3DSpaceSystem extends AbstractSystem {
 			float x = tmp.x-20;
 			float y = tmp.y + 40;
 			BitmapFont font = game.font_med;
-			font.setColor(new Color(0f, 0, 0, 1f));
+			font.setColor(Color.BLACK);
 			font.draw(batch2d, data.text, x+2, y);
 			font.draw(batch2d, data.text, x-2, y);
 			font.draw(batch2d, data.text, x, y+2);
 			font.draw(batch2d, data.text, x, y-2);
-			font.setColor(new Color(1f, 0, 0, 1f));
+			font.setColor(data.colour);//new Color(1f, 0, 0, 1f));
 			font.draw(batch2d, data.text, x, y);
 		}
 		
