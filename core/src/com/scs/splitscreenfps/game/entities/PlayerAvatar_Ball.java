@@ -39,8 +39,8 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 		// Model stuff
 		Texture tex = game.getTexture("textures/set3_example_1.png");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = new ModelBuilder();
-		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		//ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
 		HasModelComponent hasModel = new HasModelComponent(instance, 0, 0, 1f, true);
 		hasModel.dontDrawInViewId = playerIdx;

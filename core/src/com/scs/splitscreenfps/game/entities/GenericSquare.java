@@ -19,19 +19,19 @@ public class GenericSquare extends AbstractEntity {
 
 		BlendingAttribute blendingAttribute = new BlendingAttribute();
 		blendingAttribute.opacity = 1f;
-		
+
 		Texture tex = game.getTexture(filename);
 		Material material = new Material(TextureAttribute.createDiffuse(tex), blendingAttribute);		
-			ModelBuilder modelBuilder = new ModelBuilder();
-			Model floor = modelBuilder.createRect(
-					0f, 0f, 1,
-					1, 0f, 1f,
-					1f, 0f, 0f,
-					0f, 0f,0f,
-					1f, 1f,1f,
-					material,
-					VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-		
+		//ModelBuilder modelBuilder = new ModelBuilder();
+		Model floor = game.modelBuilder.createRect(
+				0f, 0f, 1,
+				1, 0f, 1f,
+				1f, 0f, 0f,
+				0f, 0f,0f,
+				1f, 1f,1f,
+				material,
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
+
 		ModelInstance instance = new ModelInstance(floor);
 		//instance.transform.translate((map_x*Game.UNIT)-(Game.UNIT/2), 0.1f, (map_y*Game.UNIT)-(Game.UNIT/2));
 		instance.transform.translate(map_x, 0.05f, map_y); // Raise it slightly

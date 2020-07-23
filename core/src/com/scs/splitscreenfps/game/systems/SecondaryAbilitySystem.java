@@ -137,7 +137,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		pc.body.activate();
 		float pow = 15+(power*30);
 		//Settings.p("Performing boost with pow=" + pow);
-		pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(pow));
+		pc.getRigidBody().applyCentralImpulse(player.camera.direction.cpy().scl(pow));
 		//pc.body.appl.applyCentralForce(player.camera.direction.cpy().scl(power*3000)); Doesn't do anything?
 
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
@@ -192,7 +192,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		Vector3 dir = new Vector3(player.camera.direction);
 		dir.y += .2f;
 		dir.nor().scl(30);
-		pc.body.applyCentralImpulse(dir);
+		pc.getRigidBody().applyCentralImpulse(dir);
 	}
 
 
@@ -201,7 +201,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();
-		pc.body.applyCentralImpulse(new Vector3(0, 40, 0));
+		pc.getRigidBody().applyCentralImpulse(new Vector3(0, 40, 0));
 
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
@@ -214,7 +214,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();
-		pc.body.applyCentralImpulse(new Vector3(0, 20, 0));
+		pc.getRigidBody().applyCentralImpulse(new Vector3(0, 20, 0));
 
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);

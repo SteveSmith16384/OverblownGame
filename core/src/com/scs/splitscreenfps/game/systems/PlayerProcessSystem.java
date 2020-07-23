@@ -74,12 +74,12 @@ public class PlayerProcessSystem implements ISystem {
 					if (ourPlayerData.performing_power_punch) {
 						float force = coll.force;//ourPhysics.body.getLinearVelocity().len();
 						if (force > LINEAR_VELOCITY_CUTOFF) { // Did we hit them really hard, i.e. are we Boomfist?
-							tmpVector.set(ourPhysics.body.getLinearVelocity());
+							tmpVector.set(ourPhysics.getRigidBody().getLinearVelocity());
 							tmpVector.nor().scl(force);
 							PhysicsComponent theirPhysics = (PhysicsComponent)entityHit.getComponent(PhysicsComponent.class);
 							theirPhysics.body.activate();
-							theirPhysics.body.applyCentralImpulse(tmpVector);
-							theirPhysics.body.setDamping(0.2f, 0.2f);
+							theirPhysics.getRigidBody().applyCentralImpulse(tmpVector);
+							theirPhysics.getRigidBody().setDamping(0.2f, 0.2f);
 
 							PlayerData theirPlayerData = (PlayerData)entityHit.getComponent(PlayerData.class);
 							theirPlayerData.has_been_punched = true;
@@ -96,13 +96,13 @@ public class PlayerProcessSystem implements ISystem {
 		}
 
 		// Check still powerpunch/damped
-		float force = ourPhysics.body.getLinearVelocity().len();
+		float force = ourPhysics.getRigidBody().getLinearVelocity().len();
 		if (force < LINEAR_VELOCITY_CUTOFF) {
 			ourPlayerData.performing_power_punch = false;
 			if (ourPlayerData.has_been_punched) {
 				Settings.p("Re-adding damping to player " + ourPlayerData.playerIdx);
 				ourPlayerData.has_been_punched = false;
-				ourPhysics.body.setDamping(player.getDefaultDamping(), player.getDefaultDamping());
+				ourPhysics.getRigidBody().setDamping(player.getDefaultDamping(), player.getDefaultDamping());
 			}
 		}
 

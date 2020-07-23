@@ -103,7 +103,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		// Turn off gravity
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
-		pc.body.setGravity(Vector3.Zero);
+		pc.getRigidBody().setGravity(Vector3.Zero);
 
 		BillBoardFPS_Main.audio.play("speech/havesomerockets.wav");
 	}
@@ -165,7 +165,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			game.ecs.addEntity(r);
 
 			PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
-			pc.body.setLinearFactor(Vector3.Zero);
+			pc.getRigidBody().setLinearFactor(Vector3.Zero);
 		}
 	}
 
@@ -186,8 +186,8 @@ public class UltimateAbilitySystem extends AbstractSystem {
 	private void endRocketBarrage(AbstractPlayersAvatar player) {
 		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
-		pc.body.setGravity(Game.GRAVITY);
-		pc.body.setLinearFactor(new Vector3(1, 1, 1));
+		pc.getRigidBody().setGravity(Game.GRAVITY);
+		pc.getRigidBody().setLinearFactor(new Vector3(1, 1, 1));
 	}
 
 }

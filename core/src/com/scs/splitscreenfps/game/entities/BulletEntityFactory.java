@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -281,8 +280,8 @@ public class BulletEntityFactory {
 		
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = new ModelBuilder();
-		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		//ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
@@ -321,8 +320,8 @@ public class BulletEntityFactory {
 		
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = new ModelBuilder();
-		Model sphere_model = modelBuilder.createSphere(diam, diam, diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		//ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = game.modelBuilder.createSphere(diam, diam, diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
 		
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);

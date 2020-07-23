@@ -48,7 +48,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
 				physics.body.activate(); // Need this!
-				physics.body.applyCentralForce(movementData.offset);
+				physics.getRigidBody().applyCentralForce(movementData.offset);
 				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
 				if (on_floor) {
 					if (movementData.next_footstep_sound < System.currentTimeMillis()) {
@@ -61,7 +61,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 
 		if (movementData.jumpPressed) {
 			if (on_floor) {
-				physics.body.applyCentralForce(JUMP_FORCE);
+				physics.getRigidBody().applyCentralForce(JUMP_FORCE);
 			}
 			movementData.jumpPressed = false;
 		}

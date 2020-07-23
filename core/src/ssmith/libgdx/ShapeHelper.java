@@ -12,11 +12,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class ShapeHelper {
 
-	public static ModelInstance createRect(Texture tex, float w, float d) {
+	public static ModelInstance createRect(ModelBuilder modelBuilder, Texture tex, float w, float d) {
 		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material material = new Material(TextureAttribute.createDiffuse(tex));		
 
-		ModelBuilder modelBuilder = new ModelBuilder();
+		//ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createRect(
 				(float)-w/2, 0f, (float)d/2,
 				(float)w/2, 0f, (float)d/2,
@@ -35,10 +35,10 @@ public class ShapeHelper {
 	}
 	
 
-	public static ModelInstance createSphere(Texture tex, float x, float y, float z, float size) {
+	public static ModelInstance createSphere(ModelBuilder modelBuilder, Texture tex, float x, float y, float z, float size) {
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 
-		ModelBuilder modelBuilder = new ModelBuilder();
+		//ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createSphere(size, size, size, 5, 5, white_material,
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 
@@ -53,10 +53,10 @@ public class ShapeHelper {
 	}
 
 	
-	public static ModelInstance createCylinder(Texture tex, float x, float y, float z, float diam, float length) {
+	public static ModelInstance createCylinder(ModelBuilder modelBuilder, Texture tex, float x, float y, float z, float diam, float length) {
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 
-		ModelBuilder modelBuilder = new ModelBuilder();
+		//ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createCylinder(diam, length, diam, 8, white_material,
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 

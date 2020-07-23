@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -37,7 +38,7 @@ public class PhysicsSystem extends AbstractSystem {
 			}
 		}
 
-		
+
 		/*
 		if (e instanceof AbstractPlayersAvatar) {
 			Vector3 force = pc.body.getInterpolationLinearVelocity(); // seems to work
@@ -78,14 +79,18 @@ public class PhysicsSystem extends AbstractSystem {
 		super.addEntity(e);
 
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-		game.dynamicsWorld.addRigidBody(pc.body);
+		if (pc.body instanceof btRigidBody) {
+			game.dynamicsWorld.addRigidBody((btRigidBody)pc.body);
+		} else {
+			game.dynamicsWorld.addCollisionObject(pc.body);
+		}
 
 		if (pc.disable_gravity) {
-			pc.body.setGravity(new Vector3());
+			pc.getRigidBody().setGravity(new Vector3());
 		}
 		if (pc.force != null) {
 			//pc.body.applyCentralForce(pc.force.scl(1));
-			pc.body.applyCentralImpulse(pc.force);
+			pc.getRigidBody().applyCentralImpulse(pc.force);
 		}
 	}
 
@@ -95,7 +100,11 @@ public class PhysicsSystem extends AbstractSystem {
 		super.removeEntity(e);
 
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-		game.dynamicsWorld.removeRigidBody(pc.body);
+		if (pc.body instanceof btRigidBody) {
+			game.dynamicsWorld.removeRigidBody((btRigidBody)pc.body);
+		} else {
+			game.dynamicsWorld.removeCollisionObject(pc.body);
+		}
 		if (pc.body.getCollisionShape().isDisposed() == false) {
 			pc.body.getCollisionShape().dispose();
 		}

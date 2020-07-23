@@ -105,7 +105,7 @@ public class DrawModelSystem extends AbstractSystem {
 		if (game.currentViewId == 0 && shadow == false) {
 			// Calc position.  Only need to do this bit once per game loop!
 			if (pc != null) {
-				if (pc.position_dity || pc.body.getInvMass() != 0 || Settings.USE_MAP_EDITOR) {
+				if (pc.position_dity || pc.getRigidBody().getInvMass() != 0 || Settings.USE_MAP_EDITOR) {
 					pc.position_dity = false;
 					pc.body.getWorldTransform(tmpMat);
 					// Resets the matrix to avoid hangoffs

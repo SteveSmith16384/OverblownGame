@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
@@ -42,7 +43,6 @@ import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -121,6 +121,7 @@ public class Game implements IModule, ITextureProvider {
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btSequentialImpulseConstraintSolver constraintSolver;
 	private final ClosestRayResultCallback callback = new ClosestRayResultCallback(new Vector3(), new Vector3());
+	public ModelBuilder modelBuilder = new ModelBuilder();
 
 	private DebugDrawer debugDrawer;
 	private btBroadphaseInterface broadphase;
@@ -627,7 +628,7 @@ public class Game implements IModule, ITextureProvider {
 		if (amt <= 0) {
 			return;
 		}
-		
+
 		if (playerHitData.invincible_until > System.currentTimeMillis()) {
 			// Show invincible text
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
@@ -648,11 +649,11 @@ public class Game implements IModule, ITextureProvider {
 
 			PlayerData shooterData = (PlayerData)shooter.getComponent(PlayerData.class);
 			shooterData.damage_caused += amt;
-			
+
 			if (playerHitData.health > 0) { // Otherwise we'll show "KILLED" instead
-			PositionComponent posData = (PositionComponent)playerDamaged.getComponent(PositionComponent.class);
-			AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, ""+amt);
-			ecs.addEntity(text);
+				PositionComponent posData = (PositionComponent)playerDamaged.getComponent(PositionComponent.class);
+				AbstractEntity text = GraphicsEntityFactory.createRisingText(ecs, shooterData.playerIdx, posData.position, ""+amt);
+				ecs.addEntity(text);
 			}
 		}
 
@@ -676,7 +677,7 @@ public class Game implements IModule, ITextureProvider {
 			return; // Prevent calling multiple times
 		}		
 		playerDiedData.dead = true;
-		
+
 		if (shooter == null) {
 			shooter = playerDiedData.last_person_to_hit_them; // In case they fell off the edge
 		}
@@ -743,7 +744,7 @@ public class Game implements IModule, ITextureProvider {
 						this.playerDamaged(e, playerHitData, explData.damage, shooter);
 					}
 					PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-					if (pc.body.getInvMass() != 0) {
+					if (pc.getRigidBody().getInvMass() != 0) {
 						pc.body.activate();
 
 						// Calc force/dir
@@ -751,7 +752,7 @@ public class Game implements IModule, ITextureProvider {
 						frc.sub(explosionPos).nor();
 						frc.y += .2f;
 						frc.scl(explData.force);
-						pc.body.applyCentralImpulse(frc);
+						pc.getRigidBody().applyCentralImpulse(frc);
 					}
 				}
 			}
@@ -810,9 +811,11 @@ public class Game implements IModule, ITextureProvider {
 
 				float force = 0;
 				try {
-					btRigidBody rb1 = (btRigidBody)ob1;
-					btRigidBody rb2 = (btRigidBody)ob2;
-					force = rb1.getLinearVelocity().len() - rb2.getLinearVelocity().len();
+					if (ob1 instanceof btRigidBody && ob2 instanceof btRigidBody) {
+						btRigidBody rb1 = (btRigidBody)ob1;
+						btRigidBody rb2 = (btRigidBody)ob2;
+						force = rb1.getLinearVelocity().len() - rb2.getLinearVelocity().len();
+					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

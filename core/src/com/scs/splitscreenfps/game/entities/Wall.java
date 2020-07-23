@@ -40,7 +40,7 @@ public class Wall extends AbstractEntity {
 		//Texture tex = new Texture("textures/neon/tron_green.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = new ModelBuilder();
+		ModelBuilder modelBuilder = game.modelBuilder;//new ModelBuilder();
 
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();

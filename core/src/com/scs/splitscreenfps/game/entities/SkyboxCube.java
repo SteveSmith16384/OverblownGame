@@ -24,7 +24,7 @@ public class SkyboxCube extends AbstractEntity {
 		Texture tex = game.getTexture("textures/sky3.jpg");// new Texture("textures/sky3.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = new ModelBuilder();
+		ModelBuilder modelBuilder = game.modelBuilder;//new ModelBuilder();
 
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();

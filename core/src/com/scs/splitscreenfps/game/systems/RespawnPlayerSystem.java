@@ -45,8 +45,8 @@ public class RespawnPlayerSystem implements ISystem {
 				mat.setTranslation(wrc.respawnPoint);
 				md.body.setWorldTransform(mat);
 				md.body.activate();
-				md.body.setAngularVelocity(Vector3.Zero);
-				md.body.setLinearVelocity(Vector3.Zero);
+				md.getRigidBody().setAngularVelocity(Vector3.Zero);
+				md.getRigidBody().setLinearVelocity(Vector3.Zero);
 
 				// Reset health
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);

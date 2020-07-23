@@ -97,7 +97,7 @@ public class ShootingSystem extends AbstractSystem {
 			if (weapon.kickback_force != 0) {
 				PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 				pc.body.activate();				
-				pc.body.applyCentralImpulse(player.camera.direction.cpy().scl(-1 * weapon.kickback_force));
+				pc.getRigidBody().applyCentralImpulse(player.camera.direction.cpy().scl(-1 * weapon.kickback_force));
 			}
 
 			// Recoil

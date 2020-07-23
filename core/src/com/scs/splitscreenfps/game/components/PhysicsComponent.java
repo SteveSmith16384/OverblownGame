@@ -3,11 +3,12 @@ package com.scs.splitscreenfps.game.components;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 
 public class PhysicsComponent {
 
-	public btRigidBody body;
+	public btCollisionObject body;
 	public boolean disable_gravity = false;
 	public Vector3 force;
 	public boolean removeIfFallen = true;
@@ -18,7 +19,7 @@ public class PhysicsComponent {
 	private Matrix4 mat = new Matrix4();
 	private Vector3 vec = new Vector3();
 
-	public PhysicsComponent(btRigidBody _body) {
+	public PhysicsComponent(btCollisionObject _body) {
 		body = _body;
 	}
 	
@@ -29,4 +30,8 @@ public class PhysicsComponent {
 		
 	}
 	
+	
+	public btRigidBody getRigidBody() {
+		return (btRigidBody)body;
+	}
 }

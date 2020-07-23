@@ -27,8 +27,8 @@ public class SkyboxSphere extends AbstractEntity {
 		Texture tex = game.getTexture("textures/sky.png");// new Texture("textures/sky.png");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = new ModelBuilder();
-		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		//ModelBuilder modelBuilder = game.modelBuilder;//new ModelBuilder();
+		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		
 		ModelInstance instance = new ModelInstance(sphere_model);
 		

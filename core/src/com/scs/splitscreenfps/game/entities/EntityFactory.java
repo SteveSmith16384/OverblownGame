@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
+import com.badlogic.gdx.physics.bullet.collision.btGhostObject;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
@@ -40,7 +41,7 @@ public class EntityFactory {
 
 		Texture tex = game.getTexture(tex_filename);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = new ModelBuilder();
+		ModelBuilder modelBuilder = game.modelBuilder;//new ModelBuilder();
 
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
@@ -84,8 +85,8 @@ public class EntityFactory {
 
 		Texture tex = game.getTexture(tex_filename);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = new ModelBuilder();
-		Model sphere_model = modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		//ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
@@ -198,7 +199,7 @@ public class EntityFactory {
 		AbstractEntity cylinder = new AbstractEntity(game.ecs, "Cylinder");
 
 		Texture tex = game.getTexture(tex_filename);
-		ModelInstance instance = ShapeHelper.createCylinder(tex, x, y, z, diam, length);
+		ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, tex, x, y, z, diam, length);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, true);
 		cylinder.addComponent(model);
@@ -224,7 +225,7 @@ public class EntityFactory {
 		AbstractEntity plane = new AbstractEntity(game.ecs, "Plane");
 
 		Texture tex = game.getTexture(tex_filename);
-		ModelInstance instance = ShapeHelper.createRect(tex, w, d);
+		ModelInstance instance = ShapeHelper.createRect(game.modelBuilder, tex, w, d);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, false);
 		plane.addComponent(model);
@@ -337,14 +338,15 @@ public class EntityFactory {
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
-		btRigidBody body = new btRigidBody(0, null, shape);
+		btGhostObject body = new btGhostObject();//0, null, shape);
+		body.setCollisionShape(shape);
 		body.userData = e;
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.disable_gravity = true;
+		//pc.disable_gravity = true; Not available for ghost objects
 		e.addComponent(pc);
 
 		return e;
@@ -355,7 +357,7 @@ public class EntityFactory {
 		AbstractEntity weapon = new AbstractEntity(game.ecs, "Weapon");
 
 		Texture tex = game.getTexture(tex_filename);
-		ModelInstance instance = ShapeHelper.createCylinder(tex, 1, 0, 0, .1f, .3f);
+		ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, tex, 1, 0, 0, .1f, .3f);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, true);
 		model.always_draw = true;
