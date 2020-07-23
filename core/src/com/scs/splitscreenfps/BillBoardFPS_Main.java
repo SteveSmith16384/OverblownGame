@@ -6,6 +6,9 @@ import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.scs.splitscreenfps.game.systems.AudioSystem;
 import com.scs.splitscreenfps.pregame.IntroModule;
@@ -13,10 +16,13 @@ import com.scs.splitscreenfps.pregame.IntroModule;
 public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerConnectionListener {
 
 	public static final AudioSystem audio = new AudioSystem();
+	private FreeTypeFontGenerator generator;
 
 	private IModule current_module;
 	public IModule next_module;
 	private boolean fullscreen = false;
+
+	public BitmapFont font_small, font_med, font_large;
 
 	public ControllerManager controllerManager;
 
@@ -31,6 +37,9 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 
 		controllerManager = new ControllerManager(this, 4);
 
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
+		generateFonts();
+		
 		current_module = new IntroModule(this);
 		
 	}
@@ -107,13 +116,38 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 	}
 
 
+	private void generateFonts() {
+		int height = Gdx.graphics.getBackBufferHeight();
+		//Settings.p("Height: " + height);
+
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = height/30;
+		//Settings.p("Font size=" + parameter.size);
+		font_small = generator.generateFont(parameter);
+
+		parameter = new FreeTypeFontParameter();
+		parameter.size = height/20;
+		//Settings.p("Font size=" + parameter.size);
+		font_med = generator.generateFont(parameter);
+
+		parameter = new FreeTypeFontParameter();
+		parameter.size = height/10;
+		//Settings.p("Font size=" + parameter.size);
+		font_large = generator.generateFont(parameter);
+	}
+	
+	
 	@Override
 	public void resize(int width, int height) {
 		//Settings.p("Resize() called");
+
+		generateFonts();
+		
 		if (this.current_module != null) {
 			this.current_module.resize(width, height);
 		}
 	}
+
 
 
 	@Override
@@ -123,6 +157,17 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 			current_module = null;
 		}
 		audio.dipose();
+		if (font_small != null) {
+			font_small.dispose();
+		}
+		if (font_med != null) {
+			font_med.dispose();
+		}
+		if (font_large != null) {
+			font_large.dispose();
+		}
+
+		generator.dispose();
 	}
 
 

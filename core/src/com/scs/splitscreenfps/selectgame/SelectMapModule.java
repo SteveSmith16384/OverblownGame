@@ -13,8 +13,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
@@ -68,19 +66,13 @@ public class SelectMapModule implements IModule {
 	private void loadAssetsForResize() {
 		batch2d = new SpriteBatch();
 
+		font_small = main.font_small;
+		//this.font_med = main.font_med;
+		this.font_large = main.font_large;
+
 		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
-		//Settings.p("Font size=" + parameter.size);
-		font_small = generator.generateFont(parameter); // font size 12 pixels
-		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
-		//Settings.p("Font size=" + parameter.size);
-		font_large = generator.generateFont(parameter); // font size 12 pixels
-		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
 		Texture tex = getTexture("arrow_right_white.png");
 		arrow = new Sprite(tex);
@@ -205,8 +197,6 @@ public class SelectMapModule implements IModule {
 	public void dispose() {
 		this.batch2d.dispose();
 		this.frameBuffer.dispose();
-		this.font_small.dispose();
-		this.font_large.dispose();
 		assetManager.dispose();
 	}
 

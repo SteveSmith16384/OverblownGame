@@ -17,8 +17,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -97,8 +95,8 @@ public class Game implements IModule, ITextureProvider {
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
-	public BitmapFont font_small, font_med, font_large;
 	public final ViewportData[] viewports;
+	public BitmapFont font_small, font_med, font_large;
 
 	public AbstractPlayersAvatar[] players;
 	public List<IInputMethod> inputs;
@@ -142,6 +140,10 @@ public class Game implements IModule, ITextureProvider {
 		main = _main;
 		inputs = _inputs;
 		gameSelectionData = _gameSelectionData;
+
+		font_small = main.font_small;
+		this.font_med = main.font_med;
+		this.font_large = main.font_large;
 
 		game_stage = 0;
 		batch2d = new SpriteBatch();
@@ -227,28 +229,6 @@ public class Game implements IModule, ITextureProvider {
 
 
 	private void loadAssetsForRescale() {
-		int height = Gdx.graphics.getBackBufferHeight();
-		//Settings.p("Height: " + height);
-		//this.currentLevel.loadAssets();
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
-
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = height/30;
-		//Settings.p("Font size=" + parameter.size);
-		font_small = generator.generateFont(parameter);
-
-		parameter = new FreeTypeFontParameter();
-		parameter.size = height/20;
-		//Settings.p("Font size=" + parameter.size);
-		font_med = generator.generateFont(parameter);
-
-		parameter = new FreeTypeFontParameter();
-		parameter.size = height/10;
-		//Settings.p("Font size=" + parameter.size);
-		font_large = generator.generateFont(parameter);
-
-		generator.dispose(); // don't forget to dispose to avoid memory leaks!
-
 		DrawGuiSpritesSystem sys = (DrawGuiSpritesSystem)this.ecs.getSystem(DrawGuiSpritesSystem.class);
 		sys.rescaleSprites();
 	}
@@ -527,16 +507,6 @@ public class Game implements IModule, ITextureProvider {
 			viewportData.dispose();
 		}
 
-		if (font_small != null) {
-			font_small.dispose();
-		}
-		if (font_med != null) {
-			font_med.dispose();
-		}
-		if (font_large != null) {
-			font_large.dispose();
-		}
-
 		batch2d.dispose();
 
 		this.assetManager.dispose();
@@ -731,7 +701,7 @@ public class Game implements IModule, ITextureProvider {
 		Iterator<AbstractEntity> it = this.physicsSystem.getEntityIterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
-			
+
 			if (e.isMarkedForRemoval()) {
 				continue;
 			}
@@ -806,7 +776,7 @@ public class Game implements IModule, ITextureProvider {
 			return true;
 		}
 
-		
+
 		@Override
 		public void onContactStarted (final btCollisionObject ob1, final btCollisionObject ob2) {
 			try {
