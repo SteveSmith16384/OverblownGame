@@ -770,7 +770,7 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
-	public btCollisionObject rayTestByDir(Vector3 ray_from, Vector3 dir, float range) {
+	public ClosestRayResultCallback rayTestByDir(Vector3 ray_from, Vector3 dir, float range) {
 		tmp_to.set(ray_from).mulAdd(dir, range);
 
 		callback.setCollisionObject(null);
@@ -784,7 +784,7 @@ public class Game implements IModule, ITextureProvider {
 
 		this.dynamicsWorld.rayTest(ray_from, tmp_to2, callback);
 		if (callback.hasHit()) {
-			return callback.getCollisionObject();
+			return callback;//..getCollisionObject();
 		}
 
 		return null;
@@ -801,21 +801,16 @@ public class Game implements IModule, ITextureProvider {
 
 	class MyContactListener extends ContactListener {
 
-		/*private ProcessCollisionSystem coll;
-
-		public MyContactListener(ProcessCollisionSystem _coll) {
-			coll = _coll;
-		}
-		 */
 		@Override
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			return true;
 		}
 
+		
 		@Override
 		public void onContactStarted (final btCollisionObject ob1, final btCollisionObject ob2) {
 			try {
-				//Settings.p(ob1.userData + " collided with " + ob2.userData);
+				Settings.p(ob1.userData + " collided with " + ob2.userData);
 				AbstractEntity e1 = (AbstractEntity)ob1.userData;
 				AbstractEntity e2 = (AbstractEntity)ob2.userData;
 

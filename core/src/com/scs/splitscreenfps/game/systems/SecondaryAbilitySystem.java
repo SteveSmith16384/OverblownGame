@@ -3,6 +3,7 @@ package com.scs.splitscreenfps.game.systems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -16,6 +17,7 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
+import com.scs.splitscreenfps.game.entities.PlayerAvatar_Person;
 
 import ssmith.lang.NumberFunctions;
 
@@ -50,7 +52,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 			//ability.current_cooldown = 0;
 		}
 
-		
+
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 		if (ability.count_available > 0) {
@@ -84,7 +86,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 							performJetPac(entity, player);
 							break;
 						case TracerJump:
-							success = performTracerJump(player);
+							success = performRacerBlink(player);
 							break;
 						case StickyMine:
 							dropStickyMine(entity, player);
@@ -151,37 +153,41 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	}
 
 
-	private boolean performTracerJump(AbstractPlayersAvatar player) {
-		float dist = 5f;
+	private boolean performRacerBlink(AbstractPlayersAvatar player) {
+		float dist = 7.5f;
 		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 		Vector3 dir = new Vector3(player.camera.direction);
-		// set y-dir to be 0
-		dir.y = 0;
-		dir.nor();
-		btCollisionObject obj = game.rayTestByDir(posData.position, dir, dist);
-		boolean clear = (obj == null);
-		if (clear) {
-			// Teleport
-			PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
-			pc.body.getWorldTransform(tmpMat);
-			tmpMat.getTranslation(tmpVec);
-			tmpVec.mulAdd(dir, dist);
-			tmpMat.setTranslation(tmpVec);
-			pc.body.setWorldTransform(tmpMat);
-			pc.body.activate();
-
-			// f/x
-			AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
-			game.ecs.addEntity(e);
-
-			BillBoardFPS_Main.audio.play("sfx/boost-start.ogg");
-			//Settings.p("Blink!");
-			return true;
-		} else {
+		if (dir.y < 0) {
+			dir.y = 0;
+			dir.nor();
+		} else if (dir.y > .4f) {
+			dir.y = .4f;
+			dir.nor();
+		}
+		//boolean clear = true;
+		ClosestRayResultCallback results = game.rayTestByDir(posData.position, dir, dist);
+		if (results != null) {
+			dist = dist * results.getClosestHitFraction();
+			dist -= PlayerAvatar_Person.RADIUS;
+		}
+		if (dist < 2f) {
 			BillBoardFPS_Main.audio.play("sfx/enemyalert.mp3");
-			Settings.p(obj + " is in the way");
 			return false;
 		}
+		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
+		pc.body.getWorldTransform(tmpMat);
+		tmpMat.getTranslation(tmpVec);
+		tmpVec.mulAdd(dir, dist);
+		tmpMat.setTranslation(tmpVec);
+		pc.body.setWorldTransform(tmpMat);
+		pc.body.activate();
+
+		// f/x
+		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
+		game.ecs.addEntity(e);
+
+		BillBoardFPS_Main.audio.play("sfx/boost-start.ogg");
+		return true;
 	}
 
 

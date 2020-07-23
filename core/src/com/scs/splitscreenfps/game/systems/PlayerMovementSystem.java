@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -40,20 +41,23 @@ public class PlayerMovementSystem extends AbstractSystem {
 		}
 
 		// Check they are on ground
+		boolean on_floor = false;
 		Matrix4 mat = physics.body.getWorldTransform();
 		mat.getTranslation(tmpVec);
-		btCollisionObject obj = game.rayTestByDir(tmpVec, V_DOWN, PlayerAvatar_Person.PLAYER_HEIGHT + 0.2f);
-		boolean on_floor = (obj != null);
-
-		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
-			if (movementData.frozenUntil < System.currentTimeMillis()) {
-				physics.body.activate(); // Need this!
-				physics.getRigidBody().applyCentralForce(movementData.offset);
-				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
-				if (on_floor) {
-					if (movementData.next_footstep_sound < System.currentTimeMillis()) {
-						BillBoardFPS_Main.audio.play("sfx/footstep.wav");
-						movementData.next_footstep_sound = System.currentTimeMillis() + 350;
+		ClosestRayResultCallback results = game.rayTestByDir(tmpVec, V_DOWN, PlayerAvatar_Person.PLAYER_HEIGHT + 0.2f);
+		if (results != null) {
+			btCollisionObject obj = results.getCollisionObject();
+			on_floor = (obj != null);
+			if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
+				if (movementData.frozenUntil < System.currentTimeMillis()) {
+					physics.body.activate(); // Need this!
+					physics.getRigidBody().applyCentralForce(movementData.offset);
+					//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
+					if (on_floor) {
+						if (movementData.next_footstep_sound < System.currentTimeMillis()) {
+							BillBoardFPS_Main.audio.play("sfx/footstep.wav");
+							movementData.next_footstep_sound = System.currentTimeMillis() + 350;
+						}
 					}
 				}
 			}

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -78,21 +79,24 @@ public class MapEditorSystem extends AbstractSystem {
 
 		if (keyboard.isMouseClicked()) {
 			selectedObject = null;
-			btCollisionObject obj = game.rayTestByDir(player.camera.position, player.camera.direction, 100);
-			if (obj != null) {
-				selectedObject = (AbstractEntity)obj.userData;
+			ClosestRayResultCallback results = game.rayTestByDir(player.camera.position, player.camera.direction, 100);
+			if (results != null) {
+				btCollisionObject obj = results.getCollisionObject();
+				if (obj != null) {
+					selectedObject = (AbstractEntity)obj.userData;
 
-				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-				if (block != null) {
-					Settings.p(block.name + " selected");
-					game.appendToLog("Selected: " + block.name + " (" + block.id + ")");
-					game.appendToLog("Mass: " + block.mass);
-					if (block.tags != null && block.tags.length() > 0) {
-						game.appendToLog("Tags: " + block.tags);
+					MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+					if (block != null) {
+						Settings.p(block.name + " selected");
+						game.appendToLog("Selected: " + block.name + " (" + block.id + ")");
+						game.appendToLog("Mass: " + block.mass);
+						if (block.tags != null && block.tags.length() > 0) {
+							game.appendToLog("Tags: " + block.tags);
+						}
+					} else {
+						game.appendToLog("Block not found");
+						selectedObject = null;
 					}
-				} else {
-					game.appendToLog("Block not found");
-					selectedObject = null;
 				}
 			} else {
 				game.appendToLog("Nothing selected");
@@ -314,7 +318,7 @@ public class MapEditorSystem extends AbstractSystem {
 		game.appendToLog(block.name + " created");
 	}
 
-/*
+	/*
 	private void createNewPlane() {
 		MapBlockComponent block = new MapBlockComponent();
 		block.size = new Vector3(1, 1, 1);
@@ -327,7 +331,7 @@ public class MapEditorSystem extends AbstractSystem {
 		//this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
 		game.appendToLog(block.name + " created");
 	}
-*/
+	 */
 
 	private void createNewSphere() {
 		MapBlockComponent block = new MapBlockComponent();

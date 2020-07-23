@@ -356,8 +356,8 @@ public class BulletEntityFactory {
 	}
 
 
-	public static AbstractEntity createTraceyBomb(Game game, AbstractEntity shooter) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "TraceyBomb");
+	public static AbstractEntity createRacerBomb(Game game, AbstractEntity shooter) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "RacerBomb");
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)shooter;
 		Vector3 dir = new Vector3(player.camera.direction);
@@ -382,7 +382,7 @@ public class BulletEntityFactory {
 
 		//e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
-		e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, true));
+		e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
 	
 		// Add physics

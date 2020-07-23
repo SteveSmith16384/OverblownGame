@@ -23,6 +23,7 @@ import ssmith.libgdx.ModelFunctions;
 // This also moves the camera
 public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 
+	public static final float RADIUS = 0.2f;
 	private static final float DAMPING = 0.9f;
 
 	public PlayerAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int health) {
@@ -37,7 +38,7 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 		this.addAlienModel(playerIdx);
 
 		//btCapsuleShape capsuleShape = new btCapsuleShape(0.15f, PLAYER_HEIGHT);
-		btCapsuleShape capsuleShape = new btCapsuleShape(0.2f, PLAYER_HEIGHT);
+		btCapsuleShape capsuleShape = new btCapsuleShape(RADIUS, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
 

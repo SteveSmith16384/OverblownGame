@@ -118,7 +118,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 
 	private void throwTraceyBomb(AbstractPlayersAvatar player) {
 		//todo BillBoardFPS_Main.audio.play("speech/craterstrike.wav");
-		AbstractEntity crater = BulletEntityFactory.createTraceyBomb(game, player);
+		AbstractEntity crater = BulletEntityFactory.createRacerBomb(game, player);
 		game.ecs.addEntity(crater);
 	}
 
