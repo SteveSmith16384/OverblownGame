@@ -2,7 +2,6 @@ package com.scs.splitscreenfps.game;
 
 import java.awt.Rectangle;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;

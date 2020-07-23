@@ -1,8 +1,10 @@
 package com.scs.splitscreenfps.game.systems.dependencies;
 
-import com.scs.splitscreenfps.game.ViewportData;
+import java.awt.Rectangle;
 
 public interface IGetCurrentViewport {
 
-	ViewportData getCurrentViewport();
+	int getCurrentViewportIdx();
+	
+	Rectangle getCurrentViewportRect();
 }

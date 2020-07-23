@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
+import java.awt.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
@@ -298,15 +299,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			}
 			this.main.next_module = new SelectHeroModule(main, this.inputs, this.gameSelectionData);
 			return;
-		}
-
-		if (Settings.DEBUG_GUI_SPRITES) {
-			if (Gdx.input.isKeyPressed(Keys.T)) {
-				AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, 1);
-				redfilter.addComponent(new RemoveEntityAfterTimeComponent(10));
-				ecs.addEntity(redfilter);
-
-			}
 		}
 
 		if (this.game_stage == 1) {
@@ -643,7 +635,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
-		float duration = amt/20f;
+		float duration = amt/30f;
 		if (duration > 3) {
 			duration = 3;
 		}
@@ -855,13 +847,15 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 
 	@Override
-	public ViewportData getCurrentViewport() {
-		return this.viewports[this.currentViewId];
-	}
-	/*public int getCurrentViewIdx() {
+	public int getCurrentViewportIdx() {
 		return this.currentViewId;
 	}
-	*/
+
+
+	@Override
+	public Rectangle getCurrentViewportRect() {
+		return this.viewports[this.currentViewId].viewRect;
+	}
 
 }
 

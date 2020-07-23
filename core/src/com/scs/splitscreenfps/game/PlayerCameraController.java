@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.input.IInputMethod;
-import com.scs.splitscreenfps.game.input.NoInputMethod;
 
 public class PlayerCameraController {
 

@@ -25,7 +25,7 @@ public class DrawTextSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		DrawTextData dtd = (DrawTextData)entity.getComponent(DrawTextData.class);
-		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != getCurrent.getCurrentViewport().idx) {
+		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != getCurrent.getCurrentViewportIdx()) {
 			return;
 		}
 

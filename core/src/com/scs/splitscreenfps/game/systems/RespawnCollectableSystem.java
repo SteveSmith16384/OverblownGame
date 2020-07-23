@@ -3,7 +3,6 @@ package com.scs.splitscreenfps.game.systems;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;

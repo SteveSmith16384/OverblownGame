@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.pregame;
 
+import java.awt.Rectangle;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.controllers.Controller;
@@ -14,8 +16,9 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
-public class IntroModule implements IModule {
+public class IntroModule implements IModule, IGetCurrentViewport {
 
 	private BillBoardFPS_Main main;
 	public BasicECS ecs;
@@ -138,6 +141,18 @@ public class IntroModule implements IModule {
 	@Override
 	public void controlledRemoved(Controller controller) {
 		// Do nothing
+	}
+
+
+	@Override
+	public int getCurrentViewportIdx() {
+		return 0;
+	}
+
+
+	@Override
+	public Rectangle getCurrentViewportRect() {
+		return null;
 	}
 
 }
