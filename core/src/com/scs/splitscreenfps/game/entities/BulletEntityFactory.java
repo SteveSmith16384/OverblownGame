@@ -399,8 +399,6 @@ public class BulletEntityFactory {
 		pc.force = dir.scl(2f);
 		e.addComponent(pc);
 
-		BillBoardFPS_Main.audio.play("sfx/racerbomb.wav");
-
 		return e;
 	}
 

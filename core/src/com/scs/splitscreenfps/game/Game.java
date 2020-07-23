@@ -82,6 +82,7 @@ import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.game.systems.SpeechSystem;
 import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
+import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewIdx;
 import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
 import com.scs.splitscreenfps.selectcharacter.SelectHeroModule;
 
@@ -89,7 +90,7 @@ import com.scs.splitscreenfps.selectcharacter.SelectHeroModule;
  * This is the main game, where the players move about n'stuff.
  *
  */
-public class Game implements IModule, ITextureProvider {
+public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 
 	public static final Vector3 GRAVITY = new Vector3(0, -10f, 0);
 
@@ -515,8 +516,17 @@ public class Game implements IModule, ITextureProvider {
 			this.vfxManager.dispose();
 		}
 
+		ecs.markAllEntitiesForRemoval();
+		ecs.addAndRemoveEntities();
 		ecs.dispose();
-	}
+
+		if (debugDrawer != null) {
+			debugDrawer.dispose();
+		}
+		broadphase.dispose();
+		dispatcher.dispose();
+		dynamicsWorld.dispose();
+}
 
 
 	@Override
@@ -656,7 +666,7 @@ public class Game implements IModule, ITextureProvider {
 
 		AnimatedComponent anim = (AnimatedComponent)playerKilled.getComponent(AnimatedComponent.class);
 		if (anim != null) {
-			anim.setNextAnim(anim.die_anim_name);// anim.new AnimData(anim.die_anim_name, false);
+			anim.setNextAnim(anim.die_anim);// anim.new AnimData(anim.die_anim_name, false);
 		} else {
 			HasModelComponent model = (HasModelComponent)playerKilled.getComponent(HasModelComponent.class);
 			model.invisible = true;
@@ -838,6 +848,12 @@ public class Game implements IModule, ITextureProvider {
 			}
 		}
 
+	}
+
+
+	@Override
+	public int getCurrentViewIdx() {
+		return this.currentViewId;
 	}
 
 }

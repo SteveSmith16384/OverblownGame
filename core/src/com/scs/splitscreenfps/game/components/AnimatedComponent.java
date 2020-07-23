@@ -8,17 +8,17 @@ public class AnimatedComponent {
 	private AnimData next_animation;
 	public AnimationController animationController;
 	
-	public final AnimData walk_anim_name, idle_anim_name; // todo - rename
-	public final AnimData die_anim_name, jump_anim_name; // todo - rename
+	public final AnimData walk_anim, idle_anim;
+	public final AnimData die_anim, jump_anim;
 	
 	public AnimatedComponent(AnimationController _animationController, String _walk_anim_name, String _idle_anim_name, String _die_anim_name, String _jump_anim_name) {
 		animationController = _animationController;
 		next_animation = new AnimData(_idle_anim_name, true);
 		
-		walk_anim_name = new AnimData(_walk_anim_name, true);
-		idle_anim_name = new AnimData(_idle_anim_name, true);
-		die_anim_name = new AnimData(_die_anim_name, false);
-		this.jump_anim_name = new AnimData(_jump_anim_name, false);
+		walk_anim = new AnimData(_walk_anim_name, true);
+		idle_anim = new AnimData(_idle_anim_name, true);
+		die_anim = new AnimData(_die_anim_name, false);
+		this.jump_anim = new AnimData(_jump_anim_name, false);
 	}
 	
 	

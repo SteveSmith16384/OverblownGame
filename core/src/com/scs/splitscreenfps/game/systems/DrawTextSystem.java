@@ -6,18 +6,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextData;
+import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewIdx;
 
 public class DrawTextSystem extends AbstractSystem {
 
-	private Game game;
 	private SpriteBatch batch2d;
+	private IGetCurrentViewIdx getCurrent;
 
-	public DrawTextSystem(BasicECS ecs, Game _game, SpriteBatch _batch2d) {
+	public DrawTextSystem(BasicECS ecs, IGetCurrentViewIdx _getCurrent, SpriteBatch _batch2d) {
 		super(ecs, DrawTextData.class);
 
-		game = _game;
+		getCurrent = _getCurrent;
 		batch2d = _batch2d;
 	}
 
@@ -25,24 +25,12 @@ public class DrawTextSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		DrawTextData dtd = (DrawTextData)entity.getComponent(DrawTextData.class);
-		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != game.currentViewId) {
+		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != getCurrent.getCurrentViewIdx()) {
 			return;
 		}
 
-		BitmapFont font = null;
-		switch (dtd.size) {
-		case 1:
-			font = game.font_large;
-			break;
-		case 2:
-			font = game.font_med;
-			break;
-		case 3:
-			font = game.font_small;
-			break;
-		default:
-			throw new RuntimeException("Unknown font size: " + dtd.size);
-		}
+		BitmapFont font = dtd.font;
+		
 		/*if (dtd.centre_x && dtd.x < 0) { // todo - re-add and cache this
 			GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
 			layout.setText(font, dtd.text);
