@@ -14,16 +14,18 @@ import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 
 public class ViewportData {
 
+	public int idx;
 	public PerspectiveCamera camera;
 	public Rectangle viewRect;
 	public FrameBuffer frameBuffer;
 	public DecalBatch decalBatch;
 
-	public ViewportData(int idx, boolean full_screen, int total) {
+	public ViewportData(int _idx, boolean full_screen, int total) {
+		idx = _idx;
+		
 		Rectangle d = this.getDimensions(idx, full_screen, total);
 
 		camera = new PerspectiveCamera(65, d.width, d.height);
-		//camera.position.set(10f, 0, 10f);
 		camera.lookAt(10f, 0, 10f);
 		camera.near = 0.01f;
 		camera.far = 100f;
@@ -102,10 +104,6 @@ public class ViewportData {
 		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 512, 512, true);
 		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 2048, 2048, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-
-		if (Gdx.app.getType() != ApplicationType.WebGL) {
-			//post = new PostProcessing(w, h);
-		}
 	}
 
 

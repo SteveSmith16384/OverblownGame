@@ -7,14 +7,14 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.DrawTextData;
-import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewIdx;
+import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
 public class DrawTextSystem extends AbstractSystem {
 
 	private SpriteBatch batch2d;
-	private IGetCurrentViewIdx getCurrent;
+	private IGetCurrentViewport getCurrent;
 
-	public DrawTextSystem(BasicECS ecs, IGetCurrentViewIdx _getCurrent, SpriteBatch _batch2d) {
+	public DrawTextSystem(BasicECS ecs, IGetCurrentViewport _getCurrent, SpriteBatch _batch2d) {
 		super(ecs, DrawTextData.class);
 
 		getCurrent = _getCurrent;
@@ -25,7 +25,7 @@ public class DrawTextSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		DrawTextData dtd = (DrawTextData)entity.getComponent(DrawTextData.class);
-		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != getCurrent.getCurrentViewIdx()) {
+		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != getCurrent.getCurrentViewport().idx) {
 			return;
 		}
 

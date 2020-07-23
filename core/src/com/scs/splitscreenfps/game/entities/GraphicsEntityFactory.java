@@ -33,7 +33,7 @@ public class GraphicsEntityFactory {
 		Texture weaponTex = texProv.getTexture("blood.png");
 		//Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		Sprite sprite = new Sprite(weaponTex);
-		sprite.setColor(1, 0, 0, 1);
+		//sprite.setColor(1, 0, 0, 1);
 
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1), false);
 		entity.addComponent(hgsc);

@@ -82,7 +82,7 @@ import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.game.systems.SpeechSystem;
 import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
-import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewIdx;
+import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
 import com.scs.splitscreenfps.selectcharacter.SelectHeroModule;
 
@@ -90,7 +90,7 @@ import com.scs.splitscreenfps.selectcharacter.SelectHeroModule;
  * This is the main game, where the players move about n'stuff.
  *
  */
-public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
+public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 	public static final Vector3 GRAVITY = new Vector3(0, -10f, 0);
 
@@ -643,7 +643,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 		}
 
 		AbstractEntity redfilter = GraphicsEntityFactory.createRedFilter(ecs, this, playerHitData.playerIdx);
-		float duration = amt/20;
+		float duration = amt/20f;
 		if (duration > 3) {
 			duration = 3;
 		}
@@ -855,9 +855,13 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewIdx {
 
 
 	@Override
-	public int getCurrentViewIdx() {
+	public ViewportData getCurrentViewport() {
+		return this.viewports[this.currentViewId];
+	}
+	/*public int getCurrentViewIdx() {
 		return this.currentViewId;
 	}
+	*/
 
 }
 

@@ -47,9 +47,8 @@ public class IntroModule implements IModule {
 		//this.font_med = main.font_med;
 		this.font_large = main.font_large;
 
-		Texture weaponTex = new Texture("overblown_logo.png");
-		//Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
-		logo = new Sprite(weaponTex);
+		Texture logoTex = new Texture("overblown_logo.png");
+		logo = new Sprite(logoTex);
 		logo.setBounds(0, 0, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()*.25f);
 
 	}
