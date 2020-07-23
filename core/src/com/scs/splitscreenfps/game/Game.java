@@ -78,7 +78,7 @@ import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
 import com.scs.splitscreenfps.game.systems.PositionPlayersWeaponSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RemoveOnContactSystem;
-import com.scs.splitscreenfps.game.systems.RespawnHealthPackSystem;
+import com.scs.splitscreenfps.game.systems.RespawnCollectableSystem;
 import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
 import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
@@ -115,6 +115,7 @@ public class Game implements IModule, ITextureProvider {
 	private DrawModelSystem drawModelSystem;
 	private PhysicsSystem physicsSystem;
 	private RespawnPlayerSystem respawnSystem;
+	public RespawnCollectableSystem respawnHealthPackSystem;
 
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
@@ -285,7 +286,8 @@ public class Game implements IModule, ITextureProvider {
 		ecs.addSystem(new SecondaryAbilitySystem(ecs, this));
 		ecs.addSystem(new UltimateAbilitySystem(ecs, this));
 		ecs.addSystem(new CollectableSystem(this, ecs));
-		ecs.addSystem(new RespawnHealthPackSystem(ecs));
+		respawnHealthPackSystem = new RespawnCollectableSystem(ecs);
+		ecs.addSystem(respawnHealthPackSystem);
 		ecs.addSystem(new CheckRangeSystem(ecs));
 		ecs.addSystem(new RemoveOnContactSystem(ecs));
 		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
@@ -373,7 +375,7 @@ public class Game implements IModule, ITextureProvider {
 		if (this.game_stage == 0) {
 			this.ecs.processSystem(ShootingSystem.class);
 			this.ecs.getSystem(CollectableSystem.class).process();
-			this.ecs.getSystem(RespawnHealthPackSystem.class).process();
+			respawnHealthPackSystem.process();
 			this.ecs.getSystem(HarmPlayerOnContactSystem.class).process();
 			this.ecs.getSystem(ExplodeOnContactSystem.class).process();
 			this.ecs.getSystem(RemoveOnContactSystem.class).process();		
@@ -729,31 +731,39 @@ public class Game implements IModule, ITextureProvider {
 		Iterator<AbstractEntity> it = this.physicsSystem.getEntityIterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
+			
 			if (e.isMarkedForRemoval()) {
 				continue;
 			}
+
+			PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+			if (pc.isRigidBody() == false || pc.getRigidBody().getInvMass() == 0) {
+				continue;
+			}
+
+			if (shooter == e) {
+				continue;
+			}
+
 			PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 			if (posData != null) {
 				float distance = posData.position.dst(explosionPos);
 				if (distance <= explData.range) {
 					if (e instanceof AbstractPlayersAvatar) {
-						if (shooter == e) {
-							continue;
-						}
 						PlayerData playerHitData = (PlayerData)e.getComponent(PlayerData.class);
 						this.playerDamaged(e, playerHitData, explData.damage, shooter);
 					}
-					PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-					if (pc.getRigidBody().getInvMass() != 0) {
-						pc.body.activate();
+					//PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+					//if (pc.getRigidBody().getInvMass() != 0) {
+					pc.body.activate();
 
-						// Calc force/dir
-						frc.set(posData.position);
-						frc.sub(explosionPos).nor();
-						frc.y += .2f;
-						frc.scl(explData.force);
-						pc.getRigidBody().applyCentralImpulse(frc);
-					}
+					// Calc force/dir
+					frc.set(posData.position);
+					frc.sub(explosionPos).nor();
+					frc.y += .2f;
+					frc.scl(explData.force);
+					pc.getRigidBody().applyCentralImpulse(frc);
+					//}
 				}
 			}
 		}

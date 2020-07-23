@@ -36,7 +36,8 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 		// Model stuff
 		this.addAlienModel(playerIdx);
 
-		btCapsuleShape capsuleShape = new btCapsuleShape(0.15f, PLAYER_HEIGHT);
+		//btCapsuleShape capsuleShape = new btCapsuleShape(0.15f, PLAYER_HEIGHT);
+		btCapsuleShape capsuleShape = new btCapsuleShape(0.2f, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
 

@@ -43,6 +43,9 @@ public class DrawDecalSystem extends AbstractSystem {
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera, DecalBatch batch) {
 		HasDecal hasDecal = (HasDecal)entity.getComponent(HasDecal.class);
+		if (hasDecal.invisible) {
+			return;
+		}
 
 		updateTransform(entity, camera, hasDecal);
 

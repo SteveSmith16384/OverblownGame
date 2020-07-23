@@ -9,6 +9,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeOnContactComponent;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.events.EventCollision;
@@ -32,6 +33,10 @@ public class ExplodeOnContactSystem extends AbstractSystem {
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
 			if (coll.entity2 == bullet.shooter) { // Shooter can't shoot themselves
+				continue;
+			}
+			PhysicsComponent hitPhysics = (PhysicsComponent)coll.entity2.getComponent(PhysicsComponent.class);
+			if (hitPhysics.isRigidBody() == false) {
 				continue;
 			}
 

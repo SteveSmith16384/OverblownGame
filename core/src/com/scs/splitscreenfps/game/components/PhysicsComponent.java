@@ -34,4 +34,10 @@ public class PhysicsComponent {
 	public btRigidBody getRigidBody() {
 		return (btRigidBody)body;
 	}
+	
+	
+	public boolean isRigidBody() {
+		return this.body instanceof btRigidBody;
+	}
+
 }
