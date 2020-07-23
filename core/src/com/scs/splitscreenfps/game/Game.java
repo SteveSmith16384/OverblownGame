@@ -718,7 +718,7 @@ public class Game implements IModule, ITextureProvider {
 	}
 
 
-	public void explosion(final Vector3 explosionPos, ExplosionData explData, AbstractEntity shooter) {
+	public void explosion(final Vector3 explosionPos, ExplosionData explData, AbstractEntity shooter, boolean harm_shooter) {
 		//Settings.p("Explosion at " + pos);
 
 		main.audio.play("sfx/explosion1.mp3");
@@ -741,7 +741,7 @@ public class Game implements IModule, ITextureProvider {
 				continue;
 			}
 
-			if (shooter == e) {
+			if (harm_shooter == false && shooter == e) {
 				continue;
 			}
 

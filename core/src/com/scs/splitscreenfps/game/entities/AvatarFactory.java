@@ -67,7 +67,7 @@ public class AvatarFactory {
 		switch (character) {
 		case CHAR_PHARTAH:
 			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10000));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 60));
 			break;
 			

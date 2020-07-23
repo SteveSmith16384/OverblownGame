@@ -17,7 +17,7 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
-	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && true;
+	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int START_LEVEL = AbstractLevel.LEVEL_DUST2;
 	public static final int NUM_AUTOSTART_CHARACTERS = 2;

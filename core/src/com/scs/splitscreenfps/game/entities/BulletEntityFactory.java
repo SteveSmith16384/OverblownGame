@@ -204,7 +204,7 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
-		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter));
+		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter, false));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
 	
 		// Add physics
@@ -382,7 +382,7 @@ public class BulletEntityFactory {
 
 		//e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
-		e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter));
+		e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, true));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
 	
 		// Add physics

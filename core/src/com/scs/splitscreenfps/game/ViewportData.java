@@ -25,7 +25,7 @@ public class ViewportData {
 		camera = new PerspectiveCamera(65, d.width, d.height);
 		//camera.position.set(10f, 0, 10f);
 		camera.lookAt(10f, 0, 10f);
-		camera.near = 0.1f;
+		camera.near = 0.01f;
 		camera.far = 100f;
 		camera.update();
 

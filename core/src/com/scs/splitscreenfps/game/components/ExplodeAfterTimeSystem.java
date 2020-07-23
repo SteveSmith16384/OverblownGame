@@ -22,7 +22,7 @@ public class ExplodeAfterTimeSystem extends AbstractSystem {
 			entity.remove();
 			//PhysicsComponent phys = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-			game.explosion(posData.position, ex.explData, ex.shooter);
+			game.explosion(posData.position, ex.explData, ex.shooter, ex.harm_shooter);
 		}
 	}
 	

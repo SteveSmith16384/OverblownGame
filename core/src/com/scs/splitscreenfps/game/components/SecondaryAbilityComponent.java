@@ -21,7 +21,7 @@ public class SecondaryAbilityComponent {
 		type = _type;
 		cooldown_duration = _cooldown;
 		current_cooldown = cooldown_duration;
-		this.count_available = 1;
+		this.count_available = 0;
 		this.max_count = 1;
 	}
 	
