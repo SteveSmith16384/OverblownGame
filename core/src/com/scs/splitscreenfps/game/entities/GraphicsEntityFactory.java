@@ -35,7 +35,7 @@ public class GraphicsEntityFactory {
 		Sprite sprite = new Sprite(weaponTex);
 		//sprite.setColor(1, 0, 0, 1);
 
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1), false);
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
 		
@@ -52,7 +52,7 @@ public class GraphicsEntityFactory {
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setColor(.8f, .8f, .8f, .3f);
 
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1), false);
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
 
@@ -141,7 +141,8 @@ public class GraphicsEntityFactory {
 		if (Settings.USE_MAP_EDITOR) {
 			y = 0.45f;
 		}
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0.46f, y, .08f, .08f), true);
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0.46f, y, .08f, .08f));
+		hgsc.square = true;
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
 		

@@ -29,11 +29,11 @@ import com.scs.splitscreenfps.selectgame.SelectMapModule;
 
 public class PlayersJoinGameModule implements IModule {
 
-	private SpriteBatch batch2d;
+	private final BillBoardFPS_Main main;
+	private final SpriteBatch spriteBatch;
 	private BitmapFont font_small, font_large;
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
-	private BillBoardFPS_Main main;
 	private Sprite logo;
 	private boolean keyboard_player_joined = false;
 
@@ -42,7 +42,7 @@ public class PlayersJoinGameModule implements IModule {
 
 		main = _main;
 
-		batch2d = new SpriteBatch();
+		spriteBatch = new SpriteBatch();
 
 		loadAssetsForResize();
 
@@ -59,7 +59,7 @@ public class PlayersJoinGameModule implements IModule {
 
 
 	private void loadAssetsForResize() {
-		batch2d = new SpriteBatch();
+		//batch2d = new SpriteBatch();
 
 		this.font_small = main.font_small;
 		this.font_large = main.font_large;
@@ -106,10 +106,10 @@ public class PlayersJoinGameModule implements IModule {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		batch2d.begin();
+		spriteBatch.begin();
 
 		if (logo != null) {
-			logo.draw(batch2d);
+			logo.draw(spriteBatch);
 		}
 
 		// Show controllers
@@ -118,28 +118,28 @@ public class PlayersJoinGameModule implements IModule {
 		int idx = 1;
 		for (Controller c : allControllers) {
 			font_large.setColor(1,  1,  1,  1);
-			font_large.draw(batch2d, "Controller " + idx, 10, y);
+			font_large.draw(spriteBatch, "Controller " + idx, 10, y);
 
 			if (main.controllerManager.isControllerInGame(c)) {
 				font_large.setColor(0,  1,  0,  1);
-				font_large.draw(batch2d, "IN GAME!", 10, y-this.font_large.getLineHeight());
+				font_large.draw(spriteBatch, "IN GAME!", 10, y-this.font_large.getLineHeight());
 			} else {
 				font_large.setColor(1,  0,  0,  1);
-				font_large.draw(batch2d, "Not in game - Press X to Join!", 10, y-this.font_large.getLineHeight());
+				font_large.draw(spriteBatch, "Not in game - Press X to Join!", 10, y-this.font_large.getLineHeight());
 			}
 			y -= this.font_large.getLineHeight()*2;
 			idx++;
 		}
 		if (allControllers.size == 0) {
 			font_large.setColor(1, 1, 1, 1);
-			font_large.draw(batch2d, "No Controllers Found", 10, y);
+			font_large.draw(spriteBatch, "No Controllers Found", 10, y);
 		}
 
 		// Draw log
 		font_small.setColor(1,  1,  1,  1);
 		y = (int)(Gdx.graphics.getHeight()*0.3);// - 220;
 		for (String s :this.log) {
-			font_small.draw(batch2d, s, 10, y);
+			font_small.draw(spriteBatch, s, 10, y);
 			y -= this.font_small.getLineHeight();
 		}
 
@@ -147,21 +147,21 @@ public class PlayersJoinGameModule implements IModule {
 		font_small.setColor(0,  1,  1,  1);
 		int x = (int)(Gdx.graphics.getWidth() * 0.7f);
 		y = (int)(Gdx.graphics.getHeight()*.3f);
-		font_small.draw(batch2d, "PRESS SPACE TO START!", x, y);
+		font_small.draw(spriteBatch, "PRESS SPACE TO START!", x, y);
 
-		batch2d.end();
+		spriteBatch.end();
 
 		frameBuffer.end();
 
 		//Draw buffer and FPS
-		batch2d.begin();
-		batch2d.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
+		spriteBatch.begin();
+		spriteBatch.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 
 		/*if (Settings.SHOW_FPS) {
 			font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font.getLineHeight());
 		}*/
 
-		batch2d.end();
+		spriteBatch.end();
 
 		readInputs();
 	}
@@ -200,14 +200,14 @@ public class PlayersJoinGameModule implements IModule {
 
 	@Override
 	public void dispose() {
-		this.batch2d.dispose();
+		this.spriteBatch.dispose();
 		this.frameBuffer.dispose();
 	}
 
 
 	@Override
 	public void setFullScreen(boolean fullscreen) {
-		batch2d.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 

@@ -14,13 +14,13 @@ public class HasGuiSpriteComponent {
 	public Rectangle scale;
 	public int onlyViewId = -1;
 	public int zOrder;
-	public boolean proportional;
+	public boolean square = false; // i.e. for crosshairs
 
-	public HasGuiSpriteComponent(Sprite _sprite, int _zOrder, Rectangle _scale, boolean _proportional) {
+	public HasGuiSpriteComponent(Sprite _sprite, int _zOrder, Rectangle _scale) {
 		sprite = _sprite;
 		scale = _scale;
 		zOrder = _zOrder;
-		proportional = _proportional;
+		//square = _square;
 	}
 
 }

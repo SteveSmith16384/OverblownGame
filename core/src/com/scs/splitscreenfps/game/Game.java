@@ -95,10 +95,10 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 	public static final Vector3 GRAVITY = new Vector3(0, -10f, 0);
 
-	private BillBoardFPS_Main main;
-	private SpriteBatch batch2d;
+	private final BillBoardFPS_Main main;
+	private final SpriteBatch spriteBatch;
 	public final ViewportData[] viewports;
-	public BitmapFont font_small, font_med, font_large;
+	public final BitmapFont font_small, font_med, font_large;
 
 	public AbstractPlayersAvatar[] players;
 	public List<IInputMethod> inputs;
@@ -118,7 +118,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	public RespawnCollectableSystem respawnHealthPackSystem;
 
 	public int currentViewId;
-	public AssetManager assetManager = new AssetManager();
+	private AssetManager assetManager = new AssetManager();
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btSequentialImpulseConstraintSolver constraintSolver;
 	private final ClosestRayResultCallback callback = new ClosestRayResultCallback(new Vector3(), new Vector3());
@@ -148,7 +148,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.font_large = main.font_large;
 
 		game_stage = 0;
-		batch2d = new SpriteBatch();
+		spriteBatch = new SpriteBatch();
 		this.createECS();
 
 		viewports = new ViewportData[4];
@@ -241,15 +241,15 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
 		ecs.addSystem(new PlayerMovementSystem(this, ecs));
-		ecs.addSystem(new DrawTextSystem(ecs, this, batch2d));
+		ecs.addSystem(new DrawTextSystem(ecs, this, spriteBatch));
 		ecs.addSystem(new AnimationSystem(ecs));
-		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
+		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.spriteBatch));
 		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
 		//ecs.addSystem(new BulletSystem(ecs, this));
 		ecs.addSystem(new ShootingSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
-		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
+		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, spriteBatch));
 		physicsSystem = new PhysicsSystem(this, ecs);
 		ecs.addSystem(physicsSystem);
 		this.respawnSystem = new RespawnPlayerSystem(ecs);
@@ -380,17 +380,17 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			if (Settings.DISABLE_POST_EFFECTS == false) {
 				vfxManager.beginInputCapture();
 			}
-			batch2d.begin();
+			spriteBatch.begin();
 			// Draw the 3D buffer
-			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewRect.x, viewportData.viewRect.y+viewportData.viewRect.height, viewportData.viewRect.width, -viewportData.viewRect.height);
-			batch2d.end();
+			spriteBatch.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewRect.x, viewportData.viewRect.y+viewportData.viewRect.height, viewportData.viewRect.width, -viewportData.viewRect.height);
+			spriteBatch.end();
 
-			batch2d.begin();
+			spriteBatch.begin();
 			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
 			// Draw HUD
-			currentLevel.renderUI(batch2d, currentViewId); // todo - remove?
+			currentLevel.renderUI(spriteBatch, currentViewId); // todo - remove?
 			float yOff = font_med.getLineHeight() * 1f;
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 			//font_small.setColor(1, 1, 1, 1);
@@ -415,17 +415,17 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				}
 			}
 			if (Settings.TEST_SCREEN_COORDS) {
-				font_small.draw(batch2d, "50", 50, 50);
-				font_small.draw(batch2d, "150", 150, 150);
-				font_small.draw(batch2d, "X", 350, 360);
-				font_small.draw(batch2d, "BL", viewportData.viewRect.x+40, viewportData.viewRect.y+40);
-				font_small.draw(batch2d, "BR", viewportData.viewRect.width-40, viewportData.viewRect.y+40);
-				font_small.draw(batch2d, "TL", viewportData.viewRect.x+20,  viewportData.viewRect.y+viewportData.viewRect.height-20);
-				font_small.draw(batch2d, "TR", viewportData.viewRect.width-40,  viewportData.viewRect.y+viewportData.viewRect.height-20);
+				font_small.draw(spriteBatch, "50", 50, 50);
+				font_small.draw(spriteBatch, "150", 150, 150);
+				font_small.draw(spriteBatch, "X", 350, 360);
+				font_small.draw(spriteBatch, "BL", viewportData.viewRect.x+40, viewportData.viewRect.y+40);
+				font_small.draw(spriteBatch, "BR", viewportData.viewRect.width-40, viewportData.viewRect.y+40);
+				font_small.draw(spriteBatch, "TL", viewportData.viewRect.x+20,  viewportData.viewRect.y+viewportData.viewRect.height-20);
+				font_small.draw(spriteBatch, "TR", viewportData.viewRect.width-40,  viewportData.viewRect.y+viewportData.viewRect.height-20);
 
 			}
 
-			batch2d.end();
+			spriteBatch.end();
 
 			if (Settings.DISABLE_POST_EFFECTS == false) {
 				vfxManager.endInputCapture();
@@ -443,9 +443,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
-			batch2d.begin();
+			spriteBatch.begin();
 			this.ecs.getSystem(DrawTextSystem.class).process();
-			batch2d.end();
+			spriteBatch.end();
 		}
 
 		if (Settings.SHOW_FPS) {
@@ -453,9 +453,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			if (Gdx.graphics.getFramesPerSecond() < 60) {
 				font_small.setColor(Color.RED);
 			}
-			batch2d.begin();
-			font_small.draw(batch2d, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-100, font_small.getLineHeight()*2);
-			batch2d.end();
+			spriteBatch.begin();
+			font_small.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-100, font_small.getLineHeight()*2);
+			spriteBatch.end();
 		}
 
 
@@ -465,16 +465,16 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 	private void drawText(BitmapFont font, String text, float x, float y, boolean highlight) {
 		font.setColor(Color.BLACK);
-		font.draw(batch2d, text, x+2, y);
-		font.draw(batch2d, text, x-2, y);
-		font.draw(batch2d, text, x, y+2);
-		font.draw(batch2d, text, x, y-2);
+		font.draw(spriteBatch, text, x+2, y);
+		font.draw(spriteBatch, text, x-2, y);
+		font.draw(spriteBatch, text, x, y+2);
+		font.draw(spriteBatch, text, x, y-2);
 		if (highlight) {
 			font.setColor(Color.YELLOW);
 		} else {
 			font.setColor(Color.WHITE);
 		}
-		font.draw(batch2d, text, x, y);
+		font.draw(spriteBatch, text, x, y);
 
 	}
 
@@ -503,7 +503,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			viewportData.dispose();
 		}
 
-		batch2d.dispose();
+		spriteBatch.dispose();
 
 		this.assetManager.dispose();
 
@@ -526,7 +526,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 	@Override
 	public void setFullScreen(boolean fullscreen) {
-		batch2d.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.resizeViewports(true);
 	}
 

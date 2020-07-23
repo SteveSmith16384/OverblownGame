@@ -26,15 +26,15 @@ public class SelectHeroModule implements IModule {
 
 	private static final long READ_INPUTS_INTERVAL = 100;
 
-	private SpriteBatch batch2d;
+	private final SpriteBatch spriteBatch;
 	private BitmapFont font_small, font_large;
-	private List<String> log = new LinkedList<String>();
+	private final List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
-	private BillBoardFPS_Main main;
+	private final BillBoardFPS_Main main;
 	public List<IInputMethod> inputs;
 	private Sprite logo;
 	private GameSelectionData gameSelectionData;
-	public AssetManager assetManager = new AssetManager();
+	public final AssetManager assetManager = new AssetManager();
 
 	private long next_input_check_time = 0;
 
@@ -54,7 +54,7 @@ public class SelectHeroModule implements IModule {
 			this.gameSelectionData.has_selected_character[i] = false;
 		}
 
-		batch2d = new SpriteBatch();
+		spriteBatch = new SpriteBatch();
 
 		loadAssetsForResize();
 
@@ -67,7 +67,7 @@ public class SelectHeroModule implements IModule {
 
 
 	private void loadAssetsForResize() {
-		batch2d = new SpriteBatch();
+		//batch2d = new SpriteBatch();
 
 		font_small = main.font_small;
 		//this.font_med = main.font_med;
@@ -117,10 +117,10 @@ public class SelectHeroModule implements IModule {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		batch2d.begin();
+		spriteBatch.begin();
 
 		if (logo != null) {
-			logo.draw(batch2d);
+			logo.draw(spriteBatch);
 		}
 
 		font_small.setColor(1,  1,  1,  1);
@@ -129,7 +129,7 @@ public class SelectHeroModule implements IModule {
 		int y_pos =  Settings.LOGICAL_SIZE_PIXELS/2;
 		for (int i=0 ; i<AvatarFactory.MAX_CHARS ; i++) {
 			int x_pos = spacing_x * (i+1);
-			font_small.draw(batch2d, AvatarFactory.getName(i), x_pos, y_pos);
+			font_small.draw(spriteBatch, AvatarFactory.getName(i), x_pos, y_pos);
 		}
 
 		// Draw arrows
@@ -139,38 +139,38 @@ public class SelectHeroModule implements IModule {
 
 			//arrow.setColor(Settings.getColourForSide(playerIdx));
 			arrows[playerIdx].setBounds(x_pos,  y_pos , 30, 30);
-			arrows[playerIdx].draw(batch2d);
+			arrows[playerIdx].draw(spriteBatch);
 		}
 
 		// Draw log
 		int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
 		for (String s :this.log) {
-			font_small.draw(batch2d, s, 10, y);
+			font_small.draw(spriteBatch, s, 10, y);
 			y -= this.font_small.getLineHeight();
 		}
 
 		if (Settings.TEST_SCREEN_COORDS) {
-			font_small.draw(batch2d, "TL", 20, 20);
-			font_small.draw(batch2d, "50", 50, 50);
-			font_small.draw(batch2d, "150", 150, 150);
-			font_small.draw(batch2d, "TR", Gdx.graphics.getBackBufferWidth()-20, 20);
-			font_small.draw(batch2d, "BL", 10, Gdx.graphics.getBackBufferHeight()-20);
-			font_small.draw(batch2d, "BR", Gdx.graphics.getBackBufferWidth()-20, Gdx.graphics.getBackBufferHeight()-20);
+			font_small.draw(spriteBatch, "TL", 20, 20);
+			font_small.draw(spriteBatch, "50", 50, 50);
+			font_small.draw(spriteBatch, "150", 150, 150);
+			font_small.draw(spriteBatch, "TR", Gdx.graphics.getBackBufferWidth()-20, 20);
+			font_small.draw(spriteBatch, "BL", 10, Gdx.graphics.getBackBufferHeight()-20);
+			font_small.draw(spriteBatch, "BR", Gdx.graphics.getBackBufferWidth()-20, Gdx.graphics.getBackBufferHeight()-20);
 		}
 
-		batch2d.end();
+		spriteBatch.end();
 
 		frameBuffer.end();
 
 		//Draw buffer and FPS
-		batch2d.begin();
-		batch2d.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
+		spriteBatch.begin();
+		spriteBatch.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 
 		/*if (Settings.SHOW_FPS) {
 			font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font.getLineHeight());
 		}*/
 
-		batch2d.end();
+		spriteBatch.end();
 	}
 
 
@@ -216,7 +216,7 @@ public class SelectHeroModule implements IModule {
 
 	@Override
 	public void dispose() {
-		this.batch2d.dispose();
+		this.spriteBatch.dispose();
 		this.frameBuffer.dispose();
 		assetManager.dispose();
 	}
@@ -224,7 +224,7 @@ public class SelectHeroModule implements IModule {
 
 	@Override
 	public void setFullScreen(boolean fullscreen) {
-		batch2d.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 
