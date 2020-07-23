@@ -1,24 +1,21 @@
 # OVERBLOWN
 
-An Overwatch clone split-screen multiplayer FPS with physics.  Designed and programmed by Stephen Carlyle-Smith (stephen.carlylesmith@googlemail.com).
+An Overwatch clone split-screen multiplayer FPS with physics.
 
 Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-74KwOzu8khhYF_4Zb0pPF
 
 
-## Development Notes
-
-* In Settings.java, set RELEASE_MODE = true to disable all debugging & testing settings.
-
-
 ## Heroes
-
 * Phartah - Has a rocket launcher and jetpac.
 * Boomfist - Can punch enemies away
 * Bowling Ball - Can roll around knocking enemies away.
+* Racer - Can zip around the map.
 
-## Game Modes
+
+## Game Maps/Modes
 * Factory - Death Match
 * Village - Control Point
+* Temple of the Noobies - Death Match
 
 
 ## Controls
@@ -48,7 +45,6 @@ The map editor is still in development.  To use it, edit the file Settings.java 
 
 
 ### Map Editor Controls
-
 * 1 - Save map
 * 2 - "Settle" position of selected entity
 * 3 - Show our position
@@ -64,6 +60,10 @@ The map editor is still in development.  To use it, edit the file Settings.java 
 * U - Undo move
 * X - Remove block - press shift to confirm!
 * Arrows & Pg Up/Pg Dn: Adjust model size/position/rotation/mass/texture depending on mode
+
+
+## Licence
+All code is licenced under MIT.
 
 
 ## Credits
