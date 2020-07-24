@@ -35,6 +35,7 @@ public class SelectHeroModule implements IModule {
 	private Sprite logo;
 	private GameSelectionData gameSelectionData;
 	public final AssetManager assetManager = new AssetManager();
+	private long earliest_input_time;
 
 	private long next_input_check_time = 0;
 
@@ -49,7 +50,7 @@ public class SelectHeroModule implements IModule {
 		inputs = _inputs;
 
 		this.gameSelectionData = _gameSelectionData;//new GameSelectionData(inputs.size());
-		
+
 		for (int i=0 ; i<this.gameSelectionData.has_selected_character.length ; i++) {
 			this.gameSelectionData.has_selected_character[i] = false;
 		}
@@ -63,6 +64,8 @@ public class SelectHeroModule implements IModule {
 		spacing_x = Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
 
 		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
+
+		earliest_input_time = System.currentTimeMillis() + 1000;
 	}
 
 
@@ -196,9 +199,11 @@ public class SelectHeroModule implements IModule {
 				} 
 			}
 			if (input.isMenuSelectPressed()) {
-				main.audio.play("sfx/controlpoint.mp3");
-				this.gameSelectionData.has_selected_character[playerIdx] = true;
-				this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(this.gameSelectionData.character[playerIdx]));
+				if (System.currentTimeMillis() > earliest_input_time) {
+					main.audio.play("sfx/controlpoint.mp3");
+					this.gameSelectionData.has_selected_character[playerIdx] = true;
+					this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(this.gameSelectionData.character[playerIdx]));
+				}
 			}
 		}
 		if (all_selected) {
@@ -207,7 +212,7 @@ public class SelectHeroModule implements IModule {
 		return all_selected;
 	}
 
-	
+
 	private void startGame() {
 		// Check all players have selected a character
 		main.next_module = new Game(main, inputs, gameSelectionData);
@@ -244,13 +249,13 @@ public class SelectHeroModule implements IModule {
 
 	@Override
 	public void controlledAdded(Controller controller) {
-		
+
 	}
 
 
 	@Override
 	public void controlledRemoved(Controller controller) {
-		
+
 	}
 
 }

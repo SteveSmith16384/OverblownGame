@@ -1,12 +1,13 @@
 package com.scs.splitscreenfps.selectgame;
 
-import java.util.LinkedList;
+import java.awt.Rectangle;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,30 +15,42 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
+import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
+import com.scs.splitscreenfps.game.systems.ChangeColourSystem;
+import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
+import com.scs.splitscreenfps.game.systems.DrawTextSystem;
+import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 import com.scs.splitscreenfps.pregame.PlayersJoinGameModule;
 import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
 import com.scs.splitscreenfps.selectcharacter.SelectHeroModule;
 
-public class SelectMapModule implements IModule {
+public class SelectMapModule implements IModule, IGetCurrentViewport {
 
 	private static final long READ_INPUTS_INTERVAL = 100;
 
 	private final SpriteBatch spriteBatch;
 	private BitmapFont font_small, font_large;
-	private final List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private final BillBoardFPS_Main main;
 	public final List<IInputMethod> inputs;
-	private Sprite logo;
 	private GameSelectionData gameSelectionData;
 	public AssetManager assetManager = new AssetManager();
 	private long next_input_check_time = 0;
-
+	private Rectangle viewRect;
+	private final BasicECS ecs;
+	private long earliest_input_time;
+	
+	private DrawGuiSpritesSystem drawGuiSpritesSystem;
+	private ChangeColourSystem colChangeSystem;
+	private DrawTextSystem drawTextSystem;
 
 	// Gfx pos data
 	private int spacing_y;
@@ -48,23 +61,40 @@ public class SelectMapModule implements IModule {
 
 		main = _main;
 		inputs = _inputs;
-
 		this.gameSelectionData = new GameSelectionData(inputs.size());
-
 		spriteBatch = new SpriteBatch();
 
+		ecs = new BasicECS();
+		drawGuiSpritesSystem = new DrawGuiSpritesSystem(ecs, this, spriteBatch);
+		colChangeSystem = new ChangeColourSystem(ecs);
+		this.drawTextSystem = new DrawTextSystem(ecs, this, this.spriteBatch);
+		
+		// Logo
+		AbstractEntity entity = new AbstractEntity(ecs, "Logo");
+		Texture weaponTex = this.getTexture("overblown_logo.png");
+		Sprite sprite = new Sprite(weaponTex);
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new com.badlogic.gdx.math.Rectangle(0.1f, 0.7f, .5f, .2f));
+		entity.addComponent(hgsc);
+		ecs.addEntity(entity);
+
+		// Text
+		TextEntity text = new TextEntity(ecs, "SELECT MAP", 50, 20, -1, Color.WHITE, 0, main.font_large, true);
+		//text.addComponent(new ChangeColourComponent(Color.WHITE, Color.RED, 300));
+		ecs.addEntity(text);
 		loadAssetsForResize();
 
-		this.appendToLog("CHOOSE A MAP!");
+		loadAssetsForResize();
 
 		spacing_y = 30;//Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
 
 		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
+		
+		earliest_input_time = System.currentTimeMillis() + 1000;
 	}
 
 
 	private void loadAssetsForResize() {
-		//batch2d = new SpriteBatch();
+		this.viewRect = new Rectangle(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 
 		font_small = main.font_small;
 		//this.font_med = main.font_med;
@@ -76,6 +106,9 @@ public class SelectMapModule implements IModule {
 
 		Texture tex = getTexture("arrow_right_white.png");
 		arrow = new Sprite(tex);
+
+		drawGuiSpritesSystem.rescaleSprites();
+		drawTextSystem.rescaleText();
 	}
 
 
@@ -90,7 +123,7 @@ public class SelectMapModule implements IModule {
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			main.next_module = new PlayersJoinGameModule(main);//, inputs, this.gameSelectionData);
+			main.next_module = new PlayersJoinGameModule(main);
 			return;
 		}
 
@@ -104,18 +137,18 @@ public class SelectMapModule implements IModule {
 			}
 		}
 
+		ecs.addAndRemoveEntities();
+		colChangeSystem.process();
+		
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
 		frameBuffer.begin();
-
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		spriteBatch.begin();
 
-		if (logo != null) {
-			logo.draw(spriteBatch);
-		}
+		drawGuiSpritesSystem.process();
+		drawTextSystem.process();
 
 		font_small.setColor(1,  1,  1,  1);
 
@@ -133,39 +166,18 @@ public class SelectMapModule implements IModule {
 		arrow.setBounds(x_pos,  y_pos , 30, 30);
 		arrow.draw(spriteBatch);
 
-		// Draw log
-		int y = (int)(Gdx.graphics.getHeight()*0.98);// - 220;
-		for (String s :this.log) {
-			font_small.draw(spriteBatch, s, 10, y);
-			y -= this.font_small.getLineHeight();
-		}
-
-		if (Settings.TEST_SCREEN_COORDS) {
-			font_small.draw(spriteBatch, "TL", 20, 20);
-			font_small.draw(spriteBatch, "50", 50, 50);
-			font_small.draw(spriteBatch, "150", 150, 150);
-			font_small.draw(spriteBatch, "TR", Gdx.graphics.getBackBufferWidth()-20, 20);
-			font_small.draw(spriteBatch, "BL", 10, Gdx.graphics.getBackBufferHeight()-20);
-			font_small.draw(spriteBatch, "BR", Gdx.graphics.getBackBufferWidth()-20, Gdx.graphics.getBackBufferHeight()-20);
-		}
-
 		spriteBatch.end();
 
 		frameBuffer.end();
 
-		//Draw buffer and FPS
+		//Draw buffer
 		spriteBatch.begin();
 		spriteBatch.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
-		/*if (Settings.SHOW_FPS) {
-			font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font.getLineHeight());
-		}*/
 		spriteBatch.end();
 	}
 
 
 	private boolean readInputs() {
-		// Read inputs
-		//boolean all_selected = true;
 		IInputMethod input = this.inputs.get(0);
 		if (input.isMenuUpPressed()) {
 			main.audio.play("sfx/type2.mp3");
@@ -179,16 +191,16 @@ public class SelectMapModule implements IModule {
 			if (this.gameSelectionData.level >= AbstractLevel.MAX_LEVELS) {
 				this.gameSelectionData.level = 0;
 			}
-		} else if (input.isMenuSelectPressed()) {
-			return true;
+		} else if (input.isMenuSelectPressed() || input.isShootPressed()) {
+			if (System.currentTimeMillis() > earliest_input_time) {
+				return true;
+			}
 		}
 		return false;
 	}
 
 
 	private void startGame() {
-		// Check all players have selected a character
-		//main.next_module = new Game(main, inputs, gameSelectionData);
 		main.next_module = new SelectHeroModule(main, inputs, this.gameSelectionData);
 	}
 
@@ -213,14 +225,6 @@ public class SelectMapModule implements IModule {
 	}
 
 
-	private void appendToLog(String s) {
-		this.log.add(s);
-		while (log.size() > 6) {
-			log.remove(0);
-		}
-	}
-
-
 	@Override
 	public void controlledAdded(Controller controller) {
 
@@ -230,6 +234,18 @@ public class SelectMapModule implements IModule {
 	@Override
 	public void controlledRemoved(Controller controller) {
 
+	}
+
+
+	@Override
+	public int getCurrentViewportIdx() {
+		return 0;
+	}
+
+
+	@Override
+	public Rectangle getCurrentViewportRect() {
+		return viewRect;
 	}
 
 }

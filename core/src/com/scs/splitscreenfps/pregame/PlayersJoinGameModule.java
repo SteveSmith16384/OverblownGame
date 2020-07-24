@@ -52,7 +52,7 @@ public class PlayersJoinGameModule implements IModule {
 		this.appendToLog("Click mouse to play with keyboard/mouse");
 		this.appendToLog("Press X to play with a controller");
 		this.appendToLog("F1 to toggle full-screen");
-		this.appendToLog("To SPACE to start once all players have joined!");
+		//this.appendToLog("Press SPACE to start once all players have joined!");
 
 		BillBoardFPS_Main.audio.startMusic("music/megasong.mp3");
 	}
@@ -171,7 +171,8 @@ public class PlayersJoinGameModule implements IModule {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && keyboard_player_joined == false) {
 			this.keyboard_player_joined = true;
 			this.appendToLog("Mouse/Keyboard player joined!");
-			BillBoardFPS_Main.audio.play("sfx/Plug-in.wav");
+			//BillBoardFPS_Main.audio.play("sfx/Plug-in.wav");
+			main.audio.play("sfx/controlpoint.mp3");
 		} else if (Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			this.startGame();
 		}
@@ -184,13 +185,9 @@ public class PlayersJoinGameModule implements IModule {
 			inputs.add(new MouseAndKeyboardInputMethod());
 		}
 		for (Controller c : main.controllerManager.getInGameControllers()) {
-			//scs new ?? if (inputs.size() <= 2) { // Max 2 players for now
 			inputs.add(new ControllerInputMethod(c));
-			//}
 		}
 		if (inputs.size() > 0) {
-			//main.next_module = new Game(main, inputs);
-			//main.next_module = new SelectCharacterScreen(main, inputs);
 			main.next_module = new SelectMapModule(main, inputs);
 		} else {
 			this.appendToLog("No players have joined!");

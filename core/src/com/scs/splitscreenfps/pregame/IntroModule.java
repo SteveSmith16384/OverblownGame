@@ -32,7 +32,6 @@ public class IntroModule implements IModule, IGetCurrentViewport {
 	private final BillBoardFPS_Main main;
 	private final BasicECS ecs;
 	private final SpriteBatch spriteBatch;
-	//private BitmapFont font_small, font_large;
 	private FrameBuffer frameBuffer;
 	private AssetManager assetManager = new AssetManager();
 	private Rectangle viewRect;
@@ -40,7 +39,6 @@ public class IntroModule implements IModule, IGetCurrentViewport {
 	private DrawGuiSpritesSystem drawGuiSpritesSystem;
 	private ChangeColourSystem colChangeSystem;
 	private DrawTextSystem drawTextSystem;
-	
 	
 	public IntroModule(BillBoardFPS_Main _main) {
 		super();
