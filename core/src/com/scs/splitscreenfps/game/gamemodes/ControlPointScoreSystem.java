@@ -13,7 +13,7 @@ import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.DrawTextData;
+import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -49,7 +49,7 @@ public class ControlPointScoreSystem implements ISystem {
 		}
 
 		if (text == null) {
-			text = new TextEntity(game.ecs, "Point Unclaimed", 37, 52, -1, Color.WHITE, 0, game.font_med);
+			text = new TextEntity(game.ecs, "Point Unclaimed", 37, 52, -1, Color.WHITE, 0, game.font_med, true);
 			game.ecs.addEntity(text);
 		}
 
@@ -102,7 +102,7 @@ public class ControlPointScoreSystem implements ISystem {
 			for (int i=0 ; i<game.players.length ; i++) {
 				str.append(PlayerData.getName(i) + ": " + (int)(this.time_on_point[i]) + "  ");
 			}
-			DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
+			DrawTextComponent dtd = (DrawTextComponent)text.getComponent(DrawTextComponent.class);
 			dtd.text = str.toString();
 			this.time_on_point[current_owner.playerIdx] += Gdx.graphics.getDeltaTime();
 			if (this.time_on_point[current_owner.playerIdx] >= WINNING_TIME) {
@@ -126,7 +126,7 @@ public class ControlPointScoreSystem implements ISystem {
 			instance.materials.get(i).set(ColorAttribute.createAmbient(col));
 		}
 
-		DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
+		DrawTextComponent dtd = (DrawTextComponent)text.getComponent(DrawTextComponent.class);
 		dtd.colour = col;
 	}
 

@@ -2,52 +2,55 @@ package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.DrawTextData;
+import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
 public class DrawTextSystem extends AbstractSystem {
 
-	private SpriteBatch batch2d;
+	private SpriteBatch spriteBatch;
 	private IGetCurrentViewport getCurrent;
 
 	public DrawTextSystem(BasicECS ecs, IGetCurrentViewport _getCurrent, SpriteBatch _batch2d) {
-		super(ecs, DrawTextData.class);
+		super(ecs, DrawTextComponent.class);
 
 		getCurrent = _getCurrent;
-		batch2d = _batch2d;
+		spriteBatch = _batch2d;
 	}
 
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		DrawTextData dtd = (DrawTextData)entity.getComponent(DrawTextData.class);
+		DrawTextComponent dtd = (DrawTextComponent)entity.getComponent(DrawTextComponent.class);
 		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != getCurrent.getCurrentViewportIdx()) {
 			return;
 		}
 
 		BitmapFont font = dtd.font;
 		
-		/*if (dtd.centre_x && dtd.x < 0) { // todo - re-add and cache this
+		if (dtd.dirty && dtd.centre_x) {
 			GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
 			layout.setText(font, dtd.text);
 			float len = layout.width;// contains the width of the current set text
-			dtd.x = Gdx.graphics.getWidth() / 2 - len/2;
-		}*/
+			dtd.x_pcent = (Gdx.graphics.getWidth() / 2 - len/2) / Gdx.graphics.getWidth();// (1-(len / Gdx.graphics.getWidth())) * 100;//;
+			dtd.x_pcent *= 100;
+			dtd.dirty = false;
+		}
 
 		float x = Gdx.graphics.getBackBufferWidth() * dtd.x_pcent / 100;
 		float y = Gdx.graphics.getBackBufferHeight() * dtd.y_pcent / 100;
 		font.setColor(0, 0, 0, 1);
-		font.draw(batch2d, dtd.text, x+2, y);
-		font.draw(batch2d, dtd.text, x-2, y);
-		font.draw(batch2d, dtd.text, x, y+2);
-		font.draw(batch2d, dtd.text, x, y-2);
+		font.draw(spriteBatch, dtd.text, x+2, y);
+		font.draw(spriteBatch, dtd.text, x-2, y);
+		font.draw(spriteBatch, dtd.text, x, y+2);
+		font.draw(spriteBatch, dtd.text, x, y-2);
 
 		font.setColor(dtd.colour);
-		font.draw(batch2d, dtd.text, x, y);
+		font.draw(spriteBatch, dtd.text, x, y);
 	}
 
 }

@@ -4,19 +4,19 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.DrawTextData;
+import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 public class TextEntity extends AbstractEntity {
 
-	public TextEntity(BasicECS ecs, String text, float _xPcent, float _yPcent, float _duration_secs, Color col, int _viewId, BitmapFont font) {
+	public TextEntity(BasicECS ecs, String text, float _xPcent, float _yPcent, float _duration_secs, Color col, int _viewId, BitmapFont font, boolean centre_x) {
 		super(ecs, "Text");
 
-		DrawTextData dtd = new DrawTextData(font, _viewId);
+		DrawTextComponent dtd = new DrawTextComponent(font, _viewId);
 		dtd.text = text;
 		dtd.x_pcent = _xPcent;
 		dtd.y_pcent = _yPcent;
-
+		dtd.centre_x = centre_x;
 		dtd.colour = col;
 		
 		this.addComponent(dtd);
