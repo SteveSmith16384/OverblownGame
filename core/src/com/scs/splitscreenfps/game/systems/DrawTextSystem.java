@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.game.systems;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -8,6 +10,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.DrawTextComponent;
+import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
 public class DrawTextSystem extends AbstractSystem {
@@ -53,4 +56,14 @@ public class DrawTextSystem extends AbstractSystem {
 		font.draw(spriteBatch, dtd.text, x, y);
 	}
 
+
+	public void rescaleText() {
+		Iterator<AbstractEntity> it = this.entities.iterator();
+		while (it.hasNext()) {
+			AbstractEntity entity = it.next();
+			DrawTextComponent hgsc = (DrawTextComponent)entity.getComponent(DrawTextComponent.class);
+			hgsc.dirty = true;
+		}
+
+	}
 }
