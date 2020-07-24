@@ -292,7 +292,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			if (Settings.AUTO_START) {
+			if (Settings.AUTO_START || Settings.USE_MAP_EDITOR) {
 				//app.System.exit(0);
 				Gdx.app.exit();
 				return;

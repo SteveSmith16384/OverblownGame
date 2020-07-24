@@ -6,14 +6,13 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
-public class Dust2Level extends AbstractLevel {
+public class TempleOfTheNoobiesLevel extends AbstractLevel {
 
 	private AbstractSystem cps;
 	
-	public Dust2Level(Game _game) {
+	public TempleOfTheNoobiesLevel(Game _game) {
 		super(_game);
 		
-		//this.cps = new ControlPointScoreSystem(game);
 		this.cps = new DeathmatchSystem(game, game.ecs);
 	}
 
@@ -27,7 +26,7 @@ public class Dust2Level extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			//super.loadJsonFile("maps/dust2.json", false);
+			//super.loadJsonFile("maps/templeofthenoobies.json", false);
 			super.loadJsonFile("maps/map_editor.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -63,7 +63,7 @@ public abstract class AbstractLevel {
 		case LEVEL_VILLAGE:
 			return new VillageLevel(game);
 		case LEVEL_DUST2:
-			return new Dust2Level(game);
+			return new TempleOfTheNoobiesLevel(game);
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
