@@ -31,8 +31,9 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_FACTORY = 0;
 	public static final int LEVEL_VILLAGE = 1;
 	public static final int LEVEL_TEMPLE_OF_THE_NOOBIES = 2;
-	public static final int LEVEL_MAP_EDITOR = 3;
-	public static final int MAX_LEVELS = 4;
+	public static final int LEVEL_BLOWPIPE = 3;
+	public static final int LEVEL_MAP_EDITOR = 4;
+	public static final int MAX_LEVELS = 5;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -51,6 +52,8 @@ public abstract class AbstractLevel {
 			return "Village - Control Point";
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return "Temple of the Noobies - Deathmatch";
+		case LEVEL_BLOWPIPE:
+			return "Blowpipe - Deathmatch";
 		case LEVEL_MAP_EDITOR:
 			return "Map Editor";
 		default:
@@ -67,6 +70,8 @@ public abstract class AbstractLevel {
 			return new VillageLevel(game);
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return new TempleOfTheNoobiesLevel(game);
+		case LEVEL_BLOWPIPE:
+			return new BlowpipeLevel(game);
 		case LEVEL_MAP_EDITOR:
 			return new MapEditorLevel(game);
 		default:

@@ -39,13 +39,13 @@ public class DeathmatchSystem implements ISystem { //extends AbstractSystem {
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 		if (by_health) {
 			if (playerData.damage_caused >= 1000) {
-				TextEntity text = new TextEntity(game.ecs, playerData.playerName + " HAS WON!", 37, 52, -1, Color.WHITE, 0, game.font_med, true);
+				TextEntity text = new TextEntity(game.ecs, playerData.playerName + " HAS WON!", 37, 52, -1, Color.WHITE, 0, game.font_large, true);
 				game.ecs.addEntity(text);
 				game.playerHasWon(entity);
 			}
 		} else {
 			if (playerData.num_kills >= 10) {
-				TextEntity text = new TextEntity(game.ecs, playerData.playerName + " HAS WON!", 37, 52, -1, Color.WHITE, 0, game.font_med, true);
+				TextEntity text = new TextEntity(game.ecs, playerData.playerName + " HAS WON!", 37, 52, -1, Color.WHITE, 0, game.font_large, true);
 				game.ecs.addEntity(text);
 				game.playerHasWon(entity);
 			}
