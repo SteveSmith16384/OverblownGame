@@ -84,7 +84,7 @@ public class AvatarFactory {
 			break;
 			
 		case CHAR_RACER:
-			weapon_type = WeaponSettingsComponent.TRACEY_PISTOLS;
+			weapon_type = WeaponSettingsComponent.RACER_PISTOLS;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.TracerJump, 6, 3));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.TraceyBomb, 50));
 			break;
@@ -127,9 +127,9 @@ public class AvatarFactory {
 			weapon.kickback_force = .5f;
 			break;
 
-		case WeaponSettingsComponent.TRACEY_PISTOLS:
+		case WeaponSettingsComponent.RACER_PISTOLS:
 			weapon = new WeaponSettingsComponent(weapon_type, 100, 1150, 20, 20, 
-					6, 13, .2f, null);
+					12, 13, .5f, null);
 			break;
 
 		case WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER:

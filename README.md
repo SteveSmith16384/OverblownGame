@@ -41,7 +41,7 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 
 
 ## Map Editor
-The map editor is still in development.  To use it, edit the file Settings.java and set "USE_MAP_EDITOR" to "true".  The map editor will always edit the file "core/assets/maps/map_editor.json", so rename whatever map file you want to edit to that name.
+The map editor is still in development.  The map editor will always edit the file "core/assets/maps/map_editor.json", so rename whatever map file you want to edit to that name.
 
 
 ### Map Editor Controls
@@ -68,11 +68,12 @@ All code is licenced under MIT.
 
 ## Credits
 * Design and programming Stephen Carlyle-Smith (stephen.carlylesmith@googlemail.com, @stephencsmith)
-* Alien model by Quaternius (https://www.patreon.com/quaternius)
 * Music by Emma Andersson, taken from https://opengameart.org/content/megasong
 * Post-processing library: https://github.com/crashinvaders/gdx-vfx
 * Voice talent by my kids.
-* Racer blink sfx by Iwan Gabovitch (qubodup@gmail.com) taken from https://opengameart.org/content/racing-speed-boost-sound
-* Shooting sfx by Michel Baradari taken from https://opengameart.org/content/4-projectile-launches
+* Alien model by Quaternius (https://www.patreon.com/quaternius)
+* Racer blink sfx by Iwan Gabovitch, taken from https://opengameart.org/content/racing-speed-boost-sound
+* Shooting sfx by Michel Baradari, taken from https://opengameart.org/content/4-projectile-launches
 * Bowling Ball jump sound taken from https://opengameart.org/content/jump-sounds
 * Racer's bomb beep taken from https://opengameart.org/content/7-space-sounds
+

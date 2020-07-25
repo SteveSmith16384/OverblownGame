@@ -133,7 +133,7 @@ public class PlayerProcessSystem implements ISystem {
 				//player.camera.update();
 				tmpVector.set(posData.position).sub(player.camera.position).nor();
 				//player.camera.lookAt(posData.position);
-				player.camera.direction.set(tmpVector);
+				//todo player.camera.direction.set(tmpVector);
 				player.camera.update();
 			}
 
