@@ -50,11 +50,12 @@ public class DrawDecalSystem extends AbstractSystem {
 		updateTransform(entity, camera, hasDecal);
 
 		if (game.currentViewId == 0) { // Only need to do this once!
+			// Set decal position
 			PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			hasDecal.decal.setPosition(pos.position);
 		}
 
-		/*if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
+		/*todo if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
 			return;
 		}*/
 
@@ -73,17 +74,6 @@ public class DrawDecalSystem extends AbstractSystem {
 		} else {
 			hasDecal.decal.setRotationY(hasDecal.rotation);
 		}
-
-		/*
-		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		if (pc != null) {
-			pc.body.getWorldTransform().getTranslation(tmp);
-			hasDecal.decal.setPosition(tmp);
-		} else {
-			PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
-			hasDecal.decal.setPosition(pos.position);
-		}
-*/
 	}
 
 

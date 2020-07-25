@@ -23,8 +23,14 @@ public class RemoveOnContactSystem extends AbstractSystem {
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
-			if (coll.entity2 == bullet.ignore) { // Shooter can't shoot themselves
+			if (coll.entity2 == bullet.ignore_collision_with) { // Shooter can't shoot themselves
 				continue;
+			}
+			if (bullet.is_bullet) {
+				RemoveOnContactComponent other_bullet = (RemoveOnContactComponent)coll.entity2.getComponent(RemoveOnContactComponent.class);
+				if (other_bullet != null && other_bullet.is_bullet) {
+					continue;
+				}
 			}
 			entity.remove();
 

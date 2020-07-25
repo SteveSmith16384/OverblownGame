@@ -32,7 +32,7 @@ public class NoInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isShootPressed() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class NoInputMethod implements IInputMethod {
 
 	@Override
 	public float getLookLeft() {
-		return .21f;
+		return 0;//.21f;
 	}
 
 	@Override

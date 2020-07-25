@@ -38,16 +38,6 @@ public class PhysicsSystem extends AbstractSystem {
 			}
 		}
 
-
-		/*
-		if (e instanceof AbstractPlayersAvatar) {
-			Vector3 force = pc.body.getInterpolationLinearVelocity(); // seems to work
-			if (force.len2() > 1) {
-				Settings.p("Force: " + force);
-			}
-		}
-		 */
-
 		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 
 		pc.body.getWorldTransform(tmpMat);

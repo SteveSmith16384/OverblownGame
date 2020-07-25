@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game;
 
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,7 +20,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
-import java.awt.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
@@ -71,6 +71,7 @@ import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.systems.HarmPlayerOnContactSystem;
+import com.scs.splitscreenfps.game.systems.MoveInDirectionSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
@@ -263,7 +264,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		ecs.addSystem(new RemoveOnContactSystem(ecs));
 		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
-
+		ecs.addSystem(new MoveInDirectionSystem(this, ecs));
 	}
 
 
@@ -313,6 +314,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
+		this.ecs.processSystem(MoveInDirectionSystem.class);
 		this.ecs.processSystem(SpeechSystem.class);
 		if (this.game_stage == 0) {
 			this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system

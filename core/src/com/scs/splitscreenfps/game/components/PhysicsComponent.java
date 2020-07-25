@@ -17,7 +17,7 @@ public class PhysicsComponent {
 	
 	// Temp vars
 	private Matrix4 mat = new Matrix4();
-	private Vector3 vec = new Vector3();
+	//private Vector3 vec = new Vector3();
 
 	public PhysicsComponent(btCollisionObject _body) {
 		body = _body;
