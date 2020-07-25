@@ -16,11 +16,12 @@ public class Settings {
 	public static final String VERSION = "1.01";
 
 	// Debugging Hacks
-	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
-	public static final int START_LEVEL = AbstractLevel.LEVEL_VILLAGE;
-	public static final int NUM_AUTOSTART_CHARACTERS = 2;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_RUBBISHRODENT;
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_TEMPLE_OF_THE_NOOBIES;
+	public static final int NUM_AUTOSTART_CHARACTERS = 1;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOWLING_BALL;
+	
+	public static final boolean TEST_3RD_PERSON = !RELEASE_MODE && false;
 	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && false;
 	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;
@@ -28,6 +29,7 @@ public class Settings {
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	public static final boolean DISABLE_POST_EFFECTS = !RELEASE_MODE && false;
+	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	public static final boolean STRICT = !RELEASE_MODE && true;
 
 	// Other settings

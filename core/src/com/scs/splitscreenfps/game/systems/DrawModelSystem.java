@@ -131,7 +131,7 @@ public class DrawModelSystem extends AbstractSystem {
 			}
 		}
 
-		if (model.dontDrawInViewId == game.currentViewId) {
+		if (model.dontDrawInViewId == game.currentViewId && Settings.TEST_3RD_PERSON == false) {
 			return;
 		}
 		if (model.onlyDrawInViewId >= 0) {

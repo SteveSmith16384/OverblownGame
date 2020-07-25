@@ -115,10 +115,18 @@ public class PlayerProcessSystem implements ISystem {
 		if (Game.physics_enabled) { // Else free roaming camera
 			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 			if (ourPlayerData.health > 0) {
-				player.camera.position.set(posData.position.x, posData.position.y + (PlayerAvatar_Person.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 				// Set rotation based on camera
 				tmpVec2.set(player.camera.direction.x, player.camera.direction.z);
 				posData.angle_y_degrees = -tmpVec2.angle();
+
+				if (Settings.TEST_3RD_PERSON == false) {
+					player.camera.position.set(posData.position.x, posData.position.y + (PlayerAvatar_Person.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+				} else {
+					float dist = 2f;
+					float x = posData.position.x - ((float)Math.sin(Math.toRadians(posData.angle_y_degrees+90))*dist);//, 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
+					float z = posData.position.z - ((float)Math.cos(Math.toRadians(posData.angle_y_degrees+90))*dist);//, 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
+					player.camera.position.set(x, posData.position.y + 1f, z);
+				}
 			} else {
 				// Show player's death from above
 				player.camera.position.set(posData.position.x, posData.position.y + 4, posData.position.z-1);
