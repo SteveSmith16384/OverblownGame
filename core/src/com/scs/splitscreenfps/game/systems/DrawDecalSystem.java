@@ -47,17 +47,18 @@ public class DrawDecalSystem extends AbstractSystem {
 			return;
 		}
 
-		updateTransform(entity, camera, hasDecal);
+		PositionComponent hasPosition = (PositionComponent)entity.getComponent(PositionComponent.class);
 
 		if (game.currentViewId == 0) { // Only need to do this once!
 			// Set decal position
-			PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
-			hasDecal.decal.setPosition(pos.position);
+			hasDecal.decal.setPosition(hasPosition.position);
 		}
 
-		/*todo if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
+		if(!camera.frustum.pointInFrustum(hasPosition.position)) {
 			return;
-		}*/
+		}
+
+		updateTransform(entity, camera, hasDecal);
 
 		batch.add(hasDecal.decal);
 	}

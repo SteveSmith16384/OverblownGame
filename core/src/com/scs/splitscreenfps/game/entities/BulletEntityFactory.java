@@ -59,21 +59,21 @@ public class BulletEntityFactory {
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, true));
 		
-		e.addComponent(new MoveInDirectionComponent(dir.scl(10f)));
+		//e.addComponent(new MoveInDirectionComponent(dir.scl(10f)));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(size/2, size/2, size/2));
-		//btRigidBody body = new btRigidBody(.07f, null, shape);
-		btGhostObject body = new btGhostObject();
-		body.setCollisionFlags(CollisionFlags.CF_NO_CONTACT_RESPONSE);
+		btRigidBody body = new btRigidBody(.07f, null, shape);
+		//btGhostObject body = new btGhostObject();
+		//body.setCollisionFlags(CollisionFlags.CF_STATIC_OBJECT);//CF_NO_CONTACT_RESPONSE); // CF_KINEMATIC_OBJECT);//
 		body.userData = e;
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		//pc.disable_gravity = true;
-		//pc.force = dir.scl(.7f);
+		pc.disable_gravity = true;
+		pc.force = dir.scl(.7f);
 		e.addComponent(pc);
 
 		switch (settings.weapon_type) {

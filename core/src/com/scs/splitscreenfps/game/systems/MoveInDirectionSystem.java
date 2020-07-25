@@ -11,7 +11,7 @@ import com.scs.splitscreenfps.game.components.MoveInDirectionComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
-public class MoveInDirectionSystem extends AbstractSystem {
+public class MoveInDirectionSystem extends AbstractSystem { // todo - delete this
 
 	private Game game;
 	private Matrix4 tmpMat = new Matrix4();
