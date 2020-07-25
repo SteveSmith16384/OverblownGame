@@ -1,19 +1,18 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.scs.basicecs.AbstractSystem;
+import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class TempleOfTheNoobiesLevel extends AbstractLevel {
 
-	private AbstractSystem cps;
+	private ISystem deathmatchSystem;
 	
 	public TempleOfTheNoobiesLevel(Game _game) {
 		super(_game);
 		
-		this.cps = new DeathmatchSystem(game, game.ecs);
+		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
 	}
 
 
@@ -37,7 +36,7 @@ public class TempleOfTheNoobiesLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		cps.process();
+		deathmatchSystem.process();
 	}
 
 

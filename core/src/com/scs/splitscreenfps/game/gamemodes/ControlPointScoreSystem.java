@@ -44,7 +44,7 @@ public class ControlPointScoreSystem implements ISystem {
 
 	@Override
 	public void process() {
-		if (game.game_stage > 0) {
+		if (game.game_stage != 0) {
 			return;
 		}
 

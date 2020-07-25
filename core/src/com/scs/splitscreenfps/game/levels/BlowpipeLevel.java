@@ -3,16 +3,24 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
-public class FactoryLevel extends AbstractLevel {
+public class BlowpipeLevel extends AbstractLevel {
 
 	private ISystem deathmatchSystem;
 	
-	public FactoryLevel(Game _game) {
+	public BlowpipeLevel(Game _game) {
 		super(_game);
 		
-		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
+		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, false);
+		
+		for(AbstractPlayersAvatar player : game.players) {
+			PlayerData pdata = (PlayerData)player.getComponent(PlayerData.class);
+			pdata.health = 1;
+			pdata.max_health = 1;
+		}
 	}
 
 

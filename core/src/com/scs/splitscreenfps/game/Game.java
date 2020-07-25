@@ -342,9 +342,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			respawnHealthPackSystem.process();
 			this.ecs.getSystem(HarmPlayerOnContactSystem.class).process();
 			this.ecs.getSystem(ExplodeOnContactSystem.class).process();
-			this.ecs.getSystem(RemoveOnContactSystem.class).process();		
 			this.ecs.getSystem(ExplodeAfterTimeSystem.class).process();
 		}
+		this.ecs.getSystem(RemoveOnContactSystem.class).process();		
 		this.ecs.getSystem(CheckRangeSystem.class).process();
 
 		// Start of drawing code ---------------------------
