@@ -127,7 +127,7 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		BillBoardFPS_Main.audio.play("sfx/beep.ogg");
 
 		for (int i=0 ; i<20 ; i++) {
-			AbstractEntity mine = BulletEntityFactory.createMine(game, player);
+			AbstractEntity mine = BulletEntityFactory.createBowlingBallMine(game, player);
 			game.ecs.addEntity(mine);
 		}
 	}

@@ -307,7 +307,7 @@ public class BulletEntityFactory {
 	}
 
 
-	public static AbstractEntity createMine(Game game, AbstractPlayersAvatar shooter) {
+	public static AbstractEntity createBowlingBallMine(Game game, AbstractPlayersAvatar shooter) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Mine");
 
 		PositionComponent playerPosData = (PositionComponent)shooter.getComponent(PositionComponent.class);
@@ -320,7 +320,6 @@ public class BulletEntityFactory {
 		
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		//ModelBuilder modelBuilder = new ModelBuilder();
 		Model sphere_model = game.modelBuilder.createSphere(diam, diam, diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
 		
@@ -373,7 +372,6 @@ public class BulletEntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
-
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
@@ -402,5 +400,49 @@ public class BulletEntityFactory {
 		return e;
 	}
 
+
+	public static AbstractEntity createJunkratMine(Game game, AbstractEntity shooter) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "StickyBomb");
+
+		AbstractPlayersAvatar player = (AbstractPlayersAvatar)shooter;
+		Vector3 dir = new Vector3(player.camera.direction);
+		
+		PositionComponent posData = (PositionComponent)shooter.getComponent(PositionComponent.class);
+		Vector3 start = new Vector3();
+		start.set(posData.position);
+		start.mulAdd(dir, .2f);
+
+		e.addComponent(new PositionComponent());
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+
+		HasDecal hasDecal = new HasDecal(); // todo - make cylinder
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = true;
+		e.addComponent(hasDecal);
+
+		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
+
+		//e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		//e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
+		//e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
+	
+		// Add physics
+		btSphereShape shape = new btSphereShape(.1f);
+		btRigidBody body = new btRigidBody(.5f, null, shape);
+		body.userData = e;
+		body.setFriction(1);
+		body.setRestitution(0);
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.force = dir.scl(2f);
+		e.addComponent(pc);
+
+		return e;
+	}
 
 }

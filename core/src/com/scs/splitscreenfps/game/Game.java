@@ -716,20 +716,16 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				continue;
 			}
 
-			if (harm_shooter == false && shooter == e) {
-				continue;
-			}
-
 			PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 			if (posData != null) {
 				float distance = posData.position.dst(explosionPos);
 				if (distance <= explData.range) {
 					if (e instanceof AbstractPlayersAvatar) {
-						PlayerData playerHitData = (PlayerData)e.getComponent(PlayerData.class);
-						this.playerDamaged(e, playerHitData, explData.damage, shooter);
+						if (harm_shooter || shooter != e) { // Still affect shooter with physics
+							PlayerData playerHitData = (PlayerData)e.getComponent(PlayerData.class);
+							this.playerDamaged(e, playerHitData, explData.damage, shooter);
+						}
 					}
-					//PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-					//if (pc.getRigidBody().getInvMass() != 0) {
 					pc.body.activate();
 
 					// Calc force/dir
@@ -738,7 +734,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 					frc.y += .2f;
 					frc.scl(explData.force);
 					pc.getRigidBody().applyCentralImpulse(frc);
-					//}
 				}
 			}
 		}

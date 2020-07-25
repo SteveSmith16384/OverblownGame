@@ -14,7 +14,9 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
+import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.PlayerAvatar_Person;
 
@@ -47,8 +49,6 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 					ability.count_available = ability.max_count;
 				}
 			}
-		} else {
-			//ability.current_cooldown = 0;
 		}
 
 
@@ -76,19 +76,19 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 						switch (ability.type) {
 						case JumpForwards:
-							performPowerJump(entity, player);
+							performPowerJump(player);
 							break;
 						case JumpUp:
-							performJumpUp(entity, player);
+							performJumpUp(entity);
 							break;
 						case JetPac:
-							performJetPac(entity, player);
+							performJetPac(entity);
 							break;
 						case TracerJump:
 							success = performRacerBlink(player);
 							break;
 						case StickyMine:
-							dropStickyMine(entity, player);
+							throwJunkratMine(player, ability);
 							break;
 						default:
 							if (Settings.STRICT) {
@@ -190,10 +190,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	}
 
 
-	private void performPowerJump(AbstractEntity entity, AbstractPlayersAvatar player) {
-		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
+	private void performPowerJump(AbstractPlayersAvatar player) {
+		PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		pc.body.activate();
-		//pc.body.applyCentralImpulse(new Vector3(0, 30, 0));
 		Vector3 dir = new Vector3(player.camera.direction);
 		dir.y += .2f;
 		dir.nor().scl(30);
@@ -201,34 +200,43 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 	}
 
 
-	private void performJetPac(AbstractEntity entity, AbstractPlayersAvatar player) {
+	private void performJetPac(AbstractEntity entity) {
 		BillBoardFPS_Main.audio.play("sfx/fart" + NumberFunctions.rnd(1, 5) + ".wav");
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.getRigidBody().applyCentralImpulse(new Vector3(0, 40, 0));
 
-		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
 		game.ecs.addEntity(e);
 	}
 
 
-	private void performJumpUp(AbstractEntity entity, AbstractPlayersAvatar player) {
+	private void performJumpUp(AbstractEntity entity) {
 		BillBoardFPS_Main.audio.play("sfx/jumps-soundsx01.wav");
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		pc.body.activate();
 		pc.getRigidBody().applyCentralImpulse(new Vector3(0, 20, 0));
 
-		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		AbstractEntity e = GraphicsEntityFactory.createBlueExplosion(game, posData.position);
 		game.ecs.addEntity(e);
 	}
 
 
-	private void dropStickyMine(AbstractEntity entity, AbstractPlayersAvatar player) {
-		// todo
+	private void throwJunkratMine(AbstractPlayersAvatar player, SecondaryAbilityComponent ability) {
+		if (ability.entity == null) {
+			ability.entity = BulletEntityFactory.createJunkratMine(game, player);
+			game.ecs.addEntity(ability.entity);
+		} else {
+			// Explode current bomb
+			PositionComponent posData = (PositionComponent)ability.entity.getComponent(PositionComponent.class);
+			game.explosion(posData.position, new ExplosionData(3, 100, 5), player, false);
+			ability.entity.remove();
+			ability.entity = null;
+		}
 	}
 
 }

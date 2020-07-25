@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.game.components;
 
+import com.scs.basicecs.AbstractEntity;
+
 public class SecondaryAbilityComponent {
 
 	public enum SecondaryAbilityType {PowerPunch, JumpForwards, JetPac, JumpUp, StickyMine, TracerJump};
@@ -16,6 +18,8 @@ public class SecondaryAbilityComponent {
 	
 	public int count_available;
 	public int max_count;
+	
+	public AbstractEntity entity; // e.g. mine
 	
 	public SecondaryAbilityComponent(SecondaryAbilityType _type, long _cooldown) {
 		type = _type;
