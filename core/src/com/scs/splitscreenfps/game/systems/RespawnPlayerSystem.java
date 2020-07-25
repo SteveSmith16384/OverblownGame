@@ -9,9 +9,11 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
+import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.components.WillRespawnComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 
@@ -48,6 +50,10 @@ public class RespawnPlayerSystem implements ISystem {
 				md.getRigidBody().setAngularVelocity(Vector3.Zero);
 				md.getRigidBody().setLinearVelocity(Vector3.Zero);
 
+				CanShoot cc = (CanShoot)e.getComponent(CanShoot.class);
+				WeaponSettingsComponent weapon = (WeaponSettingsComponent)e.getComponent(WeaponSettingsComponent.class);
+				cc.ammo = weapon.max_ammo;
+				
 				// Reset health
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);
 				playerData.health = playerData.max_health;

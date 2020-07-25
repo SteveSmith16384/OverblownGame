@@ -166,11 +166,13 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		dynamicsWorld.setGravity(GRAVITY);
 		new MyContactListener();
 
-		if (Settings.USE_MAP_EDITOR) {
+		/*if (Settings.USE_MAP_EDITOR) {
 			currentLevel = new MapEditorLevel(this);
-		} else {
-			this.currentLevel = AbstractLevel.factory(gameSelectionData.level, this);
-		}
+		} else {*/
+		this.currentLevel = AbstractLevel.factory(gameSelectionData.level, this);
+		//}
+
+		loadLevel();
 
 		for (int i=0 ; i<players.length ; i++) {
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
@@ -179,21 +181,31 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			SpeechSystem speech = (SpeechSystem)this.ecs.getSystem(SpeechSystem.class);
 			speech.addFile(SpeechSystem.getFileForCharacter(gameSelectionData.character[i]));
 
-			Camera cam = players[i].camera;
+			//Camera cam = players[i].camera;
 			//cam.lookAt(7, 0.4f, 7); //makes camera slightly slanted?
-			cam.update();
+			//cam.update();
 
 			AbstractEntity crosshairs = GraphicsEntityFactory.createCrosshairs(ecs, this, i);
 			ecs.addEntity(crosshairs);
 
-			AbstractEntity weapon = EntityFactory.createPlayersWeapon(this, i, "colours/red.png", cam);
-			ecs.addEntity(weapon);
+			//AbstractEntity weapon = EntityFactory.createPlayersWeapon(this, i, "colours/red.png", cam);
+			//ecs.addEntity(weapon);
 
+			Vector3 start_pos = currentLevel.getPlayerStartPoint(i);
 
+			PhysicsComponent md = (PhysicsComponent)this.players[i].getComponent(PhysicsComponent.class);
+			Matrix4 mat = new Matrix4();
+			mat.setTranslation(start_pos.x + 0.5f, start_pos.y, start_pos.z + 0.5f);
+			md.body.setWorldTransform(mat);
 
+			// Look down the z-axis
+			this.viewports[i].camera.direction.x = 0;
+			this.viewports[i].camera.direction.z = 1;
+			this.viewports[i].camera.update();
+
+			this.respawnSystem.addEntity(players[i], this.currentLevel.getPlayerStartPoint(i));
 		}	
 
-		loadLevel();
 		this.loadAssetsForRescale(); // Need this to load font
 
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
@@ -272,7 +284,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		currentLevel.load();
 
 		// Set start position of players
-		for (int idx=0 ; idx<players.length  ; idx++) {
+/*		for (int idx=0 ; idx<players.length  ; idx++) {
 			Vector3 start_pos = currentLevel.getPlayerStartPoint(idx);
 
 			PhysicsComponent md = (PhysicsComponent)this.players[idx].getComponent(PhysicsComponent.class);
@@ -284,7 +296,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			this.viewports[idx].camera.direction.x = 0;
 			this.viewports[idx].camera.direction.z = 1;
 			this.viewports[idx].camera.update();
-		}
+		}*/
 
 		ecs.addEntity(new SkyboxCube(this, "Skybox", "", 90, 90, 90));
 	}

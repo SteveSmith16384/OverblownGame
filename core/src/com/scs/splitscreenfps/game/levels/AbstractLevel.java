@@ -88,8 +88,6 @@ public abstract class AbstractLevel {
 
 	public abstract void update();
 
-	//public abstract void renderUI(SpriteBatch batch2d, int currentViewId);
-
 	public Vector3 getPlayerStartPoint(int idx) {
 		return this.startPositions.get(idx);
 	}
