@@ -30,8 +30,9 @@ public abstract class AbstractLevel {
 
 	public static final int LEVEL_FACTORY = 0;
 	public static final int LEVEL_VILLAGE = 1;
-	public static final int LEVEL_DUST2 = 2;
-	public static final int MAX_LEVELS = 3;
+	public static final int LEVEL_TEMPLE_OF_THE_NOOBIES = 2;
+	public static final int LEVEL_MAP_EDITOR = 3;
+	public static final int MAX_LEVELS = 4;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -48,8 +49,10 @@ public abstract class AbstractLevel {
 			return "Factory - Deathmatch";
 		case LEVEL_VILLAGE:
 			return "Village - Control Point";
-		case LEVEL_DUST2:
+		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return "Temple of the Noobies - Deathmatch";
+		case LEVEL_MAP_EDITOR:
+			return "Map Editor";
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
@@ -62,8 +65,10 @@ public abstract class AbstractLevel {
 			return new FactoryLevel(game);
 		case LEVEL_VILLAGE:
 			return new VillageLevel(game);
-		case LEVEL_DUST2:
+		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return new TempleOfTheNoobiesLevel(game);
+		case LEVEL_MAP_EDITOR:
+			return new MapEditorLevel(game);
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
