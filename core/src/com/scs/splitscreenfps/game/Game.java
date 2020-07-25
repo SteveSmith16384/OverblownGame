@@ -390,10 +390,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
 			// Draw HUD
-			currentLevel.renderUI(spriteBatch, currentViewId); // todo - remove?
 			float yOff = font_med.getLineHeight() * 1f;
 			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-			//font_small.setColor(1, 1, 1, 1);
 			drawText(this.font_small, "Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
 			drawText(this.font_small, "Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
 			drawText(this.font_med, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);

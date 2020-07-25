@@ -44,10 +44,4 @@ public class LoadJsonLevel extends AbstractLevel {
 	}
 
 
-	@Override
-	public void renderUI(SpriteBatch batch2d, int currentViewId) {
-
-	}
-
-
 }

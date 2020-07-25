@@ -77,11 +77,5 @@ public class RollingBallLevel extends AbstractLevel {
 	}
 
 
-	@Override
-	public void renderUI(SpriteBatch batch2d, int currentViewId) {
-		
-	}
-
-
 
 }

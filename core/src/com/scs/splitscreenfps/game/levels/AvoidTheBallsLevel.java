@@ -64,11 +64,4 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 	}
 
 
-	@Override
-	public void renderUI(SpriteBatch batch2d, int currentViewId) {
-		
-	}
-
-
-
 }

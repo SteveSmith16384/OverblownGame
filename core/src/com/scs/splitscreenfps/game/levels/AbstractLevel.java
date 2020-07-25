@@ -78,7 +78,7 @@ public abstract class AbstractLevel {
 
 	public abstract void update();
 
-	public abstract void renderUI(SpriteBatch batch2d, int currentViewId);
+	//public abstract void renderUI(SpriteBatch batch2d, int currentViewId);
 
 	public Vector3 getPlayerStartPoint(int idx) {
 		return this.startPositions.get(idx);
@@ -119,6 +119,12 @@ public abstract class AbstractLevel {
 		
 		if (startPositions.size() < 4) {
 			Settings.pe("Warning: only " + startPositions.size() + " start positions");
+			while (this.startPositions.size() < 4) {
+				// Add default start positions
+				//game.appendToLog("Adding default start position");
+				this.startPositions.add(new Vector3(1, 2f, 1));
+			}
+
 		}
 	}
 
