@@ -10,9 +10,7 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
-import com.badlogic.gdx.physics.bullet.collision.btGhostObject;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject.CollisionFlags;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
@@ -24,7 +22,6 @@ import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.HasRangeComponent;
-import com.scs.splitscreenfps.game.components.MoveInDirectionComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -424,7 +421,7 @@ public class BulletEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
+		//WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
 
 		//e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
 		//e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));

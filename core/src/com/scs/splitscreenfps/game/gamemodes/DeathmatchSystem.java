@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.gamemodes;
 
 import com.badlogic.gdx.graphics.Color;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
@@ -9,7 +8,7 @@ import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 
-public class DeathmatchSystem implements ISystem { //extends AbstractSystem {
+public class DeathmatchSystem implements ISystem {
 
 	private Game game;
 	private boolean by_health;

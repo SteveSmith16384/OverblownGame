@@ -59,8 +59,6 @@ public class PlayersJoinGameModule implements IModule {
 
 
 	private void loadAssetsForResize() {
-		//batch2d = new SpriteBatch();
-
 		this.font_small = main.font_small;
 		this.font_large = main.font_large;
 		

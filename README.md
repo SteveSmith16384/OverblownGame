@@ -43,6 +43,7 @@ Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-7
 ## Map Editor
 The map editor is still in development.  The map editor will always edit the file "core/assets/maps/map_editor.json", so rename whatever map file you want to edit to that name.
 
+To edit the texures used, manually edit the map json file.
 
 ### Map Editor Controls
 * 1 - Save map

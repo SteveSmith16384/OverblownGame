@@ -29,12 +29,12 @@
       "size": {
         "x": 3.75,
         "y": 4.75,
-        "z": 11.0
+        "z": 6.5
       },
       "position": {
         "x": 15.76165,
         "y": 2.375,
-        "z": 6.6238165
+        "z": 12.3738165
       },
       "rotation": {
         "x": 0.0,
@@ -52,14 +52,14 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 3.7250009,
+        "x": 5.975001,
         "y": 4.75,
-        "z": 5.25
+        "z": 5.5
       },
       "position": {
-        "x": 8.5248165,
+        "x": 7.0248165,
         "y": 2.375,
-        "z": 9.999047
+        "z": 11.499047
       },
       "rotation": {
         "x": 0.0,
@@ -94,56 +94,6 @@
       "mass": 0.0
     },
     {
-      "id": 21,
-      "type": "cube",
-      "name": "Fence_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.0,
-        "y": 0.5,
-        "z": 0.25
-      },
-      "position": {
-        "x": 6.0122557,
-        "y": 2.9960022,
-        "z": 10.628259
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 27,
-      "type": "cube",
-      "name": "Fence_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 0.75,
-        "y": 0.5,
-        "z": 0.12499998
-      },
-      "position": {
-        "x": 2.3766854,
-        "y": 0.2499958,
-        "z": 6.632853
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
       "id": 35,
       "type": "cube",
       "name": "Fence_new_new_new_new_new_new_new",
@@ -157,9 +107,9 @@
         "z": 0.12499998
       },
       "position": {
-        "x": 5.7404337,
-        "y": 0.24999934,
-        "z": 6.047955
+        "x": 5.8514266,
+        "y": 0.004447255,
+        "z": 6.0652804
       },
       "rotation": {
         "x": 0.0,
@@ -182,9 +132,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 1.118819,
-        "y": 2.2500415,
-        "z": 13.492456
+        "x": 0.9875118,
+        "y": 0.49999917,
+        "z": 13.340198
       },
       "rotation": {
         "x": 0.0,
@@ -232,9 +182,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 8.75,
+        "x": 10.75,
         "y": 0.5,
-        "z": 17.0
+        "z": 12.75
       },
       "rotation": {
         "x": 0.0,
@@ -254,12 +204,12 @@
       "size": {
         "x": 1.0,
         "y": 1.0,
-        "z": 1.0
+        "z": 0.75
       },
       "position": {
-        "x": 1.75,
+        "x": 1.25,
         "y": 0.75,
-        "z": 3.25
+        "z": -0.25
       },
       "rotation": {
         "x": 0.0,
@@ -282,9 +232,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 19.5,
+        "x": 17.5,
         "y": 0.75,
-        "z": 21.5
+        "z": 16.5
       },
       "rotation": {
         "x": 0.0,
@@ -344,181 +294,6 @@
       "mass": 0.0
     },
     {
-      "id": 20,
-      "type": "",
-      "name": "Floor_new_new",
-      "tags": "",
-      "texture_id": 16,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 3.75,
-        "y": 6.5,
-        "z": 3.0
-      },
-      "position": {
-        "x": 5.648859,
-        "y": 3.2499995,
-        "z": -2.4332504
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 23,
-      "type": "",
-      "name": "Floor_new_new_new",
-      "tags": "",
-      "texture_id": 14,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 3.75,
-        "y": 6.0,
-        "z": 3.0
-      },
-      "position": {
-        "x": 2.0280125,
-        "y": 2.9999983,
-        "z": 0.5495065
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 0.0
-    },
-    {
-      "id": 25,
-      "type": "",
-      "name": "Floor_new_new_new",
-      "tags": "",
-      "texture_id": 14,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 7.5,
-        "y": 1.75,
-        "z": 5.75
-      },
-      "position": {
-        "x": 3.891437,
-        "y": 0.8749999,
-        "z": 15.517525
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 0.0
-    },
-    {
-      "id": 28,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 4.0958114,
-        "y": 0.49999246,
-        "z": 6.8418074
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 31,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.2283198,
-        "y": 0.4999994,
-        "z": 6.5966973
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 32,
-      "type": "cube",
-      "name": "New cube 44_new",
-      "tags": "",
-      "texture_id": 10,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 6.75,
-        "y": 0.25,
-        "z": 1.75
-      },
-      "position": {
-        "x": 10.75,
-        "y": 0.72500026,
-        "z": -6.5
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": -16.0
-      },
-      "mass": 0.0
-    },
-    {
-      "id": 32,
-      "type": "cube",
-      "name": "New cube 44_new_new",
-      "tags": "",
-      "texture_id": 13,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 6.75,
-        "y": 0.25,
-        "z": 2.6499996
-      },
-      "position": {
-        "x": 18.95,
-        "y": 0.72500026,
-        "z": 7.375
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": -90.0,
-        "z": -16.0
-      },
-      "mass": 0.0
-    },
-    {
       "id": 32,
       "type": "cube",
       "name": "Crate_new_new",
@@ -532,9 +307,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 9.33451,
-        "y": 0.24999705,
-        "z": 6.6811666
+        "x": 9.336258,
+        "y": 0.24997774,
+        "z": 6.756523
       },
       "rotation": {
         "x": 0.0,
@@ -557,9 +332,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.143994,
-        "y": 0.24999388,
-        "z": 6.6261573
+        "x": 8.135011,
+        "y": 0.24999563,
+        "z": 6.759792
       },
       "rotation": {
         "x": 0.0,
@@ -577,14 +352,14 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 12.75,
+        "x": 20.0,
         "y": 5.5,
         "z": 1.5
       },
       "position": {
-        "x": 13.906315,
-        "y": 2.7500005,
-        "z": -4.3852105
+        "x": 10.268732,
+        "y": 2.7500002,
+        "z": -4.3864317
       },
       "rotation": {
         "x": 0.0,
@@ -679,12 +454,12 @@
       "size": {
         "x": 1.25,
         "y": 5.5,
-        "z": 17.75
+        "z": 26.25
       },
       "position": {
         "x": -0.47084838,
         "y": 2.7500026,
-        "z": 10.849103
+        "z": 8.849103
       },
       "rotation": {
         "x": 0.0,
@@ -692,306 +467,6 @@
         "z": 0.0
       },
       "mass": 0.0
-    },
-    {
-      "id": 28,
-      "type": "cube",
-      "name": "_new",
-      "tags": "",
-      "texture_id": 15,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.2250009,
-        "y": 1.75,
-        "z": 0.75
-      },
-      "position": {
-        "x": 11.024069,
-        "y": 0.8749753,
-        "z": 8.74827
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 29,
-      "type": "cube",
-      "name": "_new_new",
-      "tags": "",
-      "texture_id": 15,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.2250009,
-        "y": 1.75,
-        "z": 0.75
-      },
-      "position": {
-        "x": 13.273723,
-        "y": 0.87498796,
-        "z": 8.747657
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 31,
-      "type": "cube",
-      "name": "_new_new",
-      "tags": "",
-      "texture_id": 16,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 3.4750009,
-        "y": 1.75,
-        "z": 0.75
-      },
-      "position": {
-        "x": 12.148282,
-        "y": 2.6249819,
-        "z": 8.742077
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 32,
-      "type": "cube",
-      "name": "_new",
-      "tags": "",
-      "texture_id": 14,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 4.5750012,
-        "y": 1.75,
-        "z": 5.25
-      },
-      "position": {
-        "x": 2.4748163,
-        "y": -0.025000004,
-        "z": 10.499043
-      },
-      "rotation": {
-        "x": -20.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 0.0
-    },
-    {
-      "id": 33,
-      "type": "",
-      "name": "Floor_new_new_new_new",
-      "tags": "",
-      "texture_id": 13,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.5,
-        "y": 0.5,
-        "z": 3.25
-      },
-      "position": {
-        "x": 8.393144,
-        "y": 0.24998513,
-        "z": 14.267205
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 33,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.6244063,
-        "y": 3.2497804,
-        "z": 13.521762
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 34,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.1216226,
-        "y": 2.2497962,
-        "z": 13.503565
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 35,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 3.1284428,
-        "y": 2.249949,
-        "z": 13.498731
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 36,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.625804,
-        "y": 3.2496011,
-        "z": 13.52265
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 37,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.1278508,
-        "y": 4.2496114,
-        "z": 13.530645
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 38,
-      "type": "",
-      "name": "Floor_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 13,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 0.75,
-        "y": 0.5,
-        "z": 3.25
-      },
-      "position": {
-        "x": 8.017659,
-        "y": 0.74997854,
-        "z": 14.2671995
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 0.0
-    },
-    {
-      "id": 39,
-      "type": "cube",
-      "name": "_new_new_new",
-      "tags": "",
-      "texture_id": 13,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.4750009,
-        "y": 1.25,
-        "z": 2.5
-      },
-      "position": {
-        "x": 17.024048,
-        "y": 0.6249999,
-        "z": 17.073465
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
     },
     {
       "id": 41,
@@ -1007,9 +482,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.3295,
-        "y": 0.74996984,
-        "z": 6.6206517
+        "x": 8.32671,
+        "y": 0.7499661,
+        "z": 6.762236
       },
       "rotation": {
         "x": 0.0,
@@ -1032,9 +507,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 9.128637,
-        "y": 0.749975,
-        "z": 6.6775093
+        "x": 9.130612,
+        "y": 0.74996185,
+        "z": 6.7714324
       },
       "rotation": {
         "x": 0.0,
@@ -1057,9 +532,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.703269,
-        "y": 0.24999204,
-        "z": 6.6760435
+        "x": 8.704114,
+        "y": 0.24997093,
+        "z": 6.756029
       },
       "rotation": {
         "x": 0.0,
@@ -1082,9 +557,9 @@
         "z": 0.5
       },
       "position": {
-        "x": 8.711268,
-        "y": 1.2499449,
-        "z": 6.6705484
+        "x": 8.714163,
+        "y": 1.2499115,
+        "z": 6.7848377
       },
       "rotation": {
         "x": 0.0,
@@ -1107,209 +582,9 @@
         "z": 0.25
       },
       "position": {
-        "x": 5.2489743,
-        "y": 1.9999998,
-        "z": 12.8756695
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 47,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.7035632,
-        "y": 0.49999198,
-        "z": 4.14143
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 48,
-      "type": "cube",
-      "name": "_new",
-      "tags": "",
-      "texture_id": 14,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 5.0,
-        "y": 5.0,
-        "z": 5.0
-      },
-      "position": {
-        "x": 7.75,
-        "y": -1.4999998,
-        "z": 3.5
-      },
-      "rotation": {
-        "x": 57.0,
-        "y": -48.0,
-        "z": 5.0
-      },
-      "mass": 0.0
-    },
-    {
-      "id": 47,
-      "type": "cube",
-      "name": "_new",
-      "tags": "",
-      "texture_id": 16,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 4.225001,
-        "y": 0.5,
-        "z": 6.75
-      },
-      "position": {
-        "x": 7.5361743,
-        "y": 2.4960027,
-        "z": 9.197626
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 0.0
-    },
-    {
-      "id": 48,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 11.74785,
-        "y": 0.4990382,
-        "z": 3.7457147
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 51,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 11.722893,
-        "y": 1.49847,
-        "z": 3.749563
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 52,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 11.747381,
-        "y": 2.4973454,
-        "z": 3.709886
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 53,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 11.728938,
-        "y": 3.4969034,
-        "z": 3.6793363
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 54,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 11,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 11.716047,
-        "y": 4.495482,
-        "z": 3.6537497
+        "x": 5.2435555,
+        "y": 0.014635161,
+        "z": 13.326563
       },
       "rotation": {
         "x": 0.0,
@@ -1320,28 +595,128 @@
     },
     {
       "id": 55,
-      "type": "cylinder",
-      "name": "New cylinder 50_new_new_new_new_new_new_new_new",
+      "type": "",
+      "name": "Floor_new",
       "tags": "",
-      "texture_id": 11,
+      "texture_id": 15,
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 3.75,
+        "y": 4.75,
+        "z": 4.25
       },
       "position": {
-        "x": 11.71979,
-        "y": 5.49497,
-        "z": 3.6376903
+        "x": 15.511647,
+        "y": 2.3749995,
+        "z": 2.8738165
       },
       "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
-      "mass": 1.0
+      "mass": 0.0
+    },
+    {
+      "id": 56,
+      "type": "cube",
+      "name": "",
+      "tags": "",
+      "texture_id": 14,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 5.975001,
+        "y": 4.75,
+        "z": 5.5
+      },
+      "position": {
+        "x": 8.521244,
+        "y": 2.3750055,
+        "z": 4.505127
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 58,
+      "type": "cube",
+      "name": "",
+      "tags": "",
+      "texture_id": 14,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 2.2250009,
+        "y": 4.75,
+        "z": 5.5
+      },
+      "position": {
+        "x": 1.2721924,
+        "y": 2.3749986,
+        "z": 4.004718
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 59,
+      "type": "cube",
+      "name": "",
+      "tags": "",
+      "texture_id": 14,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 9.975,
+        "y": 4.75,
+        "z": 1.25
+      },
+      "position": {
+        "x": 8.521244,
+        "y": 2.3750057,
+        "z": -0.74487305
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 60,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 16,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 24.0,
+        "y": 0.5,
+        "z": 28.0
+      },
+      "position": {
+        "x": 10.0,
+        "y": 3.25,
+        "z": 9.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
     }
   ]
 }

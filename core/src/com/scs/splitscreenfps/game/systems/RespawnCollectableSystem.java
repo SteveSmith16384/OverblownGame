@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.scs.basicecs.AbstractEntity;
-import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
@@ -13,10 +12,8 @@ import com.scs.splitscreenfps.game.components.IsCollectableComponent;
 public class RespawnCollectableSystem implements ISystem {
 
 	private List<RespawnData> points = new LinkedList<RespawnData>();
-	private BasicECS ecs;
 
-	public RespawnCollectableSystem(BasicECS _ecs) {
-		ecs = _ecs;
+	public RespawnCollectableSystem() {
 	}
 
 	

@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.gamemodes.ControlPointScoreSystem;
 

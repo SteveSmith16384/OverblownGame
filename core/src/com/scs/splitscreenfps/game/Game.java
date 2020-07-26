@@ -11,7 +11,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -51,14 +50,12 @@ import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.MapEditorLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CheckRangeSystem;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
@@ -71,7 +68,6 @@ import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.systems.HarmPlayerOnContactSystem;
-import com.scs.splitscreenfps.game.systems.MoveInDirectionSystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
@@ -258,25 +254,23 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.spriteBatch));
 		ecs.addSystem(new ExplodeAfterTimeSystem(this, ecs));
-		//ecs.addSystem(new BulletSystem(ecs, this));
 		ecs.addSystem(new ShootingSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs);
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, spriteBatch));
 		physicsSystem = new PhysicsSystem(this, ecs);
 		ecs.addSystem(physicsSystem);
-		this.respawnSystem = new RespawnPlayerSystem(ecs);
+		this.respawnSystem = new RespawnPlayerSystem();
 		ecs.addSystem(new HarmPlayerOnContactSystem(this, ecs));
 		ecs.addSystem(new SecondaryAbilitySystem(ecs, this));
 		ecs.addSystem(new UltimateAbilitySystem(ecs, this));
 		ecs.addSystem(new CollectableSystem(this, ecs));
-		respawnHealthPackSystem = new RespawnCollectableSystem(ecs);
+		respawnHealthPackSystem = new RespawnCollectableSystem();
 		ecs.addSystem(respawnHealthPackSystem);
 		ecs.addSystem(new CheckRangeSystem(ecs));
 		ecs.addSystem(new RemoveOnContactSystem(ecs));
 		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
-		ecs.addSystem(new MoveInDirectionSystem(this, ecs));
 	}
 
 
@@ -284,7 +278,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		currentLevel.load();
 
 		// Set start position of players
-/*		for (int idx=0 ; idx<players.length  ; idx++) {
+		/*		for (int idx=0 ; idx<players.length  ; idx++) {
 			Vector3 start_pos = currentLevel.getPlayerStartPoint(idx);
 
 			PhysicsComponent md = (PhysicsComponent)this.players[idx].getComponent(PhysicsComponent.class);
@@ -326,7 +320,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.respawnSystem.process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
-		this.ecs.processSystem(MoveInDirectionSystem.class);
 		this.ecs.processSystem(SpeechSystem.class);
 		if (this.game_stage == 0) {
 			this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
@@ -404,14 +397,16 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
 			// Draw HUD
-			float yOff = font_med.getLineHeight() * 1f;
-			PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-			drawText(this.font_small, "Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
-			drawText(this.font_small, "Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
-			drawText(this.font_med, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
-			drawText(this.font_med, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
-			drawText(this.font_small, playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);
-			drawText(this.font_med, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
+			if (Settings.USE_MAP_EDITOR == false) {
+				float yOff = font_med.getLineHeight() * 1f;
+				PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
+				drawText(this.font_small, "Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
+				drawText(this.font_small, "Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
+				drawText(this.font_med, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
+				drawText(this.font_med, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
+				drawText(this.font_small, playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);
+				drawText(this.font_med, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
+			}
 
 			if (currentViewId == 0) {
 				// Draw log

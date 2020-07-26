@@ -10,7 +10,6 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.DrawTextComponent;
-import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
 public class DrawTextSystem extends AbstractSystem {
