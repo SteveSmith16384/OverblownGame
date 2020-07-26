@@ -199,9 +199,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			md.body.setWorldTransform(mat);
 
 			// Look down the z-axis
-			this.viewports[i].camera.direction.x = 0;
-			this.viewports[i].camera.direction.z = 1;
-			this.viewports[i].camera.update();
+			//this.viewports[i].camera.direction.x = 0;
+			//this.viewports[i].camera.direction.z = 1;
+			//this.viewports[i].camera.update();
 
 			this.respawnSystem.addEntity(players[i], this.currentLevel.getPlayerStartPoint(i));
 		}	

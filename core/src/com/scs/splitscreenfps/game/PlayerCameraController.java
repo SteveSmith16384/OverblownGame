@@ -21,7 +21,7 @@ public class PlayerCameraController {
 	}
 
 	
-	public void update( IInputMethod input) {
+	public void update(IInputMethod input) {
 		float dt = Gdx.graphics.getDeltaTime();
 
 		if (input.isMouse()) {
@@ -35,8 +35,6 @@ public class PlayerCameraController {
 				}
 				camera.rotate(Vector3.Y, -mouseTurnSpeed * rx * dt);
 			}
-	//	} else if (input instanceof NoInputMethod) {
-			// Do nothing
 		} else {
 			//Rotation
 			if (input.getLookUp() > Settings.MIN_AXIS) {
