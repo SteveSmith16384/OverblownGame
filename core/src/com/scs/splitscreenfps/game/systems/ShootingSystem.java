@@ -36,12 +36,18 @@ public class ShootingSystem extends AbstractSystem {
 		CanShoot cc = (CanShoot)entity.getComponent(CanShoot.class);
 		if (cc.nextShotTime > System.currentTimeMillis()) {
 			return;
-		}
+		} 
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
 		WeaponSettingsComponent weapon = (WeaponSettingsComponent)entity.getComponent(WeaponSettingsComponent.class);
 
+		if (cc.reloading) {
+			cc.reloading = false;
+			cc.ammo = weapon.max_ammo;
+			playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+		}
+		
 		if (player.inputMethod.isShootPressed()) {
 			//Settings.p("Shoot at " + System.currentTimeMillis());
 			cc.ammo--;
@@ -108,16 +114,22 @@ public class ShootingSystem extends AbstractSystem {
 			if (cc.ammo <= 0) {
 				//playerData.ability1text = "Reloading...";
 				//BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
-				cc.ammo = weapon.max_ammo;
+				//cc.ammo = weapon.max_ammo;
 				cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
+				cc.reloading = true;
 			}
-
-			playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+			if (cc.reloading) {
+				playerData.gunText = "Reloading...";
+			} else {
+				playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+			}
 		} else if (player.inputMethod.isReloadPressed()) {
 			if (cc.ammo < weapon.max_ammo) {
-				cc.ammo = weapon.max_ammo;
+				//cc.ammo = weapon.max_ammo;
+				cc.reloading = true;
 				cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
-				playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+				//playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
+				playerData.gunText = "Reloading...";
 			}
 		}
 
