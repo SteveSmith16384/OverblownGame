@@ -32,7 +32,7 @@ public class NoInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isShootPressed() {
-		return true;
+		return false;
 	}
 
 	@Override

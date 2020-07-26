@@ -38,7 +38,7 @@ public class BulletEntityFactory {
 	public static AbstractEntity createBullet(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Bullet");
 
-		float size = 0.1f;
+		float size = 0.1f;//05f;
 		
 		e.addComponent(new PositionComponent());
 
@@ -70,7 +70,7 @@ public class BulletEntityFactory {
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
-		pc.force = dir.scl(.7f);
+		pc.force = new Vector3(dir).scl(.7f);
 		e.addComponent(pc);
 
 		switch (settings.weapon_type) {

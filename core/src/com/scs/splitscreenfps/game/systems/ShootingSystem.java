@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -12,8 +13,6 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
-
-import ssmith.lang.NumberFunctions;
 
 public class ShootingSystem extends AbstractSystem {
 
@@ -49,7 +48,6 @@ public class ShootingSystem extends AbstractSystem {
 		}
 		
 		if (player.inputMethod.isShootPressed()) {
-			//Settings.p("Shoot at " + System.currentTimeMillis());
 			cc.ammo--;
 			cc.nextShotTime = System.currentTimeMillis() + weapon.shot_interval;
 			Vector3 dir = new Vector3();
@@ -57,25 +55,46 @@ public class ShootingSystem extends AbstractSystem {
 			if (cc.shootInCameraDirection) {
 				dir.set(player.camera.direction);
 				float spread = .05f;
-				dir.x += NumberFunctions.rndFloat(-spread,spread);
-				dir.z += NumberFunctions.rndFloat(-spread, spread);
+				//dir.x += NumberFunctions.rndFloat(-spread,spread);
+				//dir.z += NumberFunctions.rndFloat(-spread, spread);
 			} else {
 				dir.set((float)Math.sin(Math.toRadians(posData.angle_y_degrees+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
 			}
 			dir.nor();
 
+			//Settings.p("Shoot dir = " + dir);
+
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
-			startPos.mulAdd(dir, .2f);
+			startPos.mulAdd(dir, .2f); //.2f
 
 			switch (weapon.weapon_type) {
 			case WeaponSettingsComponent.RACER_PISTOLS:
-			case WeaponSettingsComponent.BOOMFIST_RIFLE:
 			case WeaponSettingsComponent.BOWLINGBALL_GUN:
 				AbstractEntity bullet = BulletEntityFactory.createBullet(game, player, startPos, dir);
 				game.ecs.addEntity(bullet);
 				break;
 
+			case WeaponSettingsComponent.BOOMFIST_RIFLE:
+				// Shoot 3-ways - need to do work to stop them colliding at the start!
+				AbstractEntity b1 = BulletEntityFactory.createBullet(game, player, startPos, dir);
+				game.ecs.addEntity(b1);
+				
+				dir.set((float)Math.sin(Math.toRadians(posData.angle_y_degrees+65)), dir.y, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+65)));
+				dir.nor();
+				startPos.set(posData.position);
+				startPos.mulAdd(dir, .3f); //.2f
+				b1 = BulletEntityFactory.createBullet(game, player, startPos, dir);
+				game.ecs.addEntity(b1);
+
+				dir.set((float)Math.sin(Math.toRadians(posData.angle_y_degrees+115)), dir.y, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+115)));
+				dir.nor();
+				startPos.set(posData.position);
+				startPos.mulAdd(dir, .3f); //.2f
+				b1 = BulletEntityFactory.createBullet(game, player, startPos, dir);
+				game.ecs.addEntity(b1);
+				
+				break;
 			case WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER:
 				AbstractEntity g = BulletEntityFactory.createGrenade(game, player, startPos, dir);
 				game.ecs.addEntity(g);

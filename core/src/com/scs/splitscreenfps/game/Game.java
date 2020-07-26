@@ -787,7 +787,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		@Override
 		public void onContactStarted (final btCollisionObject ob1, final btCollisionObject ob2) {
 			try {
-				//Settings.p(ob1.userData + " collided with " + ob2.userData);
+				Settings.p(ob1.userData + " collided with " + ob2.userData);
 				AbstractEntity e1 = (AbstractEntity)ob1.userData;
 				AbstractEntity e2 = (AbstractEntity)ob2.userData;
 
