@@ -18,13 +18,13 @@ public class AvatarFactory {
 	public static final int CHAR_BOOMFIST = 2;
 	public static final int CHAR_BOWLING_BALL = 3;
 	public static final int CHAR_RACER = 4;
+	public static final int CHAR_BLOWPIPE = 5;
+	public static final int CHAR_PIGGY = 6;
+	public static final int CHAR_VICTIM = 7;
 
-	public static final int MAX_CHAR_ID = 4;
-
-	//public static final int CHAR_SIGMA = 5;
-	public static final int CHAR_WINSTON = 6;
-	public static final int CHAR_BASTION = 7;
-	public static final int CHAR_RUBBISHRODENT = 8;
+	public static final int CHAR_WINSTON = 96;
+	public static final int CHAR_BASTION = 97;
+	public static final int CHAR_RUBBISHRODENT = 98;
 	
 	
 
@@ -37,6 +37,11 @@ public class AvatarFactory {
 		case CHAR_WINSTON: return "Winston";
 		case CHAR_BASTION: return "Bastion";
 		case CHAR_RUBBISHRODENT: return "Rubbish Rodent";
+
+		case CHAR_PIGGY: return "PIGGY";
+		case CHAR_VICTIM: return "INNOCENT VICTIM";
+		case CHAR_BLOWPIPE: return "ASSASSIN";
+
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}
@@ -52,6 +57,11 @@ public class AvatarFactory {
 		case CHAR_WINSTON: return 300;
 		case CHAR_BASTION: return 150;
 		case CHAR_RUBBISHRODENT: return 150;
+		
+		case CHAR_PIGGY: return 999;
+		case CHAR_VICTIM: return 1;
+		case CHAR_BLOWPIPE: return 1;
+		
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}
@@ -71,7 +81,7 @@ public class AvatarFactory {
 
 		}
 		
-		WeaponSettingsComponent weapon;
+		WeaponSettingsComponent weapon = null;
 		int weapon_type = -1;
 		switch (character) {
 		case CHAR_PHARTAH:
@@ -112,11 +122,27 @@ public class AvatarFactory {
 			weapon_type = WeaponSettingsComponent.BASTION_CANNON;
 			break;
 			
+		case CHAR_BLOWPIPE:
+			weapon_type = WeaponSettingsComponent.BLOWPIPE;
+			break;
+			
+		case CHAR_PIGGY:
+			weapon_type = WeaponSettingsComponent.PIGGY_GUN;
+			break;
+			
+		case CHAR_VICTIM:
+			weapon_type = WeaponSettingsComponent.NONE;
+			break;
+			
 		default:
 			throw new RuntimeException("Unhandled character: " + character);
 		}
 
 		switch (weapon_type) {
+		case WeaponSettingsComponent.NONE:
+			weapon = new WeaponSettingsComponent(weapon_type, 100000, 100000, 0, 0, 
+					0, 0, 0, null);
+			break;
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER: 
 			ExplosionData explData2 = new ExplosionData(1f, 30, 3f);
 			weapon = new WeaponSettingsComponent(weapon_type, 750, 1500, 6, 50, 
@@ -158,12 +184,20 @@ public class AvatarFactory {
 					60, 0, 0, null);
 			break;
 
+		case WeaponSettingsComponent.BLOWPIPE:
+		case WeaponSettingsComponent.PIGGY_GUN:
+			weapon = new WeaponSettingsComponent(weapon_type, 4000, 0, 999, 999, 
+					999, 0, 0, null);
+			break;
+
 		default:
 			throw new RuntimeException("Unknown weapon: " + weapon_type);
 		}
 
-		avatar.addComponent(weapon);
-
+		if (weapon != null) {
+			avatar.addComponent(weapon);
+		}
+		
 		return avatar;
 	}
 }

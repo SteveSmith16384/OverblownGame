@@ -31,23 +31,26 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_VILLAGE = 1;
 	public static final int LEVEL_TEMPLE_OF_THE_NOOBIES = 2;
 	public static final int LEVEL_BLOWPIPE = 3;
-	public static final int LEVEL_AI_TEST = 4;
-	public static final int LEVEL_MAP_EDITOR = 5;
-	public static final int MAX_LEVELS = 6;
+	public static final int LEVEL_PIGGY = 4;
+	public static final int LEVEL_AI_TEST = 5;
+	public static final int LEVEL_MAP_EDITOR = 6;
+	public static final int MAX_LEVELS = 7;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
 	public MapData mapdata;
 
-	public AbstractLevel(Game _game) {
+/*	public AbstractLevel(Game _game) {
+		game = _game;
+	}
+*/
+
+	public void getReadyForGame(Game _game) {
 		game = _game;
 	}
 
 
-	public int getNumAi() {
-		return 0;
-	}
-	
+	public abstract int[] getHeroSelection();
 	
 	public static final String getName(int i) {
 		switch (i) {
@@ -59,6 +62,8 @@ public abstract class AbstractLevel {
 			return "Temple of the Noobies - Deathmatch";
 		case LEVEL_BLOWPIPE:
 			return "Blowpipe - Deathmatch";
+		case LEVEL_PIGGY:
+			return "Piggy";
 		case LEVEL_AI_TEST:
 			return "AI Test";
 		case LEVEL_MAP_EDITOR:
@@ -69,20 +74,22 @@ public abstract class AbstractLevel {
 	}
 
 
-	public static final AbstractLevel factory(int i, Game game) {
+	public static final AbstractLevel factory(int i) {
 		switch (i) {
 		case LEVEL_FACTORY:
-			return new FactoryLevel(game);
+			return new FactoryLevel();
 		case LEVEL_VILLAGE:
-			return new VillageLevel(game);
+			return new VillageLevel();
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
-			return new TempleOfTheNoobiesLevel(game);
+			return new TempleOfTheNoobiesLevel();
 		case LEVEL_BLOWPIPE:
-			return new BlowpipeLevel(game);
+			return new BlowpipeLevel();
+		case LEVEL_PIGGY:
+			return new PiggyLevel();
 		case LEVEL_AI_TEST:
-			return new AITestLevel(game);
+			return new AITestLevel();
 		case LEVEL_MAP_EDITOR:
-			return new MapEditorLevel(game);
+			return new MapEditorLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}

@@ -8,18 +8,25 @@ import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class BlowpipeLevel extends AbstractLevel {
 
 	private ISystem deathmatchSystem;
-	private boolean players_edited = false;
+	//private boolean players_edited = false;
 
-	public BlowpipeLevel(Game _game) {
-		super(_game);
+	public void getReadyForGame(Game game) {
+		super.getReadyForGame(game);
 
 		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, false);
 
+	}
+
+
+	@Override
+	public int[] getHeroSelection() {
+		return new int[]{AvatarFactory.CHAR_BLOWPIPE};
 	}
 
 
@@ -43,7 +50,7 @@ public class BlowpipeLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		if (players_edited == false) {
+		/*if (players_edited == false) {
 			players_edited = true;
 			for(AbstractPlayersAvatar player : game.players) {
 				PlayerData pdata = (PlayerData)player.getComponent(PlayerData.class);
@@ -58,7 +65,7 @@ public class BlowpipeLevel extends AbstractLevel {
 				weapon.reload_interval = 5000;
 				weapon.max_ammo = 1;
 			}
-		}
+		}*/
 
 		deathmatchSystem.process();
 	}

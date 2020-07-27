@@ -27,6 +27,7 @@ import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.systems.ChangeColourSystem;
 import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
@@ -43,12 +44,15 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	private FrameBuffer frameBuffer;
 	private final BillBoardFPS_Main main;
 	public List<IInputMethod> inputs;
-	private GameSelectionData gameSelectionData;
 	public final AssetManager assetManager = new AssetManager();
+
 	private long earliest_input_time;
 	private long next_input_check_time = 0;
 	private final BasicECS ecs;
 	private Rectangle viewRect;
+	private GameSelectionData gameSelectionData;
+	//private AbstractLevel level;
+	private int[] available_heroes;
 	
 	// Systems
 	private DrawGuiSpritesSystem drawGuiSpritesSystem;
@@ -67,9 +71,11 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 
 		this.gameSelectionData = _gameSelectionData;//new GameSelectionData(inputs.size());
 
+		AbstractLevel level = AbstractLevel.factory(this.gameSelectionData.level);
+		this.available_heroes = level.getHeroSelection();
 		for (int i=0 ; i<this.gameSelectionData.has_selected_character.length ; i++) {
 			this.gameSelectionData.has_selected_character[i] = false;
-			this.gameSelectionData.character[i] = 1; // First character
+			this.gameSelectionData.character[i] = 0;//available_heroes[0];
 		}
 
 		spriteBatch = new SpriteBatch();
@@ -137,6 +143,12 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 			main.next_module = new SelectMapModule(main, inputs);
 			return;
 		}
+		
+		if (this.available_heroes.length == 1) {
+			// Only one hero!
+			this.startGame();
+			return;
+		}
 
 		if (next_input_check_time < System.currentTimeMillis()) {
 			this.next_input_check_time = System.currentTimeMillis() + READ_INPUTS_INTERVAL;
@@ -167,8 +179,8 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		// Draw heroes
 		int x_pos = Settings.LOGICAL_SIZE_PIXELS/2;
 		int y_pos = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
-		for (int i=1 ; i<=AvatarFactory.MAX_CHAR_ID ; i++) {
-			font_small.draw(spriteBatch, AvatarFactory.getName(i), x_pos, y_pos);
+		for (int i=0 ; i<this.available_heroes.length ; i++) {
+			font_small.draw(spriteBatch, AvatarFactory.getName(this.available_heroes[i]), x_pos, y_pos);
 			y_pos -= spacing_y;
 		}
 
@@ -177,7 +189,7 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 			x_pos = Settings.LOGICAL_SIZE_PIXELS/2 - ((playerIdx+1) * 35);
 			//y_pos = y_pos + (30*playerIdx);
 			int y_pos_start = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
-			y_pos = y_pos_start - (spacing_y * (this.gameSelectionData.character[playerIdx]));
+			y_pos = y_pos_start - ((spacing_y) * (this.gameSelectionData.character[playerIdx]+1));
 			arrows[playerIdx].setBounds(x_pos,  y_pos , 30, 30);
 			arrows[playerIdx].draw(spriteBatch);
 		}
@@ -197,10 +209,6 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		spriteBatch.begin();
 		spriteBatch.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 
-		/*if (Settings.SHOW_FPS) {
-			font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font.getLineHeight());
-		}*/
-
 		spriteBatch.end();
 	}
 
@@ -215,14 +223,14 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 				if (input.isMenuUpPressed()) {
 					main.audio.play("sfx/type2.mp3");
 					this.gameSelectionData.character[playerIdx]--;
-					if (this.gameSelectionData.character[playerIdx] < 1) {
-						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHAR_ID;
+					if (this.gameSelectionData.character[playerIdx] < 0) {
+						this.gameSelectionData.character[playerIdx] = this.available_heroes.length-1;
 					}
 				} else if (input.isMenuDownPressed()) {
 					main.audio.play("sfx/type2.mp3");
 					this.gameSelectionData.character[playerIdx]++;
-					if (this.gameSelectionData.character[playerIdx] > AvatarFactory.MAX_CHAR_ID) {
-						this.gameSelectionData.character[playerIdx] = 1;
+					if (this.gameSelectionData.character[playerIdx] >= this.available_heroes.length) {
+						this.gameSelectionData.character[playerIdx] = 0;
 					}
 				} 
 			}
@@ -230,7 +238,8 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 				if (System.currentTimeMillis() > earliest_input_time) {
 					main.audio.play("sfx/controlpoint.mp3");
 					this.gameSelectionData.has_selected_character[playerIdx] = true;
-					this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(this.gameSelectionData.character[playerIdx]));
+					int hero_id = this.available_heroes[this.gameSelectionData.character[playerIdx]];
+					this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(hero_id));
 				}
 			}
 		}

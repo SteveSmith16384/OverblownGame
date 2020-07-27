@@ -171,12 +171,14 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 		new MyContactListener();
 
-		this.currentLevel = AbstractLevel.factory(gameSelectionData.level, this);
+		this.currentLevel = AbstractLevel.factory(gameSelectionData.level);
+		this.currentLevel.getReadyForGame(this);
 
 		loadLevel();
 
 		for (int i=0 ; i<players.length ; i++) {
-			players[i] = AvatarFactory.createAvatar(this, i, viewports[i].camera, inputs.get(i), gameSelectionData.character[i]);
+			int hero_id = this.currentLevel.getHeroSelection()[this.gameSelectionData.character[i]];
+			players[i] = AvatarFactory.createAvatar(this, i, viewports[i].camera, inputs.get(i), hero_id);
 			ecs.addEntity(players[i]);
 			
 			SpeechSystem speech = (SpeechSystem)this.ecs.getSystem(SpeechSystem.class);

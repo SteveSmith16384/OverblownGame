@@ -3,16 +3,22 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class FactoryLevel extends AbstractLevel {
 
 	private ISystem deathmatchSystem;
 	
-	public FactoryLevel(Game _game) {
-		super(_game);
-		
+	public void getReadyForGame(Game game) {
+		super.getReadyForGame(game);		
 		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
+	}
+
+
+	@Override
+	public int[] getHeroSelection() {
+		return new int[]{AvatarFactory.CHAR_PHARTAH, AvatarFactory.CHAR_BOOMFIST, AvatarFactory.CHAR_BOWLING_BALL, AvatarFactory.CHAR_RACER};
 	}
 
 

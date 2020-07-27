@@ -3,22 +3,22 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
-import com.scs.splitscreenfps.game.gamemodes.ControlPointScoreSystem;
 
-public class VillageLevel extends AbstractLevel {
+public class PiggyLevel extends AbstractLevel {
 
-	private ControlPointScoreSystem cps;
-	
+	//todo private ISystem deathmatchSystem;
+
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
 
-		this.cps = new ControlPointScoreSystem(game);
+		//this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, false);
+
 	}
 
 
 	@Override
 	public int[] getHeroSelection() {
-		return new int[]{AvatarFactory.CHAR_PHARTAH, AvatarFactory.CHAR_BOOMFIST, AvatarFactory.CHAR_BOWLING_BALL, AvatarFactory.CHAR_RACER};
+		return new int[]{AvatarFactory.CHAR_PIGGY, AvatarFactory.CHAR_VICTIM};
 	}
 
 
@@ -31,8 +31,8 @@ public class VillageLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			super.loadJsonFile("maps/village.json", false);
-			//super.loadJsonFile("maps/map_editor.json", false);
+			//super.loadJsonFile("maps/undergroundcomplex.json", false);
+			super.loadJsonFile("maps/map_editor.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,7 +42,7 @@ public class VillageLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		cps.process();
+		//deathmatchSystem.process();
 	}
 
 

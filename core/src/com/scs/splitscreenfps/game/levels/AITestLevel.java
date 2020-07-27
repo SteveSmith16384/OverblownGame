@@ -11,18 +11,13 @@ public class AITestLevel extends AbstractLevel {
 
 	//private ISystem deathmatchSystem;
 	
-	public AITestLevel(Game _game) {
-		super(_game);
-		
+	public void getReadyForGame(Game game) {
+		super.getReadyForGame(game);
+
 		//this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
 	}
 
 
-	public int getNumAi() { // todo - remove all this
-		return 1;
-	}
-	
-	
 	@Override
 	public void setBackgroundColour() {
 		Gdx.gl.glClearColor(0, .6f, .8f, 1);
@@ -49,6 +44,12 @@ public class AITestLevel extends AbstractLevel {
 	@Override
 	public void update() {
 		//deathmatchSystem.process();
+	}
+
+
+	@Override
+	public int[] getHeroSelection() {
+		return new int[]{1, 2, 3, 4}; // todo
 	}
 
 

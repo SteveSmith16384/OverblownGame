@@ -72,10 +72,12 @@ public class ShootingSystem extends AbstractSystem {
 			switch (weapon.weapon_type) {
 			case WeaponSettingsComponent.RACER_PISTOLS:
 			case WeaponSettingsComponent.BOWLINGBALL_GUN:
+			case WeaponSettingsComponent.PIGGY_GUN:
 				AbstractEntity bullet = BulletEntityFactory.createBullet(game, player, startPos, dir);
 				game.ecs.addEntity(bullet);
 				break;
 
+			case WeaponSettingsComponent.BLOWPIPE:
 			case WeaponSettingsComponent.HYPERSPHERES:
 				AbstractEntity hs = BulletEntityFactory.createBouncingBullet(game, player, startPos, dir);
 				game.ecs.addEntity(hs);
@@ -121,6 +123,9 @@ public class ShootingSystem extends AbstractSystem {
 				game.ecs.addEntity(c);
 				break;
 
+			case WeaponSettingsComponent.NONE:
+				break;
+				
 			default:
 				throw new RuntimeException("Unknown weapon type: " + weapon.weapon_type);
 			}
