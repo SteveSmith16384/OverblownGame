@@ -48,6 +48,7 @@ import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
+import com.scs.splitscreenfps.game.data.GameSelectionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
@@ -83,8 +84,7 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.game.systems.SpeechSystem;
 import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
-import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
-import com.scs.splitscreenfps.selectcharacter.SelectHeroModule;
+import com.scs.splitscreenfps.pregame.SelectHeroModule;
 
 /**
  * This is the main game, where the players move about n'stuff.

@@ -1,7 +1,6 @@
-package com.scs.splitscreenfps.selectcharacter;
+package com.scs.splitscreenfps.pregame;
 
 import java.awt.Rectangle;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -21,10 +20,9 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ChangeColourComponent;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
-import com.scs.splitscreenfps.game.entities.AvatarFactory;
+import com.scs.splitscreenfps.game.data.GameSelectionData;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
@@ -32,52 +30,37 @@ import com.scs.splitscreenfps.game.systems.ChangeColourSystem;
 import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
-import com.scs.splitscreenfps.selectgame.SelectMapModule;
 
-public class SelectHeroModule implements IModule, IGetCurrentViewport {
+public class SelectMapModule implements IModule, IGetCurrentViewport {
 
 	private static final long READ_INPUTS_INTERVAL = 100;
 
 	private final SpriteBatch spriteBatch;
 	private BitmapFont font_small, font_large;
-	private final List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private final BillBoardFPS_Main main;
-	public List<IInputMethod> inputs;
-	public final AssetManager assetManager = new AssetManager();
-
-	private long earliest_input_time;
-	private long next_input_check_time = 0;
-	private final BasicECS ecs;
-	private Rectangle viewRect;
+	public final List<IInputMethod> inputs;
 	private GameSelectionData gameSelectionData;
-	//private AbstractLevel level;
-	private int[] available_heroes;
+	public AssetManager assetManager = new AssetManager();
+	private long next_input_check_time = 0;
+	private Rectangle viewRect;
+	private final BasicECS ecs;
+	private long earliest_input_time;
 	
-	// Systems
 	private DrawGuiSpritesSystem drawGuiSpritesSystem;
 	private ChangeColourSystem colChangeSystem;
 	private DrawTextSystem drawTextSystem;
 
 	// Gfx pos data
 	private int spacing_y;
-	private Sprite[] arrows;
+	private Sprite arrow;
 
-	public SelectHeroModule(BillBoardFPS_Main _main, List<IInputMethod> _inputs, GameSelectionData _gameSelectionData) {
+	public SelectMapModule(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		super();
 
 		main = _main;
 		inputs = _inputs;
-
-		this.gameSelectionData = _gameSelectionData;//new GameSelectionData(inputs.size());
-
-		AbstractLevel level = AbstractLevel.factory(this.gameSelectionData.level);
-		this.available_heroes = level.getHeroSelection();
-		for (int i=0 ; i<this.gameSelectionData.has_selected_character.length ; i++) {
-			this.gameSelectionData.has_selected_character[i] = false;
-			this.gameSelectionData.character[i] = 0;//available_heroes[0];
-		}
-
+		this.gameSelectionData = new GameSelectionData();//inputs.size());
 		spriteBatch = new SpriteBatch();
 
 		ecs = new BasicECS();
@@ -94,17 +77,16 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		ecs.addEntity(entity);
 
 		// Text
-		TextEntity text = new TextEntity(ecs, "CHOOSE YOUR HEROES!", 50, 20, -1, Color.WHITE, 0, main.font_large, true);
+		TextEntity text = new TextEntity(ecs, "SELECT MAP", 50, 20, -1, Color.WHITE, 0, main.font_large, true);
 		text.addComponent(new ChangeColourComponent(Color.WHITE, Color.GRAY, 300));
 		ecs.addEntity(text);
-		loadAssetsForResize();
 
-		//this.appendToLog("CHOOSE A HERO!");
+		loadAssetsForResize();
 
 		spacing_y = 30;//Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
 
 		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
-
+		
 		earliest_input_time = System.currentTimeMillis() + 1000;
 	}
 
@@ -121,11 +103,10 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		Texture tex = getTexture("arrow_right_white.png");
-		arrows = new Sprite[this.inputs.size()];
-		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
-			arrows[playerIdx] = new Sprite(tex);
-			arrows[playerIdx].setColor(Settings.getColourForSide(playerIdx));
-		}
+		arrow = new Sprite(tex);
+
+		drawGuiSpritesSystem.rescaleSprites();
+		drawTextSystem.rescaleText();
 	}
 
 
@@ -140,13 +121,7 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			main.next_module = new SelectMapModule(main, inputs);
-			return;
-		}
-		
-		if (this.available_heroes.length == 1) {
-			// Only one hero!
-			this.startGame();
+			main.next_module = new PlayersJoinGameModule(main);
 			return;
 		}
 
@@ -154,6 +129,7 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 			this.next_input_check_time = System.currentTimeMillis() + READ_INPUTS_INTERVAL;
 			boolean all_selected = this.readInputs();
 			if (all_selected) {
+				main.audio.play("sfx/controlpoint.mp3");
 				this.startGame();
 				return;
 			}
@@ -163,9 +139,7 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		colChangeSystem.process();
 		
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
 		frameBuffer.begin();
-
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -176,83 +150,56 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 
 		font_small.setColor(1,  1,  1,  1);
 
-		// Draw heroes
+		// Draw levels
 		int x_pos = Settings.LOGICAL_SIZE_PIXELS/2;
 		int y_pos = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
-		for (int i=0 ; i<this.available_heroes.length ; i++) {
-			font_small.draw(spriteBatch, AvatarFactory.getName(this.available_heroes[i]), x_pos, y_pos);
+		for (int i=0 ; i<AbstractLevel.MAX_LEVELS ; i++) {
+			font_small.draw(spriteBatch, AbstractLevel.getName(i), x_pos, y_pos);
 			y_pos -= spacing_y;
 		}
 
 		// Draw arrows
-		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
-			x_pos = Settings.LOGICAL_SIZE_PIXELS/2 - ((playerIdx+1) * 35);
-			//y_pos = y_pos + (30*playerIdx);
-			int y_pos_start = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
-			y_pos = y_pos_start - ((spacing_y) * (this.gameSelectionData.character[playerIdx]+1));
-			arrows[playerIdx].setBounds(x_pos,  y_pos , 30, 30);
-			arrows[playerIdx].draw(spriteBatch);
-		}
-
-		// Draw log
-		int y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
-		for (String s :this.log) {
-			font_small.draw(spriteBatch, s, 10, y);
-			y -= this.font_small.getLineHeight();
-		}
+		x_pos = Settings.LOGICAL_SIZE_PIXELS/2 - 50;
+		y_pos = (int)( Gdx.graphics.getBackBufferHeight() * .6f) - (gameSelectionData.level * spacing_y) - 20;
+		arrow.setBounds(x_pos,  y_pos , 30, 30);
+		arrow.draw(spriteBatch);
 
 		spriteBatch.end();
 
 		frameBuffer.end();
 
-		//Draw buffer and FPS
+		//Draw buffer
 		spriteBatch.begin();
 		spriteBatch.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
-
 		spriteBatch.end();
 	}
 
 
 	private boolean readInputs() {
-		// Read inputs
-		boolean all_selected = true;
-		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
-			IInputMethod input = this.inputs.get(playerIdx);
-			if (this.gameSelectionData.has_selected_character[playerIdx] == false) {
-				all_selected = false;
-				if (input.isMenuUpPressed()) {
-					main.audio.play("sfx/type2.mp3");
-					this.gameSelectionData.character[playerIdx]--;
-					if (this.gameSelectionData.character[playerIdx] < 0) {
-						this.gameSelectionData.character[playerIdx] = this.available_heroes.length-1;
-					}
-				} else if (input.isMenuDownPressed()) {
-					main.audio.play("sfx/type2.mp3");
-					this.gameSelectionData.character[playerIdx]++;
-					if (this.gameSelectionData.character[playerIdx] >= this.available_heroes.length) {
-						this.gameSelectionData.character[playerIdx] = 0;
-					}
-				} 
+		IInputMethod input = this.inputs.get(0);
+		if (input.isMenuUpPressed()) {
+			main.audio.play("sfx/type2.mp3");
+			this.gameSelectionData.level--;
+			if (this.gameSelectionData.level < 0) {
+				this.gameSelectionData.level = AbstractLevel.MAX_LEVELS-1;
 			}
-			if (input.isMenuSelectPressed()) {
-				if (System.currentTimeMillis() > earliest_input_time) {
-					main.audio.play("sfx/controlpoint.mp3");
-					this.gameSelectionData.has_selected_character[playerIdx] = true;
-					int hero_id = this.available_heroes[this.gameSelectionData.character[playerIdx]];
-					this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(hero_id));
-				}
+		} else if (input.isMenuDownPressed()) {
+			main.audio.play("sfx/type2.mp3");
+			this.gameSelectionData.level++;
+			if (this.gameSelectionData.level >= AbstractLevel.MAX_LEVELS) {
+				this.gameSelectionData.level = 0;
+			}
+		} else if (input.isMenuSelectPressed() || input.isShootPressed()) {
+			if (System.currentTimeMillis() > earliest_input_time) {
+				return true;
 			}
 		}
-		if (all_selected) {
-			this.appendToLog("All Players have selected their hero!");
-		}
-		return all_selected;
+		return false;
 	}
 
 
 	private void startGame() {
-		// Check all players have selected a character
-		main.next_module = new Game(main, inputs, gameSelectionData);
+		main.next_module = new SelectHeroModule(main, inputs, this.gameSelectionData);
 	}
 
 
@@ -276,14 +223,6 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	}
 
 
-	private void appendToLog(String s) {
-		this.log.add(s);
-		while (log.size() > 6) {
-			log.remove(0);
-		}
-	}
-
-
 	@Override
 	public void controlledAdded(Controller controller) {
 
@@ -296,7 +235,6 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	}
 
 
-
 	@Override
 	public int getCurrentViewportIdx() {
 		return 0;
@@ -307,5 +245,5 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	public Rectangle getCurrentViewportRect() {
 		return viewRect;
 	}
-	
+
 }

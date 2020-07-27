@@ -1,11 +1,7 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.HasAIComponent;
-import com.scs.splitscreenfps.game.entities.AvatarFactory;
-import com.scs.splitscreenfps.game.input.AIInputMethod;
 
 public class AITestLevel extends AbstractLevel {
 

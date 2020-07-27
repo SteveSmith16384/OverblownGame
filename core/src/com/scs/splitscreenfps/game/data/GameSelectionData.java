@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.selectcharacter;
+package com.scs.splitscreenfps.game.data;
 
 public class GameSelectionData {
 

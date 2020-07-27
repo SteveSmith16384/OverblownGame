@@ -20,12 +20,11 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.data.GameSelectionData;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
-import com.scs.splitscreenfps.selectcharacter.GameSelectionData;
-import com.scs.splitscreenfps.selectgame.SelectMapModule;
 
 public class PlayersJoinGameModule implements IModule {
 
