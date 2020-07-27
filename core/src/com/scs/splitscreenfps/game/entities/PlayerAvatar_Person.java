@@ -60,8 +60,6 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 		}
 		addComponent(new PlayerData(playerIdx, health));
 
-		setAvatarColour(this, playerIdx);
-
 		addComponent(new CanShoot());
 	}
 

@@ -76,6 +76,8 @@ public class AvatarFactory {
 			avatar = new PlayerAvatar_Person(_game, playerIdx, camera, _inputMethod, getHealth(character));
 		}
 		
+		avatar.setAvatarColour(character);
+
 		if (_inputMethod instanceof AIInputMethod) {
 			avatar.addComponent(new HasAIComponent((AIInputMethod)_inputMethod));
 

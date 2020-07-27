@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeComponent;
@@ -147,8 +148,8 @@ public class BulletEntityFactory {
 	}
 
 	
-	private static Decal getBulletDecal(Game game, int side) {
-		Decal decal = GraphicsHelper.DecalHelper(game.getTexture("particle.png"), 0.2f);
+	private static Decal getBulletDecal(ITextureProvider texProvider, int side) {
+		Decal decal = GraphicsHelper.DecalHelper(texProvider.getTexture("particle.png"), 0.2f);
 		decal.setColor(Settings.getColourForSide(side));
 		return decal;
 	}

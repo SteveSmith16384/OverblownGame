@@ -54,10 +54,6 @@ public class ShootingSystem extends AbstractSystem {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 			if (cc.shootInCameraDirection) {
 				dir.set(player.camera.direction);
-				// Adjust by random amount?
-				//float spread = .05f;
-				//dir.x += NumberFunctions.rndFloat(-spread,spread);
-				//dir.z += NumberFunctions.rndFloat(-spread, spread);
 			} else {
 				dir.set((float)Math.sin(Math.toRadians(posData.angle_y_degrees+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
 			}
@@ -67,7 +63,7 @@ public class ShootingSystem extends AbstractSystem {
 
 			Vector3 startPos = new Vector3();
 			startPos.set(posData.position);
-			startPos.mulAdd(dir, .2f); //.2f
+			startPos.mulAdd(dir, .2f);
 
 			switch (weapon.weapon_type) {
 			case WeaponSettingsComponent.RACER_PISTOLS:

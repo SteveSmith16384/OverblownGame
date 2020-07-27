@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.scs.basicecs.AbstractEntity;
@@ -16,7 +17,7 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 
 	public Camera camera;
 	public IInputMethod inputMethod;
-	public int playerIdx;
+	public final int playerIdx;
 	public PlayerCameraController cameraController;
 	protected Game game;
 	public boolean controlled_connected = true;
@@ -29,16 +30,25 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 	}
 
 	
-	protected void setAvatarColour(AbstractEntity e, int idx) {
-		// Reset player colours
-		HasModelComponent hasModel = (HasModelComponent)e.getComponent(HasModelComponent.class);
-		ModelInstance instance = hasModel.model;
-		for (int i=0 ; i<instance.materials.size ; i++) {
-			instance.materials.get(i).set(ColorAttribute.createDiffuse(Settings.getColourForSide(idx)));
-			instance.materials.get(i).set(ColorAttribute.createAmbient(Settings.getColourForSide(idx)));
+	protected void setAvatarColour(int character) {
+		if (character == AvatarFactory.CHAR_PIGGY) {
+			this.setColour(Color.RED);
+		} else if (character == AvatarFactory.CHAR_VICTIM) {
+			this.setColour(Color.GREEN);
+		} else {
+			this.setColour(Settings.getColourForSide(playerIdx));
 		}
 	}
 	
+
+	private void setColour(Color c) {
+		HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
+		ModelInstance instance = hasModel.model;
+		for (int i=0 ; i<instance.materials.size ; i++) {
+			instance.materials.get(i).set(ColorAttribute.createDiffuse(c));
+			instance.materials.get(i).set(ColorAttribute.createAmbient(c));
+		}
+	}
 	
 	public abstract float getDefaultDamping();
 
