@@ -78,7 +78,9 @@ public class Settings {
 
 
 	public static final void p(String s) {
-		System.out.println(s);
+		if (Settings.RELEASE_MODE == false) {
+			System.out.println(s);
+		}
 	}
 
 

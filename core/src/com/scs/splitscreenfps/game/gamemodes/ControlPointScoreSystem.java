@@ -108,6 +108,7 @@ public class ControlPointScoreSystem implements ISystem {
 			if (this.time_on_point[current_owner.playerIdx] >= WINNING_TIME) {
 				//DrawTextData dtd = (DrawTextData)text.getComponent(DrawTextData.class);
 				PlayerData playerData = (PlayerData)current_owner.getComponent(PlayerData.class);
+				dtd.colour = Settings.getColourForSide(playerData.playerIdx);
 				dtd.text = playerData.playerName + " HAS WON!";
 				game.playerHasWon(current_owner);
 				return;
