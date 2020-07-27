@@ -21,8 +21,8 @@
     {
       "id": 2,
       "type": "",
-      "name": "Floor_new",
-      "tags": "",
+      "name": "problem1",
+      "tags": "test1",
       "texture_id": 15,
       "model_filename": "",
       "tiled": false,
@@ -352,9 +352,9 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 20.0,
+        "x": 21.0,
         "y": 5.5,
-        "z": 1.5
+        "z": 1.25
       },
       "position": {
         "x": 10.268732,
@@ -366,13 +366,13 @@
         "y": 0.0,
         "z": 0.0
       },
-      "mass": 1.0
+      "mass": 0.0
     },
     {
       "id": 44,
       "type": "",
-      "name": "Floor_new_new_new",
-      "tags": "",
+      "name": "problem2",
+      "tags": "test2",
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
@@ -427,7 +427,7 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 20.75,
+        "x": 22.75,
         "y": 5.5,
         "z": 1.5
       },

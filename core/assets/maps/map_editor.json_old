@@ -13,16 +13,16 @@
     "11": "textures/yellowbricks1.png",
     "12": "textures/yellowbricks2.png",
     "13": "textures/yellowbricks3.png",
-    "14": "textures/blackborder/yellow1.png",
-    "15": "textures/blackborder/yellow2.png",
-    "16": "textures/blackborder/yellow3.png"
+    "14": "textures/blackborder/grey1.png",
+    "15": "textures/blackborder/grey2.png",
+    "16": "textures/blackborder/grey3.png"
   },
   "blocks": [
     {
       "id": 2,
       "type": "",
-      "name": "Floor_new",
-      "tags": "",
+      "name": "problem1",
+      "tags": "test1",
       "texture_id": 15,
       "model_filename": "",
       "tiled": false,
@@ -132,9 +132,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 0.9875118,
-        "y": 0.49999917,
-        "z": 13.340198
+        "x": 0.9875057,
+        "y": 0.49999908,
+        "z": 13.34015
       },
       "rotation": {
         "x": 0.0,
@@ -352,9 +352,9 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 20.0,
+        "x": 21.0,
         "y": 5.5,
-        "z": 1.5
+        "z": 1.25
       },
       "position": {
         "x": 10.268732,
@@ -371,8 +371,8 @@
     {
       "id": 44,
       "type": "",
-      "name": "Floor_new_new_new",
-      "tags": "",
+      "name": "problem2",
+      "tags": "test2",
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
@@ -403,7 +403,7 @@
       "tiled": false,
       "size": {
         "x": 1.0,
-        "y": 5.5,
+        "y": 2.25,
         "z": 10.75
       },
       "position": {
@@ -427,7 +427,7 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 20.75,
+        "x": 22.75,
         "y": 5.5,
         "z": 1.5
       },
@@ -698,9 +698,9 @@
       "type": "cube",
       "name": "New cube 58",
       "tags": "",
-      "texture_id": 16,
+      "texture_id": 14,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 24.0,
         "y": 0.5,
@@ -708,7 +708,7 @@
       },
       "position": {
         "x": 10.0,
-        "y": 3.25,
+        "y": 2.5,
         "z": 9.0
       },
       "rotation": {

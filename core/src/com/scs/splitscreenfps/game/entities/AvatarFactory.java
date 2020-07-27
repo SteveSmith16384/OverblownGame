@@ -41,13 +41,13 @@ public class AvatarFactory {
 
 	private static int getHealth(int id) {
 		switch (id) {
-		case CHAR_PHARTAH: return 200;
-		case CHAR_BOOMFIST: return 250;
-		case CHAR_BOWLING_BALL: return 500;
+		case CHAR_PHARTAH: return 100;
+		case CHAR_BOOMFIST: return 200;
+		case CHAR_BOWLING_BALL: return 300;
 		case CHAR_RACER: return 150;
-		case CHAR_WINSTON: return 500;
-		case CHAR_BASTION: return 200;
-		case CHAR_RUBBISHRODENT: return 200;
+		case CHAR_WINSTON: return 300;
+		case CHAR_BASTION: return 150;
+		case CHAR_RUBBISHRODENT: return 150;
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}

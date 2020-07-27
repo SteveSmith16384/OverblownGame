@@ -63,8 +63,18 @@ To edit the texures used, manually edit the map json file.
 * Arrows & Pg Up/Pg Dn: Adjust model size/position/rotation/mass/texture depending on mode
 
 
+## Notes for other Developers
+* Development branch is the cutting edge but possibly broken branch.  Master is the most stable but out of date.
+* Gradle is a real pain to work with.  However, if you have trouble loading this project, I used Gradle v4.10.3.
+* The file Settings.java contains various settings that determine what game mode the game starts in.
+
+
+## Become a Patron!
+Well, it's worth a try: https://www.patreon.com/bePatron?u=3406199
+
+
 ## Licence
-All code is licenced under MIT.
+This project uses the MIT licence.  See LICENCE.txt.
 
 
 ## Credits

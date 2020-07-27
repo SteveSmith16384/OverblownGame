@@ -106,6 +106,7 @@ public abstract class AbstractLevel {
 
 		for (MapBlockComponent block : mapdata.blocks) {
 			if (block.position.y < -4f) { // Skip any that have fallen off the edge
+				Settings.p("Ignoreing" + block.name + " as it is too low");
 				continue;
 			}
 			if (block.tags.contains("playerstartposition")) {
