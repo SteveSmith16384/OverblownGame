@@ -26,10 +26,6 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 		
 		game = _game;
 		playerIdx = _playerIdx;
-		
-		//DrawTextIn3DSpaceComponent text = new DrawTextIn3DSpaceComponent("", new Vector3(0, .3f, 0), 4, playerIdx);
-		//this.addComponent(text);
-
 	}
 
 	

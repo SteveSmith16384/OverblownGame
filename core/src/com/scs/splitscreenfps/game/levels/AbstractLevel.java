@@ -31,8 +31,9 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_VILLAGE = 1;
 	public static final int LEVEL_TEMPLE_OF_THE_NOOBIES = 2;
 	public static final int LEVEL_BLOWPIPE = 3;
-	public static final int LEVEL_MAP_EDITOR = 4;
-	public static final int MAX_LEVELS = 5;
+	public static final int LEVEL_AI_TEST = 4;
+	public static final int LEVEL_MAP_EDITOR = 5;
+	public static final int MAX_LEVELS = 6;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -43,6 +44,11 @@ public abstract class AbstractLevel {
 	}
 
 
+	public int getNumAi() {
+		return 0;
+	}
+	
+	
 	public static final String getName(int i) {
 		switch (i) {
 		case LEVEL_FACTORY:
@@ -53,6 +59,8 @@ public abstract class AbstractLevel {
 			return "Temple of the Noobies - Deathmatch";
 		case LEVEL_BLOWPIPE:
 			return "Blowpipe - Deathmatch";
+		case LEVEL_AI_TEST:
+			return "AI Test";
 		case LEVEL_MAP_EDITOR:
 			return "Map Editor";
 		default:
@@ -71,6 +79,8 @@ public abstract class AbstractLevel {
 			return new TempleOfTheNoobiesLevel(game);
 		case LEVEL_BLOWPIPE:
 			return new BlowpipeLevel(game);
+		case LEVEL_AI_TEST:
+			return new AITestLevel(game);
 		case LEVEL_MAP_EDITOR:
 			return new MapEditorLevel(game);
 		default:

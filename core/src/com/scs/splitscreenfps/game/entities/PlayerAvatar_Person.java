@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
@@ -8,7 +9,6 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PlayerCameraController;
-import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
@@ -26,7 +26,7 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 	public static final float RADIUS = 0.2f;
 	private static final float DAMPING = 0.9f;
 
-	public PlayerAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int health) {
+	public PlayerAvatar_Person(Game _game, int playerIdx, Camera _camera, IInputMethod _inputMethod, int health) {
 		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		inputMethod = _inputMethod;
@@ -37,7 +37,6 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 		// Model stuff
 		this.addAlienModel(playerIdx);
 
-		//btCapsuleShape capsuleShape = new btCapsuleShape(0.15f, PLAYER_HEIGHT);
 		btCapsuleShape capsuleShape = new btCapsuleShape(RADIUS, PLAYER_HEIGHT);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
@@ -54,7 +53,7 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 
 		this.addComponent(new PositionComponent());
 
-		camera = _viewportData.camera;
+		camera = _camera;//_viewportData.camera;
 		cameraController = new PlayerCameraController(camera);
 		if (Game.physics_enabled == false) {
 			camera.position.set(0, 5, 0);

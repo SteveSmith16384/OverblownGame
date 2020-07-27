@@ -53,6 +53,7 @@ import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
+import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
@@ -149,6 +150,13 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.createECS();
 
 		viewports = new ViewportData[4];
+
+		if (this.gameSelectionData.level == AbstractLevel.LEVEL_AI_TEST) {
+			// Add AI
+			this.inputs.add(new AIInputMethod());
+			this.gameSelectionData.character[this.inputs.size()-1] = AvatarFactory.CHAR_PHARTAH;
+		}
+
 		players = new AbstractPlayersAvatar[inputs.size()];
 		for (int i=0 ; i<players.length ; i++) {
 			this.viewports[i] = new ViewportData(i, false, players.length);
@@ -160,26 +168,19 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(GRAVITY);
+
 		new MyContactListener();
 
-		/*if (Settings.USE_MAP_EDITOR) {
-			currentLevel = new MapEditorLevel(this);
-		} else {*/
 		this.currentLevel = AbstractLevel.factory(gameSelectionData.level, this);
-		//}
 
 		loadLevel();
 
 		for (int i=0 ; i<players.length ; i++) {
-			players[i] = AvatarFactory.createAvatar(this, i, viewports[i], inputs.get(i), gameSelectionData.character[i]);
+			players[i] = AvatarFactory.createAvatar(this, i, viewports[i].camera, inputs.get(i), gameSelectionData.character[i]);
 			ecs.addEntity(players[i]);
-
+			
 			SpeechSystem speech = (SpeechSystem)this.ecs.getSystem(SpeechSystem.class);
 			speech.addFile(SpeechSystem.getFileForCharacter(gameSelectionData.character[i]));
-
-			//Camera cam = players[i].camera;
-			//cam.lookAt(7, 0.4f, 7); //makes camera slightly slanted?
-			//cam.update();
 
 			AbstractEntity crosshairs = GraphicsEntityFactory.createCrosshairs(ecs, this, i);
 			ecs.addEntity(crosshairs);

@@ -14,11 +14,6 @@ public class AnimationSystem extends AbstractSystem {
 	}
 
 
-	public void setNextAnim(String name, boolean loop) {
-		
-	}
-	
-	
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);

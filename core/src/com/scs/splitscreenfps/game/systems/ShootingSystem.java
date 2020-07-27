@@ -54,7 +54,8 @@ public class ShootingSystem extends AbstractSystem {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 			if (cc.shootInCameraDirection) {
 				dir.set(player.camera.direction);
-				float spread = .05f;
+				// Adjust by random amount?
+				//float spread = .05f;
 				//dir.x += NumberFunctions.rndFloat(-spread,spread);
 				//dir.z += NumberFunctions.rndFloat(-spread, spread);
 			} else {

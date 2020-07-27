@@ -354,6 +354,7 @@ public class EntityFactory {
 	}
 
 
+
 	public static AbstractEntity createPlayersWeapon(Game game, int playerIdx, String tex_filename, Camera cam) {
 		AbstractEntity weapon = new AbstractEntity(game.ecs, "Weapon");
 

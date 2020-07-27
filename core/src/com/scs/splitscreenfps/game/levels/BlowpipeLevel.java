@@ -32,7 +32,7 @@ public class BlowpipeLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			//super.loadJsonFile("maps/factory.json", false);
+			//super.loadJsonFile("maps/undergroundcomplex.json", false);
 			super.loadJsonFile("maps/map_editor.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();

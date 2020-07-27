@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.gamemodes;
 
-import com.badlogic.gdx.graphics.Color;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;

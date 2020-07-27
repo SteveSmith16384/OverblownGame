@@ -1,25 +1,27 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.ViewportData;
+import com.scs.splitscreenfps.game.components.HasAIComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent.SecondaryAbilityType;
 import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
 import com.scs.splitscreenfps.game.components.UltimateAbilityComponent.UltimateType;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
+import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class AvatarFactory {
 
-	public static final int CHAR_PHARTAH = 0;
-	public static final int CHAR_BOOMFIST = 1;
-	public static final int CHAR_BOWLING_BALL = 2;
-	public static final int CHAR_RACER = 3;
+	public static final int CHAR_PHARTAH = 1;
+	public static final int CHAR_BOOMFIST = 2;
+	public static final int CHAR_BOWLING_BALL = 3;
+	public static final int CHAR_RACER = 4;
 
-	public static final int CHAR_WINSTON = 4;
-	public static final int CHAR_BASTION = 5;
-	public static final int CHAR_RUBBISHRODENT = 6;
+	public static final int CHAR_WINSTON = 5;
+	public static final int CHAR_BASTION = 6;
+	public static final int CHAR_RUBBISHRODENT = 7;
 	
 	
 	public static final int MAX_CHARS = 4;
@@ -54,12 +56,17 @@ public class AvatarFactory {
 	}
 
 
-	public static AbstractPlayersAvatar createAvatar(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int character) {
+	public static AbstractPlayersAvatar createAvatar(Game _game, int playerIdx, Camera camera, IInputMethod _inputMethod, int character) {
 		AbstractPlayersAvatar avatar = null;
 		if (character == CHAR_BOWLING_BALL) {
-			avatar = new PlayerAvatar_Ball(_game, playerIdx, _viewportData, _inputMethod, getHealth(character));
+			avatar = new PlayerAvatar_Ball(_game, playerIdx, camera, _inputMethod, getHealth(character));
 		} else {
-			avatar = new PlayerAvatar_Person(_game, playerIdx, _viewportData, _inputMethod, getHealth(character));
+			avatar = new PlayerAvatar_Person(_game, playerIdx, camera, _inputMethod, getHealth(character));
+		}
+		
+		if (_inputMethod instanceof AIInputMethod) {
+			avatar.addComponent(new HasAIComponent((AIInputMethod)_inputMethod));
+
 		}
 		
 		WeaponSettingsComponent weapon;

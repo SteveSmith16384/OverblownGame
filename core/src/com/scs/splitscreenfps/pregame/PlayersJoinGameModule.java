@@ -88,7 +88,7 @@ public class PlayersJoinGameModule implements IModule {
 					}
 				}
 			}
-			GameSelectionData gameSelectionData = new GameSelectionData(Settings.NUM_AUTOSTART_CHARACTERS);
+			GameSelectionData gameSelectionData = new GameSelectionData();//Settings.NUM_AUTOSTART_CHARACTERS);
 			gameSelectionData.level = Settings.AUTOSTART_LEVEL;
 			for (int i=0 ; i<Settings.NUM_AUTOSTART_CHARACTERS ; i++) {
 				gameSelectionData.character[i] = Settings.AUTOSTART_CHARACTER;

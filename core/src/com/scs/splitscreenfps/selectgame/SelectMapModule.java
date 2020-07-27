@@ -22,6 +22,7 @@ import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.entities.TextEntity;
+import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.systems.ChangeColourSystem;
@@ -61,7 +62,7 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 
 		main = _main;
 		inputs = _inputs;
-		this.gameSelectionData = new GameSelectionData(inputs.size());
+		this.gameSelectionData = new GameSelectionData();//inputs.size());
 		spriteBatch = new SpriteBatch();
 
 		ecs = new BasicECS();
