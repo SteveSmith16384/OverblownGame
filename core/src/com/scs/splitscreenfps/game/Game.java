@@ -57,6 +57,7 @@ import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
+import com.scs.splitscreenfps.game.systems.AISystem;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CheckRangeSystem;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
@@ -274,6 +275,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		ecs.addSystem(new RemoveOnContactSystem(ecs));
 		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
+		ecs.addSystem(new AISystem(this, ecs));
+		
 	}
 
 
@@ -330,7 +333,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 		this.ecs.getSystem(PlayerProcessSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
+		this.ecs.getSystem(AISystem.class).process();
 		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
+		
 		this.ecs.events.clear();
 		if (physics_enabled) {
 			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away

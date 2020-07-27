@@ -39,6 +39,7 @@ public class Settings {
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 	public static final int LOGICAL_SIZE_PIXELS = 1024;
+	public static final float DEF_MOVE_SPEED = 15;//20;//25;//1.5f;
 
 	public static Properties prop;
 

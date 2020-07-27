@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasAIComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
@@ -68,12 +69,22 @@ public class AvatarFactory {
 	}
 
 
+	private static float getSpeed(int id) {
+		switch (id) {
+		case CHAR_VICTIM:
+			return Settings.DEF_MOVE_SPEED * 1.1f;
+		default:
+			return Settings.DEF_MOVE_SPEED;
+		}
+	}
+
+
 	public static AbstractPlayersAvatar createAvatar(Game _game, int playerIdx, Camera camera, IInputMethod _inputMethod, int hero_id) {
 		AbstractPlayersAvatar avatar = null;
 		if (hero_id == CHAR_BOWLING_BALL) {
-			avatar = new PlayerAvatar_Ball(_game, playerIdx, hero_id, camera, _inputMethod, getHealth(hero_id));
+			avatar = new PlayerAvatar_Ball(_game, playerIdx, camera, hero_id, _inputMethod, getHealth(hero_id), getSpeed(hero_id));
 		} else {
-			avatar = new PlayerAvatar_Person(_game, playerIdx, hero_id, camera, _inputMethod, getHealth(hero_id));
+			avatar = new PlayerAvatar_Person(_game, playerIdx, camera, hero_id, _inputMethod, getHealth(hero_id), getSpeed(hero_id));
 		}
 		
 		avatar.setAvatarColour(hero_id);

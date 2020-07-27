@@ -22,7 +22,6 @@ import com.scs.splitscreenfps.game.events.EventCollision;
 
 public class PlayerProcessSystem implements ISystem {
 
-	private static final float MOVE_SPEED = 15;//20;//25;//1.5f;
 	private static final float CAM_SPEED = 3f;
 	private static final float LINEAR_VELOCITY_CUTOFF = 4f;
 
@@ -154,21 +153,21 @@ public class PlayerProcessSystem implements ISystem {
 				//Settings.p("Fwd:" + this.inputMethod.isForwardsPressed());
 				tmpVector.set(camera.direction);
 				tmpVector.y = 0;
-				movementData.offset.add(tmpVector.nor().scl(player.inputMethod.getForwards() * MOVE_SPEED));
+				movementData.offset.add(tmpVector.nor().scl(player.inputMethod.getForwards() * movementData.speed));
 			} else if (player.inputMethod.getBackwards() > Settings.MIN_AXIS) {
 				//Settings.p("Back:" + this.inputMethod.isBackwardsPressed());
 				tmpVector.set(camera.direction);
 				tmpVector.y = 0;
-				movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * player.inputMethod.getBackwards()));
+				movementData.offset.add(tmpVector.nor().scl(-movementData.speed * player.inputMethod.getBackwards()));
 			}
 			if (player.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
 				tmpVector.set(camera.direction).crs(camera.up);
 				tmpVector.y = 0;
-				movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * player.inputMethod.getStrafeLeft()));
+				movementData.offset.add(tmpVector.nor().scl(-movementData.speed * player.inputMethod.getStrafeLeft()));
 			} else if (player.inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
 				tmpVector.set(camera.direction).crs(camera.up);
 				tmpVector.y = 0;
-				movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED * player.inputMethod.getStrafeRight()));
+				movementData.offset.add(tmpVector.nor().scl(movementData.speed * player.inputMethod.getStrafeRight()));
 			}
 
 			if (player.inputMethod.isJumpPressed()) {

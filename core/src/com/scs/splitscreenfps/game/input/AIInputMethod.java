@@ -2,14 +2,18 @@ package com.scs.splitscreenfps.game.input;
 
 public class AIInputMethod implements IInputMethod {
 
+	public boolean move_fwd;
+	public boolean turn_left, turn_right;
+	
 	public AIInputMethod() {
 	}
 
 	@Override
 	public float getForwards() {
-		return 0;
+		return move_fwd ? 1 : 0;
 	}
 
+	
 	@Override
 	public float getBackwards() {
 		return 0;
@@ -42,12 +46,12 @@ public class AIInputMethod implements IInputMethod {
 
 	@Override
 	public float getLookLeft() {
-		return 0;//.21f;
+		return turn_left ? .5f : 0;//.21f;
 	}
 
 	@Override
 	public float getLookRight() {
-		return 0;//.1f;
+		return turn_right ? .5f : 0;//.21f;
 	}
 
 	@Override

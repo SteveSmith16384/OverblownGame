@@ -20,19 +20,13 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 import ssmith.libgdx.ModelFunctions;
 
-// This also moves the camera
 public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 
 	public static final float RADIUS = 0.2f;
 	private static final float DAMPING = 0.9f;
 
-	public PlayerAvatar_Person(Game _game, int playerIdx, int hero_id, Camera _camera, IInputMethod _inputMethod, int health) {
-		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx, hero_id);
-
-		inputMethod = _inputMethod;
-
-		PlayerMovementData md = new PlayerMovementData();
-		this.addComponent(md);
+	public PlayerAvatar_Person(Game _game, int playerIdx, Camera camera, int hero_id, IInputMethod _inputMethod, int health, float speed) {
+		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx, camera, hero_id, _inputMethod, health, speed);
 
 		// Model stuff
 		this.addAlienModel(playerIdx);
@@ -51,16 +45,6 @@ public class PlayerAvatar_Person extends AbstractPlayersAvatar {
 		physics.physicsControlsRotation = false;
 		addComponent(physics);
 
-		this.addComponent(new PositionComponent());
-
-		camera = _camera;//_viewportData.camera;
-		cameraController = new PlayerCameraController(camera);
-		if (Game.physics_enabled == false) {
-			camera.position.set(0, 5, 0);
-		}
-		addComponent(new PlayerData(playerIdx, health));
-
-		addComponent(new CanShoot());
 	}
 
 

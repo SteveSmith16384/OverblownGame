@@ -1,21 +1,14 @@
 # OVERBLOWN
 
-An Overwatch clone split-screen multiplayer FPS with physics.
+An Overwatch clone split-screen multiplayer FPS with physics.  I created this as an attempt to get my kids to play one of my games, so I've copied ideas from their favourite games, including Overwatch and Piggy (/Roblox).
+
 
 Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-74KwOzu8khhYF_4Zb0pPF
 
 
-## Heroes
-* Phartah - Has a rocket launcher and jetpac.
-* Boomfist - Can punch enemies away
-* Bowling Ball - Can roll around knocking enemies away.
-* Racer - Can zip around the map.
-
-
-## Game Maps/Modes
-* Factory - Death Match
-* Village - Control Point
-* Temple of the Noobies - Death Match
+## Features
+* Multiple heroes with different abilities and ultimates.
+* Multiple game modes
 
 
 ## Controls

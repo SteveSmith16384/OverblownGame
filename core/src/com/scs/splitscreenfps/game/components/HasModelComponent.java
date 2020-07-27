@@ -30,7 +30,6 @@ public class HasModelComponent {
 	public HasModelComponent(ModelInstance _model, float yOffset, int _angleOffset, float _scale, boolean _cast_shadow) {
 		model = _model;
 		yOff = yOffset;
-		//positionOffsetToOrigin = _offset;
 		angleYOffsetToFwds = _angleOffset;
 		scale = _scale;
 		cast_shadow = _cast_shadow;

@@ -8,4 +8,9 @@ public class PlayerMovementData {
 	public long frozenUntil = 0;
 	public boolean jumpPressed = false;
 	public long next_footstep_sound;
+	public float speed;
+	
+	public PlayerMovementData(float _speed) {
+		speed = _speed;
+	}
 }

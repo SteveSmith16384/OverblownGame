@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PlayerCameraController;
 import com.scs.splitscreenfps.game.components.CanShoot;
@@ -23,16 +24,10 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 
-	//private static final float PLAYER_HEIGHT = 0.4f;
 	private static final float DAMPING = 0.5f;
 
-	public PlayerAvatar_Ball(Game _game, int playerIdx, int hero_id, Camera _camera, IInputMethod _inputMethod, int health) {
-		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx, hero_id);
-
-		inputMethod = _inputMethod;
-
-		PlayerMovementData md = new PlayerMovementData();
-		this.addComponent(md);
+	public PlayerAvatar_Ball(Game _game, int playerIdx, Camera camera, int hero_id, IInputMethod _inputMethod, int health, float speed) {
+		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx, camera, hero_id, _inputMethod, health, speed);
 
 		float diam = .8f;
 		// Model stuff
@@ -58,19 +53,6 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 		physics.removeIfFallen = false;
 		physics.physicsControlsRotation = false;
 		addComponent(physics);
-
-		this.addComponent(new PositionComponent());
-
-		camera = _camera;//_viewportData.camera;
-		cameraController = new PlayerCameraController(camera);
-		if (Game.physics_enabled == false) {
-			camera.position.set(0, 5, 0);
-		}
-		addComponent(new PlayerData(playerIdx, health));
-
-		//setAvatarColour(this, playerIdx);
-
-		addComponent(new CanShoot());
 
 	}
 
