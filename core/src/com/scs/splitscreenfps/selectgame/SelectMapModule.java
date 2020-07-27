@@ -20,9 +20,9 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.ChangeColourComponent;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.entities.TextEntity;
-import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.systems.ChangeColourSystem;
@@ -80,9 +80,8 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 
 		// Text
 		TextEntity text = new TextEntity(ecs, "SELECT MAP", 50, 20, -1, Color.WHITE, 0, main.font_large, true);
-		//text.addComponent(new ChangeColourComponent(Color.WHITE, Color.RED, 300));
+		text.addComponent(new ChangeColourComponent(Color.WHITE, Color.GRAY, 300));
 		ecs.addEntity(text);
-		loadAssetsForResize();
 
 		loadAssetsForResize();
 

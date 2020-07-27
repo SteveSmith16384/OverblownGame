@@ -57,8 +57,6 @@ public class BulletEntityFactory {
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, true));
 		e.addComponent(new RemoveEntityAfterTimeComponent(8)); // Just in case it hits another bullet and hangs in the air
 
-		//e.addComponent(new MoveInDirectionComponent(dir.scl(10f)));
-
 		// Add physics
 		btSphereShape shape = new btSphereShape(diam/2);//new Vector3(size/2, size/2, size/2));
 		btRigidBody body = new btRigidBody(.07f, null, shape);
