@@ -1,17 +1,19 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
+import com.scs.splitscreenfps.game.gamemodes.PiggyScoreSystem;
 
 public class PiggyLevel extends AbstractLevel {
 
-	//todo private ISystem deathmatchSystem;
+	private ISystem deathmatchSystem;
 
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
 
-		//this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, false);
+		this.deathmatchSystem = new PiggyScoreSystem(game, game.ecs);
 
 	}
 
@@ -42,7 +44,7 @@ public class PiggyLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		//deathmatchSystem.process();
+		deathmatchSystem.process();
 	}
 
 

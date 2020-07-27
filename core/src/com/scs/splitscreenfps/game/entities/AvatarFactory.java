@@ -68,15 +68,15 @@ public class AvatarFactory {
 	}
 
 
-	public static AbstractPlayersAvatar createAvatar(Game _game, int playerIdx, Camera camera, IInputMethod _inputMethod, int character) {
+	public static AbstractPlayersAvatar createAvatar(Game _game, int playerIdx, Camera camera, IInputMethod _inputMethod, int hero_id) {
 		AbstractPlayersAvatar avatar = null;
-		if (character == CHAR_BOWLING_BALL) {
-			avatar = new PlayerAvatar_Ball(_game, playerIdx, camera, _inputMethod, getHealth(character));
+		if (hero_id == CHAR_BOWLING_BALL) {
+			avatar = new PlayerAvatar_Ball(_game, playerIdx, hero_id, camera, _inputMethod, getHealth(hero_id));
 		} else {
-			avatar = new PlayerAvatar_Person(_game, playerIdx, camera, _inputMethod, getHealth(character));
+			avatar = new PlayerAvatar_Person(_game, playerIdx, hero_id, camera, _inputMethod, getHealth(hero_id));
 		}
 		
-		avatar.setAvatarColour(character);
+		avatar.setAvatarColour(hero_id);
 
 		if (_inputMethod instanceof AIInputMethod) {
 			avatar.addComponent(new HasAIComponent((AIInputMethod)_inputMethod));
@@ -85,7 +85,7 @@ public class AvatarFactory {
 		
 		WeaponSettingsComponent weapon = null;
 		int weapon_type = -1;
-		switch (character) {
+		switch (hero_id) {
 		case CHAR_PHARTAH:
 			weapon_type = WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10));
@@ -137,7 +137,7 @@ public class AvatarFactory {
 			break;
 			
 		default:
-			throw new RuntimeException("Unhandled character: " + character);
+			throw new RuntimeException("Unhandled character: " + hero_id);
 		}
 
 		switch (weapon_type) {
@@ -187,8 +187,12 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.BLOWPIPE:
-		case WeaponSettingsComponent.PIGGY_GUN:
 			weapon = new WeaponSettingsComponent(weapon_type, 4000, 0, 999, 999, 
+					999, 0, 0, null);
+			break;
+
+		case WeaponSettingsComponent.PIGGY_GUN:
+			weapon = new WeaponSettingsComponent(weapon_type, 2000, 0, 999, 999, 
 					999, 0, 0, null);
 			break;
 

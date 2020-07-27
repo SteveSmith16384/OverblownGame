@@ -17,16 +17,17 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 
 	public Camera camera;
 	public IInputMethod inputMethod;
-	public final int playerIdx;
+	public final int playerIdx, hero_id;
 	public PlayerCameraController cameraController;
 	protected Game game;
 	public boolean controlled_connected = true;
 	
-	public AbstractPlayersAvatar(Game _game, int _playerIdx, String _name) {
+	public AbstractPlayersAvatar(Game _game, int _playerIdx, String _name, int _hero_id) {
 		super(_game.ecs, _name);
 		
 		game = _game;
 		playerIdx = _playerIdx;
+		hero_id = _hero_id;
 	}
 
 	
