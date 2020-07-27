@@ -53,6 +53,7 @@ public class SelectHeroModule implements IModule {
 
 		for (int i=0 ; i<this.gameSelectionData.has_selected_character.length ; i++) {
 			this.gameSelectionData.has_selected_character[i] = false;
+			this.gameSelectionData.character[i] = 1; // First character
 		}
 
 		spriteBatch = new SpriteBatch();
@@ -138,7 +139,7 @@ public class SelectHeroModule implements IModule {
 		// Draw arrows
 		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
 			y_pos = y_pos + (30*playerIdx);
-			int x_pos = spacing_x * (this.gameSelectionData.character[playerIdx]+1);
+			int x_pos = spacing_x * (this.gameSelectionData.character[playerIdx]);
 
 			//arrow.setColor(Settings.getColourForSide(playerIdx));
 			arrows[playerIdx].setBounds(x_pos,  y_pos , 30, 30);
@@ -187,14 +188,14 @@ public class SelectHeroModule implements IModule {
 				if (input.isMenuLeftPressed()) {
 					main.audio.play("sfx/type2.mp3");
 					this.gameSelectionData.character[playerIdx]--;
-					if (this.gameSelectionData.character[playerIdx] < 0) {
-						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS-1;
+					if (this.gameSelectionData.character[playerIdx] < 1) {
+						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS;
 					}
 				} else if (input.isMenuRightPressed()) {
 					main.audio.play("sfx/type2.mp3");
 					this.gameSelectionData.character[playerIdx]++;
-					if (this.gameSelectionData.character[playerIdx] >= AvatarFactory.MAX_CHARS) {
-						this.gameSelectionData.character[playerIdx] = 0;
+					if (this.gameSelectionData.character[playerIdx] > AvatarFactory.MAX_CHARS) {
+						this.gameSelectionData.character[playerIdx] = 1;
 					}
 				} 
 			}
