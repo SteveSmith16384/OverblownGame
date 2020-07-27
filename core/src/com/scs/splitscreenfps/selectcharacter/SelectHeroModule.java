@@ -61,7 +61,7 @@ public class SelectHeroModule implements IModule {
 
 		this.appendToLog("CHOOSE A HERO!");
 
-		spacing_x = Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
+		spacing_x = Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+2);
 
 		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
 
@@ -130,8 +130,8 @@ public class SelectHeroModule implements IModule {
 
 		// Draw characters
 		int y_pos =  Settings.LOGICAL_SIZE_PIXELS/2;
-		for (int i=0 ; i<AvatarFactory.MAX_CHARS ; i++) {
-			int x_pos = spacing_x * (i+1);
+		for (int i=1 ; i<=AvatarFactory.MAX_CHARS ; i++) {
+			int x_pos = spacing_x * (i);
 			font_small.draw(spriteBatch, AvatarFactory.getName(i), x_pos, y_pos);
 		}
 

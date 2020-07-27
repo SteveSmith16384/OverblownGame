@@ -5,7 +5,6 @@ import com.scs.splitscreenfps.game.data.ExplosionData;
 public class WeaponSettingsComponent {
 
 	// Weapon types
-	//public static final int WEAPON_RIFLE = 1;
 	public static final int JUNKRAT_GRENADE_LAUNCHER = 2;
 	public static final int WEAPON_ROCKET_LAUNCHER = 3;
 	public static final int WEAPON_PUNCH = 4;

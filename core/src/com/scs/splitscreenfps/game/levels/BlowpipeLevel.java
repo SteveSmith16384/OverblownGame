@@ -54,6 +54,7 @@ public class BlowpipeLevel extends AbstractLevel {
 				player.removeComponent(SecondaryAbilityComponent.class);
 
 				WeaponSettingsComponent weapon = (WeaponSettingsComponent)player.getComponent(WeaponSettingsComponent.class);
+				weapon.weapon_type = WeaponSettingsComponent.RACER_PISTOLS;
 				weapon.reload_interval = 5000;
 				weapon.max_ammo = 1;
 			}
