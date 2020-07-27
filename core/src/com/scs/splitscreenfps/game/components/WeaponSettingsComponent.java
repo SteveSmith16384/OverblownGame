@@ -12,6 +12,7 @@ public class WeaponSettingsComponent {
 	public static final int BOOMFIST_RIFLE = 6;
 	public static final int BOWLINGBALL_GUN = 7;
 	public static final int RACER_PISTOLS = 8;
+	public static final int HYPERSPHERES = 9;
 		
 	public int weapon_type;
 	public long shot_interval;

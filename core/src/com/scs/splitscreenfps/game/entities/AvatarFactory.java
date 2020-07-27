@@ -19,12 +19,14 @@ public class AvatarFactory {
 	public static final int CHAR_BOWLING_BALL = 3;
 	public static final int CHAR_RACER = 4;
 
-	public static final int CHAR_WINSTON = 5;
-	public static final int CHAR_BASTION = 6;
-	public static final int CHAR_RUBBISHRODENT = 7;
+	public static final int MAX_CHAR_ID = 4;
+
+	//public static final int CHAR_SIGMA = 5;
+	public static final int CHAR_WINSTON = 6;
+	public static final int CHAR_BASTION = 7;
+	public static final int CHAR_RUBBISHRODENT = 8;
 	
 	
-	public static final int MAX_CHARS = 4;
 
 	public static String getName(int id) {
 		switch (id) {

@@ -76,6 +76,11 @@ public class ShootingSystem extends AbstractSystem {
 				game.ecs.addEntity(bullet);
 				break;
 
+			case WeaponSettingsComponent.HYPERSPHERES:
+				AbstractEntity hs = BulletEntityFactory.createBouncingBullet(game, player, startPos, dir);
+				game.ecs.addEntity(hs);
+				break;
+
 			case WeaponSettingsComponent.BOOMFIST_RIFLE:
 				// Shoot 3-ways - need to do work to stop them colliding at the start!
 				AbstractEntity b1 = BulletEntityFactory.createBullet(game, player, startPos, dir);

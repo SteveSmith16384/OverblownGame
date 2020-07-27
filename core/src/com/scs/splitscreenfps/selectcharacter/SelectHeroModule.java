@@ -62,7 +62,7 @@ public class SelectHeroModule implements IModule {
 
 		this.appendToLog("CHOOSE A HERO!");
 
-		spacing_x = Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+2);
+		spacing_x = Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHAR_ID+2);
 
 		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
 
@@ -131,7 +131,7 @@ public class SelectHeroModule implements IModule {
 
 		// Draw characters
 		int y_pos =  Settings.LOGICAL_SIZE_PIXELS/2;
-		for (int i=1 ; i<=AvatarFactory.MAX_CHARS ; i++) {
+		for (int i=1 ; i<=AvatarFactory.MAX_CHAR_ID ; i++) {
 			int x_pos = spacing_x * (i);
 			font_small.draw(spriteBatch, AvatarFactory.getName(i), x_pos, y_pos);
 		}
@@ -189,12 +189,12 @@ public class SelectHeroModule implements IModule {
 					main.audio.play("sfx/type2.mp3");
 					this.gameSelectionData.character[playerIdx]--;
 					if (this.gameSelectionData.character[playerIdx] < 1) {
-						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHARS;
+						this.gameSelectionData.character[playerIdx] = AvatarFactory.MAX_CHAR_ID;
 					}
 				} else if (input.isMenuRightPressed()) {
 					main.audio.play("sfx/type2.mp3");
 					this.gameSelectionData.character[playerIdx]++;
-					if (this.gameSelectionData.character[playerIdx] > AvatarFactory.MAX_CHARS) {
+					if (this.gameSelectionData.character[playerIdx] > AvatarFactory.MAX_CHAR_ID) {
 						this.gameSelectionData.character[playerIdx] = 1;
 					}
 				} 

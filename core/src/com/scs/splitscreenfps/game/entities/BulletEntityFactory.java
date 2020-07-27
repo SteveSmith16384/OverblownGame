@@ -38,7 +38,7 @@ public class BulletEntityFactory {
 	public static AbstractEntity createBullet(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Bullet");
 
-		float size = 0.1f;//05f;
+		float diam = 0.1f;//05f;
 		
 		e.addComponent(new PositionComponent());
 
@@ -55,11 +55,12 @@ public class BulletEntityFactory {
 		e.addComponent(new RemoveOnContactComponent(shooter, true));
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, true));
-		
+		e.addComponent(new RemoveEntityAfterTimeComponent(8)); // Just in case it hits another bullet and hangs in the air
+
 		//e.addComponent(new MoveInDirectionComponent(dir.scl(10f)));
 
 		// Add physics
-		btBoxShape shape = new btBoxShape(new Vector3(size/2, size/2, size/2));
+		btSphereShape shape = new btSphereShape(diam/2);//new Vector3(size/2, size/2, size/2));
 		btRigidBody body = new btRigidBody(.07f, null, shape);
 		//btGhostObject body = new btGhostObject();
 		//body.setCollisionFlags(CollisionFlags.CF_STATIC_OBJECT);//CF_NO_CONTACT_RESPONSE); // CF_KINEMATIC_OBJECT);//
@@ -71,6 +72,62 @@ public class BulletEntityFactory {
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
 		pc.force = new Vector3(dir).scl(.7f);
+		e.addComponent(pc);
+
+		switch (settings.weapon_type) {
+		case WeaponSettingsComponent.BOWLINGBALL_GUN:
+			BillBoardFPS_Main.audio.play("sfx/launches/flaunch.wav");
+			break;
+		case WeaponSettingsComponent.BOOMFIST_RIFLE:
+			BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+			break;
+		case WeaponSettingsComponent.RACER_PISTOLS:
+			BillBoardFPS_Main.audio.play("sfx/launches/slimeball.wav");
+			break;
+		default:
+			BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
+			break;
+		}
+
+		return e;
+	}
+
+	
+	public static AbstractEntity createBouncingBullet(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "Bullet");
+
+		float diam = 0.1f;//05f;
+		
+		e.addComponent(new PositionComponent());
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
+
+		HasDecal hasDecal = new HasDecal();
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
+
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = true;
+		e.addComponent(hasDecal);
+
+		//e.addComponent(new RemoveOnContactComponent(shooter, true));
+		//e.addComponent(new HasRangeComponent(start, settings.range));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, true));
+		e.addComponent(new RemoveEntityAfterTimeComponent(4));
+		
+		// Add physics
+		btSphereShape shape = new btSphereShape(diam/2);//new Vector3(size/2, size/2, size/2));
+		btRigidBody body = new btRigidBody(.07f, null, shape);
+		body.userData = e;
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		body.setRestitution(1);
+		body.setFriction(0);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.disable_gravity = true;
+		pc.force = new Vector3(dir).scl(.8f);
 		e.addComponent(pc);
 
 		switch (settings.weapon_type) {
