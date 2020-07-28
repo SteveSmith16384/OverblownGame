@@ -214,7 +214,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
 			vfxManager.addEffect(new LensFlareEffect()); // Good
-			vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
+			//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
 			//vfxManager.addEffect(new FxaaEffect()); // No effect?
 			//vfxManager.addEffect(new LevelsEffect()); // No effect
 			//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f)); // A bit trippy
