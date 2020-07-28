@@ -8,6 +8,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextComponent;
@@ -108,6 +109,7 @@ public class ShootTagSystem implements ISystem {
 				weapon.weapon_type = WeaponSettingsComponent.HYPERSPHERES;
 				PlayerData pdata = (PlayerData)this.it_player.getComponent(PlayerData.class);
 				game.appendToLog(pdata.playerName + " is now IT!");
+				BillBoardFPS_Main.audio.play("sfx/so thats coming along.wav");
 			} else {
 				weapon.weapon_type = WeaponSettingsComponent.NONE;
 			}

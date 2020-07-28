@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
@@ -18,11 +19,11 @@ public class PiggyGameMode implements ISystem {
 	private AbstractEntity piggy;
 	private AbstractEntity time_text;
 	private int kills_required;
+	private int prev_kills;
 
-	public PiggyGameMode(Game _game, BasicECS ecs) {//, long duration, int _kills_required) {
+	public PiggyGameMode(Game _game, BasicECS ecs) {
 		game = _game;
-		kills_required = 6;//_kills_required;
-
+		kills_required = 6;
 		end_time = System.currentTimeMillis() + 3 * 60 * 1000;
 	}
 
@@ -39,6 +40,7 @@ public class PiggyGameMode implements ISystem {
 		}
 
 		if (piggy == null) {
+			// Sewt up game
 			for(AbstractPlayersAvatar player : game.players) {
 				if (player.hero_id == AvatarFactory.CHAR_PIGGY) {
 					piggy = player;
@@ -56,6 +58,11 @@ public class PiggyGameMode implements ISystem {
 		} else {
 			PlayerData playerData = (PlayerData)piggy.getComponent(PlayerData.class);
 
+			if (this.prev_kills != playerData.num_kills) {
+				BillBoardFPS_Main.audio.play("sfx/so thats coming along.wav");
+				this.prev_kills = playerData.num_kills;
+			}
+			
 			DrawTextComponent dtd = (DrawTextComponent)time_text.getComponent(DrawTextComponent.class);
 			dtd.dirty = true;
 			dtd.text = "Time Left: " + ((end_time-System.currentTimeMillis())/1000) + "  Kills: " + playerData.num_kills + "/" + this.kills_required;
