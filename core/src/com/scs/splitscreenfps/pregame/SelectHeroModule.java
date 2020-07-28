@@ -51,9 +51,9 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	private final BasicECS ecs;
 	private Rectangle viewRect;
 	private GameSelectionData gameSelectionData;
-	//private AbstractLevel level;
 	private int[] available_heroes;
-	
+	private int[] selected_hero_num;
+
 	// Systems
 	private DrawGuiSpritesSystem drawGuiSpritesSystem;
 	private ChangeColourSystem colChangeSystem;
@@ -75,8 +75,9 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		this.available_heroes = level.getHeroSelection();
 		for (int i=0 ; i<this.gameSelectionData.has_selected_character.length ; i++) {
 			this.gameSelectionData.has_selected_character[i] = false;
-			this.gameSelectionData.character[i] = 0;//available_heroes[0];
+			//this.gameSelectionData.selected_character_id[i] = available_heroes[0]; // Select by default
 		}
+		selected_hero_num = new int[this.inputs.size()];
 
 		spriteBatch = new SpriteBatch();
 
@@ -84,7 +85,7 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		drawGuiSpritesSystem = new DrawGuiSpritesSystem(ecs, this, spriteBatch);
 		colChangeSystem = new ChangeColourSystem(ecs);
 		this.drawTextSystem = new DrawTextSystem(ecs, this, this.spriteBatch);
-		
+
 		// Logo
 		AbstractEntity entity = new AbstractEntity(ecs, "Logo");
 		Texture weaponTex = this.getTexture("overblown_logo.png");
@@ -143,9 +144,12 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 			main.next_module = new SelectMapModule(main, inputs);
 			return;
 		}
-		
+
 		if (this.available_heroes.length == 1) {
 			// Only one hero!
+			for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
+				this.gameSelectionData.selected_character_id[playerIdx] = available_heroes[0]; // Select by default
+			}
 			this.startGame();
 			return;
 		}
@@ -161,7 +165,7 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 
 		ecs.addAndRemoveEntities();
 		colChangeSystem.process();
-		
+
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		frameBuffer.begin();
@@ -189,7 +193,7 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 			x_pos = Settings.LOGICAL_SIZE_PIXELS/2 - ((playerIdx+1) * 35);
 			//y_pos = y_pos + (30*playerIdx);
 			int y_pos_start = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
-			y_pos = y_pos_start - ((spacing_y) * (this.gameSelectionData.character[playerIdx]+1));
+			y_pos = y_pos_start - ((spacing_y) * (this.selected_hero_num[playerIdx]+1));
 			arrows[playerIdx].setBounds(x_pos,  y_pos , 30, 30);
 			arrows[playerIdx].draw(spriteBatch);
 		}
@@ -220,25 +224,26 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 			IInputMethod input = this.inputs.get(playerIdx);
 			if (this.gameSelectionData.has_selected_character[playerIdx] == false) {
 				all_selected = false;
-				if (input.isMenuUpPressed()) {
-					main.audio.play("sfx/type2.mp3");
-					this.gameSelectionData.character[playerIdx]--;
-					if (this.gameSelectionData.character[playerIdx] < 0) {
-						this.gameSelectionData.character[playerIdx] = this.available_heroes.length-1;
-					}
-				} else if (input.isMenuDownPressed()) {
-					main.audio.play("sfx/type2.mp3");
-					this.gameSelectionData.character[playerIdx]++;
-					if (this.gameSelectionData.character[playerIdx] >= this.available_heroes.length) {
-						this.gameSelectionData.character[playerIdx] = 0;
-					}
-				} 
 			}
+			if (input.isMenuUpPressed()) {
+				main.audio.play("sfx/type2.mp3");
+				this.selected_hero_num[playerIdx]--;
+				if (this.selected_hero_num[playerIdx] < 0) {
+					this.selected_hero_num[playerIdx] = this.available_heroes.length-1;
+				}
+			} else if (input.isMenuDownPressed()) {
+				main.audio.play("sfx/type2.mp3");
+				this.selected_hero_num[playerIdx]++;
+				if (this.selected_hero_num[playerIdx] >= this.available_heroes.length) {
+					this.selected_hero_num[playerIdx] = 0;
+				}
+			} 
 			if (input.isMenuSelectPressed()) {
 				if (System.currentTimeMillis() > earliest_input_time) {
 					main.audio.play("sfx/controlpoint.mp3");
 					this.gameSelectionData.has_selected_character[playerIdx] = true;
-					int hero_id = this.available_heroes[this.gameSelectionData.character[playerIdx]];
+					int hero_id = this.available_heroes[selected_hero_num[playerIdx]];//this.available_heroes[this.gameSelectionData.character[playerIdx]];
+					this.gameSelectionData.selected_character_id[playerIdx] = hero_id;
 					this.appendToLog("Player " + playerIdx + " has selected " + AvatarFactory.getName(hero_id));
 				}
 			}
@@ -307,5 +312,5 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	public Rectangle getCurrentViewportRect() {
 		return viewRect;
 	}
-	
+
 }

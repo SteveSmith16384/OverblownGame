@@ -52,18 +52,18 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 	}
 
 	
-	protected void setAvatarColour(int character) {
-		if (character == AvatarFactory.CHAR_PIGGY) {
+	public void setAvatarColour() {
+		/*if (character == AvatarFactory.CHAR_PIGGY) {
 			this.setColour(Color.RED);
 		} else if (character == AvatarFactory.CHAR_VICTIM) {
 			this.setColour(Color.GREEN);
-		} else {
+		} else {*/
 			this.setColour(Settings.getColourForSide(playerIdx));
-		}
+		//}
 	}
 	
 
-	private void setColour(Color c) {
+	public void setColour(Color c) {
 		HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
 		ModelInstance instance = hasModel.model;
 		for (int i=0 ; i<instance.materials.size ; i++) {

@@ -13,11 +13,8 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
-import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
-import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.events.EventCollision;
 
@@ -28,6 +25,7 @@ public class ShootTagSystem implements ISystem {
 	private AbstractPlayersAvatar it_player;
 	private AbstractEntity time_text;
 	private float[] time_as_it;
+	private StringBuilder str = new StringBuilder();
 
 	public ShootTagSystem(Game _game, BasicECS _ecs, long duration) {
 		game = _game;
@@ -51,22 +49,30 @@ public class ShootTagSystem implements ISystem {
 		}
 
 		if (time_text == null) {
-			time_text = new TextEntity(game.ecs, "", 37, 52, -1, Color.WHITE, 0, game.font_large, true);
+			time_text = new TextEntity(game.ecs, "", 37, 52, -1, Color.WHITE, 0, game.font_med, true);
 			game.ecs.addEntity(time_text);
 		}
 
 		this.time_as_it[this.it_player.playerIdx] -= Gdx.graphics.getDeltaTime();
+
+		DrawTextComponent dtd = (DrawTextComponent)time_text.getComponent(DrawTextComponent.class);
+		str.delete(0, str.length());
+		for (int i=0 ; i<game.players.length ; i++) {
+			PlayerData pdata = (PlayerData)game.players[i].getComponent(PlayerData.class);
+			str.append(pdata.playerName).append(": ").append((int)this.time_as_it[i]).append(" ~ ");
+		}
+		dtd.text = str.toString();
+
 		if (this.time_as_it[this.it_player.playerIdx] <= 0) {
+			time_text.remove();
+			time_text = null;
 			PlayerData pdata = (PlayerData)this.it_player.getComponent(PlayerData.class);
 			TextEntity text = new TextEntity(game.ecs, pdata.playerName + " HAS LOST!", 37, 52, -1, Settings.getColourForSide(this.it_player.playerIdx), 0, game.font_large, true);
 			game.ecs.addEntity(text);
 			game.playerHasLost(it_player);
-
+			return;
 		}
 		
-		DrawTextComponent dtd = (DrawTextComponent)time_text.getComponent(DrawTextComponent.class);
-		//todo dtd.text = "Time Left: " + ((end_time-System.currentTimeMillis())/1000);
-
 		checkForBulletHits();
 	}
 

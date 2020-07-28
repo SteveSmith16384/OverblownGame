@@ -3,11 +3,6 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.PlayerData;
-import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
-import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
-import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
-import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.gamemodes.ShootTagSystem;
 

@@ -17,9 +17,9 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && false;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_BLOWPIPE;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_SHOOT_TAG;
 	public static final int NUM_AUTOSTART_CHARACTERS = 2;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BOOMFIST;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_BLOWPIPE;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	
 	public static final boolean TEST_3RD_PERSON = !RELEASE_MODE && false;

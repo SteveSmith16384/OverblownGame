@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
-import com.scs.splitscreenfps.game.gamemodes.PiggyScoreSystem;
+import com.scs.splitscreenfps.game.gamemodes.PiggyGameMode;
 
 public class PiggyLevel extends AbstractLevel {
 
@@ -13,7 +13,7 @@ public class PiggyLevel extends AbstractLevel {
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
 
-		this.deathmatchSystem = new PiggyScoreSystem(game, game.ecs, 2*60*1000, 6);
+		this.deathmatchSystem = new PiggyGameMode(game, game.ecs);//, 2*60*1000, 6);
 
 	}
 

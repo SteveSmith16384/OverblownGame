@@ -155,7 +155,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		if (this.gameSelectionData.level == AbstractLevel.LEVEL_AI_TEST) {
 			// Add AI
 			this.inputs.add(new AIInputMethod());
-			this.gameSelectionData.character[this.inputs.size()-1] = AvatarFactory.CHAR_PHARTAH;
+			this.gameSelectionData.selected_character_id[this.inputs.size()-1] = AvatarFactory.CHAR_PHARTAH;
 		}
 
 		players = new AbstractPlayersAvatar[inputs.size()];
@@ -178,12 +178,12 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		loadLevel();
 
 		for (int i=0 ; i<players.length ; i++) {
-			int hero_id = this.currentLevel.getHeroSelection()[this.gameSelectionData.character[i]];
+			int hero_id = this.gameSelectionData.selected_character_id[i];//this.currentLevel.getHeroSelection()[this.gameSelectionData.character[i]];
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i].camera, inputs.get(i), hero_id);
 			ecs.addEntity(players[i]);
 			
 			SpeechSystem speech = (SpeechSystem)this.ecs.getSystem(SpeechSystem.class);
-			speech.addFile(SpeechSystem.getFileForCharacter(gameSelectionData.character[i]));
+			speech.addFile(SpeechSystem.getFileForCharacter(gameSelectionData.selected_character_id[i]));
 
 			AbstractEntity crosshairs = GraphicsEntityFactory.createCrosshairs(ecs, this, i);
 			ecs.addEntity(crosshairs);
@@ -409,8 +409,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			if (Settings.USE_MAP_EDITOR == false) {
 				float yOff = font_med.getLineHeight() * 1f;
 				PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
-				drawText(this.font_small, "Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
-				drawText(this.font_small, "Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
+				//drawText(this.font_small, "Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
+				//drawText(this.font_small, "Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
 				drawText(this.font_med, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
 				drawText(this.font_med, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
 				drawText(this.font_small, playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);

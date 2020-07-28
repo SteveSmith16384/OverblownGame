@@ -11,19 +11,19 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 
-public class PiggyScoreSystem implements ISystem {
+public class PiggyGameMode implements ISystem {
 
 	private Game game;
 	private long end_time;
 	private AbstractEntity piggy;
 	private AbstractEntity time_text;
 	private int kills_required;
-	
-	public PiggyScoreSystem(Game _game, BasicECS ecs, long duration, int _kills_required) {
+
+	public PiggyGameMode(Game _game, BasicECS ecs) {//, long duration, int _kills_required) {
 		game = _game;
-		kills_required = _kills_required;
-		
-		end_time = System.currentTimeMillis() + duration;//2 * 60 * 1000;
+		kills_required = 6;//_kills_required;
+
+		end_time = System.currentTimeMillis() + 3 * 60 * 1000;
 	}
 
 
@@ -34,22 +34,38 @@ public class PiggyScoreSystem implements ISystem {
 		}
 
 		if (time_text == null) {
-			time_text = new TextEntity(game.ecs, "", 37, 52, -1, Color.WHITE, 0, game.font_large, true);
+			time_text = new TextEntity(game.ecs, "", 37, 52, -1, Color.WHITE, 0, game.font_med, true);
 			game.ecs.addEntity(time_text);
 		}
-		DrawTextComponent dtd = (DrawTextComponent)time_text.getComponent(DrawTextComponent.class);
-		dtd.text = "Time Left: " + ((end_time-System.currentTimeMillis())/1000);
-		
+
 		if (piggy == null) {
 			for(AbstractPlayersAvatar player : game.players) {
 				if (player.hero_id == AvatarFactory.CHAR_PIGGY) {
 					piggy = player;
 				}
 			}
+
+			// Set colours
+			for(AbstractPlayersAvatar avatar : game.players) {
+				if (avatar.hero_id == AvatarFactory.CHAR_PIGGY) {
+					avatar.setColour(Color.RED);
+				} else {
+					avatar.setColour(Color.GREEN);
+				}
+			}
 		} else {
-			checkPiggy();
+			PlayerData playerData = (PlayerData)piggy.getComponent(PlayerData.class);
+
+			DrawTextComponent dtd = (DrawTextComponent)time_text.getComponent(DrawTextComponent.class);
+			dtd.dirty = true;
+			dtd.text = "Time Left: " + ((end_time-System.currentTimeMillis())/1000) + "  Kills: " + playerData.num_kills + "/" + this.kills_required;
+
+			checkIfPiggyHasWon(playerData);
 
 			if (this.end_time < System.currentTimeMillis()) {
+				time_text.remove();
+				time_text = null;
+				
 				TextEntity text = new TextEntity(game.ecs, "PIGGY HAS LOST!", 37, 52, -1, Color.GREEN, 0, game.font_large, true);
 				game.ecs.addEntity(text);
 				game.playerHasLost(piggy);
@@ -58,9 +74,11 @@ public class PiggyScoreSystem implements ISystem {
 	}
 
 
-	private void checkPiggy() {
-		PlayerData playerData = (PlayerData)piggy.getComponent(PlayerData.class);
-		if (playerData.num_kills >= kills_required) {
+	private void checkIfPiggyHasWon(PlayerData piggyPlayerData) {
+		if (piggyPlayerData.num_kills >= kills_required) {
+			time_text.remove();
+			time_text = null;
+			
 			TextEntity text = new TextEntity(game.ecs, "PIGGY HAS WON!", 37, 52, -1, Color.RED, 0, game.font_large, true);
 			game.ecs.addEntity(text);
 			game.playerHasWon(piggy);

@@ -25,6 +25,7 @@ import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
+import com.scs.splitscreenfps.game.levels.AbstractLevel;
 
 public class PlayersJoinGameModule implements IModule {
 
@@ -47,7 +48,6 @@ public class PlayersJoinGameModule implements IModule {
 
 		this.appendToLog("Welcome to " + Settings.TITLE);
 
-		//this.appendToLog("v" + Settings.VERSION);
 		this.appendToLog("Click mouse to play with keyboard/mouse");
 		this.appendToLog("Press X to play with a controller");
 		this.appendToLog("F1 to toggle full-screen");
@@ -89,8 +89,9 @@ public class PlayersJoinGameModule implements IModule {
 			}
 			GameSelectionData gameSelectionData = new GameSelectionData();//Settings.NUM_AUTOSTART_CHARACTERS);
 			gameSelectionData.level = Settings.AUTOSTART_LEVEL;
+			//AbstractLevel level = AbstractLevel.factory(gameSelectionData.level);
 			for (int i=0 ; i<Settings.NUM_AUTOSTART_CHARACTERS ; i++) {
-				gameSelectionData.character[i] = Settings.AUTOSTART_CHARACTER;
+				gameSelectionData.selected_character_id[i] = Settings.AUTOSTART_CHARACTER;
 			}
 			main.next_module = new Game(main, inputs, gameSelectionData);
 			return;
