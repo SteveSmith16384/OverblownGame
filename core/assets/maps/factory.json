@@ -1,5 +1,5 @@
 {
-  "filename": "maps/default_map.json",
+  "filename": "maps/map_editor.json",
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
@@ -938,31 +938,6 @@
         "z": 0.0
       },
       "mass": 1.0
-    },
-    {
-      "id": 38,
-      "type": "sphere",
-      "name": "New sphere 62",
-      "tags": "controlpoint",
-      "texture_id": 1,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 10.25,
-        "y": 1.75,
-        "z": 7.0
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 0.0
     },
     {
       "id": 39,

@@ -8,12 +8,12 @@ import com.scs.splitscreenfps.game.gamemodes.ShootTagSystem;
 
 public class ShootTagLevel extends AbstractLevel {
 
-	private ISystem deathmatchSystem;
+	private ISystem shootTagSystem;
 
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
 
-		this.deathmatchSystem = new ShootTagSystem(game, game.ecs, 60);
+		this.shootTagSystem = new ShootTagSystem(game, game.ecs, 60);
 
 	}
 
@@ -44,7 +44,7 @@ public class ShootTagLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		deathmatchSystem.process();
+		shootTagSystem.process();
 	}
 
 

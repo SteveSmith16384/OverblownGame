@@ -16,6 +16,7 @@ import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.WeaponSettingsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.events.EventCollision;
 
@@ -110,6 +111,9 @@ public class ShootTagSystem implements ISystem {
 				PlayerData pdata = (PlayerData)this.it_player.getComponent(PlayerData.class);
 				game.appendToLog(pdata.playerName + " is now IT!");
 				BillBoardFPS_Main.audio.play("sfx/so thats coming along.wav");
+				
+				AbstractEntity slime = GraphicsEntityFactory.createFilter(game, pdata.playerIdx, "textures/slime.jpg", 3);
+				game.ecs.addEntity(slime);
 			} else {
 				weapon.weapon_type = WeaponSettingsComponent.NONE;
 			}

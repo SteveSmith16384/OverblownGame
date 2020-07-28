@@ -30,7 +30,7 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_FACTORY = 0;
 	public static final int LEVEL_VILLAGE = 1;
 	public static final int LEVEL_TEMPLE_OF_THE_NOOBIES = 2;
-	public static final int LEVEL_BLOWPIPE = 3; // todo - rename
+	public static final int LEVEL_BLOWPIPE_ASSASSINS = 3; // todo - rename
 	public static final int LEVEL_PIGGY = 4;
 	public static final int LEVEL_SHOOT_TAG = 5;
 	public static final int LEVEL_AI_TEST = 6;
@@ -61,7 +61,7 @@ public abstract class AbstractLevel {
 			return "Village - Control Point";
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return "Temple of the Noobies - Deathmatch";
-		case LEVEL_BLOWPIPE:
+		case LEVEL_BLOWPIPE_ASSASSINS:
 			return "Blowpipe - Deathmatch";
 		case LEVEL_PIGGY:
 			return "Piggy";
@@ -85,7 +85,7 @@ public abstract class AbstractLevel {
 			return new VillageLevel();
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return new TempleOfTheNoobiesLevel();
-		case LEVEL_BLOWPIPE:
+		case LEVEL_BLOWPIPE_ASSASSINS:
 			return new BlowpipeLevel();
 		case LEVEL_PIGGY:
 			return new PiggyLevel();

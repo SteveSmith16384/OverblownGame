@@ -44,17 +44,21 @@ public class GraphicsEntityFactory {
 	}
 
 
-	public static AbstractEntity createWhiteFilter(Game game, int viewId) {
+	public static AbstractEntity createFilter(Game game, int viewId, String filename, float seconds) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, "WhiteFilter");
 
-		//Texture weaponTex = new Texture(Gdx.files.internal("colours/white.png"));		
-		Texture weaponTex = game.getTexture("colours/white.png");
+		Texture weaponTex = game.getTexture(filename);
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setColor(.8f, .8f, .8f, .3f);
 
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
 		entity.addComponent(hgsc);
 		hgsc.onlyViewId = viewId;
+		
+		if (seconds > 0) {
+			RemoveEntityAfterTimeComponent remove = new RemoveEntityAfterTimeComponent(seconds);
+			entity.addComponent(remove);
+		}
 
 		return entity;	
 
