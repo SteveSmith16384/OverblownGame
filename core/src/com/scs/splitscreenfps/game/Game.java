@@ -86,6 +86,8 @@ import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 import com.scs.splitscreenfps.pregame.SelectMapModule;
 
+import ssmith.lang.NumberFunctions;
+
 /**
  * This is the main game, where the players move about n'stuff.
  *
@@ -229,6 +231,10 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 
 		BillBoardFPS_Main.audio.stopMusic();
+		
+		for (int i=0 ; i<4 ; i++) {
+			BillBoardFPS_Main.audio.play("sfx/airhorn.wav", NumberFunctions.rnd(500, 2000));
+		}
 	}
 
 

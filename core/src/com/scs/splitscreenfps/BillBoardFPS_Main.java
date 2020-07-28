@@ -63,11 +63,11 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 		}
 
 
+		audio.process();
+
 		if (current_module != null) {
 			current_module.render();
 		}
-
-		audio.update();
 
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
 			if (fullscreen) {

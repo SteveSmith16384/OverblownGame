@@ -81,6 +81,8 @@ public class BulletEntityFactory {
 			BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
 			break;
 		case WeaponSettingsComponent.RACER_PISTOLS:
+		case WeaponSettingsComponent.PIGGY_GUN:
+		case WeaponSettingsComponent.BLOWPIPE:
 			BillBoardFPS_Main.audio.play("sfx/launches/slimeball.wav");
 			break;
 		default:
