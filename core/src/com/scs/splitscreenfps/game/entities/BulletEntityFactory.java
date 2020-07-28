@@ -552,8 +552,10 @@ public class BulletEntityFactory {
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
+		
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.force = dir.scl(.7f);
+		pc.sound_on_collision = "sfx/clang1.wav";
 		e.addComponent(pc);
 
 		return e;

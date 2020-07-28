@@ -4,7 +4,7 @@ import com.scs.basicecs.AbstractEntity;
 
 public class SecondaryAbilityComponent {
 
-	public enum SecondaryAbilityType {PowerPunch, JumpForwards, JetPac, JumpUp, StickyMine, TracerJump, InvisibleMine};
+	public enum SecondaryAbilityType {PowerPunch, JumpForwards, JetPac, JumpUp, Sticky_Mine, Blink, Invisible_Mine};
 		
 	public final long cooldown_duration;
 	public float current_cooldown;

@@ -816,6 +816,17 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
+				
+				// Any sound?
+				PhysicsComponent p1 = (PhysicsComponent)e1.getComponent(PhysicsComponent.class);
+				if (p1 != null && p1.sound_on_collision != null) {
+					main.audio.play(p1.sound_on_collision);
+				}
+				p1 = (PhysicsComponent)e2.getComponent(PhysicsComponent.class);
+				if (p1 != null && p1.sound_on_collision != null) {
+					main.audio.play(p1.sound_on_collision);
+				}
+				
 				ecs.events.add(new EventCollision(e1, e2, force));
 			} catch (Exception ex) {
 				ex.printStackTrace();

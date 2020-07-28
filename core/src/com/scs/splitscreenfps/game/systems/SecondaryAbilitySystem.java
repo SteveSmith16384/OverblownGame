@@ -84,13 +84,13 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 						case JetPac:
 							performJetPac(entity);
 							break;
-						case TracerJump:
+						case Blink:
 							success = performRacerBlink(player);
 							break;
-						case StickyMine:
+						case Sticky_Mine:
 							throwJunkratMine(player, ability);
 							break;
-						case InvisibleMine:
+						case Invisible_Mine:
 							success = throwInvisibleMine(player, ability);
 							break;
 						default:

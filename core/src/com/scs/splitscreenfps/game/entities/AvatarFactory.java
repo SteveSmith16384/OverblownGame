@@ -117,7 +117,7 @@ public class AvatarFactory {
 			
 		case CHAR_RACER:
 			weapon_type = WeaponSettingsComponent.RACER_PISTOLS;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.TracerJump, 6, 3));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Blink, 6, 3));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.TraceyBomb, 50));
 			break;
 			
@@ -128,7 +128,7 @@ public class AvatarFactory {
 			
 		case CHAR_RUBBISHRODENT:
 			weapon_type = WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.StickyMine, 4));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Sticky_Mine, 4));
 			break;
 			
 		case CHAR_BASTION:
@@ -137,7 +137,7 @@ public class AvatarFactory {
 			
 		case CHAR_BLOWPIPE_ASSASSIN:
 			weapon_type = WeaponSettingsComponent.BLOWPIPE;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.InvisibleMine, 20));
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Invisible_Mine, 20));
 			break;
 			
 		case CHAR_PIGGY:
