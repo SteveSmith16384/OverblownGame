@@ -130,6 +130,7 @@ public class BulletEntityFactory {
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
 		pc.force = new Vector3(dir).scl(.8f);
+		pc.sound_on_collision = "sfx/bump1.wav";
 		e.addComponent(pc);
 
 		switch (settings.weapon_type) {

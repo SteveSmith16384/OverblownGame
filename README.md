@@ -81,5 +81,7 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Shooting sfx by Michel Baradari, taken from https://opengameart.org/content/4-projectile-launches
 * Bowling Ball jump sound taken from https://opengameart.org/content/jump-sounds
 * Racer's bomb beep taken from https://opengameart.org/content/7-space-sounds
-8 Cackle taken from https://opengameart.org/content/so-thats-coming-along
+* Cackle taken from https://opengameart.org/content/so-thats-coming-along
+* Explosions and clang taken from https://opengameart.org/content/metal-clang-explosions-zing
+* Death sounds taken from https://opengameart.org/content/grunts-male-death-and-pain
 

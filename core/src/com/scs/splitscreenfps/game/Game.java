@@ -712,6 +712,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 		HasModelComponent model = (HasModelComponent)playerKilled.getComponent(HasModelComponent.class);
 		model.dontDrawInViewId = -1; // So we draw the corpse
+
+		main.audio.play("sfx/deathsounds/death" + NumberFunctions.rnd(1,  13) + ".wav");
+
 	}
 
 
