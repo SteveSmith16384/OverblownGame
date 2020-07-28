@@ -32,9 +32,10 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_TEMPLE_OF_THE_NOOBIES = 2;
 	public static final int LEVEL_BLOWPIPE = 3;
 	public static final int LEVEL_PIGGY = 4;
-	public static final int LEVEL_AI_TEST = 5;
-	public static final int LEVEL_MAP_EDITOR = 6;
-	public static final int MAX_LEVELS = 7;
+	public static final int LEVEL_SHOOT_TAG = 5;
+	public static final int LEVEL_AI_TEST = 6;
+	public static final int LEVEL_MAP_EDITOR = 7;
+	public static final int MAX_LEVEL_ID = 7;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -68,6 +69,8 @@ public abstract class AbstractLevel {
 			return "AI Test";
 		case LEVEL_MAP_EDITOR:
 			return "Map Editor";
+		case LEVEL_SHOOT_TAG:
+			return "Shoot-Tag";
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
@@ -88,6 +91,8 @@ public abstract class AbstractLevel {
 			return new PiggyLevel();
 		case LEVEL_AI_TEST:
 			return new AITestLevel();
+		case LEVEL_SHOOT_TAG:
+			return new ShootTagLevel();
 		case LEVEL_MAP_EDITOR:
 			return new MapEditorLevel();
 		default:

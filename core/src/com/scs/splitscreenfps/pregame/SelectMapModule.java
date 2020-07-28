@@ -153,7 +153,7 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 		// Draw levels
 		int x_pos = Settings.LOGICAL_SIZE_PIXELS/2;
 		int y_pos = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
-		for (int i=0 ; i<AbstractLevel.MAX_LEVELS ; i++) {
+		for (int i=0 ; i<=AbstractLevel.MAX_LEVEL_ID ; i++) {
 			font_small.draw(spriteBatch, AbstractLevel.getName(i), x_pos, y_pos);
 			y_pos -= spacing_y;
 		}
@@ -181,12 +181,12 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 			main.audio.play("sfx/type2.mp3");
 			this.gameSelectionData.level--;
 			if (this.gameSelectionData.level < 0) {
-				this.gameSelectionData.level = AbstractLevel.MAX_LEVELS-1;
+				this.gameSelectionData.level = AbstractLevel.MAX_LEVEL_ID;
 			}
 		} else if (input.isMenuDownPressed()) {
 			main.audio.play("sfx/type2.mp3");
 			this.gameSelectionData.level++;
-			if (this.gameSelectionData.level >= AbstractLevel.MAX_LEVELS) {
+			if (this.gameSelectionData.level > AbstractLevel.MAX_LEVEL_ID) {
 				this.gameSelectionData.level = 0;
 			}
 		} else if (input.isMenuSelectPressed() || input.isShootPressed()) {

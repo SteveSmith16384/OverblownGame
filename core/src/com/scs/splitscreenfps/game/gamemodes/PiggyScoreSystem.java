@@ -17,11 +17,13 @@ public class PiggyScoreSystem implements ISystem {
 	private long end_time;
 	private AbstractEntity piggy;
 	private AbstractEntity time_text;
-
-	public PiggyScoreSystem(Game _game, BasicECS ecs) {
+	private int kills_required;
+	
+	public PiggyScoreSystem(Game _game, BasicECS ecs, long duration, int _kills_required) {
 		game = _game;
-
-		end_time = System.currentTimeMillis() + 2 * 60 * 1000;
+		kills_required = _kills_required;
+		
+		end_time = System.currentTimeMillis() + duration;//2 * 60 * 1000;
 	}
 
 
@@ -58,7 +60,7 @@ public class PiggyScoreSystem implements ISystem {
 
 	private void checkPiggy() {
 		PlayerData playerData = (PlayerData)piggy.getComponent(PlayerData.class);
-		if (playerData.num_kills >= 10) {
+		if (playerData.num_kills >= kills_required) {
 			TextEntity text = new TextEntity(game.ecs, "PIGGY HAS WON!", 37, 52, -1, Color.RED, 0, game.font_large, true);
 			game.ecs.addEntity(text);
 			game.playerHasWon(piggy);

@@ -84,7 +84,7 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.game.systems.SpeechSystem;
 import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
-import com.scs.splitscreenfps.pregame.SelectHeroModule;
+import com.scs.splitscreenfps.pregame.SelectMapModule;
 
 /**
  * This is the main game, where the players move about n'stuff.
@@ -310,7 +310,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				Gdx.app.exit();
 				return;
 			}
-			this.main.next_module = new SelectHeroModule(main, this.inputs, this.gameSelectionData);
+			//this.main.next_module = new SelectHeroModule(main, this.inputs, this.gameSelectionData); No as it comes straight back if there are no heroes to select
+			this.main.next_module = new SelectMapModule(main, this.inputs);
 			return;
 		}
 

@@ -39,7 +39,7 @@ public class AvatarFactory {
 		case CHAR_BASTION: return "Bastion";
 		case CHAR_RUBBISHRODENT: return "Rubbish Rodent";
 
-		case CHAR_PIGGY: return "PIGGY";
+		case CHAR_PIGGY: return "Piggy";
 		case CHAR_VICTIM: return "INNOCENT VICTIM";
 		case CHAR_BLOWPIPE: return "ASSASSIN";
 
@@ -59,7 +59,7 @@ public class AvatarFactory {
 		case CHAR_BASTION: return 150;
 		case CHAR_RUBBISHRODENT: return 150;
 		
-		case CHAR_PIGGY: return 999;
+		case CHAR_PIGGY: return 9999;
 		case CHAR_VICTIM: return 1;
 		case CHAR_BLOWPIPE: return 1;
 		
@@ -203,8 +203,8 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.PIGGY_GUN:
-			weapon = new WeaponSettingsComponent(weapon_type, 2000, 0, 999, 999, 
-					999, 0, 0, null);
+			weapon = new WeaponSettingsComponent(weapon_type, 500, 0, 999, 999, 
+					1, 0, 0, null); // Damage must be 1 for shoot-tag
 			break;
 
 		default:

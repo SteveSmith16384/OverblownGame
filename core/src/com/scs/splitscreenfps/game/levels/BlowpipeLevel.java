@@ -9,7 +9,6 @@ import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 public class BlowpipeLevel extends AbstractLevel {
 
 	private ISystem deathmatchSystem;
-	//private boolean players_edited = false;
 
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
@@ -45,23 +44,6 @@ public class BlowpipeLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		/*if (players_edited == false) {
-			players_edited = true;
-			for(AbstractPlayersAvatar player : game.players) {
-				PlayerData pdata = (PlayerData)player.getComponent(PlayerData.class);
-				pdata.health = 1;
-				pdata.max_health = 1;
-
-				player.removeComponent(UltimateAbilityComponent.class);
-				player.removeComponent(SecondaryAbilityComponent.class);
-
-				WeaponSettingsComponent weapon = (WeaponSettingsComponent)player.getComponent(WeaponSettingsComponent.class);
-				weapon.weapon_type = WeaponSettingsComponent.HYPERSPHERES;
-				weapon.reload_interval = 5000;
-				weapon.max_ammo = 1;
-			}
-		}*/
-
 		deathmatchSystem.process();
 	}
 
