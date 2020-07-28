@@ -65,7 +65,7 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 			
 			//float z = NumberFunctions.rndFloat(2,  8);
 			AbstractEntity ball = EntityFactory.createBall(game, "textures/neon/sun.jpg", FLOOR_SIZE/2, 10, FLOOR_SIZE/2, 1.5f, 100);
-			ball.addComponent(new HarmPlayerOnContactComponent(null, null, "sfx/electric_explosion5.wav", 10, 0, 0, false, false));
+			ball.addComponent(new HarmPlayerOnContactComponent(null, null, "sfx/electric_explosion5.wav", 10, 0, 0, false, 0));
 			game.ecs.addEntity(ball);
 		}
 	}

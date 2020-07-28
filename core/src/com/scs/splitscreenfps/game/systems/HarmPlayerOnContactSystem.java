@@ -52,8 +52,8 @@ public class HarmPlayerOnContactSystem extends AbstractSystem {
 					if (harm.remove) {
 						entity.remove();
 					}
-					if (harm.show_explosion) {
-						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, posData.position, .3f);
+					if (harm.explosion_size > 0) {
+						AbstractEntity expl = GraphicsEntityFactory.createNormalExplosion(game, posData.position, harm.explosion_size);
 						game.ecs.addEntity(expl);
 					}
 				}

@@ -32,6 +32,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.BloomEffect;
 import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
@@ -47,12 +48,14 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
+import com.scs.splitscreenfps.game.components.WillRespawnComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.data.GameSelectionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
+import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
@@ -183,7 +186,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			int hero_id = this.gameSelectionData.selected_character_id[i];//this.currentLevel.getHeroSelection()[this.gameSelectionData.character[i]];
 			players[i] = AvatarFactory.createAvatar(this, i, viewports[i].camera, inputs.get(i), hero_id);
 			ecs.addEntity(players[i]);
-			
+
 			SpeechSystem speech = (SpeechSystem)this.ecs.getSystem(SpeechSystem.class);
 			speech.addFile(SpeechSystem.getFileForCharacter(gameSelectionData.selected_character_id[i]));
 
@@ -199,12 +202,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			Matrix4 mat = new Matrix4();
 			mat.setTranslation(start_pos.x + 0.5f, start_pos.y, start_pos.z + 0.5f);
 			md.body.setWorldTransform(mat);
-
-			// Look down the z-axis
-			//this.viewports[i].camera.direction.x = 0;
-			//this.viewports[i].camera.direction.z = 1;
-			//this.viewports[i].camera.update();
-
 			this.respawnSystem.addEntity(players[i], this.currentLevel.getPlayerStartPoint(i));
 		}	
 
@@ -217,7 +214,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
 			vfxManager.addEffect(new LensFlareEffect()); // Good
-			//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
+			vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
 			//vfxManager.addEffect(new FxaaEffect()); // No effect?
 			//vfxManager.addEffect(new LevelsEffect()); // No effect
 			//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f)); // A bit trippy
@@ -231,9 +228,19 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 
 		BillBoardFPS_Main.audio.stopMusic();
-		
+
+		// Play airhorn
+		BillBoardFPS_Main.audio.play("sfx/airhorn.wav", WillRespawnComponent.RESPAWN_TIME);
 		for (int i=0 ; i<4 ; i++) {
-			BillBoardFPS_Main.audio.play("sfx/airhorn.wav", NumberFunctions.rnd(500, 2000));
+			BillBoardFPS_Main.audio.play("sfx/airhorn.wav", NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000));
+		}
+
+		// Show countdown
+		int max = (int)WillRespawnComponent.RESPAWN_TIME/1000;
+		for (int i=1 ; i<=max ; i++) {
+			TextEntity countdown = new TextEntity(ecs, ""+i, 50f, 50f, max+1-i, Color.MAGENTA, -1, this.font_large, true);
+			ecs.addEntity(countdown);
+
 		}
 	}
 
@@ -282,28 +289,12 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
 		ecs.addSystem(new AISystem(this, ecs));
-		
+
 	}
 
 
 	private void loadLevel() {
 		currentLevel.load();
-
-		// Set start position of players
-		/*		for (int idx=0 ; idx<players.length  ; idx++) {
-			Vector3 start_pos = currentLevel.getPlayerStartPoint(idx);
-
-			PhysicsComponent md = (PhysicsComponent)this.players[idx].getComponent(PhysicsComponent.class);
-			Matrix4 mat = new Matrix4();
-			mat.setTranslation(start_pos.x + 0.5f, start_pos.y, start_pos.z + 0.5f);
-			md.body.setWorldTransform(mat);
-
-			// Look down the z-axis
-			this.viewports[idx].camera.direction.x = 0;
-			this.viewports[idx].camera.direction.z = 1;
-			this.viewports[idx].camera.update();
-		}*/
-
 		ecs.addEntity(new SkyboxCube(this, "Skybox", "", 90, 90, 90));
 	}
 
@@ -342,7 +333,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 		this.ecs.getSystem(AISystem.class).process();
 		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
-		
+
 		this.ecs.events.clear();
 		if (physics_enabled) {
 			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
@@ -745,12 +736,15 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			if (posData != null) {
 				float distance = posData.position.dst(explosionPos);
 				if (distance <= explData.range) {
-					if (e instanceof AbstractPlayersAvatar) {
-						if (harm_shooter || shooter != e) { // Still affect shooter with physics
-							PlayerData playerHitData = (PlayerData)e.getComponent(PlayerData.class);
-							this.playerDamaged(e, playerHitData, explData.damage, shooter);
+					if (explData.damage > 0) {
+						if (e instanceof AbstractPlayersAvatar) {
+							if (harm_shooter || shooter != e) { // Still affect shooter with physics
+								PlayerData playerHitData = (PlayerData)e.getComponent(PlayerData.class);
+								this.playerDamaged(e, playerHitData, explData.damage, shooter);
+							}
 						}
 					}
+
 					pc.body.activate();
 
 					// Calc force/dir
@@ -819,7 +813,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-				
+
 				// Any sound?
 				PhysicsComponent p1 = (PhysicsComponent)e1.getComponent(PhysicsComponent.class);
 				if (p1 != null && p1.sound_on_collision != null) {
@@ -829,7 +823,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				if (p1 != null && p1.sound_on_collision != null) {
 					main.audio.play(p1.sound_on_collision);
 				}
-				
+
 				ecs.events.add(new EventCollision(e1, e2, force));
 			} catch (Exception ex) {
 				ex.printStackTrace();

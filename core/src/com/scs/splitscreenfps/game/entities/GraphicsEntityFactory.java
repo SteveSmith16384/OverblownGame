@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
@@ -33,7 +34,6 @@ public class GraphicsEntityFactory {
 		Texture weaponTex = texProv.getTexture("blood.png");
 		//Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		Sprite sprite = new Sprite(weaponTex);
-		//sprite.setColor(1, 0, 0, 1);
 
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
 		entity.addComponent(hgsc);
@@ -49,7 +49,7 @@ public class GraphicsEntityFactory {
 
 		Texture weaponTex = game.getTexture(filename);
 		Sprite sprite = new Sprite(weaponTex);
-		sprite.setColor(.8f, .8f, .8f, .3f);
+		//sprite.setColor(.8f, .8f, .8f, .3f);
 
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER, new Rectangle(0, 0, 1, 1));
 		entity.addComponent(hgsc);
@@ -82,7 +82,6 @@ public class GraphicsEntityFactory {
 		hasDecal.decal.setPosition(posData.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
-		//hasDecal.decal.transformationOffset = new Vector2(0, pos.y/2);
 		entity.addComponent(hasDecal);
 
 		HasDecalCycle cycle = new HasDecalCycle(.02f, 4*4);
@@ -95,6 +94,8 @@ public class GraphicsEntityFactory {
 			}
 		}
 		entity.addComponent(cycle);
+
+		BillBoardFPS_Main.audio.play("sfx/explosion1.mp3");
 
 		return entity;	
 

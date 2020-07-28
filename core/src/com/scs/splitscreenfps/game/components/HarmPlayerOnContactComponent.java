@@ -13,9 +13,9 @@ public class HarmPlayerOnContactComponent {
 	public String sfx;
 	public AbstractEntity shooter;
 	public boolean remove;
-	public boolean show_explosion;
+	public float explosion_size; // zero for none
 	
-	public HarmPlayerOnContactComponent(AbstractEntity _shooter, Vector3 _start_pos, String _sfx, int _damage, float _dropoff_start, float _dropoff_per_metre, boolean _remove, boolean _show_explosion) {
+	public HarmPlayerOnContactComponent(AbstractEntity _shooter, Vector3 _start_pos, String _sfx, int _damage, float _dropoff_start, float _dropoff_per_metre, boolean _remove, float _explosion_size) {
 		shooter = _shooter;
 		if (_start_pos != null) {
 			start_pos = new Vector3(_start_pos);
@@ -25,7 +25,8 @@ public class HarmPlayerOnContactComponent {
 		dropoff_start = _dropoff_start;
 		dropoff_per_metre = _dropoff_per_metre;
 		remove = _remove;
-		show_explosion =_show_explosion;
+		//show_explosion =_show_explosion;
+		explosion_size = _explosion_size;
 	}
 	
 }

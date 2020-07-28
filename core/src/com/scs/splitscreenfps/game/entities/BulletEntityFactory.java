@@ -56,7 +56,7 @@ public class BulletEntityFactory {
 
 		e.addComponent(new RemoveOnContactComponent(shooter, true));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0.3f));
 		e.addComponent(new RemoveEntityAfterTimeComponent(8)); // Just in case it hits another bullet and hangs in the air
 
 		// Add physics
@@ -114,7 +114,7 @@ public class BulletEntityFactory {
 
 		//e.addComponent(new RemoveOnContactComponent(shooter, true));
 		//e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, .4f));
 		e.addComponent(new RemoveEntityAfterTimeComponent(4));
 		
 		// Add physics
@@ -179,7 +179,7 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, true, false, true));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(size/2, size/2, size/2));
@@ -224,7 +224,7 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		//e.addComponent(new RemoveOnContactComponent(shooter));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, false, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, false, 0.3f));
 
 		// Add physics
 		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
@@ -264,7 +264,7 @@ public class BulletEntityFactory {
 
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
 		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter, false));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
 	
@@ -306,7 +306,7 @@ public class BulletEntityFactory {
 		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new RemoveOnContactComponent(shooter, false));
 		e.addComponent(new HasRangeComponent(start, settings.range));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, true));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0.5f));
 
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f);
@@ -388,7 +388,7 @@ public class BulletEntityFactory {
 		
 		e.addComponent(new PositionComponent());
 		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(.2f, 10, 3), shooter, false, true, false));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, null, "", 20, 0, 0, true, false));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, null, "", 20, 0, 0, true, 0));
 		e.addComponent(new RemoveEntityAfterTimeComponent(20));
 		
 		// Add physics
@@ -438,7 +438,7 @@ public class BulletEntityFactory {
 
 		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
 
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
 		e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
 	
@@ -486,7 +486,7 @@ public class BulletEntityFactory {
 		e.addComponent(model);
 
 		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
 		//e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
 		//e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
 	
@@ -536,8 +536,8 @@ public class BulletEntityFactory {
 		model.onlyDrawInViewId = playerData.playerIdx;
 		e.addComponent(model);
 
-		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 0, 5));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 2f));
 		//e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
 		//e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
 	
