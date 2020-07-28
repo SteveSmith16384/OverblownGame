@@ -90,6 +90,9 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 						case StickyMine:
 							throwJunkratMine(player, ability);
 							break;
+						case InvisibleMine:
+							success = throwInvisibleMine(player, ability);
+							break;
 						default:
 							if (Settings.STRICT) {
 								throw new RuntimeException("Unknown ability: " + ability.type);
@@ -227,7 +230,7 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 
 
 	private void throwJunkratMine(AbstractPlayersAvatar player, SecondaryAbilityComponent ability) {
-		if (ability.entity == null) {
+		if (ability.entity == null || ability.entity.isMarkedForRemoval()) {
 			ability.entity = BulletEntityFactory.createJunkratMine(game, player);
 			game.ecs.addEntity(ability.entity);
 		} else {
@@ -239,4 +242,16 @@ public class SecondaryAbilitySystem extends AbstractSystem {
 		}
 	}
 
+
+	private boolean throwInvisibleMine(AbstractPlayersAvatar player, SecondaryAbilityComponent ability) {
+		if (ability.entity == null || ability.entity.isMarkedForRemoval()) {
+			ability.entity = BulletEntityFactory.createInvisibleMine(game, player);
+			game.ecs.addEntity(ability.entity);
+			return true;
+		} else {
+			ability.entity.remove();
+			ability.entity = null;
+			return false;
+		}
+	}
 }

@@ -19,7 +19,7 @@ public class AvatarFactory {
 	public static final int CHAR_BOOMFIST = 2;
 	public static final int CHAR_BOWLING_BALL = 3;
 	public static final int CHAR_RACER = 4;
-	public static final int CHAR_BLOWPIPE = 5;
+	public static final int CHAR_BLOWPIPE_ASSASSIN = 5;
 	public static final int CHAR_PIGGY = 6;
 	public static final int CHAR_VICTIM = 7;
 
@@ -41,7 +41,7 @@ public class AvatarFactory {
 
 		case CHAR_PIGGY: return "Piggy";
 		case CHAR_VICTIM: return "INNOCENT VICTIM";
-		case CHAR_BLOWPIPE: return "ASSASSIN";
+		case CHAR_BLOWPIPE_ASSASSIN: return "ASSASSIN";
 
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -61,7 +61,7 @@ public class AvatarFactory {
 		
 		case CHAR_PIGGY: return 9999;
 		case CHAR_VICTIM: return 1;
-		case CHAR_BLOWPIPE: return 1;
+		case CHAR_BLOWPIPE_ASSASSIN: return 1;
 		
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -135,8 +135,9 @@ public class AvatarFactory {
 			weapon_type = WeaponSettingsComponent.BASTION_CANNON;
 			break;
 			
-		case CHAR_BLOWPIPE:
+		case CHAR_BLOWPIPE_ASSASSIN:
 			weapon_type = WeaponSettingsComponent.BLOWPIPE;
+			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.InvisibleMine, 20));
 			break;
 			
 		case CHAR_PIGGY:

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
+import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
@@ -471,32 +472,88 @@ public class BulletEntityFactory {
 
 		e.addComponent(new PositionComponent());
 
-		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+		//PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 
-		HasDecal hasDecal = new HasDecal(); // todo - make cylinder
-		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
-		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = true;
-		e.addComponent(hasDecal);
+		float width = .5f;
+		float height = .1f;
+		Texture tex = game.getTexture("textures/sun.jpg");
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		Model sphere_model = game.modelBuilder.createCylinder(width, height, width, 8, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		ModelInstance instance = new ModelInstance(sphere_model);
+		
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		e.addComponent(model);
 
-		//WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
-
-		//e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
 		//e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
 		//e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
 	
 		// Add physics
-		btSphereShape shape = new btSphereShape(.1f);
-		btRigidBody body = new btRigidBody(.5f, null, shape);
+		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(width/2, height/2, width/2));
+		Vector3 local_inertia = new Vector3();
+		cylinderShape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody body = new btRigidBody(.5f, null, cylinderShape, local_inertia);
 		body.userData = e;
 		body.setFriction(1);
 		body.setRestitution(0);
-		body.setCollisionShape(shape);
+		body.setCollisionShape(cylinderShape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.force = dir.scl(2f);
+		e.addComponent(pc);
+
+		return e;
+	}
+
+
+	public static AbstractEntity createInvisibleMine(Game game, AbstractEntity shooter) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "StickyBomb");
+
+		AbstractPlayersAvatar player = (AbstractPlayersAvatar)shooter;
+		Vector3 dir = new Vector3(player.camera.direction);
+		
+		PositionComponent posData = (PositionComponent)shooter.getComponent(PositionComponent.class);
+		Vector3 start = new Vector3();
+		start.set(posData.position);
+		start.mulAdd(dir, .2f);
+
+		e.addComponent(new PositionComponent());
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+
+		float width = .5f;
+		float height = .1f;
+		Texture tex = game.getTexture("textures/sun.jpg");
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		Model sphere_model = game.modelBuilder.createCylinder(width, height, width, 8, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		ModelInstance instance = new ModelInstance(sphere_model);
+		
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		model.onlyDrawInViewId = playerData.playerIdx;
+		e.addComponent(model);
+
+		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, false));
+		//e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
+		//e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
+	
+		// Add physics
+		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(width/2, height/2, width/2));
+		Vector3 local_inertia = new Vector3();
+		cylinderShape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody body = new btRigidBody(.5f, null, cylinderShape, local_inertia);
+		body.userData = e;
+		body.setFriction(1);
+		body.setRestitution(0);
+		body.setCollisionShape(cylinderShape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.force = dir.scl(.7f);
 		e.addComponent(pc);
 
 		return e;

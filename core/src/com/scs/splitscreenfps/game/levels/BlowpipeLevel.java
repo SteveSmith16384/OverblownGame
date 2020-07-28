@@ -20,7 +20,7 @@ public class BlowpipeLevel extends AbstractLevel {
 
 	@Override
 	public int[] getHeroSelection() {
-		return new int[]{AvatarFactory.CHAR_BLOWPIPE};
+		return new int[]{AvatarFactory.CHAR_BLOWPIPE_ASSASSIN};
 	}
 
 

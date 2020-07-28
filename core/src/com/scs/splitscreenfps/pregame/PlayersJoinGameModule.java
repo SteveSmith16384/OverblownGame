@@ -25,7 +25,6 @@ import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
-import com.scs.splitscreenfps.game.levels.AbstractLevel;
 
 public class PlayersJoinGameModule implements IModule {
 
