@@ -18,23 +18,23 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 
+	public static final float DIAM = 0.8f;
 	private static final float DAMPING = 0.5f;
 
 	public PlayerAvatar_Ball(Game _game, int playerIdx, Camera camera, int hero_id, IInputMethod _inputMethod, int health, float speed) {
 		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx, camera, hero_id, _inputMethod, health, speed);
 
-		float diam = .8f;
 		// Model stuff
 		Texture tex = game.getTexture("textures/set3_example_1.png");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		//ModelBuilder modelBuilder = new ModelBuilder();
-		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		Model sphere_model = game.modelBuilder.createSphere(DIAM,  DIAM,  DIAM, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
 		HasModelComponent hasModel = new HasModelComponent(instance, 0, 0, 1f, true);
 		hasModel.dontDrawInViewId = playerIdx;
 		this.addComponent(hasModel);
 
-		btSphereShape capsuleShape = new btSphereShape(diam/2);
+		btSphereShape capsuleShape = new btSphereShape(DIAM/2);
 		final Vector3 inertia = new Vector3(0, 0, 0);
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
 

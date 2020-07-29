@@ -1,16 +1,20 @@
 package com.scs.splitscreenfps.game.gamemodes;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextComponent;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
+
+import ssmith.libgdx.ModelFunctions;
 
 public class PiggyGameMode implements ISystem {
 
@@ -40,7 +44,7 @@ public class PiggyGameMode implements ISystem {
 		}
 
 		if (piggy == null) {
-			// Sewt up game
+			// Set up game
 			for(AbstractPlayersAvatar player : game.players) {
 				if (player.hero_id == AvatarFactory.CHAR_PIGGY) {
 					piggy = player;
@@ -49,10 +53,12 @@ public class PiggyGameMode implements ISystem {
 
 			// Set colours
 			for(AbstractPlayersAvatar avatar : game.players) {
+				HasModelComponent hasModel = (HasModelComponent)avatar.getComponent(HasModelComponent.class);
+				ModelInstance instance = hasModel.model;
 				if (avatar.hero_id == AvatarFactory.CHAR_PIGGY) {
-					avatar.setColour(Color.RED);
+					ModelFunctions.setColour(instance, Color.RED);
 				} else {
-					avatar.setColour(Color.GREEN);
+					ModelFunctions.setColour(instance, Color.GREEN);
 				}
 			}
 		} else {

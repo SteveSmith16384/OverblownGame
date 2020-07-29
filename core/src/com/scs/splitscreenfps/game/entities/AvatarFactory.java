@@ -22,6 +22,7 @@ public class AvatarFactory {
 	public static final int CHAR_BLOWPIPE_ASSASSIN = 5;
 	public static final int CHAR_PIGGY = 6;
 	public static final int CHAR_VICTIM = 7;
+	public static final int CHAR_WHAT_THE_BALL = 8;
 
 	public static final int CHAR_WINSTON = 96;
 	public static final int CHAR_BASTION = 97;
@@ -62,6 +63,7 @@ public class AvatarFactory {
 		case CHAR_PIGGY: return 9999;
 		case CHAR_VICTIM: return 1;
 		case CHAR_BLOWPIPE_ASSASSIN: return 1;
+		case CHAR_WHAT_THE_BALL: return 100;
 		
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -81,7 +83,7 @@ public class AvatarFactory {
 
 	public static AbstractPlayersAvatar createAvatar(Game _game, int playerIdx, Camera camera, IInputMethod _inputMethod, int hero_id) {
 		AbstractPlayersAvatar avatar = null;
-		if (hero_id == CHAR_BOWLING_BALL) {
+		if (hero_id == CHAR_BOWLING_BALL || hero_id == CHAR_WHAT_THE_BALL) {
 			avatar = new PlayerAvatar_Ball(_game, playerIdx, camera, hero_id, _inputMethod, getHealth(hero_id), getSpeed(hero_id));
 		} else {
 			avatar = new PlayerAvatar_Person(_game, playerIdx, camera, hero_id, _inputMethod, getHealth(hero_id), getSpeed(hero_id));
@@ -146,6 +148,10 @@ public class AvatarFactory {
 			
 		case CHAR_VICTIM:
 			weapon_type = WeaponSettingsComponent.NONE;
+			break;
+			
+		case CHAR_WHAT_THE_BALL:
+			weapon_type = WeaponSettingsComponent.BOWLINGBALL_GUN;
 			break;
 			
 		default:

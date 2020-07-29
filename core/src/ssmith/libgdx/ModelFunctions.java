@@ -2,16 +2,19 @@ package ssmith.libgdx;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.UBJsonReader;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class ModelFunctions {
 
@@ -86,4 +89,14 @@ public class ModelFunctions {
 		return out;
 	}
 
+
+	public static void setColour(ModelInstance instance, Color c) {
+		//HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
+		//ModelInstance instance = hasModel.model;
+		for (int i=0 ; i<instance.materials.size ; i++) {
+			instance.materials.get(i).set(ColorAttribute.createDiffuse(c));
+			instance.materials.get(i).set(ColorAttribute.createAmbient(c));
+		}
+	}
+	
 }

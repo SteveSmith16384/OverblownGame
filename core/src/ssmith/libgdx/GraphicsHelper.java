@@ -1,8 +1,12 @@
 package ssmith.libgdx;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class GraphicsHelper {
 
@@ -41,5 +45,7 @@ public class GraphicsHelper {
 		decal.setScale(size / tr.getRegionWidth());
 		return decal;
 	}
+
+
 
 }
