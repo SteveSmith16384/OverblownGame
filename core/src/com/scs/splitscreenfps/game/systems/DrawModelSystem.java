@@ -91,7 +91,7 @@ public class DrawModelSystem extends AbstractSystem {
 
 
 	//@Override
-	public void renderEntity(AbstractEntity entity, ModelBatch batch, boolean shadow) {
+	public void renderEntity(AbstractEntity entity, ModelBatch batch, boolean drawing_shadows) {
 		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
 
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
@@ -102,7 +102,7 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
-		if (game.currentViewId == 0 && shadow == false) {
+		if (game.currentViewId == 0 && drawing_shadows == false) {
 			// Calc position.  Only need to do this bit once per game loop!
 			if (pc != null) {
 				if (pc.position_dity || pc.getRigidBody().getInvMass() != 0 || Settings.USE_MAP_EDITOR) {
@@ -131,7 +131,7 @@ public class DrawModelSystem extends AbstractSystem {
 			}
 		}
 
-		if (model.dontDrawInViewId == game.currentViewId && Settings.TEST_3RD_PERSON == false) {
+		if (drawing_shadows == false && model.dontDrawInViewId == game.currentViewId && Settings.TEST_3RD_PERSON == false) {
 			return;
 		}
 		if (model.onlyDrawInViewId >= 0) {
@@ -144,7 +144,7 @@ public class DrawModelSystem extends AbstractSystem {
 			return;
 		}
 
-		if (shadow && model.cast_shadow == false) {
+		if (drawing_shadows && model.cast_shadow == false) {
 			return;
 		}
 
@@ -152,7 +152,6 @@ public class DrawModelSystem extends AbstractSystem {
 			if (model.keep_player_in_centre) { // i.e. a skybox
 				model.model.transform.setToTranslation(batch.getCamera().position);
 			} else {
-				//int dfdf = 5654;
 				model.model.transform.setToTranslation(posData.position);
 				model.model.transform.scl(model.scale);
 				model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
@@ -174,7 +173,8 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		batch.render(model.model, environment);
-		if (shadow == false) {
+		
+		if (drawing_shadows == false) {
 			num_objects_drawn++;
 		}
 	}

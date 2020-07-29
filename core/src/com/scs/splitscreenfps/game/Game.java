@@ -387,7 +387,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				dynamicsWorld.debugDrawWorld();
 				debugDrawer.end();
 			}
-			this.drawModelSystem.process(viewportData.camera, true);
+			this.drawModelSystem.process(viewportData.camera, true); // Draw shadows of models
 
 			viewportData.frameBuffer.end();
 
