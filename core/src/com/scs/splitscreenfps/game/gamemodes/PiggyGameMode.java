@@ -28,7 +28,8 @@ public class PiggyGameMode implements ISystem {
 	public PiggyGameMode(Game _game, BasicECS ecs) {
 		game = _game;
 		kills_required = 6;
-		end_time = System.currentTimeMillis() + 3 * 60 * 1000;
+		end_time = System.currentTimeMillis() + 4 * 60 * 1000;
+		end_time -= (game.players.length * 30*1000); // Adjust for number of victims
 		game.show_kills = true;
 	}
 
