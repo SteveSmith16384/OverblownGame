@@ -63,7 +63,7 @@ public abstract class AbstractLevel {
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return "Temple of the Noobies - Deathmatch";
 		case LEVEL_BLOWPIPE_ASSASSINS:
-			return "Blowpipe - Deathmatch";
+			return "The Assassins - Deathmatch";
 		case LEVEL_PIGGY:
 			return "Piggy";
 		case LEVEL_AI_TEST:

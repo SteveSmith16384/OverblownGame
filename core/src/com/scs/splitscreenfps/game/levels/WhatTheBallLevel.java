@@ -78,7 +78,7 @@ public class WhatTheBallLevel extends AbstractLevel {
 		
 		PhysicsComponent pc = (PhysicsComponent)ball.getComponent(PhysicsComponent.class);
 		pc.sound_on_collision = "sfx/clang1.wav";
-		//game.ecs.addEntity(ball);
+		game.ecs.addEntity(ball);
 	}
 
 	

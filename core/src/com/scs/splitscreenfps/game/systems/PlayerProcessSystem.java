@@ -117,6 +117,12 @@ public class PlayerProcessSystem implements ISystem {
 				// Set rotation based on camera
 				tmpVec2.set(player.camera.direction.x, player.camera.direction.z);
 				posData.angle_y_degrees = -tmpVec2.angle();
+				while (posData.angle_y_degrees < 0) {
+					posData.angle_y_degrees += 360;
+				}
+				while (posData.angle_y_degrees > 360) {
+					posData.angle_y_degrees -= 360;
+				}
 
 				if (Settings.TEST_3RD_PERSON == false) {
 					player.camera.position.set(posData.position.x, posData.position.y + (PlayerAvatar_Person.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
