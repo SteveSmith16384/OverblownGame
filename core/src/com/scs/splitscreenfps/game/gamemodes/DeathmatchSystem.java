@@ -16,6 +16,12 @@ public class DeathmatchSystem implements ISystem {
 	public DeathmatchSystem(Game _game, BasicECS ecs, boolean _by_health) {
 		game = _game;
 		by_health = _by_health;
+		
+		if (this.by_health) {
+			game.show_damage = true;
+		} else {
+			game.show_kills = true;
+		}
 
 	}
 

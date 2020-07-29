@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
@@ -21,9 +21,9 @@ import ssmith.libgdx.ModelFunctions;
 
 public class WhatTheBallLevel extends AbstractLevel {
 
-	private static final float FLOOR_SIZE = 15f;
 	private static final long BALL_INTERVAL = 3000;
 
+	private float floor_size = 15f;
 	private long last_ball_time;
 	private ISystem deathmatchSystem;
 	private boolean setup = false;
@@ -31,7 +31,9 @@ public class WhatTheBallLevel extends AbstractLevel {
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
 
-		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
+		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, false);
+		
+		floor_size = 10 + (game.players.length * 2f);
 	}
 
 
@@ -49,20 +51,13 @@ public class WhatTheBallLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		try {
-			//todo super.loadJsonFile("maps/whattheball.json", false);
-			//super.loadJsonFile("maps/map_editor.json", false);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		this.startPositions.add(new Vector3(1, 2f, 1));
-		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, FLOOR_SIZE-2));
-		this.startPositions.add(new Vector3(1, 2f, FLOOR_SIZE-2));
-		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, 1));
+		this.startPositions.add(new Vector3(floor_size-2, 2f, floor_size-2));
+		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
+		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
-		Wall floor = new Wall(game, "Floor", "colours/white.png", FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
-				FLOOR_SIZE, .2f, FLOOR_SIZE, 
+		Wall floor = new Wall(game, "Floor", "colours/white.png", floor_size/2, -0.1f, floor_size/2, 
+				floor_size, .2f, floor_size, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
 
@@ -74,12 +69,15 @@ public class WhatTheBallLevel extends AbstractLevel {
 
 	
 	private void createBall() {
-		float col = NumberFunctions.rndFloat(2, FLOOR_SIZE);
-		float row = NumberFunctions.rndFloat(2, FLOOR_SIZE);
+		float col = NumberFunctions.rndFloat(2, floor_size);
+		float row = NumberFunctions.rndFloat(2, floor_size);
 		AbstractEntity ball = EntityFactory.createBall(game, "textures/set3_example_1.png", col, 10, row, PlayerAvatar_Ball.DIAM, 1);
 		HasModelComponent hasModel = (HasModelComponent)ball.getComponent(HasModelComponent.class);
 		ModelInstance instance = hasModel.model;
 		ModelFunctions.setColour(instance, Color.WHITE);
+		
+		PhysicsComponent pc = (PhysicsComponent)ball.getComponent(PhysicsComponent.class);
+		pc.sound_on_collision = "sfx/clang1.wav";
 		game.ecs.addEntity(ball);
 	}
 

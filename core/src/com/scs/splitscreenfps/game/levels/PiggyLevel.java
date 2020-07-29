@@ -8,12 +8,12 @@ import com.scs.splitscreenfps.game.gamemodes.PiggyGameMode;
 
 public class PiggyLevel extends AbstractLevel {
 
-	private ISystem deathmatchSystem;
+	private ISystem piggyGameMode;
 
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
 
-		this.deathmatchSystem = new PiggyGameMode(game, game.ecs);//, 2*60*1000, 6);
+		this.piggyGameMode = new PiggyGameMode(game, game.ecs);//, 2*60*1000, 6);
 
 	}
 
@@ -44,7 +44,7 @@ public class PiggyLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		deathmatchSystem.process();
+		piggyGameMode.process();
 	}
 
 

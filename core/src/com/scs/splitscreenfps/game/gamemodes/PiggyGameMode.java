@@ -29,6 +29,7 @@ public class PiggyGameMode implements ISystem {
 		game = _game;
 		kills_required = 6;
 		end_time = System.currentTimeMillis() + 3 * 60 * 1000;
+		game.show_kills = true;
 	}
 
 
