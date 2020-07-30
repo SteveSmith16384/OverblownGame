@@ -30,7 +30,7 @@ public class ModelFunctions {
 		} else if (filename.endsWith(".g3db")) {
 			G3dModelLoader g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
 			//MyModelLoader g3dbModelLoader = new MyModelLoader(new UBJsonReader(), adj, scale);
-			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
+			model = g3dbModelLoader.loadModel(Gdx.files.internal(filename));
 		} else {
 			throw new RuntimeException("Unhandled model format: " + filename);
 		}

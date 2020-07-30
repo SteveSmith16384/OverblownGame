@@ -42,11 +42,6 @@ public abstract class AbstractLevel {
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
 	public MapData mapdata;
 
-/*	public AbstractLevel(Game _game) {
-		game = _game;
-	}
-*/
-
 	public void getReadyForGame(Game _game) {
 		game = _game;
 	}
@@ -122,7 +117,8 @@ public abstract class AbstractLevel {
 	public void loadJsonFile(String filename, boolean for_map_editor) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		Gson gson = new Gson();
 
-		mapdata = gson.fromJson(new FileReader(filename), MapData.class);
+		String s = Gdx.files.internal(filename).readString();
+		mapdata = gson.fromJson(s, MapData.class);
 		mapdata.filename = filename;
 
 		if (mapdata.textures == null) {
