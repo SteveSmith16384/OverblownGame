@@ -77,6 +77,7 @@ import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.systems.HarmPlayerOnContactSystem;
+import com.scs.splitscreenfps.game.systems.JunkratMineAbilitySystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
@@ -298,6 +299,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.respawnSystem = new RespawnPlayerSystem();
 		ecs.addSystem(new HarmPlayerOnContactSystem(this, ecs));
 		ecs.addSystem(new SecondaryAbilitySystem(ecs, this));
+		ecs.addSystem(new JunkratMineAbilitySystem(ecs, this));
 		ecs.addSystem(new UltimateAbilitySystem(ecs, this));
 		ecs.addSystem(new CollectableSystem(this, ecs));
 		respawnHealthPackSystem = new RespawnCollectableSystem();
@@ -349,6 +351,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.ecs.processSystem(SpeechSystem.class);
 		if (this.game_stage == 0) {
 			this.ecs.processSystem(SecondaryAbilitySystem.class); // Must be before player movement system
+			this.ecs.processSystem(JunkratMineAbilitySystem.class);			
 			this.ecs.processSystem(UltimateAbilitySystem.class); // Must be before player movement system
 		}
 		this.ecs.getSystem(PlayerProcessSystem.class).process();

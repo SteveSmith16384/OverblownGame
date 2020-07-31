@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasAIComponent;
+import com.scs.splitscreenfps.game.components.JunkratMineAbilityComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent;
 import com.scs.splitscreenfps.game.components.SecondaryAbilityComponent.SecondaryAbilityType;
 import com.scs.splitscreenfps.game.components.UltimateAbilityComponent;
@@ -23,10 +24,10 @@ public class AvatarFactory {
 	public static final int CHAR_PIGGY = 6;
 	public static final int CHAR_VICTIM = 7;
 	public static final int CHAR_WHAT_THE_BALL = 8;
+	public static final int CHAR_RUBBISHRODENT = 9;
 
 	public static final int CHAR_WINSTON = 96;
 	public static final int CHAR_BASTION = 97;
-	public static final int CHAR_RUBBISHRODENT = 98;
 	
 	
 
@@ -130,7 +131,7 @@ public class AvatarFactory {
 			
 		case CHAR_RUBBISHRODENT:
 			weapon_type = WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER;
-			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Sticky_Mine, 4));
+			avatar.addComponent(new JunkratMineAbilityComponent(4));
 			break;
 			
 		case CHAR_BASTION:

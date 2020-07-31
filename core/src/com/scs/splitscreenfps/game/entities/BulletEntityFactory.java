@@ -473,11 +473,9 @@ public class BulletEntityFactory {
 
 		e.addComponent(new PositionComponent());
 
-		//PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
-
 		float width = .5f;
 		float height = .1f;
-		Texture tex = game.getTexture("textures/sun.jpg");
+		Texture tex = game.getTexture("textures/twoshades/white.png");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		Model sphere_model = game.modelBuilder.createCylinder(width, height, width, 8, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
@@ -485,11 +483,6 @@ public class BulletEntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
 
-		WeaponSettingsComponent settings = new WeaponSettingsComponent(-1, -1, -1, -1, -1, 200, 0, 0, new ExplosionData(5, 100, 5));
-		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
-		//e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
-		//e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
-	
 		// Add physics
 		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(width/2, height/2, width/2));
 		Vector3 local_inertia = new Vector3();
