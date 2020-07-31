@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.entities;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
@@ -27,7 +26,6 @@ import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.IsCollectableComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
-import com.scs.splitscreenfps.game.components.PlayersWeaponComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
 
@@ -110,59 +108,6 @@ public class EntityFactory {
 
 		return ball;
 	}
-
-	/*
-	public static AbstractEntity createDoorway(BasicECS ecs, float posX, float posY, float posZ) {
-		AbstractEntity doorway = new AbstractEntity(ecs, "Doorway");
-
-		ModelInstance instance = ModelFunctions.loadModel("models/magicavoxel/doorway.obj", false);
-
-		HasModelComponent hasModel = new HasModelComponent(instance);//, offset, 0, scale);
-		doorway.addComponent(hasModel);
-
-		instance.transform.setTranslation(posX, posY, posZ);
-
-		//PositionComponent pos = new PositionComponent(posX, posY, posZ);
-		//doorway.addComponent(pos);
-
-		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
-		btRigidBody body = new btRigidBody(0, null, shape);
-		body.userData = doorway;
-		body.setCollisionShape(shape);
-		body.setWorldTransform(instance.transform);
-		doorway.addComponent(new PhysicsComponent(body));
-
-		return doorway;
-	}
-
-/*
-	public static AbstractEntity createGun(BasicECS ecs, float posX, float posY, float posZ) {
-		AbstractEntity stairs = new AbstractEntity(ecs, "Stairs");
-
-		ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
-		//float scale = 1f;//ModelFunctions.getScaleForHeight(instance, .8f);
-		//instance.transform.scl(scale);
-		//Vector3 offset = new Vector3();//ModelFunctions.getOrigin(instance);
-		//offset.y -= .3f; // Hack since model is too high
-
-		HasModelComponent hasModel = new HasModelComponent(instance);//, offset, 0, scale);
-		stairs.addComponent(hasModel);
-
-		instance.transform.setTranslation(posX, posY, posZ);
-
-		//PositionComponent pos = new PositionComponent(posX, posY, posZ);
-		//doorway.addComponent(pos);
-
-		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
-		btRigidBody body = new btRigidBody(1f, null, shape);
-		body.userData = stairs;
-		body.setCollisionShape(shape);
-		body.setWorldTransform(instance.transform);
-		stairs.addComponent(new PhysicsComponent(body));
-
-		return stairs;
-	}
-	 */
 
 
 	// Note that the mass gets multiplied by the size
@@ -353,7 +298,7 @@ public class EntityFactory {
 		return e;
 	}
 
-
+/*
 	public static AbstractEntity createPlayersWeapon(Game game, int playerIdx, String tex_filename, Camera cam) {
 		AbstractEntity weapon = new AbstractEntity(game.ecs, "Weapon");
 
@@ -371,7 +316,40 @@ public class EntityFactory {
 
 		return weapon;
 	}
+*/
 
+
+	/*
+	public static AbstractEntity createTerrain(Game game, String tex_filename, float posX, float posY, float posZ, float w, float d) {
+		AbstractEntity ball = new AbstractEntity(game.ecs, "Ball");
+
+		Texture tex = game.getTexture(tex_filename);
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		//ModelBuilder modelBuilder = new ModelBuilder();
+		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
+
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		ball.addComponent(model);
+
+		//float volume = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
+		//float mass = mass_pre * volume;
+
+		btSphereShape sphere_shape = new btSphereShape(diam/2);
+		Vector3 local_inertia = new Vector3();
+		sphere_shape.calculateLocalInertia(mass, local_inertia);
+		btRigidBody groundObject = new btRigidBody(mass, null, sphere_shape, local_inertia);
+		groundObject.userData = ball;
+		groundObject.setRestitution(.5f);
+		groundObject.setCollisionShape(sphere_shape);
+		groundObject.setWorldTransform(instance.transform);
+		ball.addComponent(new PhysicsComponent(groundObject));
+
+		ball.addComponent(new PositionComponent());
+
+		return ball;
+	}
+*/
 
 
 }
