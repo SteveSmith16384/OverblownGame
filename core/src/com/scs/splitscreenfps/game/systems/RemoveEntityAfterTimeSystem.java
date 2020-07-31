@@ -18,7 +18,7 @@ public class RemoveEntityAfterTimeSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		RemoveEntityAfterTimeComponent hdc = (RemoveEntityAfterTimeComponent)entity.getComponent(RemoveEntityAfterTimeComponent.class);
 
-		float dt = Gdx.graphics.getDeltaTime();
+		float dt = Gdx.graphics.getDeltaTime(); // todo - just5 store time for removal
 
 		hdc.timeRemaining_secs -= dt;
 		if(hdc.timeRemaining_secs <= 0) {

@@ -10,7 +10,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.scs.basicecs.ISystem;
 
-public class AudioSystem implements ISystem {
+public class AudioSystem implements ISystem { // todo - rename to MusicSystem
 
 	private Music music;
 	private String music_filename;
@@ -50,12 +50,13 @@ public class AudioSystem implements ISystem {
 	}
 
 
+	/*
 	public void play(String name, long delay) {
 		synchronized (scheduled_sounds) {
 			this.scheduled_sounds.add(new ScheduledSoundData(name, System.currentTimeMillis() + delay));
 		}
 	}
-	
+	*/
 
 	public void play(String name) {
 		try {
@@ -80,7 +81,7 @@ public class AudioSystem implements ISystem {
 	}
 
 
-	public void dipose() {
+	public void dispose() {
 		for (Sound s : this.sounds.values()) {
 			s.dispose();
 		}

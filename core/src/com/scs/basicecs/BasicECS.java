@@ -17,7 +17,9 @@ public class BasicECS {
 
 
 	public void addSystem(ISystem system) {
-		this.systems.put(system.getClass(), system);
+		if (this.systems.containsKey(system.getClass()) == false) {
+			this.systems.put(system.getClass(), system);
+		}
 	}
 
 
@@ -194,16 +196,19 @@ public class BasicECS {
 
 
 	public void dispose() {
-		// Show total processing time for profiling
-		/*
+		markAllEntitiesForRemoval();
+		addAndRemoveEntities();
+
 		for (ISystem sys: this.systems.values()) {
 			if (sys instanceof AbstractSystem) {
 				AbstractSystem system = (AbstractSystem)sys;
-				if (system.total_time > 0) {
+				system.dispose();
+				// Show total processing time for profiling
+				/*if (system.total_time > 0) {
 					System.out.println(system.getClass().getSimpleName() + " = " + system.total_time);
-				}
+				}*/
 			}
-		}*/
+		}
 
 	}
 }

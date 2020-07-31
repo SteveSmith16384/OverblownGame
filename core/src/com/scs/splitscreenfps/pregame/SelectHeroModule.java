@@ -266,6 +266,8 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		this.spriteBatch.dispose();
 		this.frameBuffer.dispose();
 		assetManager.dispose();
+		ecs.dispose();
+
 	}
 
 

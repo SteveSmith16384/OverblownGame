@@ -16,7 +16,10 @@ public class AddComponentAfterTimeSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		AddComponentAfterTimeComponent rc = (AddComponentAfterTimeComponent)entity.getComponent(AddComponentAfterTimeComponent.class);
 		if (System.currentTimeMillis() > rc.time_to_add) {
+			//entity.remove();
 			entity.addComponent(rc.component);
+			//ecs.addEntity(entity);
+			entity.removeComponent(AddComponentAfterTimeComponent.class);
 		}
 	}
 	

@@ -10,7 +10,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.systems.AddComponentAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.AudioSystem;
+import com.scs.splitscreenfps.game.systems.AudioSystem2;
 import com.scs.splitscreenfps.pregame.IntroModule;
 
 public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerConnectionListener {
@@ -26,6 +29,12 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 
 	public ControllerManager controllerManager;
 
+	// Systems
+	private BasicECS ecs;
+	//private AudioSystem2 audioSystem;
+	//private AddComponentAfterTimeSystem addComponentSystem;
+	
+	
 	@Override
 	public void create() {
 		Settings.init();
@@ -39,9 +48,12 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		generateFonts();
-		
+
 		current_module = new IntroModule(this);
-		
+
+		ecs = new BasicECS();
+		ecs.addSystem(new AudioSystem2(ecs));
+		ecs.addSystem(new AddComponentAfterTimeSystem(ecs));
 	}
 
 
@@ -53,6 +65,10 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {// && Gdx.input.isCursorCatched()) {
 			Gdx.input.setCursorCatched(false);
 		}
+
+		ecs.addAndRemoveEntities();
+		ecs.processSystem(AddComponentAfterTimeSystem.class);
+		ecs.processSystem(AudioSystem2.class);
 
 		controllerManager.checkForControllers();
 
@@ -135,14 +151,14 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 		//Settings.p("Font size=" + parameter.size);
 		font_large = generator.generateFont(parameter);
 	}
-	
-	
+
+
 	@Override
 	public void resize(int width, int height) {
 		//Settings.p("Resize() called");
 
 		generateFonts();
-		
+
 		if (this.current_module != null) {
 			this.current_module.resize(width, height);
 		}
@@ -156,7 +172,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 			current_module.dispose();
 			current_module = null;
 		}
-		audio.dipose();
+		audio.dispose();
 		if (font_small != null) {
 			font_small.dispose();
 		}
@@ -166,7 +182,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 		if (font_large != null) {
 			font_large.dispose();
 		}
-
+		ecs.dispose();
 		generator.dispose();
 	}
 

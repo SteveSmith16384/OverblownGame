@@ -12,7 +12,7 @@ public abstract class AbstractSystem implements ISystem {
 	private Class<?> component_class;
 
 	public long total_time;
-	
+
 	/**
 	 * 
 	 * @param _ecs
@@ -21,7 +21,7 @@ public abstract class AbstractSystem implements ISystem {
 	public AbstractSystem(BasicECS _ecs,  Class<?> _component_class) {
 		this.ecs = _ecs;
 		component_class = _component_class;
-		
+
 		name = this.getClass().getSimpleName();
 
 		this.ecs.addSystem(this);
@@ -47,7 +47,11 @@ public abstract class AbstractSystem implements ISystem {
 		return this.getClass().getSimpleName();
 	}
 
-	
+
+	/**
+	 * This should only be called by the BasicECS class.
+	 * @param e
+	 */
 	public void addEntity(AbstractEntity e) {
 		if (entities.contains(e) == false) {
 			entities.add(e);
@@ -61,31 +65,27 @@ public abstract class AbstractSystem implements ISystem {
 	public void removeEntity(AbstractEntity e) {
 		this.entities.remove(e);
 	}
-	
-	
+
+
 	public void process() {
 		long start = System.currentTimeMillis();
-		
+
 		if (this.entities == null) {
 			Iterator<AbstractEntity> it = ecs.getEntityIterator();
 			while (it.hasNext()) {
 				AbstractEntity entity = it.next();
-				/*if (entity.isMarkedForRemoval()) {
-					continue;
-				}*/
 				this.processEntity(entity);
 			}
 		} else {
-			Iterator<AbstractEntity> it = entities.iterator();
-			while (it.hasNext()) {
-				AbstractEntity entity = it.next();
-				/*if (entity.isMarkedForRemoval()) {
-					continue;
-				}*/
+			for (int i=entities.size()-1 ; i>=0 ; i--) { // In case we've added/remvoed a component while loping through components
+				//Iterator<AbstractEntity> it = entities.iterator();
+				//while (it.hasNext()) {
+				//AbstractEntity entity = it.next();
+				AbstractEntity entity = entities.get(i);
 				this.processEntity(entity);
 			}
 		}
-		
+
 		long duration = System.currentTimeMillis() - start;
 		this.total_time += duration;
 	}
@@ -95,14 +95,19 @@ public abstract class AbstractSystem implements ISystem {
 		// Override if you want to process all entities with required component.
 	}
 
-	
+
 	public Iterator<AbstractEntity> getEntityIterator() {
 		return this.entities.iterator();
 	}
 
-	
+
 	public String toString() {
 		return name;
 	}
-	
+
+
+	public void dispose() {
+		// Override if required
+	}
+
 }

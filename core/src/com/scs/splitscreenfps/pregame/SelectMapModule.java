@@ -208,6 +208,8 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 		this.spriteBatch.dispose();
 		this.frameBuffer.dispose();
 		assetManager.dispose();
+		ecs.dispose();
+
 	}
 
 

@@ -32,7 +32,6 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.BloomEffect;
 import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
@@ -41,7 +40,9 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.AddComponentAfterTimeComponent;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
+import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.components.ExplodeAfterTimeSystem;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -52,17 +53,19 @@ import com.scs.splitscreenfps.game.components.WillRespawnComponent;
 import com.scs.splitscreenfps.game.data.ExplosionData;
 import com.scs.splitscreenfps.game.data.GameSelectionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.AudioEntityFactory;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
-import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.systems.AISystem;
+import com.scs.splitscreenfps.game.systems.AddComponentAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
+import com.scs.splitscreenfps.game.systems.AudioSystem2;
 import com.scs.splitscreenfps.game.systems.CheckRangeSystem;
 import com.scs.splitscreenfps.game.systems.CollectableSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -120,6 +123,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	private PhysicsSystem physicsSystem;
 	private RespawnPlayerSystem respawnSystem;
 	public RespawnCollectableSystem respawnHealthPackSystem;
+	public AudioSystem2 audioSystem;
 
 	public int currentViewId;
 	private AssetManager assetManager = new AssetManager();
@@ -231,15 +235,28 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		BillBoardFPS_Main.audio.stopMusic();
 
 		// Play airhorn
-		BillBoardFPS_Main.audio.play("sfx/airhorn.wav", WillRespawnComponent.RESPAWN_TIME);
+		this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .5f, WillRespawnComponent.RESPAWN_TIME));
 		for (int i=0 ; i<4 ; i++) {
-			BillBoardFPS_Main.audio.play("sfx/airhorn.wav", NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000));
+			this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .5f, NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000)));
+			//BillBoardFPS_Main.audio.play("sfx/airhorn.wav", NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000));
 		}
 
 		// Show countdown
 		int max = (int)WillRespawnComponent.RESPAWN_TIME/1000;
 		for (int i=1 ; i<=max ; i++) {
-			TextEntity countdown = new TextEntity(ecs, ""+i, 50f, 50f, max+1-i, Color.MAGENTA, -1, this.font_large, true);
+			AbstractEntity countdown = new AbstractEntity(ecs, "Countdown");
+			
+			DrawTextComponent dtd = new DrawTextComponent(this.font_large, -1);
+			dtd.text = i+"";
+			dtd.x_pcent = 50;
+			dtd.y_pcent = 50;
+			dtd.centre_x = true;
+			dtd.colour = Color.WHITE;
+			
+			countdown.addComponent(new AddComponentAfterTimeComponent(dtd, (max-i)*1000));
+
+			countdown.addComponent(new RemoveEntityAfterTimeComponent((max+1-i)));
+			//TextEntity countdown = new TextEntity(ecs, ""+i, 50f, 50f, max+1-i, Color.MAGENTA, -1, this.font_large, true);
 			ecs.addEntity(countdown);
 
 		}
@@ -290,6 +307,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		ecs.addSystem(new ExplodeOnContactSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
 		ecs.addSystem(new AISystem(this, ecs));
+		ecs.addSystem(new AddComponentAfterTimeSystem(ecs));
+		audioSystem = new AudioSystem2(ecs);
+		ecs.addSystem(audioSystem);
 
 	}
 
@@ -323,6 +343,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.currentLevel.update();
 
 		this.respawnSystem.process();
+		this.ecs.getSystem(AddComponentAfterTimeSystem.class).process();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.processSystem(SpeechSystem.class);
@@ -358,6 +379,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 		this.ecs.getSystem(RemoveOnContactSystem.class).process();		
 		this.ecs.getSystem(CheckRangeSystem.class).process();
+		this.audioSystem.process();
 
 		// Start of drawing code ---------------------------
 
@@ -529,8 +551,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			this.vfxManager.dispose();
 		}
 
-		ecs.markAllEntitiesForRemoval();
-		ecs.addAndRemoveEntities();
 		ecs.dispose();
 
 		if (debugDrawer != null) {
