@@ -89,6 +89,7 @@ import com.scs.splitscreenfps.game.systems.RespawnPlayerSystem;
 import com.scs.splitscreenfps.game.systems.SecondaryAbilitySystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 import com.scs.splitscreenfps.game.systems.SpeechSystem;
+import com.scs.splitscreenfps.game.systems.StickySystem;
 import com.scs.splitscreenfps.game.systems.UltimateAbilitySystem;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 import com.scs.splitscreenfps.pregame.SelectMapModule;
@@ -312,7 +313,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		ecs.addSystem(new AddComponentAfterTimeSystem(ecs));
 		audioSystem = new AudioSystem2(ecs);
 		ecs.addSystem(audioSystem);
-
+		ecs.addSystem(new StickySystem(ecs));
+		
 	}
 
 
@@ -358,7 +360,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
 		this.ecs.getSystem(AISystem.class).process();
 		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
-
+		this.ecs.getSystem(StickySystem.class).process();
+		
 		this.ecs.events.clear();
 		if (physics_enabled) {
 			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away

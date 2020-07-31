@@ -3,7 +3,7 @@
 An Overwatch clone split-screen multiplayer FPS with physics.  I created this as an attempt to get my kids to play one of my games, so I've copied ideas from their favourite games, including Overwatch and Piggy (/Roblox).
 
 
-Gameplay videos: https://www.youtube.com/watch?v=l5r8nlscKwI&list=PLbGkfhhJ5G3-74KwOzu8khhYF_4Zb0pPF
+Gameplay video: https://www.youtube.com/watch?v=3LQdwPbTgmQ
 
 
 ## Features

@@ -24,6 +24,7 @@ import com.scs.splitscreenfps.game.components.HarmPlayerOnContactComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.HasRangeComponent;
+import com.scs.splitscreenfps.game.components.IsStickyComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -482,6 +483,8 @@ public class BulletEntityFactory {
 		
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
+
+		e.addComponent(new IsStickyComponent());
 
 		// Add physics
 		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(width/2, height/2, width/2));
