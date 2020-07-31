@@ -7,7 +7,7 @@ public class JunkratMineAbilityComponent {
 
 	public final long cooldown_duration;
 	public float current_cooldown;
-	public SecondaryAbilityType type;
+	//public SecondaryAbilityType type;
 
 	public boolean button_released = true; // Prevent using all abilities in one go
 	

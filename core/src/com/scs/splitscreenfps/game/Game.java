@@ -782,7 +782,12 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 					frc.set(posData.position);
 					frc.sub(explosionPos).nor();
 					frc.y += .2f;
-					frc.scl(explData.force);
+					
+					if (pc.body.userData instanceof AbstractPlayersAvatar) {
+						frc.scl(explData.force * 5); // To counter damping
+					} else {
+						frc.scl(explData.force);
+					}
 					pc.getRigidBody().applyCentralImpulse(frc);
 				}
 			}
@@ -804,7 +809,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 		this.dynamicsWorld.rayTest(ray_from, tmp_to2, callback);
 		if (callback.hasHit()) {
-			return callback;//..getCollisionObject();
+			return callback;
 		}
 
 		return null;

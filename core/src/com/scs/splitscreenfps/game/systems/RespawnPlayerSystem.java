@@ -57,7 +57,10 @@ public class RespawnPlayerSystem implements ISystem {
 				playerData.dead = false;
 				
 				AbstractPlayersAvatar player = (AbstractPlayersAvatar)e;
-				player.camera.direction.set(1, 0, 1);//.lookAt(new Vector3(15, .5f, 15)); player.camera.rotate(Vector3.X, -90);
+				Vector3 dir = new Vector3(15, 1, 15).sub(wrc.respawnPoint);
+				dir.y = 0;
+				dir.nor();
+				player.camera.direction.set(dir);//1, 0, 1);//.lookAt(new Vector3(15, .5f, 15)); player.camera.rotate(Vector3.X, -90);
 				player.camera.up.x = 0;
 				player.camera.up.y = 1;
 				player.camera.up.z = 0;

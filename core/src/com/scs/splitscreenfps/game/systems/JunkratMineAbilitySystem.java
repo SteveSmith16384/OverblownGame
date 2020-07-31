@@ -17,8 +17,6 @@ import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
 public class JunkratMineAbilitySystem extends AbstractSystem {
 
 	private Game game;
-	//private Vector3 tmpVec = new Vector3();
-	//private Matrix4 tmpMat = new Matrix4();
 
 	public JunkratMineAbilitySystem(BasicECS ecs, Game _game) {
 		super(ecs, JunkratMineAbilityComponent.class);
@@ -48,7 +46,7 @@ public class JunkratMineAbilitySystem extends AbstractSystem {
 		PlayerData playerData = (PlayerData)entity.getComponent(PlayerData.class);
 		if (ability.count_available > 0 || ability.entity != null) {
 			playerData.ability1Ready = true;
-			playerData.ability1text = ability.type + " Ready! (" + ability.count_available + ") ";
+			playerData.ability1text ="Concussion Mine Ready! (" + ability.count_available + ") ";
 			if (player.inputMethod.isAbility1Pressed()) {
 				if (ability.button_released) {
 					ability.button_released = false;
@@ -76,7 +74,7 @@ public class JunkratMineAbilitySystem extends AbstractSystem {
 			playerData.ability1Ready = false;
 
 			int pcent = (int)((ability.current_cooldown / ability.cooldown_duration) * 100);
-			playerData.ability1text = ability.type + " " + pcent + "%";
+			playerData.ability1text = "Concussion Mine: " + pcent + "%";
 		}
 	}
 

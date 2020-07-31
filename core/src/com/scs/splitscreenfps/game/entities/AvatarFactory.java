@@ -191,7 +191,7 @@ public class AvatarFactory {
 		case WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER:
 			ExplosionData explData = new ExplosionData(2f, 40, 2f);
 			weapon = new WeaponSettingsComponent(weapon_type, 667, 1500, 5, 100, 
-					130, 0, 0, explData);
+					90, 0, 0, explData);
 			weapon.kickback_force = 1f;
 			break;
 

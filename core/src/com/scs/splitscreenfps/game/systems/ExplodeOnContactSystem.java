@@ -46,7 +46,7 @@ public class ExplodeOnContactSystem extends AbstractSystem {
 				if (bullet.remove) {
 					entity.remove();
 				}
-				Settings.p(bullet + " hit " + coll.entity2);
+				//Settings.p(bullet + " hit " + coll.entity2);
 				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 				
 				//AbstractEntity shooter = bullet.shooter;
