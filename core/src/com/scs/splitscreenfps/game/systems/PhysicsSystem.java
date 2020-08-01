@@ -25,7 +25,7 @@ public class PhysicsSystem extends AbstractSystem {
 		game = _game;
 	}
 
-
+	
 	@Override
 	public void processEntity(AbstractEntity e) {
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);

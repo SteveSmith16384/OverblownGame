@@ -209,7 +209,10 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			Matrix4 mat = new Matrix4();
 			mat.setTranslation(start_pos.x + 0.5f, start_pos.y, start_pos.z + 0.5f);
 			md.body.setWorldTransform(mat);
-			this.respawnSystem.addEntity(players[i], this.currentLevel.getPlayerStartPoint(i));
+			
+			if (Settings.USE_MAP_EDITOR == false) {
+				this.respawnSystem.addEntity(players[i], this.currentLevel.getPlayerStartPoint(i));
+			}
 		}	
 
 		this.loadAssetsForRescale(); // Need this to load font
@@ -236,31 +239,33 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 		BillBoardFPS_Main.audio.stopMusic();
 
-		// Play airhorn
-		this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .5f, WillRespawnComponent.RESPAWN_TIME));
-		for (int i=0 ; i<4 ; i++) {
-			this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .5f, NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000)));
-			//BillBoardFPS_Main.audio.play("sfx/airhorn.wav", NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000));
-		}
+		if (Settings.USE_MAP_EDITOR == false) {
 
-		// Show countdown
-		int max = (int)WillRespawnComponent.RESPAWN_TIME/1000;
-		for (int i=1 ; i<=max ; i++) {
-			AbstractEntity countdown = new AbstractEntity(ecs, "Countdown");
-			
-			DrawTextComponent dtd = new DrawTextComponent(this.font_large, -1);
-			dtd.text = i+"";
-			dtd.x_pcent = 50;
-			dtd.y_pcent = 50;
-			dtd.centre_x = true;
-			dtd.colour = Color.WHITE;
-			
-			countdown.addComponent(new AddComponentAfterTimeComponent(dtd, (max-i)*1000));
+			// Play airhorn
+			this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .5f, WillRespawnComponent.RESPAWN_TIME));
+			for (int i=0 ; i<4 ; i++) {
+				this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .5f, NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000)));
+				//BillBoardFPS_Main.audio.play("sfx/airhorn.wav", NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000));
+			}
 
-			countdown.addComponent(new RemoveEntityAfterTimeComponent((max+1-i)));
-			//TextEntity countdown = new TextEntity(ecs, ""+i, 50f, 50f, max+1-i, Color.MAGENTA, -1, this.font_large, true);
-			ecs.addEntity(countdown);
+			// Show countdown
+			int max = (int)WillRespawnComponent.RESPAWN_TIME/1000;
+			for (int i=1 ; i<=max ; i++) {
+				AbstractEntity countdown = new AbstractEntity(ecs, "Countdown");
 
+				DrawTextComponent dtd = new DrawTextComponent(this.font_large, -1);
+				dtd.text = i+"";
+				dtd.x_pcent = 50;
+				dtd.y_pcent = 50;
+				dtd.centre_x = true;
+				dtd.colour = Color.WHITE;
+
+				countdown.addComponent(new AddComponentAfterTimeComponent(dtd, (max-i)*1000));
+
+				countdown.addComponent(new RemoveEntityAfterTimeComponent((max+1-i)));
+				//TextEntity countdown = new TextEntity(ecs, ""+i, 50f, 50f, max+1-i, Color.MAGENTA, -1, this.font_large, true);
+				ecs.addEntity(countdown);
+			}
 		}
 	}
 
@@ -314,7 +319,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		audioSystem = new AudioSystem2(ecs);
 		ecs.addSystem(audioSystem);
 		ecs.addSystem(new StickySystem(ecs));
-		
+
 	}
 
 
@@ -361,7 +366,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.ecs.getSystem(AISystem.class).process();
 		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
 		this.ecs.getSystem(StickySystem.class).process();
-		
+
 		this.ecs.events.clear();
 		if (physics_enabled) {
 			if (System.currentTimeMillis() > startPhysicsTime) { // Don't start straight away
@@ -415,8 +420,10 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				dynamicsWorld.debugDrawWorld();
 				debugDrawer.end();
 			}
-			this.drawModelSystem.process(viewportData.camera, true); // Draw shadows of models
-
+			if (Settings.DISABLE_SHADOWS == false) {
+				this.drawModelSystem.process(viewportData.camera, true); // Draw shadows of models
+			}
+			
 			viewportData.frameBuffer.end();
 
 			if (Settings.DISABLE_POST_EFFECTS == false) {
@@ -782,7 +789,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 					frc.set(posData.position);
 					frc.sub(explosionPos).nor();
 					frc.y += .2f;
-					
+
 					if (pc.body.userData instanceof AbstractPlayersAvatar) {
 						frc.scl(explData.force * 5); // To counter damping
 					} else {

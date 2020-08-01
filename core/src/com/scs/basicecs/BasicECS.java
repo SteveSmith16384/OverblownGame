@@ -203,10 +203,11 @@ public class BasicECS {
 			if (sys instanceof AbstractSystem) {
 				AbstractSystem system = (AbstractSystem)sys;
 				system.dispose();
+				
 				// Show total processing time for profiling
-				/*if (system.total_time > 0) {
+				if (system.total_time > 1000) {
 					System.out.println(system.getClass().getSimpleName() + " = " + system.total_time);
-				}*/
+				}
 			}
 		}
 

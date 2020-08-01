@@ -51,12 +51,12 @@ public class JunkratMineAbilitySystem extends AbstractSystem {
 				if (ability.button_released) {
 					ability.button_released = false;
 					if (ability.entity == null || ability.entity.isMarkedForRemoval()) {
-						Settings.p("Launching mine");
+						//Settings.p("Launching mine");
 						ability.entity = BulletEntityFactory.createJunkratMine(game, player);
 						game.ecs.addEntity(ability.entity);
 						ability.count_available--;
 					} else {
-						Settings.p("Exploding current mine");
+						//Settings.p("Exploding current mine");
 						// Explode current bomb
 						PositionComponent posData = (PositionComponent)ability.entity.getComponent(PositionComponent.class);
 						game.explosion(posData.position, new ExplosionData(2, 100, 5), player, false);
@@ -66,7 +66,7 @@ public class JunkratMineAbilitySystem extends AbstractSystem {
 				}
 			} else { // Button released?
 				if (ability.button_released == false) {
-					Settings.p("Button released");
+					//Settings.p("Button released");
 					ability.button_released = true;
 				}
 			}

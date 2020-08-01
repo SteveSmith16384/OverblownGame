@@ -36,7 +36,7 @@ public class ExplodeOnContactSystem extends AbstractSystem {
 				continue;
 			}
 			PhysicsComponent hitPhysics = (PhysicsComponent)coll.entity2.getComponent(PhysicsComponent.class);
-			if (hitPhysics.isRigidBody() == false) {
+			if (hitPhysics == null || hitPhysics.isRigidBody() == false) {
 				continue;
 			}
 

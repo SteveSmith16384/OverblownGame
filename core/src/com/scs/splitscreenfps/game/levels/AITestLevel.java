@@ -28,12 +28,6 @@ public class AITestLevel extends AbstractLevel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		/*
-		AIInputMethod ai_input = new AIInputMethod();
-		AbstractEntity ai = AvatarFactory.createAvatar(game, 3, game.viewports[3].camera, ai_input, AvatarFactory.CHAR_PHARTAH);
-		ai.addComponent(new HasAIComponent(ai_input));
-		*/
 	}
 
 

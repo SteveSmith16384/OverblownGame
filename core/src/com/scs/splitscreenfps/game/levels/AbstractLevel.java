@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.levels;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +34,9 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_SHOOT_TAG = 5;
 	public static final int LEVEL_WHAT_THE_BALL = 6;
 	public static final int LEVEL_MAP_EDITOR = 7;
-	public static final int LEVEL_AI_TEST = 8;
+	public static final int LEVEL_CITY = 8;
+	public static final int LEVEL_AI_TEST = 9;
+	
 	public static final int MAX_LEVEL_ID = 7;
 
 	public Game game;
@@ -53,6 +54,8 @@ public abstract class AbstractLevel {
 		switch (i) {
 		case LEVEL_FACTORY:
 			return "Factory - Deathmatch";
+		case LEVEL_CITY:
+			return "City - Deathmatch";
 		case LEVEL_VILLAGE:
 			return "Village - Control Point";
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
@@ -95,6 +98,8 @@ public abstract class AbstractLevel {
 			return new WhatTheBallLevel();
 		case LEVEL_MAP_EDITOR:
 			return new MapEditorLevel();
+		case LEVEL_CITY:
+			return new CityLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
@@ -115,6 +120,22 @@ public abstract class AbstractLevel {
 
 
 	public void loadJsonFile(String filename, boolean for_map_editor) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		this.loadJsonFile(filename, for_map_editor, Vector3.Zero, 5);
+	}
+	
+	
+	/**
+	 * Load a map file but offset all the entities by the specified position.  Useful for when loading multiple
+	 * map files for one level.
+	 * 
+	 * @param filename
+	 * @param for_map_editor
+	 * @param offset
+	 * @throws JsonSyntaxException
+	 * @throws JsonIOException
+	 * @throws FileNotFoundException
+	 */
+	public void loadJsonFile(String filename, boolean for_map_editor, Vector3 offset, float mass_mult) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		Gson gson = new Gson();
 
 		String s = Gdx.files.internal(filename).readString();
@@ -128,6 +149,8 @@ public abstract class AbstractLevel {
 
 
 		for (MapBlockComponent block : mapdata.blocks) {
+			block.position.add(offset);
+			
 			if (block.position.y < -4f) { // Skip any that have fallen off the edge
 				Settings.p("Ignoreing" + block.name + " as it is too low");
 				continue;
@@ -145,7 +168,7 @@ public abstract class AbstractLevel {
 				game.ecs.addEntity(health);
 				continue;
 			}
-			game.currentLevel.createAndAddEntityFromBlockData(block, for_map_editor);
+			game.currentLevel.createAndAddEntityFromBlockData(block, for_map_editor, mass_mult);
 		}
 		
 		if (startPositions.size() < 4) {
@@ -161,17 +184,17 @@ public abstract class AbstractLevel {
 
 
 	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block) {
-		return this.createAndAddEntityFromBlockData(block, true);
+		return this.createAndAddEntityFromBlockData(block, true, 5);
 	}
 
 
-	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block, boolean for_map_editor) {
+	public AbstractEntity createAndAddEntityFromBlockData(MapBlockComponent block, boolean for_map_editor, float mass_mult) {
 		if (block.id == 0) {
 			block.id = MapBlockComponent.next_id++;
 		}
 		if (block.model_filename != null && block.model_filename.length() > 0) {
 			AbstractEntity model = EntityFactory.createModel(game.ecs, block.name, block.model_filename, 
-					8, -2f, 7, 
+					block.position.x, block.position.y, block.position.z, 
 					block.mass, null);
 			model.tags = block.tags;
 			if (for_map_editor) {
@@ -188,7 +211,7 @@ public abstract class AbstractLevel {
 			if (block.type == null || block.type.length() == 0 || block.type.equalsIgnoreCase("cube")) {
 				wall = new Wall(game, block.name, tex, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
-						block.mass * 5, // Hack to make walls heavier
+						block.mass,//todo - readd * 5, // Hack to make walls heavier
 						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
 			} else if (block.type.equalsIgnoreCase("sphere")) {
 				wall = EntityFactory.createBall(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);

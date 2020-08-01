@@ -6,6 +6,7 @@ import java.util.List;
 
 public class MapData {
 
+	public String name;
 	public String filename;
 	public HashMap<Integer, String> textures;
 	public List<MapBlockComponent> blocks;
