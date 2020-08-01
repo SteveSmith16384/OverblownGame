@@ -59,7 +59,7 @@ public class JunkratMineAbilitySystem extends AbstractSystem {
 						Settings.p("Exploding current mine");
 						// Explode current bomb
 						PositionComponent posData = (PositionComponent)ability.entity.getComponent(PositionComponent.class);
-						game.explosion(posData.position, new ExplosionData(3, 100, 5), player, false);
+						game.explosion(posData.position, new ExplosionData(2, 100, 5), player, false);
 						ability.entity.remove();
 						ability.entity = null;
 					}

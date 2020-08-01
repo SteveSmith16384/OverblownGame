@@ -2,13 +2,17 @@
 
 An Overwatch clone split-screen multiplayer FPS with physics.  I created this as an attempt to get my kids to play one of my games, so I've copied ideas from their favourite games, including Overwatch and Piggy (/Roblox).
 
+A release can be downloaded from https://stephensmith.itch.io/overblown
 
 Gameplay video: https://www.youtube.com/watch?v=3LQdwPbTgmQ
+
+For further instructions, see the download page at https://stephensmith.itch.io/overblown
 
 
 ## Features
 * Multiple heroes with different abilities and ultimates.
 * Multiple game modes
+* Multiple maps
 
 
 ## Controls
@@ -34,9 +38,9 @@ Gameplay video: https://www.youtube.com/watch?v=3LQdwPbTgmQ
 
 
 ## Map Editor
-The map editor is still in development.  The map editor will always edit the file "core/assets/maps/map_editor.json", so rename whatever map file you want to edit to that name.
+The map editor is still in development, and will only work properly by running the game from source (so the data files can be written back).  The map editor will always edit the file "core/assets/maps/map_editor.json", so rename whatever map file you want to edit to that name.
 
-To edit the texures used, manually edit the map json file.
+To edit the available texures, manually edit the map json file.
 
 ### Map Editor Controls
 * 1 - Save map
@@ -46,11 +50,12 @@ To edit the texures used, manually edit the map json file.
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block
+* G - Enable physics/gravity
 * M - Mass mode - Use arrow keys to change mass
 * N - New block - then bress B, C or E for Box, Cylinder or Sphere.
 * P - Position Mode
 * R - Rotation Mode
-* G - Enable physics/gravity
+* T - Texture mode
 * U - Undo move
 * X - Remove block - press shift to confirm!
 * Arrows & Pg Up/Pg Dn: Adjust model size/position/rotation/mass/texture depending on mode
