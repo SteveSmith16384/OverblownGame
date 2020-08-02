@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
+import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class CityLevel extends AbstractLevel {
@@ -38,10 +39,11 @@ public class CityLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
 		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
-		/*Wall floor = new Wall(game, "Floor", "colours/white.png", floor_size/2, -0.1f, floor_size/2, 
+/*
+ 		Wall floor = new Wall(game, "Floor", "colours/white.png", floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
 				0f, true, false);
-		game.ecs.addEntity(floor);*/
+		game.ecs.addEntity(floor);
 
 		try {
 			//super.loadJsonFile("maps/skyscraper.json", false);
@@ -49,7 +51,7 @@ public class CityLevel extends AbstractLevel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+*/
 		for (int z=0 ; z<2 ; z++) {
 			for (int x=0 ; x<2 ; x++) {
 				try {

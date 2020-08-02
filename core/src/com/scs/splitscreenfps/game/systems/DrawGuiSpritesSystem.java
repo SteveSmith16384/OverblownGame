@@ -16,13 +16,12 @@ import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
 public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<AbstractEntity> {
 
-	//private Game game;
 	private IGetCurrentViewport view;
 	private SpriteBatch batch2d;
 
 	public DrawGuiSpritesSystem(BasicECS ecs, IGetCurrentViewport _view, SpriteBatch _batch2d) {
 		super(ecs, HasGuiSpriteComponent.class);
-		//game = _game;
+
 		view = _view;
 		batch2d = _batch2d;
 	}
@@ -90,4 +89,6 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 		}
 
 	}
+	
+
 }

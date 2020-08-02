@@ -1,10 +1,12 @@
 package com.scs.splitscreenfps.game.systems;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
@@ -35,7 +37,9 @@ public class DrawModelSystem extends AbstractSystem {
 
 	private int num_objects_drawn;
 	private BoundingBox tmpBB = new BoundingBox();
-	
+
+	private LinkedList<RenderableProvider> renderables = new LinkedList<RenderableProvider>();
+
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
 		game = _game;
@@ -60,6 +64,7 @@ public class DrawModelSystem extends AbstractSystem {
 		num_objects_drawn = 0;
 
 		if (!shadows) {
+			renderables.clear();
 			this.modelBatch.begin(cam);
 
 			Iterator<AbstractEntity> it = entities.iterator();
@@ -67,15 +72,22 @@ public class DrawModelSystem extends AbstractSystem {
 				AbstractEntity entity = it.next();
 				this.renderEntity(entity, modelBatch, false);
 			}
+			if (Settings.MODIFIED_DRAW_SYSTEM) {
+				this.modelBatch.render(this.renderables, this.environment);
+			}
 			this.modelBatch.end();
 		} else {
 			shadowLight.begin(Vector3.Zero, cam.direction);
 			shadowBatch.begin(shadowLight.getCamera());
 
-			Iterator<AbstractEntity> it2 = entities.iterator();
-			while (it2.hasNext()) {
-				AbstractEntity entity = it2.next();
-				this.renderEntity(entity, shadowBatch, true);
+			if (Settings.MODIFIED_DRAW_SYSTEM == false) {
+				Iterator<AbstractEntity> it2 = entities.iterator();
+				while (it2.hasNext()) {
+					AbstractEntity entity = it2.next();
+					this.renderEntity(entity, shadowBatch, true);
+				}
+			} else {
+				this.modelBatch.render(this.renderables, this.environment);
 			}
 
 			shadowBatch.end();
@@ -139,7 +151,7 @@ public class DrawModelSystem extends AbstractSystem {
 				return;
 			}
 		}
-		
+
 		if (model.invisible) {
 			return;
 		}
@@ -172,12 +184,22 @@ public class DrawModelSystem extends AbstractSystem {
 			}
 		}
 
-		batch.render(model.model, environment);
-		
+		if (Settings.MODIFIED_DRAW_SYSTEM == false) {
+			batch.render(model.model, environment);
+		} else {
+			this.renderables.add(model.model);
+		}
+
 		if (drawing_shadows == false) {
 			num_objects_drawn++;
 		}
 	}
 
+
+	@Override
+	public void dispose() {
+		this.modelBatch.dispose();
+		this.shadowBatch.dispose();
+	}
 
 }
