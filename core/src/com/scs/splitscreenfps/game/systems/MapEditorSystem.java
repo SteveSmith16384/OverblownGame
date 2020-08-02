@@ -31,6 +31,7 @@ public class MapEditorSystem extends AbstractSystem {
 	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS, NEW_BLOCK};
 
 	private float MOVE_INC = 0.25f;
+	private float FRAC = 0.001f;
 
 	private Game game;
 	private Mode mode = Mode.POSITION;
@@ -493,6 +494,10 @@ public class MapEditorSystem extends AbstractSystem {
 		block.size.y = Math.round(block.size.y)*MOVE_INC; 
 		block.size.z = Math.round(block.size.z)*MOVE_INC; 
 
+		block.size.x -= FRAC;
+		block.size.y -= FRAC;
+		block.size.z -= FRAC;
+		
 		block.rotation.set(0, 0, 0);
 		this.selectedObject.remove();
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);

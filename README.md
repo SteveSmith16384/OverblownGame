@@ -59,6 +59,8 @@ To edit the available texures, manually edit the map json file.
 * U - Undo move
 * X - Remove block - press shift to confirm!
 * Arrows & Pg Up/Pg Dn: Adjust model size/position/rotation/mass/texture depending on mode
+* Shift - only adjust one side of object
+* Ctrl - Move in very small increments
 
 
 ## Notes for other Developers

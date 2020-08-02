@@ -23,14 +23,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": 2.0024385,
-        "y": 0.49995434,
-        "z": 2.000979
+        "x": 2.0028286,
+        "y": 0.49897343,
+        "z": 1.9988852
       },
       "rotation": {
         "x": 0.0,
@@ -48,9 +48,9 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 8.0,
-        "y": 0.5,
-        "z": 8.0
+        "x": 7.999,
+        "y": 0.499,
+        "z": 7.999
       },
       "position": {
         "x": 0.5,
@@ -65,56 +65,6 @@
       "mass": 0.0
     },
     {
-      "id": 38,
-      "type": "cylinder",
-      "name": "New cylinder 50_new",
-      "tags": "",
-      "texture_id": 7,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 4.014009,
-        "y": 0.50000066,
-        "z": 12.741772
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 4,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.0019759,
-        "y": 0.4999569,
-        "z": 1.9945396
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
       "id": 5,
       "type": "",
       "name": "Floor",
@@ -123,14 +73,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": 0.0013432925,
-        "y": 0.49944183,
-        "z": 1.9949903
+        "x": -0.004131867,
+        "y": 0.49897584,
+        "z": 2.0109975
       },
       "rotation": {
         "x": 0.0,
@@ -148,139 +98,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": -1.0011407,
-        "y": 0.4999536,
-        "z": 2.0010834
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 7,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0027287,
-        "y": 1.4993782,
-        "z": 2.0011008
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 8,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.0007267,
-        "y": 1.4993967,
-        "z": 1.9985993
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 9,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -6.585878E-5,
-        "y": 1.4993508,
-        "z": 2.0025423
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 10,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0017179,
-        "y": 1.4992425,
-        "z": 2.0027146
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 11,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0059836,
-        "y": 1.4999999,
-        "z": 1.9944205
+        "x": -1.0087259,
+        "y": 0.49895135,
+        "z": 1.998472
       },
       "rotation": {
         "x": 0.0,
@@ -298,14 +123,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": 2.0018737,
-        "y": 0.49987605,
-        "z": 0.9984894
+        "x": 1.9992658,
+        "y": 0.49897063,
+        "z": 0.9978254
       },
       "rotation": {
         "x": 0.0,
@@ -323,14 +148,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": 2.0002072,
-        "y": 0.49953866,
-        "z": -0.0018373075
+        "x": 1.997982,
+        "y": 0.4989873,
+        "z": -0.0013916396
       },
       "rotation": {
         "x": 0.0,
@@ -348,14 +173,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": 2.0012817,
-        "y": 0.4994526,
-        "z": -1.0045775
+        "x": 2.003034,
+        "y": 0.4989772,
+        "z": -1.01324
       },
       "rotation": {
         "x": 0.0,
@@ -373,39 +198,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": 1.0003722,
-        "y": 0.49951002,
-        "z": -0.99983144
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 17,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -0.00107506,
-        "y": 0.4994402,
-        "z": -0.98190594
+        "x": 1.0013613,
+        "y": 0.49898112,
+        "z": -1.003549
       },
       "rotation": {
         "x": 0.0,
@@ -423,14 +223,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": -1.003608,
-        "y": 0.49948734,
-        "z": -1.0015972
+        "x": -1.0072116,
+        "y": 0.49898013,
+        "z": -1.0152489
       },
       "rotation": {
         "x": 0.0,
@@ -448,14 +248,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": -1.000045,
-        "y": 0.49953133,
-        "z": -5.010434E-4
+        "x": -1.0073148,
+        "y": 0.49899152,
+        "z": -0.0060696453
       },
       "rotation": {
         "x": 0.0,
@@ -473,1089 +273,14 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
       },
       "position": {
-        "x": -0.9998383,
-        "y": 0.49915123,
-        "z": 1.000317
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 21,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0017319,
-        "y": 1.4986682,
-        "z": 0.9990011
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 22,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0030286,
-        "y": 2.4982839,
-        "z": 2.0012276
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 23,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.0014172,
-        "y": 2.498531,
-        "z": 1.99961
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 24,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -6.4572116E-4,
-        "y": 2.4983416,
-        "z": 2.002161
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 25,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0017145,
-        "y": 2.4981434,
-        "z": 2.0030355
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 26,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -0.99929535,
-        "y": 1.4989958,
-        "z": 1.0001532
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 27,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0008245,
-        "y": 2.4977636,
-        "z": 1.0016948
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 28,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.000582,
-        "y": 1.4994613,
-        "z": -5.865483E-4
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 29,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0025471,
-        "y": 2.498961,
-        "z": -1.04552586E-4
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 30,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0031924,
-        "y": 1.4990355,
-        "z": -1.002367
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 31,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.004701,
-        "y": 2.4988964,
-        "z": -1.0033932
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 32,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -0.0023789587,
-        "y": 1.499,
-        "z": -1.0003918
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 33,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -0.0027191774,
-        "y": 2.4988701,
-        "z": -1.0016259
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 34,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 0.9996284,
-        "y": 1.4994566,
-        "z": -0.99983627
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 35,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 0.9994219,
-        "y": 2.4989479,
-        "z": -0.9997882
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 36,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0034485,
-        "y": 1.4993207,
-        "z": -1.0095797
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 37,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0040061,
-        "y": 2.4984407,
-        "z": -1.0114849
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 38,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.000764,
-        "y": 1.4994454,
-        "z": -0.0046627834
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 39,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0002732,
-        "y": 2.498941,
-        "z": -0.007546338
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 40,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0019832,
-        "y": 2.4983492,
-        "z": 1.0008507
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 41,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0036826,
-        "y": 3.498086,
-        "z": 2.0021515
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 42,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0041773,
-        "y": 4.4980655,
-        "z": 2.0038598
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 43,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.0015295,
-        "y": 3.4984365,
-        "z": 2.001976
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 44,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.0020037,
-        "y": 4.4980884,
-        "z": 2.0028498
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 45,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -6.386473E-4,
-        "y": 3.4982135,
-        "z": 2.0016894
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 46,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 4.4759468E-4,
-        "y": 4.49786,
-        "z": 2.000843
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 47,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0025606,
-        "y": 3.497949,
-        "z": 2.0056162
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 48,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0029551,
-        "y": 4.4979267,
-        "z": 2.0065222
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 49,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.00157,
-        "y": 3.497678,
-        "z": 1.0011171
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 50,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0028636,
-        "y": 4.497223,
-        "z": 1.0030873
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 51,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0018183,
-        "y": 3.498511,
-        "z": -5.6829845E-4
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 52,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0005696,
-        "y": 4.4981685,
-        "z": -1.9805285E-4
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 53,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.00571,
-        "y": 3.498302,
-        "z": -1.0034137
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 54,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -1.0074105,
-        "y": 4.498274,
-        "z": -1.004722
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 55,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -0.0016405913,
-        "y": 3.4984283,
-        "z": -1.0019659
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 56,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": -3.331071E-4,
-        "y": 4.4980984,
-        "z": -1.0021492
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 57,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.0000046,
-        "y": 3.498324,
-        "z": -1.0002207
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 58,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 1.0004382,
-        "y": 4.4983053,
-        "z": -1.0008796
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 59,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0017147,
-        "y": 3.4983497,
-        "z": 1.0016522
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 60,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0023313,
-        "y": 4.498064,
-        "z": 1.0026227
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 61,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0001016,
-        "y": 3.498322,
-        "z": -0.010502429
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 62,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.000934,
-        "y": 4.4982977,
-        "z": -0.012403348
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 63,
-      "type": "",
-      "name": "Floor",
-      "tags": "",
-      "texture_id": 4,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 2.0042768,
-        "y": 3.498265,
-        "z": -1.0138247
+        "x": -0.9993553,
+        "y": 0.49898687,
+        "z": 0.9967523
       },
       "rotation": {
         "x": 0.0,
@@ -1573,14 +298,589 @@
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 3.999,
+        "y": 0.249,
+        "z": 3.999
       },
       "position": {
-        "x": 2.0048945,
-        "y": 4.498251,
-        "z": -1.0165765
+        "x": 0.49962392,
+        "y": 1.1229187,
+        "z": 0.50034565
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 65,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 1.0001994,
+        "y": 1.7468536,
+        "z": -1.000696
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 66,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 2.001278,
+        "y": 1.7467988,
+        "z": -1.0038984
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 67,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 0.0010919969,
+        "y": 1.7468038,
+        "z": -1.0039158
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 68,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": -0.9987051,
+        "y": 1.7468467,
+        "z": -1.003919
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 70,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": -0.9989761,
+        "y": 1.7469196,
+        "z": 0.9961593
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 71,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": -0.9990645,
+        "y": 1.7469493,
+        "z": 1.9961513
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 72,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 0.0013196922,
+        "y": 1.7442762,
+        "z": 1.9962064
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 73,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 1.0009165,
+        "y": 1.7469245,
+        "z": 1.9962448
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 74,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 2.000851,
+        "y": 1.7468909,
+        "z": 1.996096
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 76,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 2.0011857,
+        "y": 1.7468436,
+        "z": -0.0038410807
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 78,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 0.0010919969,
+        "y": 2.9958038,
+        "z": -1.0039158
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 79,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": -0.998908,
+        "y": 2.994804,
+        "z": -1.0039158
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 80,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 1.001092,
+        "y": 2.993804,
+        "z": -1.0039158
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 81,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 2.001092,
+        "y": 2.992804,
+        "z": -1.0039158
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 82,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 2.001092,
+        "y": 2.9918041,
+        "z": -0.0039157867
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 83,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 2.001092,
+        "y": 2.9908042,
+        "z": 0.9960842
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 84,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 2.001092,
+        "y": 2.9898043,
+        "z": 1.9960842
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 85,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 1.001092,
+        "y": 2.9888043,
+        "z": 1.9960842
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 86,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": 0.0010919571,
+        "y": 2.9878044,
+        "z": 1.9960842
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 87,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": -0.99890804,
+        "y": 2.9868045,
+        "z": 1.9960842
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 88,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": -0.99890804,
+        "y": 2.9858046,
+        "z": 0.9960842
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 89,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.999,
+        "y": 0.999,
+        "z": 0.999
+      },
+      "position": {
+        "x": -0.99890804,
+        "y": 2.9848046,
+        "z": -0.0039157867
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 90,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 3.999,
+        "y": 0.249,
+        "z": 3.999
+      },
+      "position": {
+        "x": 0.49962392,
+        "y": 3.6209188,
+        "z": 0.50034565
       },
       "rotation": {
         "x": 0.0,
