@@ -23,13 +23,11 @@ public class AudioSystem2 extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		AudioComponent rc = (AudioComponent)entity.getComponent(AudioComponent.class);
-		//if (rc != null) {
 		this.play(rc.filename, rc.volume);
 
 		if (rc.remove_entity_on_play && entity.getComponents().size() == 1) {
 			entity.remove();
 		}
-		//}
 	}
 
 

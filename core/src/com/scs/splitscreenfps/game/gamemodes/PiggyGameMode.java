@@ -11,6 +11,7 @@ import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.AudioEntityFactory;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 
@@ -24,13 +25,16 @@ public class PiggyGameMode implements ISystem {
 	private AbstractEntity time_text;
 	private int kills_required;
 	private int prev_kills;
+	private long game_duration;
 
 	public PiggyGameMode(Game _game, BasicECS ecs) {
 		game = _game;
 		kills_required = 6;
-		end_time = System.currentTimeMillis() + 4 * 60 * 1000;
-		end_time -= (game.players.length * 30*1000); // Adjust for number of victims
+		
+		game_duration = (4 * 60 * 1000) - (game.players.length * 30*1000);
+		end_time = System.currentTimeMillis() + game_duration;
 		game.show_kills = true;
+		
 	}
 
 
@@ -63,6 +67,9 @@ public class PiggyGameMode implements ISystem {
 					ModelFunctions.setColour(instance, Color.GREEN);
 				}
 			}
+			
+			AbstractEntity sfx = AudioEntityFactory.createSfxEntityWithDelay(game.ecs, "music/5 Open Surge score jingle - A.ogg", 1f, game_duration-7000);
+			game.ecs.addEntity(sfx);
 		} else {
 			PlayerData playerData = (PlayerData)piggy.getComponent(PlayerData.class);
 

@@ -242,9 +242,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		if (Settings.USE_MAP_EDITOR == false) {
 
 			// Play airhorn
-			this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .5f, WillRespawnComponent.RESPAWN_TIME));
+			this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .3f, WillRespawnComponent.RESPAWN_TIME));
 			for (int i=0 ; i<4 ; i++) {
-				this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .5f, NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000)));
+				this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .3f, NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000)));
 				//BillBoardFPS_Main.audio.play("sfx/airhorn.wav", NumberFunctions.rnd(WillRespawnComponent.RESPAWN_TIME, WillRespawnComponent.RESPAWN_TIME+2000));
 			}
 
@@ -420,7 +420,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				dynamicsWorld.debugDrawWorld();
 				debugDrawer.end();
 			}
-			if (Settings.DISABLE_SHADOWS == false) {
+			if (Settings.DISABLE_SHADOWS == false && Gdx.graphics.getFramesPerSecond() > 30) {
 				this.drawModelSystem.process(viewportData.camera, true); // Draw shadows of models
 			}
 			

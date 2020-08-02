@@ -16,13 +16,13 @@ public class AudioEntityFactory {
 	}
 	
 
-	public static AbstractEntity createSfxEntityWithDelay(BasicECS ecs, String filename, float vol, long delay) {
+	public static AbstractEntity createSfxEntityWithDelay(BasicECS ecs, String filename, float vol, long delay_millis) {
 		AbstractEntity e = new AbstractEntity(ecs, "Audio_" + filename);
 		
 		AudioComponent audio = new AudioComponent(filename, vol);
 		//e.addComponent(audio); No!
 
-		e.addComponent(new AddComponentAfterTimeComponent(audio, delay));
+		e.addComponent(new AddComponentAfterTimeComponent(audio, delay_millis));
 		return e;
 	}
 	
