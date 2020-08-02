@@ -2,16 +2,10 @@
   "filename": "maps/map_editor.json",
   "textures": {
     "1": "colours/white.png",
-    "2": "colours/red.png",
-    "3": "colours/brown.png",
-    "4": "textures/blackborder/white.png",
-    "5": "textures/crate1.png",
-    "6": "textures/crate2.png",
+    "4": "textures/tones/grey0.png",
     "7": "textures/blackborder/grey1.png",
     "8": "textures/blackborder/grey2.png",
-    "9": "textures/blackborder/grey3.png",
-    "10": "textures/blackborder/purple1.png",
-    "11": "textures/skyscraper.png"
+    "9": "textures/blackborder/grey3.png"
   },
   "blocks": [
     {
@@ -44,7 +38,7 @@
       "type": "cube",
       "name": "New cube 58",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 4,
       "model_filename": "",
       "tiled": true,
       "size": {

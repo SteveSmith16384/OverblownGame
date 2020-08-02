@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Matrix4;
@@ -47,11 +48,12 @@ public class DrawModelSystem extends AbstractSystem {
 		this.modelBatch = new ModelBatch();
 
 		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.6f, 0.6f, 0.6f, 1f));
+		//environment.set(new ColorAttribute(ColorAttribute.Diffuse, 0.6f, 0.6f, 0.6f, 1f));
+		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.5f, -1f));
 
 		environment.add((shadowLight = new DirectionalShadowLight(1024, 1024, 15, 15, 1f, 100f))
-				.set(0.8f, 0.8f, 0.8f, 
+				.set(0.9f, 0.8f, 0.8f, 
 						1f, -.5f, 1f));
 		environment.shadowMap = shadowLight;
 		shadowBatch = new ModelBatch(new DepthShaderProvider());
