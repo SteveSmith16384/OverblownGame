@@ -62,23 +62,20 @@ public class IntroModule implements IModule, IGetCurrentViewport {
 		TextEntity text = new TextEntity(ecs, "PRESS SPACE TO START!", 50, 50, -1, Color.WHITE, 0, main.font_large, true);
 		text.addComponent(new ChangeColourComponent(Color.WHITE, Color.RED, 300));
 		ecs.addEntity(text);
-		loadAssetsForResize();
+		loadAssetsForResize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		BillBoardFPS_Main.audio.startMusic("music/megasong.mp3");
 	}
 
 
-	private void loadAssetsForResize() {
-		this.viewRect = new Rectangle(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+	private void loadAssetsForResize(int w, int h) {
+		//this.viewRect = new Rectangle(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+		this.viewRect = new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-		//font_small = main.font_small;
-		//this.font_med = main.font_med;
-		//this.font_large = main.font_large;
-		
 		drawGuiSpritesSystem.rescaleSprites();
 		drawTextSystem.rescaleText();
 
@@ -107,7 +104,7 @@ public class IntroModule implements IModule, IGetCurrentViewport {
 		ecs.addAndRemoveEntities();
 		colChangeSystem.process();
 		
-		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.gl.glViewport(0, 0, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		frameBuffer.begin();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -160,7 +157,7 @@ public class IntroModule implements IModule, IGetCurrentViewport {
 
 	@Override
 	public void resize(int w, int h) {
-		this.loadAssetsForResize();
+		this.loadAssetsForResize(w, h);
 	}
 
 

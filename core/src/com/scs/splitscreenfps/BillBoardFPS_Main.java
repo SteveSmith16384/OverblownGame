@@ -31,8 +31,6 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 
 	// Systems
 	private BasicECS ecs;
-	//private AudioSystem2 audioSystem;
-	//private AddComponentAfterTimeSystem addComponentSystem;
 	
 	
 	@Override
@@ -155,7 +153,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 
 	@Override
 	public void resize(int width, int height) {
-		//Settings.p("Resize() called");
+		Settings.p("Resize() to " + width + "," + height);
 
 		generateFonts();
 
