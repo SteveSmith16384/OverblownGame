@@ -91,4 +91,5 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Cackle taken from https://opengameart.org/content/so-thats-coming-along
 * Explosions and clang taken from https://opengameart.org/content/metal-clang-explosions-zing
 * Death sounds taken from https://opengameart.org/content/grunts-male-death-and-pain
+* Health collected sfx taken from https://opengameart.org/content/picked-coin-echo-2
 

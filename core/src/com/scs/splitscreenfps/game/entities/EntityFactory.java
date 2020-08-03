@@ -319,37 +319,5 @@ public class EntityFactory {
 */
 
 
-	/*
-	public static AbstractEntity createTerrain(Game game, String tex_filename, float posX, float posY, float posZ, float w, float d) {
-		AbstractEntity ball = new AbstractEntity(game.ecs, "Ball");
-
-		Texture tex = game.getTexture(tex_filename);
-		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		//ModelBuilder modelBuilder = new ModelBuilder();
-		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
-		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
-
-		HasModelComponent model = new HasModelComponent(instance, 1f, true);
-		ball.addComponent(model);
-
-		//float volume = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
-		//float mass = mass_pre * volume;
-
-		btSphereShape sphere_shape = new btSphereShape(diam/2);
-		Vector3 local_inertia = new Vector3();
-		sphere_shape.calculateLocalInertia(mass, local_inertia);
-		btRigidBody groundObject = new btRigidBody(mass, null, sphere_shape, local_inertia);
-		groundObject.userData = ball;
-		groundObject.setRestitution(.5f);
-		groundObject.setCollisionShape(sphere_shape);
-		groundObject.setWorldTransform(instance.transform);
-		ball.addComponent(new PhysicsComponent(groundObject));
-
-		ball.addComponent(new PositionComponent());
-
-		return ball;
-	}
-*/
-
 
 }

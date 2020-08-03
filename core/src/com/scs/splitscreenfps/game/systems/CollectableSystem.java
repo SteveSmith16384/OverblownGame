@@ -6,6 +6,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -72,7 +73,7 @@ public class CollectableSystem extends AbstractSystem {
 		PlayerData playerHitData = (PlayerData)player.getComponent(PlayerData.class);
 		if (playerHitData != null) {
 			if (playerHitData.health < playerHitData.max_health) {
-				//BillBoardFPS_Main.audio.play("todo");
+				BillBoardFPS_Main.audio.play("sfx/Picked Coin Echo 2.wav");
 				playerHitData.health += 75f;
 				if (playerHitData.health > playerHitData.max_health) {
 					playerHitData.health = playerHitData.max_health;
