@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -33,10 +34,12 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.LensFlareEffect;
+import com.google.gson.Gson;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.GameConfig;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.ITextureProvider;
 import com.scs.splitscreenfps.Settings;
@@ -144,6 +147,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	private long startPhysicsTime;
 
 	private VfxManager vfxManager;
+	public GameConfig game_config;
 
 	// Temp vars
 	private final Vector3 tmp_from = new Vector3();
@@ -154,6 +158,22 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		main = _main;
 		inputs = _inputs;
 		gameSelectionData = _gameSelectionData;
+
+		this.game_config = new GameConfig();
+		try {
+			String filename = "game.cfg";
+			FileHandle file = Gdx.files.local("../../" + filename);
+			Settings.p("Looking for settings file " + file.file().getAbsolutePath());
+			if (file.exists()) {
+				Gson gson = new Gson();
+				String s = file.readString();
+				this.game_config = gson.fromJson(s, GameConfig.class);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		GRAVITY.y = this.game_config.gravity * -1;
 
 		font_small = main.font_small;
 		this.font_med = main.font_med;
@@ -210,7 +230,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			Matrix4 mat = new Matrix4();
 			mat.setTranslation(start_pos.x + 0.5f, start_pos.y, start_pos.z + 0.5f);
 			md.body.setWorldTransform(mat);
-			
+
 			if (Settings.USE_MAP_EDITOR == false) {
 				this.respawnSystem.addEntity(players[i], this.currentLevel.getPlayerStartPoint(i));
 			}
@@ -424,7 +444,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			if (Settings.DISABLE_SHADOWS == false && Gdx.graphics.getFramesPerSecond() > 30) {
 				this.drawModelSystem.process(viewportData.camera, true); // Draw shadows of models
 			}
-			
+
 			viewportData.frameBuffer.end();
 
 			if (Settings.DISABLE_POST_EFFECTS == false) {
@@ -744,7 +764,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		model.dontDrawInViewId = -1; // So we draw the corpse
 
 		main.audio.play("sfx/deathsounds/death" + NumberFunctions.rnd(1,  13) + ".wav");
-		
+
 		AbstractPlayersAvatar avatar = (AbstractPlayersAvatar)playerKilled;
 		if (avatar.hero_id == AvatarFactory.CHAR_RUBBISHRODENT) {
 			PositionComponent posData = (PositionComponent)avatar.getComponent(PositionComponent.class);

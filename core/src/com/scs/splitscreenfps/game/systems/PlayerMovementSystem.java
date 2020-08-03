@@ -28,6 +28,8 @@ public class PlayerMovementSystem extends AbstractSystem {
 		super(ecs, PlayerMovementData.class);
 
 		game = _game;
+		
+		JUMP_FORCE.y = game.game_config.jump_force;
 	}
 
 

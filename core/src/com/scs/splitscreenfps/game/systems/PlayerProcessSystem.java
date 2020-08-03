@@ -32,8 +32,6 @@ public class PlayerProcessSystem implements ISystem {
 
 	public PlayerProcessSystem(Game _game) {
 		game = _game;
-
-
 	}
 
 
@@ -53,7 +51,7 @@ public class PlayerProcessSystem implements ISystem {
 
 		// Regen health
 		if (ourPlayerData.dead == false) {
-			ourPlayerData.health += (Gdx.graphics.getDeltaTime()/2);
+			ourPlayerData.health += (Gdx.graphics.getDeltaTime() * game.game_config.health_regen);
 			if (ourPlayerData.health > ourPlayerData.max_health) {
 				ourPlayerData.health = ourPlayerData.max_health;
 			}
