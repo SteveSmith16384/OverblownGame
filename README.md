@@ -37,6 +37,10 @@ For further instructions, see the download page at https://stephensmith.itch.io/
 * Triangle - Ultimate
 
 
+## Modifying the Game
+You can modify a few game settings by editing the file "game.cfg".
+
+
 ## Map Editor
 The map editor is still in development, and will only work properly by running the game from source (so the data files can be written back).  The map editor will always edit the file "core/assets/maps/map_editor.json", so rename whatever map file you want to edit to that name.
 

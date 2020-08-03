@@ -35,7 +35,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 	
 	@Override
 	public void create() {
-		Settings.init();
+		//Settings.init();
 		Bullet.init();
 
 		if (Settings.RELEASE_MODE) {

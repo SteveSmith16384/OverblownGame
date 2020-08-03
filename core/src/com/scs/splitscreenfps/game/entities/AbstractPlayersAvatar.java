@@ -35,7 +35,7 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 
 		inputMethod = _inputMethod;
 
-		camera = _camera;//_viewportData.camera;
+		camera = _camera;
 		cameraController = new PlayerCameraController(camera);
 		if (Game.physics_enabled == false) {
 			camera.position.set(0, 5, 0);

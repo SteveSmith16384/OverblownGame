@@ -168,6 +168,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				Gson gson = new Gson();
 				String s = file.readString();
 				this.game_config = gson.fromJson(s, GameConfig.class);
+				Settings.p("Successfully read game config file");
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
