@@ -14,6 +14,8 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
+import ssmith.libgdx.ShapeHelper;
+
 public class SkyboxCube extends AbstractEntity {
 
 	// Positions are from the centre
@@ -26,6 +28,7 @@ public class SkyboxCube extends AbstractEntity {
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = game.modelBuilder;//new ModelBuilder();
 
+		/*
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 		modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material)
@@ -44,6 +47,8 @@ public class SkyboxCube extends AbstractEntity {
 		    .rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2, -w/2,h/2,d/2, -w/2,-h/2,d/2, -1,0,0);
 
 		Model box_model = modelBuilder.end();
+		*/
+		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
 		
 		/*if (tile) {
 			Matrix3 mat = new Matrix3();

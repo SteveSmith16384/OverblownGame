@@ -30,8 +30,7 @@ public class ViewportData {
 		camera.far = 100f;
 		camera.update();
 
-		ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
-		decalBatch = new DecalBatch(groupStrategy);
+		decalBatch = new DecalBatch(new ShadedGroupStrategy(camera));
 
 		this.resize(idx, full_screen, total);
 	}

@@ -40,8 +40,9 @@ public class EntityFactory {
 
 		Texture tex = game.getTexture(tex_filename);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = game.modelBuilder;//new ModelBuilder();
+		ModelBuilder modelBuilder = game.modelBuilder;
 
+		/*
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 		modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material)
@@ -57,7 +58,9 @@ public class EntityFactory {
 		modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
 		.rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
 		Model box_model = modelBuilder.end();
-
+*/
+		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
+		
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);

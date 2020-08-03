@@ -14,7 +14,6 @@ public class PositionPlayersWeaponSystem extends AbstractSystem {
 	private Game game;
 
 	private Vector3 tmpVector = new Vector3();
-	//private Vector2 tmpVec2 = new Vector2();
 
 	public PositionPlayersWeaponSystem(Game _game, BasicECS ecs) {
 		super(ecs, PlayersWeaponComponent.class);
