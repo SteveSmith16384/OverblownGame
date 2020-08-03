@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 public class PositionComponent {
 
 	public Vector3 position;
-	public float angle_y_degrees;
+	public float angle_y_degrees;  // 0-360
 
 	public PositionComponent() {
 		this.position = new Vector3();

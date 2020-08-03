@@ -17,8 +17,8 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_FACTORY;
-	public static final int NUM_AUTOSTART_CHARACTERS = 4;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_AI_TEST;
+	public static final int NUM_AUTOSTART_CHARACTERS = 1;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_RUBBISHRODENT;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	

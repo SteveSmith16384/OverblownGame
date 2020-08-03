@@ -21,27 +21,31 @@ public class AISystem extends AbstractSystem {
 
 
 	@Override
-	public void processEntity(AbstractEntity entity) {
-		HasAIComponent ai = (HasAIComponent)entity.getComponent(HasAIComponent.class);
+	public void processEntity(AbstractEntity ai_entity) {
+		HasAIComponent ai = (HasAIComponent)ai_entity.getComponent(HasAIComponent.class);
 		if (ai.target_entity == null) {
 			for(AbstractPlayersAvatar player : game.players) {
-				if (player != entity) {
+				if (player != ai_entity) {
 					ai.target_entity = player;
 					break;
 				}
 			}
 		} else {
-			ai.ai_input.move_fwd = false;
+			ai.ai_input.move_fwd = true;
 			ai.ai_input.turn_left = false;
 			ai.ai_input.turn_right = false;
 
-			PositionComponent ourPosData = (PositionComponent)entity.getComponent(PositionComponent.class);
+			PositionComponent aiPosData = (PositionComponent)ai_entity.getComponent(PositionComponent.class);
 			PositionComponent targetPosData = (PositionComponent)ai.target_entity.getComponent(PositionComponent.class);
-			
-			float x_diff = targetPosData.position.x-ourPosData.position.x;
-			float z_diff = targetPosData.position.z-ourPosData.position.z;
+
+			float x_diff = targetPosData.position.x - aiPosData.position.x;
+			float z_diff = targetPosData.position.z - aiPosData.position.z;
 			double angle = Math.atan2(z_diff, x_diff);
-			float degs = (float)Math.toDegrees(angle)-ourPosData.angle_y_degrees;
+			float degs = (float)Math.toDegrees(angle);// - ourPosData.angle_y_degrees;
+			//Settings.p("Degs: " + degs);
+			//degs = 360-degs;
+			float ai_angle = (360-aiPosData.angle_y_degrees);
+			degs -= ai_angle;//aiPosData.angle_y_degrees;
 			while (degs < 0) {
 				degs += 360;
 			}
@@ -49,12 +53,17 @@ public class AISystem extends AbstractSystem {
 				degs -= 360;
 			}
 
-			Settings.p("Angle: " + degs);
-			if (degs > 51) {
-				//ai.ai_input.turn_right = true;
-			} else if (degs < 51) {
-				//ai.ai_input.turn_left = true;
+			//Settings.p("AI Angle: " + ai_angle);
+			Settings.p("Diff Angle: " + degs);
+			//ai.ai_input.turn_right = true; // reduces angle
+			//ai.ai_input.turn_left = true;
+			
+			if (degs > 185 && degs < 355) {
+				ai.ai_input.turn_left = true;
+			} else if (degs > 5 && degs < 175) {
+				ai.ai_input.turn_right = true;
 			}
+
 			// todo
 		}
 	}
