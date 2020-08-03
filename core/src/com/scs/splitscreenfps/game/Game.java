@@ -55,6 +55,7 @@ import com.scs.splitscreenfps.game.data.GameSelectionData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AudioEntityFactory;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
+import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
 import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
@@ -703,7 +704,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	public void playerDied(AbstractEntity playerKilled, PlayerData playerDiedData, AbstractEntity shooter) {
 		if (playerDiedData.dead) {
 			return; // Prevent calling multiple times
-		}		
+		}
 		playerDiedData.dead = true;
 
 		if (shooter == null) {
@@ -743,6 +744,15 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		model.dontDrawInViewId = -1; // So we draw the corpse
 
 		main.audio.play("sfx/deathsounds/death" + NumberFunctions.rnd(1,  13) + ".wav");
+		
+		AbstractPlayersAvatar avatar = (AbstractPlayersAvatar)playerKilled;
+		if (avatar.hero_id == AvatarFactory.CHAR_RUBBISHRODENT) {
+			PositionComponent posData = (PositionComponent)avatar.getComponent(PositionComponent.class);
+			for (int i=0 ; i<4 ; i++) {
+				AbstractEntity bullet = BulletEntityFactory.createGrenade(this, avatar, posData.position, new Vector3());
+				ecs.addEntity(bullet);
+			}
+		}
 
 	}
 

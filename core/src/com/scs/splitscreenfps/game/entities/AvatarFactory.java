@@ -30,7 +30,6 @@ public class AvatarFactory {
 	public static final int CHAR_BASTION = 97;
 	
 	
-
 	public static String getName(int id) {
 		switch (id) {
 		case CHAR_PHARTAH: return "Phartah";
