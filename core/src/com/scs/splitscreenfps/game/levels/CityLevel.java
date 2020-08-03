@@ -10,7 +10,7 @@ import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class CityLevel extends AbstractLevel {
 
-	private float floor_size = 18f;
+	private float floor_size = 21f;
 
 	private ISystem deathmatchSystem;
 
@@ -39,12 +39,11 @@ public class CityLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
 		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
-/*
- 		Wall floor = new Wall(game, "Floor", "colours/white.png", floor_size/2, -0.1f, floor_size/2, 
+ 		Wall floor = new Wall(game, "Floor", "textures/tones/brown1.png", floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
-
+/*
 		try {
 			//super.loadJsonFile("maps/skyscraper.json", false);
 			//super.loadJsonFile("maps/map_editor.json", false, new Vector3(4, 0, 4));
@@ -55,8 +54,8 @@ public class CityLevel extends AbstractLevel {
 		for (int z=0 ; z<2 ; z++) {
 			for (int x=0 ; x<2 ; x++) {
 				try {
-					//super.loadJsonFile("maps/skyscraper.json", false);
-					super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
+					//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
+					super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*10+5, 0.1f, z*10+5), 1);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
