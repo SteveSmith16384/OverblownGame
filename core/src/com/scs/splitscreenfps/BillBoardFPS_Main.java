@@ -77,8 +77,6 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 		}
 
 
-		audio.process();
-
 		if (current_module != null) {
 			current_module.render();
 		}

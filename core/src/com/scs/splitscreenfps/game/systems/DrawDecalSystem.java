@@ -14,8 +14,9 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class DrawDecalSystem extends AbstractSystem {
 
-	private Vector3 tmp = new Vector3();
 	private Game game;
+
+	private Vector3 tmp = new Vector3();
 
 	public DrawDecalSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasDecal.class);
@@ -28,7 +29,7 @@ public class DrawDecalSystem extends AbstractSystem {
 	public void process() {
 		int viewId = game.currentViewId;
 		Camera camera = game.players[viewId].camera;
-		DecalBatch batch = game.viewports[viewId].decalBatch; // todo - dispose
+		DecalBatch batch = game.viewports[viewId].decalBatch;
 
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
@@ -50,7 +51,6 @@ public class DrawDecalSystem extends AbstractSystem {
 		PositionComponent hasPosition = (PositionComponent)entity.getComponent(PositionComponent.class);
 
 		if (game.currentViewId == 0) { // Only need to do this once!
-			// Set decal position
 			hasDecal.decal.setPosition(hasPosition.position);
 		}
 

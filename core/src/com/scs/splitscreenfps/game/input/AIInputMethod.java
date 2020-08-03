@@ -36,7 +36,7 @@ public class AIInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isShootPressed() {
-		return false; // todo
+		return false;
 	}
 
 	@Override

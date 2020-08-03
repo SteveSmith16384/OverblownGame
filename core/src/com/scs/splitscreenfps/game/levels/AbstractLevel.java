@@ -211,7 +211,7 @@ public abstract class AbstractLevel {
 			if (block.type == null || block.type.length() == 0 || block.type.equalsIgnoreCase("cube")) {
 				wall = new Wall(game, block.name, tex, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
-						block.mass,//todo - readd * 5, // Hack to make walls heavier
+						block.mass * mass_mult, // Hack to make walls heavier
 						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
 			} else if (block.type.equalsIgnoreCase("sphere")) {
 				wall = EntityFactory.createBall(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
