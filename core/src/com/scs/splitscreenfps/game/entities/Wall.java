@@ -1,14 +1,11 @@
 package com.scs.splitscreenfps.game.entities;
 
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
@@ -24,8 +21,6 @@ import ssmith.libgdx.ShapeHelper;
 
 public class Wall extends AbstractEntity {
 	
-	//todo - cache private Hashmap<>
-
 	public Wall(Game game, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
 		this(game, name, tex_filename, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
 	}

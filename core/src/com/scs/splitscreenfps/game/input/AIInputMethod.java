@@ -5,6 +5,7 @@ public class AIInputMethod implements IInputMethod {
 	private static final float TURN_SPEED = 1f;
 	
 	public boolean move_fwd;
+	public boolean shoot;
 	public boolean turn_left, turn_right;
 	
 	public AIInputMethod() {
@@ -38,7 +39,7 @@ public class AIInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isShootPressed() {
-		return false;
+		return shoot;
 	}
 
 	@Override

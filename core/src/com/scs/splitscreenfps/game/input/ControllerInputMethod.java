@@ -58,13 +58,6 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isJumpPressed() {
-		// Code for testing buttons
-		/*for (int i=0 ; i<16 ; i++) {
-			if (this.controller.getButton(i)) {
-				Settings.p("Pressed! " + i);
-				break;
-			}
-		}*/
 		return this.controller.getButton(0);
 	}
 

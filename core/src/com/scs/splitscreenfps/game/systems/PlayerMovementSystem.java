@@ -46,7 +46,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 		boolean on_floor = false;
 		Matrix4 mat = physics.body.getWorldTransform();
 		mat.getTranslation(tmpVec);
-		ClosestRayResultCallback results = game.rayTestByDir(tmpVec, V_DOWN, PlayerAvatar_Person.PLAYER_HEIGHT + 0.2f);
+		ClosestRayResultCallback results = game.rayTestByDir(tmpVec, V_DOWN, PlayerAvatar_Person.PLAYER_HEIGHT + 0.2f); // todo - only check every so often
 		if (results != null) {
 			btCollisionObject obj = results.getCollisionObject();
 			on_floor = (obj != null);
@@ -62,7 +62,6 @@ public class PlayerMovementSystem extends AbstractSystem {
 				}
 				physics.body.activate(); // Need this!
 				physics.getRigidBody().applyCentralForce(tmpVec);
-				//movementData.characterController.setLinearVelocity(movementData.offset); // Overwrites any current force
 				if (on_floor) {
 					if (movementData.next_footstep_sound < System.currentTimeMillis()) {
 						BillBoardFPS_Main.audio.play("sfx/footstep.wav");

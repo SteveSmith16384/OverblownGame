@@ -24,7 +24,6 @@ public class AITestLevel extends AbstractLevel {
 	public void load() {
 		try {
 			super.loadJsonFile("maps/complex.json", false);
-			//super.loadJsonFile("maps/map_editor.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

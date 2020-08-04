@@ -55,7 +55,7 @@ public class CityLevel extends AbstractLevel {
 			for (int x=0 ; x<2 ; x++) {
 				try {
 					//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
-					super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*10+5, 0.1f, z*10+5), 1);
+					super.loadJsonFile("maps/skyscraper2.json", false, new Vector3(x*10+5, 0.1f, z*10+5), 1);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

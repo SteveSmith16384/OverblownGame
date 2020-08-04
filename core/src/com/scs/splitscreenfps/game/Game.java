@@ -189,7 +189,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		if (this.gameSelectionData.level == AbstractLevel.LEVEL_AI_TEST) {
 			// Add AI
 			this.inputs.add(new AIInputMethod());
-			this.gameSelectionData.selected_character_id[this.inputs.size()-1] = AvatarFactory.CHAR_PHARTAH;
+			this.gameSelectionData.selected_character_id[this.inputs.size()-1] = AvatarFactory.CHAR_BOOMFIST;
 		}
 
 		players = new AbstractPlayersAvatar[inputs.size()];
