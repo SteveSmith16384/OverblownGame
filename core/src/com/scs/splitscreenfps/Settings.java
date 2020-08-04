@@ -16,8 +16,8 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_AI_TEST;
-	public static final int NUM_AUTOSTART_CHARACTERS = 1;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_CITY;
+	public static final int NUM_AUTOSTART_CHARACTERS = 4;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_RUBBISHRODENT;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	
@@ -49,18 +49,6 @@ public class Settings {
 
 	}
 
-/*
-	public static void init() {
-		// load any settings file
-		prop = new Properties();
-		try {
-			prop.load(new FileInputStream("config.txt"));
-		} catch (Exception e) {
-			//e.printStackTrace();
-		}
-
-	}
-*/
 
 	public static Color getColourForSide( int idx) {
 		switch (idx) {

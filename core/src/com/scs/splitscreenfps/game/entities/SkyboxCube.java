@@ -1,18 +1,19 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-
-import ssmith.libgdx.ShapeHelper;
 
 public class SkyboxCube extends AbstractEntity {
 
@@ -26,27 +27,25 @@ public class SkyboxCube extends AbstractEntity {
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = game.modelBuilder;//new ModelBuilder();
 
-		/*
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
-		modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 0,0,1);
-		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,h/2,-d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,h/2,-d/2, 0,0,-1);
+		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material);
+		    mb.rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 0,0,1);
+		//modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
+		    mb.rect(-w/2,h/2,-d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,h/2,-d/2, 0,0,-1);
 		
-		modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,h/2,d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,h/2,d/2, 0,1,0);
-		modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,-h/2,-d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,-h/2,-d/2, 0,-1,0);
+		//modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
+		    mb.rect(-w/2,h/2,d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,h/2,d/2, 0,1,0);
+		//modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
+		    mb.rect(-w/2,-h/2,-d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,-h/2,-d/2, 0,-1,0);
 		
-		modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(w/2,-h/2,d/2, w/2,h/2,d/2, w/2,h/2,-d/2, w/2,-h/2,-d/2, 1,0,0);
-		modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
-		    .rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2, -w/2,h/2,d/2, -w/2,-h/2,d/2, -1,0,0);
+		//modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
+		    mb.rect(w/2,-h/2,d/2, w/2,h/2,d/2, w/2,h/2,-d/2, w/2,-h/2,-d/2, 1,0,0);
+		//modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
+		    mb.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2, -w/2,h/2,d/2, -w/2,-h/2,d/2, -1,0,0);
 
 		Model box_model = modelBuilder.end();
-		*/
-		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
+
 		
 		/*if (tile) {
 			Matrix3 mat = new Matrix3();
