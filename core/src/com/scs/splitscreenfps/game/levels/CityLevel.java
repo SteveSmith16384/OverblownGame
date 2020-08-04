@@ -43,14 +43,7 @@ public class CityLevel extends AbstractLevel {
 				floor_size, .2f, floor_size, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
-/*
-		try {
-			//super.loadJsonFile("maps/skyscraper.json", false);
-			//super.loadJsonFile("maps/map_editor.json", false, new Vector3(4, 0, 4));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-*/
+
 		for (int z=0 ; z<2 ; z++) {
 			for (int x=0 ; x<2 ; x++) {
 				try {
