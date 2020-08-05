@@ -45,4 +45,10 @@ public class VillageLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "Village Control Point";
+	}
+
+
 }

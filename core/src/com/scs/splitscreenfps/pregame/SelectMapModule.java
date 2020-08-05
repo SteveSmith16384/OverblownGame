@@ -1,6 +1,8 @@
 package com.scs.splitscreenfps.pregame;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -46,6 +48,7 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 	private Rectangle viewRect;
 	private final BasicECS ecs;
 	private long earliest_input_time;
+	private ArrayList<String> map_names;
 	
 	private DrawGuiSpritesSystem drawGuiSpritesSystem;
 	private ChangeColourSystem colChangeSystem;
@@ -86,6 +89,12 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 		spacing_y = 30;//Settings.LOGICAL_SIZE_PIXELS / (AvatarFactory.MAX_CHARS+1);
 
 		BillBoardFPS_Main.audio.startMusic("music/battleThemeA.mp3");
+
+		map_names = new ArrayList<String>();
+		for (int i=0 ; i<=AbstractLevel.MAX_LEVEL_ID ; i++) {
+			AbstractLevel level = AbstractLevel.factory(i);
+			map_names.add(level.getName());
+		}
 		
 		earliest_input_time = System.currentTimeMillis() + 1000;
 	}
@@ -154,7 +163,7 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 		int x_pos = Settings.LOGICAL_SIZE_PIXELS/2;
 		int y_pos = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
 		for (int i=0 ; i<=AbstractLevel.MAX_LEVEL_ID ; i++) {
-			font_small.draw(spriteBatch, AbstractLevel.getName(i), x_pos, y_pos);
+			font_small.draw(spriteBatch, this.map_names.get(i), x_pos, y_pos);
 			y_pos -= spacing_y;
 		}
 

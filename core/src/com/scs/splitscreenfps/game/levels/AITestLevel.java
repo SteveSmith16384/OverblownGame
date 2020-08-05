@@ -42,4 +42,10 @@ public class AITestLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "AI Test Level";
+	}
+
+
 }

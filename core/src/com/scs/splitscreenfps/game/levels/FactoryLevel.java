@@ -45,4 +45,10 @@ public class FactoryLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "Factory Deathmatch";
+	}
+
+
 }

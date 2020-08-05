@@ -104,4 +104,10 @@ public class WhatTheBallLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "What the Ball?";
+	}
+
+
 }

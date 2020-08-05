@@ -47,4 +47,10 @@ public class ShootTagLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "Shoot-Tag";
+	}
+
+
 }

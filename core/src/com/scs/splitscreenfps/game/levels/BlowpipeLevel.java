@@ -6,7 +6,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
-public class BlowpipeLevel extends AbstractLevel {
+public class BlowpipeLevel extends AbstractLevel { // todo - rename
 
 	private ISystem deathmatchSystem;
 
@@ -44,6 +44,12 @@ public class BlowpipeLevel extends AbstractLevel {
 	@Override
 	public void update() {
 		deathmatchSystem.process();
+	}
+
+
+	@Override
+	public String getName() {
+		return "The Assassins";
 	}
 
 

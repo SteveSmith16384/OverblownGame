@@ -48,8 +48,11 @@ public abstract class AbstractLevel {
 	}
 
 
+	public abstract String getName();
+	
 	public abstract int[] getHeroSelection();
 	
+	/*
 	public static final String getName(int i) {
 		switch (i) {
 		case LEVEL_FACTORY:
@@ -76,7 +79,7 @@ public abstract class AbstractLevel {
 			throw new RuntimeException("Unknown level: " + i);
 		}
 	}
-
+*/
 
 	public static final AbstractLevel factory(int i) {
 		switch (i) {

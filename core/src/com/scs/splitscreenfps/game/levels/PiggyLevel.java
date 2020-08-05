@@ -47,4 +47,10 @@ public class PiggyLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "Hunter";
+	}
+
+
 }

@@ -53,4 +53,10 @@ public class MapEditorLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "Map Editor";
+	}
+
+
 }

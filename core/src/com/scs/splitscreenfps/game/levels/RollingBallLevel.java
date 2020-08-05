@@ -84,5 +84,11 @@ public class RollingBallLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "Rolling Ball";
+	}
+
+
 
 }

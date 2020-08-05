@@ -71,4 +71,10 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "Avoid the Balls";
+	}
+
+
 }

@@ -65,4 +65,10 @@ public class CityLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "City Deathmatch";
+	}
+
+
 }

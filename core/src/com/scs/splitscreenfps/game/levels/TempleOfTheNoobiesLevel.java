@@ -46,4 +46,10 @@ public class TempleOfTheNoobiesLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public String getName() {
+		return "Temple of the Noobies";
+	}
+
+
 }
