@@ -289,6 +289,45 @@ public class BulletEntityFactory {
 	}
 
 
+	public static AbstractEntity createTobleroneBullet(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "TobleroneBullet");
+
+		e.addComponent(new PositionComponent());
+
+		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
+		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
+
+		HasDecal hasDecal = new HasDecal();
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
+
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = true;
+		e.addComponent(hasDecal);
+
+		e.addComponent(new RemoveOnContactComponent(shooter, true));
+		e.addComponent(new HasRangeComponent(start, settings.range));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
+	
+		// Add physics
+		btSphereShape shape = new btSphereShape(.1f);
+		btRigidBody body = new btRigidBody(.1f, null, shape);
+		body.userData = e;
+		body.setFriction(0.9f);
+		body.setRestitution(.7f);
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.force = dir.scl(2f);
+		e.addComponent(pc);
+
+		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
+
+		return e;
+	}
+
+
 	public static AbstractEntity createCannonball(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Cannonball");
 

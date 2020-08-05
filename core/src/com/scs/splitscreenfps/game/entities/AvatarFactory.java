@@ -25,6 +25,7 @@ public class AvatarFactory {
 	public static final int CHAR_VICTIM = 7;
 	public static final int CHAR_WHAT_THE_BALL = 8;
 	public static final int CHAR_RUBBISHRODENT = 9;
+	public static final int CHAR_TOBLERONE = 10;
 
 	public static final int CHAR_WINSTON = 96;
 	public static final int CHAR_BASTION = 97;
@@ -59,6 +60,7 @@ public class AvatarFactory {
 		case CHAR_WINSTON: return 300;
 		case CHAR_BASTION: return 150;
 		case CHAR_RUBBISHRODENT: return 150;
+		case CHAR_TOBLERONE: return 150;
 		
 		case CHAR_PIGGY: return 9999;
 		case CHAR_VICTIM: return 1;
@@ -137,6 +139,10 @@ public class AvatarFactory {
 			weapon_type = WeaponSettingsComponent.BASTION_CANNON;
 			break;
 			
+		case CHAR_TOBLERONE:
+			weapon_type = WeaponSettingsComponent.TOBLERONE_GUN;
+			break;
+			
 		case CHAR_BLOWPIPE_ASSASSIN:
 			weapon_type = WeaponSettingsComponent.BLOWPIPE;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Invisible_Mine, 20));
@@ -166,7 +172,7 @@ public class AvatarFactory {
 		case WeaponSettingsComponent.WEAPON_ROCKET_LAUNCHER: 
 			ExplosionData explData2 = new ExplosionData(1f, 30, 3f);
 			weapon = new WeaponSettingsComponent(weapon_type, 750, 1500, 6, 50, 
-					90, 0, 0, explData2);
+					60, 0, 0, explData2);
 			weapon.kickback_force = 5f;
 			break;
 
@@ -190,7 +196,7 @@ public class AvatarFactory {
 		case WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER:
 			ExplosionData explData = new ExplosionData(2f, 40, 2f);
 			weapon = new WeaponSettingsComponent(weapon_type, 667, 1500, 5, 100, 
-					90, 0, 0, explData);
+					50, 0, 0, explData);
 			weapon.kickback_force = 1f;
 			break;
 
@@ -212,6 +218,11 @@ public class AvatarFactory {
 		case WeaponSettingsComponent.PIGGY_GUN:
 			weapon = new WeaponSettingsComponent(weapon_type, 500, 0, 999, 999, 
 					1, 0, 0, null); // Damage must be 1 for shoot-tag
+			break;
+
+		case WeaponSettingsComponent.TOBLERONE_GUN:
+			weapon = new WeaponSettingsComponent(weapon_type, 700, 1500, 20, 100, 
+					50, 0, 0, null);
 			break;
 
 		default:
