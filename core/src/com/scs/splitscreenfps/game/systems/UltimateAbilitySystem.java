@@ -82,6 +82,9 @@ public class UltimateAbilitySystem extends AbstractSystem {
 					case TraceyBomb:
 						throwTraceyBomb(player);
 						break;
+					case SprayLava:
+						startSprayLava(player, ability);
+						break;
 					default:
 						throw new RuntimeException("Unknown ability: " + ability.type);
 					}
@@ -106,6 +109,14 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		pc.getRigidBody().setGravity(Vector3.Zero);
 
 		BillBoardFPS_Main.audio.play("speech/havesomerockets.wav");
+	}
+
+
+	private void startSprayLava(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
+		ability.in_progress = true;
+		ability.end_time = System.currentTimeMillis() + 4000;
+
+		//BillBoardFPS_Main.audio.play("todo.wav");
 	}
 
 
@@ -139,6 +150,9 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		case RocketBarrage:
 			continueRocketBarrage(player, ability);
 			break;
+		case SprayLava:
+			continueSprayLava(player, ability);
+			break;
 		default:
 			throw new RuntimeException("Unknown ability: " + ability.type);
 		}
@@ -165,8 +179,32 @@ public class UltimateAbilitySystem extends AbstractSystem {
 			AbstractEntity r = BulletEntityFactory.createRocket(game, player, startPos, dir);
 			game.ecs.addEntity(r);
 
+			// Keep player in the air
 			PhysicsComponent pc = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 			pc.getRigidBody().setLinearFactor(Vector3.Zero);
+		}
+	}
+
+
+	private void continueSprayLava(AbstractPlayersAvatar player, UltimateAbilityComponent ability) {
+		if (ability.next_shot < System.currentTimeMillis()) {
+			ability.next_shot = System.currentTimeMillis() + 150;
+
+			// Spray Lava!
+			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+			Vector3 startPos = new Vector3();
+			startPos.set(posData.position);
+			startPos.mulAdd(player.camera.direction, .2f);
+
+			Vector3 dir = new Vector3(player.camera.direction);
+			float DIFF = 0.1f;
+			dir.x += NumberFunctions.rndFloat(-DIFF, DIFF);
+			dir.y += NumberFunctions.rndFloat(-DIFF, DIFF);
+			dir.z += NumberFunctions.rndFloat(-DIFF, DIFF);
+			dir.nor();
+
+			AbstractEntity r = BulletEntityFactory.createLavaSpray(game, player, startPos, dir);
+			game.ecs.addEntity(r);
 		}
 	}
 
@@ -177,6 +215,9 @@ public class UltimateAbilitySystem extends AbstractSystem {
 		switch (ability.type) {
 		case RocketBarrage:
 			endRocketBarrage(player);
+			break;
+		case SprayLava:
+			// Do nothing
 			break;
 		default:
 			throw new RuntimeException("Unknown ability: " + ability.type);

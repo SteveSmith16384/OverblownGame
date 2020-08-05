@@ -141,6 +141,7 @@ public class AvatarFactory {
 			
 		case CHAR_TOBLERONE:
 			weapon_type = WeaponSettingsComponent.TOBLERONE_GUN;
+			avatar.addComponent(new UltimateAbilityComponent(UltimateType.SprayLava, 50));
 			break;
 			
 		case CHAR_BLOWPIPE_ASSASSIN:

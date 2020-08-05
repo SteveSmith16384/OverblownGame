@@ -305,7 +305,7 @@ public class BulletEntityFactory {
 		e.addComponent(hasDecal);
 
 		e.addComponent(new RemoveOnContactComponent(shooter, true));
-		e.addComponent(new HasRangeComponent(start, settings.range));
+		//e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
 	
 		// Add physics
@@ -323,6 +323,50 @@ public class BulletEntityFactory {
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
+
+		return e;
+	}
+
+
+	public static AbstractEntity createLavaSpray(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "LavaSpray");
+
+		e.addComponent(new PositionComponent());
+
+		float diam = 0.3f;
+		/*
+		HasDecal hasDecal = new HasDecal();
+		hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("textures/sun.jpg"), 0.4f);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = true;
+		e.addComponent(hasDecal);
+*/
+
+		Texture tex = game.getTexture("textures/sun.jpg");
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		ModelInstance instance = new ModelInstance(sphere_model);
+		HasModelComponent model = new HasModelComponent(instance, 1f, false);
+		e.addComponent(model);
+
+		e.addComponent(new RemoveEntityAfterTimeComponent(20));
+		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", 100, 0, 0, false, 0));
+	
+		// Add physics
+		btSphereShape shape = new btSphereShape(diam/2);
+		btRigidBody body = new btRigidBody(diam, null, shape);
+		body.userData = e;
+		body.setFriction(1f);
+		body.setRestitution(.0f);
+		body.setCollisionShape(shape);
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(start);
+		body.setWorldTransform(mat);
+		PhysicsComponent pc = new PhysicsComponent(body);
+		pc.force = dir.scl(1.5f);
+		e.addComponent(pc);
+
+		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav"); // todo
 
 		return e;
 	}
