@@ -41,7 +41,7 @@ public class AvatarFactory {
 		case CHAR_BASTION: return "Bastion";
 		case CHAR_RUBBISHRODENT: return "Rubbish Rodent";
 
-		case CHAR_PIGGY: return "Piggy";
+		case CHAR_PIGGY: return "The Hunter";
 		case CHAR_VICTIM: return "INNOCENT VICTIM";
 		case CHAR_BLOWPIPE_ASSASSIN: return "ASSASSIN";
 

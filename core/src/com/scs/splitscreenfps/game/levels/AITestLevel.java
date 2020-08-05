@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.levels;
 
-import com.badlogic.gdx.Gdx;
 import com.scs.splitscreenfps.game.Game;
 
 public class AITestLevel extends AbstractLevel {
@@ -11,12 +10,6 @@ public class AITestLevel extends AbstractLevel {
 		super.getReadyForGame(game);
 
 		//this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
-	}
-
-
-	@Override
-	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(0, .6f, .8f, 1);
 	}
 
 
@@ -33,12 +26,6 @@ public class AITestLevel extends AbstractLevel {
 	@Override
 	public void update() {
 		//deathmatchSystem.process();
-	}
-
-
-	@Override
-	public int[] getHeroSelection() {
-		return new int[]{1, 2, 3, 4}; // todo
 	}
 
 

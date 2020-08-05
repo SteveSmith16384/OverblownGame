@@ -333,37 +333,43 @@ public class BulletEntityFactory {
 
 		e.addComponent(new PositionComponent());
 
-		float diam = 0.3f;
 		/*
-		HasDecal hasDecal = new HasDecal();
-		hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("textures/sun.jpg"), 0.4f);
-		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = true;
-		e.addComponent(hasDecal);
-*/
-
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
 		HasModelComponent model = new HasModelComponent(instance, 1f, false);
-		e.addComponent(model);
+		e.addComponent(model);*/
 
 		e.addComponent(new RemoveEntityAfterTimeComponent(20));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", 100, 0, 0, false, 0));
-	
+
+		
+		float width = .5f;
+		float height = .1f;
+		Texture tex = game.getTexture("colours/yellow.png");
+		Material material = new Material(TextureAttribute.createDiffuse(tex));
+		Model sphere_model = game.modelBuilder.createCylinder(width, height, width, 10, material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		ModelInstance instance = new ModelInstance(sphere_model);
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		e.addComponent(model);
+
 		// Add physics
-		btSphereShape shape = new btSphereShape(diam/2);
-		btRigidBody body = new btRigidBody(diam, null, shape);
+		/*btSphereShape shape = new btSphereShape(diam/2);
+		btRigidBody body = new btRigidBody(diam, null, shape);*/
+		btCylinderShape shape = new btCylinderShape(new Vector3(width/2, height/2, width/2));
+		Vector3 local_inertia = new Vector3();
+		shape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody body = new btRigidBody(.5f, null, shape, local_inertia);
 		body.userData = e;
 		body.setFriction(1f);
-		body.setRestitution(.0f);
+		body.setRestitution(.01f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(1.5f);
+		pc.force = dir.scl(NumberFunctions.rndFloat(3f,  6f));//5f);
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav"); // todo
@@ -607,8 +613,8 @@ public class BulletEntityFactory {
 		float width = .5f;
 		float height = .1f;
 		Texture tex = game.getTexture("textures/sun.jpg");
-		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		Model sphere_model = game.modelBuilder.createCylinder(width, height, width, 8, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		Material material = new Material(TextureAttribute.createDiffuse(tex));
+		Model sphere_model = game.modelBuilder.createCylinder(width, height, width, 8, material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
 		
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);

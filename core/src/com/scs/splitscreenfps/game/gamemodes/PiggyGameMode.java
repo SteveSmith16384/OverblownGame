@@ -45,7 +45,7 @@ public class PiggyGameMode implements ISystem {
 		}
 
 		if (time_text == null) {
-			time_text = new TextEntity(game.ecs, "", 37, 52, -1, Color.WHITE, 0, game.font_med, true);
+			time_text = new TextEntity(game.ecs, "", 37, 52, -1, Color.YELLOW, 0, game.font_med, true);
 			game.ecs.addEntity(time_text);
 		}
 

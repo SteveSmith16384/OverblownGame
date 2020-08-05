@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.levels;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
@@ -40,12 +39,6 @@ public class WhatTheBallLevel extends AbstractLevel {
 	@Override
 	public int[] getHeroSelection() {
 		return new int[]{AvatarFactory.CHAR_WHAT_THE_BALL};
-	}
-
-
-	@Override
-	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(0, .6f, .8f, 1);
 	}
 
 

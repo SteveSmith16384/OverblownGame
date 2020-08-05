@@ -17,6 +17,7 @@ import com.google.gson.stream.JsonWriter;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
@@ -50,7 +51,11 @@ public abstract class AbstractLevel {
 
 	public abstract String getName();
 	
-	public abstract int[] getHeroSelection();
+	public int[] getHeroSelection() {
+		return new int[]{AvatarFactory.CHAR_PHARTAH, AvatarFactory.CHAR_BOOMFIST, AvatarFactory.CHAR_BOWLING_BALL, AvatarFactory.CHAR_RACER, AvatarFactory.CHAR_RUBBISHRODENT};
+	}
+
+
 	
 	/*
 	public static final String getName(int i) {
@@ -110,8 +115,9 @@ public abstract class AbstractLevel {
 
 
 	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
+		Gdx.gl.glClearColor(0, .6f, .8f, 1);
 	}
+
 
 	public abstract void load();
 

@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.levels;
 
-import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
@@ -21,12 +20,6 @@ public class PiggyLevel extends AbstractLevel {
 	@Override
 	public int[] getHeroSelection() {
 		return new int[]{AvatarFactory.CHAR_PIGGY, AvatarFactory.CHAR_VICTIM};
-	}
-
-
-	@Override
-	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(0, .6f, .8f, 1);
 	}
 
 

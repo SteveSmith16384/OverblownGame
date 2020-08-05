@@ -2,7 +2,6 @@ package com.scs.splitscreenfps.pregame;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
