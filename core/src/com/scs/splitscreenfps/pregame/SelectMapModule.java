@@ -32,19 +32,16 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
-public class SelectMapModule implements IModule, IGetCurrentViewport {
+public class SelectMapModule extends AbstractSingleViewModule implements IModule, IGetCurrentViewport {
 
 	private static final long READ_INPUTS_INTERVAL = 100;
 
 	private final SpriteBatch spriteBatch;
 	private BitmapFont font_small, font_large;
 	private FrameBuffer frameBuffer;
-	private final BillBoardFPS_Main main;
 	public final List<IInputMethod> inputs;
 	private GameSelectionData gameSelectionData;
-	public AssetManager assetManager = new AssetManager();
 	private long next_input_check_time = 0;
-	private Rectangle viewRect;
 	private final BasicECS ecs;
 	private long earliest_input_time;
 	private ArrayList<String> map_names;
@@ -58,9 +55,8 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 	private Sprite arrow;
 
 	public SelectMapModule(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
-		super();
+		super(_main);
 
-		main = _main;
 		inputs = _inputs;
 		this.gameSelectionData = new GameSelectionData();//inputs.size());
 		spriteBatch = new SpriteBatch();
@@ -99,8 +95,8 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 	}
 
 
-	private void loadAssetsForResize() {
-		this.viewRect = new Rectangle(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+	protected void loadAssetsForResize() {
+		super.loadAssetsForResize();
 
 		font_small = main.font_small;
 		//this.font_med = main.font_med;
@@ -213,9 +209,10 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 
 	@Override
 	public void dispose() {
+		super.dispose();
+		
 		this.spriteBatch.dispose();
 		this.frameBuffer.dispose();
-		assetManager.dispose();
 		ecs.dispose();
 
 	}
@@ -232,28 +229,5 @@ public class SelectMapModule implements IModule, IGetCurrentViewport {
 		this.loadAssetsForResize();
 	}
 
-
-	@Override
-	public void controlledAdded(Controller controller) {
-
-	}
-
-
-	@Override
-	public void controlledRemoved(Controller controller) {
-
-	}
-
-
-	@Override
-	public int getCurrentViewportIdx() {
-		return 0;
-	}
-
-
-	@Override
-	public Rectangle getCurrentViewportRect() {
-		return viewRect;
-	}
 
 }

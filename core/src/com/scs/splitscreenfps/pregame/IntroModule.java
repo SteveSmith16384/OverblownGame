@@ -26,23 +26,19 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
-public class IntroModule implements IModule, IGetCurrentViewport {
+public class IntroModule extends AbstractSingleViewModule implements IModule, IGetCurrentViewport {
 
-	private final BillBoardFPS_Main main;
 	private final BasicECS ecs;
 	private final SpriteBatch spriteBatch;
 	private FrameBuffer frameBuffer;
-	private AssetManager assetManager = new AssetManager();
-	private Rectangle viewRect;
 
 	private DrawGuiSpritesSystem drawGuiSpritesSystem;
 	private ChangeColourSystem colChangeSystem;
 	private DrawTextSystem drawTextSystem;
 	
 	public IntroModule(BillBoardFPS_Main _main) {
-		super();
+		super(_main);
 
-		main = _main;
 		spriteBatch = new SpriteBatch();
 
 		ecs = new BasicECS();
@@ -141,9 +137,10 @@ public class IntroModule implements IModule, IGetCurrentViewport {
 
 	@Override
 	public void dispose() {
+		super.dispose();
+		
 		this.spriteBatch.dispose();
 		this.frameBuffer.dispose();
-		assetManager.dispose();
 		ecs.dispose();
 
 	}
@@ -160,28 +157,5 @@ public class IntroModule implements IModule, IGetCurrentViewport {
 		this.loadAssetsForResize(w, h);
 	}
 
-
-	@Override
-	public void controlledAdded(Controller controller) {
-		// Do nothing
-	}
-
-
-	@Override
-	public void controlledRemoved(Controller controller) {
-		// Do nothing
-	}
-
-
-	@Override
-	public int getCurrentViewportIdx() {
-		return 0;
-	}
-
-
-	@Override
-	public Rectangle getCurrentViewportRect() {
-		return viewRect;
-	}
 
 }

@@ -34,7 +34,7 @@ import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 
-public class SelectHeroModule implements IModule, IGetCurrentViewport {
+public class SelectHeroModule extends AbstractSingleViewModule implements IModule, IGetCurrentViewport {
 
 	private static final long READ_INPUTS_INTERVAL = 100;
 
@@ -42,14 +42,11 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	private BitmapFont font_small, font_large;
 	private final List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
-	private final BillBoardFPS_Main main;
 	public List<IInputMethod> inputs;
-	public final AssetManager assetManager = new AssetManager();
 
 	private long earliest_input_time;
 	private long next_input_check_time = 0;
 	private final BasicECS ecs;
-	private Rectangle viewRect;
 	private GameSelectionData gameSelectionData;
 	private int[] available_heroes;
 	private int[] selected_hero_num;
@@ -64,9 +61,8 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	private Sprite[] arrows;
 
 	public SelectHeroModule(BillBoardFPS_Main _main, List<IInputMethod> _inputs, GameSelectionData _gameSelectionData) {
-		super();
+		super(_main);
 
-		main = _main;
 		inputs = _inputs;
 
 		this.gameSelectionData = _gameSelectionData;//new GameSelectionData(inputs.size());
@@ -110,8 +106,8 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 	}
 
 
-	private void loadAssetsForResize() {
-		this.viewRect = new Rectangle(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+	protected void loadAssetsForResize() {
+		super.loadAssetsForResize();
 
 		font_small = main.font_small;
 		//this.font_med = main.font_med;
@@ -263,9 +259,10 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 
 	@Override
 	public void dispose() {
+		super.dispose();
+		
 		this.spriteBatch.dispose();
 		this.frameBuffer.dispose();
-		assetManager.dispose();
 		ecs.dispose();
 
 	}
@@ -290,29 +287,5 @@ public class SelectHeroModule implements IModule, IGetCurrentViewport {
 		}
 	}
 
-
-	@Override
-	public void controlledAdded(Controller controller) {
-
-	}
-
-
-	@Override
-	public void controlledRemoved(Controller controller) {
-
-	}
-
-
-
-	@Override
-	public int getCurrentViewportIdx() {
-		return 0;
-	}
-
-
-	@Override
-	public Rectangle getCurrentViewportRect() {
-		return viewRect;
-	}
 
 }

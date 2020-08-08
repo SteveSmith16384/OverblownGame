@@ -26,9 +26,8 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 
-public class PlayersJoinGameModule implements IModule {
+public class PlayersJoinGameModule extends AbstractSingleViewModule implements IModule {
 
-	private final BillBoardFPS_Main main;
 	private final SpriteBatch spriteBatch;
 	private BitmapFont font_small, font_large;
 	private List<String> log = new LinkedList<String>();
@@ -37,9 +36,7 @@ public class PlayersJoinGameModule implements IModule {
 	private boolean keyboard_player_joined = false;
 
 	public PlayersJoinGameModule(BillBoardFPS_Main _main) {
-		super();
-
-		main = _main;
+		super(_main);
 
 		spriteBatch = new SpriteBatch();
 
@@ -56,7 +53,9 @@ public class PlayersJoinGameModule implements IModule {
 	}
 
 
-	private void loadAssetsForResize() {
+	protected void loadAssetsForResize() {
+		super.loadAssetsForResize();
+		
 		this.font_small = main.font_small;
 		this.font_large = main.font_large;
 		
@@ -194,6 +193,8 @@ public class PlayersJoinGameModule implements IModule {
 
 	@Override
 	public void dispose() {
+		super.dispose();
+		
 		this.spriteBatch.dispose();
 		this.frameBuffer.dispose();
 	}
@@ -216,18 +217,6 @@ public class PlayersJoinGameModule implements IModule {
 		while (log.size() > 6) {
 			log.remove(0);
 		}
-	}
-
-
-	@Override
-	public void controlledAdded(Controller controller) {
-		// Do nothing
-	}
-
-
-	@Override
-	public void controlledRemoved(Controller controller) {
-		// Do nothing
 	}
 
 }
