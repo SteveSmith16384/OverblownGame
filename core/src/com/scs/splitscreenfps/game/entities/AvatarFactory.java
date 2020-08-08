@@ -26,11 +26,12 @@ public class AvatarFactory {
 	public static final int CHAR_WHAT_THE_BALL = 8;
 	public static final int CHAR_RUBBISHRODENT = 9;
 	public static final int CHAR_TOBLERONE = 10;
+	public static final int CHAR_BOUNCING_BALL = 11;
 
 	public static final int CHAR_WINSTON = 96;
 	public static final int CHAR_BASTION = 97;
-	
-	
+
+
 	public static String getName(int id) {
 		switch (id) {
 		case CHAR_PHARTAH: return "Phartah";
@@ -44,6 +45,7 @@ public class AvatarFactory {
 		case CHAR_PIGGY: return "The Hunter";
 		case CHAR_VICTIM: return "INNOCENT VICTIM";
 		case CHAR_BLOWPIPE_ASSASSIN: return "ASSASSIN";
+		case CHAR_BOUNCING_BALL: return "Bouncing Ball";
 
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -61,12 +63,13 @@ public class AvatarFactory {
 		case CHAR_BASTION: return 150;
 		case CHAR_RUBBISHRODENT: return 150;
 		case CHAR_TOBLERONE: return 150;
-		
+
 		case CHAR_PIGGY: return 9999;
 		case CHAR_VICTIM: return 1;
 		case CHAR_BLOWPIPE_ASSASSIN: return 1;
 		case CHAR_WHAT_THE_BALL: return 100;
-		
+		case CHAR_BOUNCING_BALL: return 100;
+
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
 		}
@@ -87,17 +90,19 @@ public class AvatarFactory {
 		AbstractPlayersAvatar avatar = null;
 		if (hero_id == CHAR_BOWLING_BALL || hero_id == CHAR_WHAT_THE_BALL) {
 			avatar = new PlayerAvatar_Ball(_game, playerIdx, camera, hero_id, _inputMethod, getHealth(hero_id), getSpeed(hero_id));
+		} else if (hero_id == CHAR_BOUNCING_BALL) {
+			avatar = new PlayerAvatar_BouncingBall(_game, playerIdx, camera, hero_id, _inputMethod, getHealth(hero_id), getSpeed(hero_id));
 		} else {
 			avatar = new PlayerAvatar_Person(_game, playerIdx, camera, hero_id, _inputMethod, getHealth(hero_id), getSpeed(hero_id));
 		}
-		
+
 		avatar.setAvatarColour();
 
 		if (_inputMethod instanceof AIInputMethod) {
 			avatar.addComponent(new HasAIComponent((AIInputMethod)_inputMethod));
 
 		}
-		
+
 		WeaponSettingsComponent weapon = null;
 		int weapon_type = -1;
 		switch (hero_id) {
@@ -106,59 +111,63 @@ public class AvatarFactory {
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JetPac, 10));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.RocketBarrage, 60));
 			break;
-			
+
 		case CHAR_BOOMFIST:
 			weapon_type = WeaponSettingsComponent.BOOMFIST_RIFLE;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.PowerPunch, 4, .5f));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.CraterStrike, 50));
 			break;
-			
+
 		case CHAR_BOWLING_BALL:
 			weapon_type = WeaponSettingsComponent.BOWLINGBALL_GUN;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpUp, 5));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.Minefield, 60));
 			break;
-			
+
 		case CHAR_RACER:
 			weapon_type = WeaponSettingsComponent.RACER_PISTOLS;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Blink, 6, 3));
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.TraceyBomb, 50));
 			break;
-			
+
 		case CHAR_WINSTON:
 			weapon_type = WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.JumpForwards, 5));
 			break;
-			
+
 		case CHAR_RUBBISHRODENT:
 			weapon_type = WeaponSettingsComponent.JUNKRAT_GRENADE_LAUNCHER;
 			avatar.addComponent(new JunkratMineAbilityComponent(4));
 			break;
-			
+
 		case CHAR_BASTION:
 			weapon_type = WeaponSettingsComponent.BASTION_CANNON;
 			break;
-			
+
 		case CHAR_TOBLERONE:
 			weapon_type = WeaponSettingsComponent.TOBLERONE_GUN;
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.SprayLava, 50));
 			break;
-			
+
 		case CHAR_BLOWPIPE_ASSASSIN:
 			weapon_type = WeaponSettingsComponent.BLOWPIPE;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Invisible_Mine, 20));
 			break;
-			
+
 		case CHAR_PIGGY:
 			weapon_type = WeaponSettingsComponent.PIGGY_GUN;
 			break;
-			
+
 		case CHAR_VICTIM:
 			weapon_type = WeaponSettingsComponent.NONE;
 			break;
-			
+
 		case CHAR_WHAT_THE_BALL:
 			weapon_type = WeaponSettingsComponent.BOWLINGBALL_GUN;
+			break;
+
+		case CHAR_BOUNCING_BALL:
+			weapon_type = WeaponSettingsComponent.NONE;
 			break;
 			
 		default:
@@ -233,7 +242,7 @@ public class AvatarFactory {
 		if (weapon != null) {
 			avatar.addComponent(weapon);
 		}
-		
+
 		return avatar;
 	}
 }

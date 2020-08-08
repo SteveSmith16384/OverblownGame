@@ -97,7 +97,7 @@ public class Wall extends AbstractEntity {
 		btRigidBody body = new btRigidBody(mass, null, boxShape, local_inertia);
 		body.userData = this;
 		body.setRestitution(.2f);
-		body.setDamping(.5f,  .5f); // scs new
+		body.setDamping(.5f, .5f);
 		//groundObject.setFriction(.1f);
 		body.setCollisionShape(boxShape);
 		body.setWorldTransform(instance.transform);

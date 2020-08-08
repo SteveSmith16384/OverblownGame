@@ -16,12 +16,12 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
-public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
+public class PlayerAvatar_BouncingBall extends AbstractPlayersAvatar {
 
-	public static final float DIAM = 0.8f;
+	private static final float DIAM = 0.8f;
 	private static final float DAMPING = 0.5f;
 
-	public PlayerAvatar_Ball(Game _game, int playerIdx, Camera camera, int hero_id, IInputMethod _inputMethod, int health, float speed) {
+	public PlayerAvatar_BouncingBall(Game _game, int playerIdx, Camera camera, int hero_id, IInputMethod _inputMethod, int health, float speed) {
 		super(_game, playerIdx, PlayerAvatar_Person.class.getSimpleName() + "_" + playerIdx, camera, hero_id, _inputMethod, health, speed);
 
 		// Model stuff
@@ -38,10 +38,10 @@ public class PlayerAvatar_Ball extends AbstractPlayersAvatar {
 		capsuleShape.calculateLocalInertia(1.0f, inertia);
 
 		btDefaultMotionState motionState = new btDefaultMotionState();
-		btRigidBody player_body = new btRigidBody(2f, motionState, capsuleShape, inertia);
+		btRigidBody player_body = new btRigidBody(4f, motionState, capsuleShape, inertia);
 		player_body.userData = this;
 		player_body.setDamping(DAMPING, DAMPING);
-		player_body.setRestitution(.8f);
+		player_body.setRestitution(1f);
 		PhysicsComponent physics = new PhysicsComponent(player_body);
 		physics.removeIfFallen = false;
 		physics.physicsControlsRotation = false;

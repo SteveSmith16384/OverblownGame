@@ -486,7 +486,6 @@ public class BulletEntityFactory {
 		btSphereShape shape = new btSphereShape(diam/2); // This is a lot smaller so the sphere goes through the ground before exploding
 		Vector3 local_inertia = new Vector3();
 		shape.calculateLocalInertia(mass, local_inertia);
-		//scs new btDefaultMotionState motionState = new btDefaultMotionState();
 		btRigidBody body = new btRigidBody(mass, null, shape, local_inertia);
 		body.userData = e;
 		body.setRestitution(1);//.5f);

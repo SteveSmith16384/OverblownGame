@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.systems;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
@@ -8,7 +9,9 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.HasAIComponent;
+import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 
@@ -36,10 +39,16 @@ public class AISystem extends AbstractSystem {
 				}
 			}
 		} else {
+			// todo - check if target is dead.
+			// todo - find closest enemy
+			
 			ai.ai_input.move_fwd = false;
 			ai.ai_input.turn_left = false;
 			ai.ai_input.turn_right = false;
-
+			ai.ai_input.look_up = false;
+			ai.ai_input.look_down = false;
+			ai.ai_input.shoot = false;
+			
 			PositionComponent aiPosData = (PositionComponent)ai_entity.getComponent(PositionComponent.class);
 			PositionComponent targetPosData = (PositionComponent)ai.target_entity.getComponent(PositionComponent.class);
 
@@ -47,15 +56,15 @@ public class AISystem extends AbstractSystem {
 			boolean can_see = this.canSee(ai.target_entity, aiPosData, targetPosData);
 
 			if (dist > 2 || can_see == false) {
-				ai.ai_input.move_fwd = true;
+				//tod ai.ai_input.move_fwd = true;
 			}
 			float x_diff = targetPosData.position.x - aiPosData.position.x;
 			float z_diff = targetPosData.position.z - aiPosData.position.z;
 			double angle = Math.atan2(z_diff, x_diff);
-			float degs = (float)Math.toDegrees(angle);// - ourPosData.angle_y_degrees;
+			float degs = (float)Math.toDegrees(angle);
 			//Settings.p("Degs: " + degs);
 			float ai_angle = (360-aiPosData.angle_y_degrees);
-			degs -= ai_angle;//aiPosData.angle_y_degrees;
+			degs -= ai_angle;
 			while (degs < 0) {
 				degs += 360;
 			}
@@ -63,19 +72,38 @@ public class AISystem extends AbstractSystem {
 				degs -= 360;
 			}
 
-			//Settings.p("AI Angle: " + ai_angle);
-			//Settings.p("Diff Angle: " + degs);
-
 			if (degs > 185 && degs < 355) {
 				ai.ai_input.turn_left = true;
 			} else if (degs > 5 && degs < 175) {
 				ai.ai_input.turn_right = true;
 			}
 
+			Camera camera = game.viewports[1].camera;
 			//Settings.p("Can see: " + can_see);
 			if (can_see) {
+				// Look up/down
+				PlayerData playerData = (PlayerData)ai_entity.getComponent(PlayerData.class);
+				ViewportData viewport = game.viewports[playerData.playerIdx];
+				tmpVec.set(targetPosData.position);
+				camera.project(tmpVec, viewport.viewRect.x, viewport.viewRect.y, viewport.viewRect.width, viewport.viewRect.height);
+
+				float height_req = viewport.viewRect.y + (viewport.viewRect.height/2);
+				//Settings.p("Y: " + pos.y);
+				if (tmpVec.y > height_req+10) {
+					ai.ai_input.look_up = true;
+				} else if (tmpVec.y < height_req-10) {
+					ai.ai_input.look_down = true;
+				}
+
 				ai.ai_input.shoot = true;
+			} else {
+				//camera.direction.y = 0;
+				//camera.direction.nor();
 			}
+			
+			/*if (camera.up.y != 1) {
+				Settings.p("UP wrong!");
+			}*/
 
 		}
 	}
