@@ -38,7 +38,7 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_CITY = 8;
 	public static final int LEVEL_AI_TEST = 9;
 	
-	public static final int MAX_LEVEL_ID = 7;
+	public static final int MAX_LEVEL_ID = 8;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -52,7 +52,7 @@ public abstract class AbstractLevel {
 	public abstract String getName();
 	
 	public int[] getHeroSelection() {
-		return new int[]{AvatarFactory.CHAR_PHARTAH, AvatarFactory.CHAR_BOOMFIST, AvatarFactory.CHAR_BOWLING_BALL, AvatarFactory.CHAR_RACER, AvatarFactory.CHAR_RUBBISHRODENT};
+		return new int[]{AvatarFactory.CHAR_PHARTAH, AvatarFactory.CHAR_BOOMFIST, AvatarFactory.CHAR_BOWLING_BALL, AvatarFactory.CHAR_RACER, AvatarFactory.CHAR_RUBBISHRODENT, AvatarFactory.CHAR_TOBLERONE};
 	}
 
 
