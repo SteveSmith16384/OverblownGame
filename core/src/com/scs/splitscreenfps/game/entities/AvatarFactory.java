@@ -20,13 +20,14 @@ public class AvatarFactory {
 	public static final int CHAR_BOOMFIST = 2;
 	public static final int CHAR_BOWLING_BALL = 3;
 	public static final int CHAR_RACER = 4;
-	public static final int CHAR_BLOWPIPE_ASSASSIN = 5;
+	public static final int CHAR_ASSASSIN = 5;
 	public static final int CHAR_PIGGY = 6;
 	public static final int CHAR_VICTIM = 7;
 	public static final int CHAR_WHAT_THE_BALL = 8;
 	public static final int CHAR_RUBBISHRODENT = 9;
 	public static final int CHAR_TOBLERONE = 10;
 	public static final int CHAR_BOUNCING_BALL = 11;
+	public static final int CHAR_WEAK = 12;
 
 	public static final int CHAR_WINSTON = 96;
 	public static final int CHAR_BASTION = 97;
@@ -42,10 +43,11 @@ public class AvatarFactory {
 		case CHAR_BASTION: return "Bastion";
 		case CHAR_RUBBISHRODENT: return "Rubbish Rodent";
 		case CHAR_TOBLERONE: return "Toblerone";
+		case CHAR_WEAK: return "WEAK";
 
 		case CHAR_PIGGY: return "The Hunter";
 		case CHAR_VICTIM: return "INNOCENT VICTIM";
-		case CHAR_BLOWPIPE_ASSASSIN: return "ASSASSIN";
+		case CHAR_ASSASSIN: return "ASSASSIN";
 		case CHAR_BOUNCING_BALL: return "Bouncing Ball";
 
 		default:
@@ -67,9 +69,10 @@ public class AvatarFactory {
 
 		case CHAR_PIGGY: return 9999;
 		case CHAR_VICTIM: return 1;
-		case CHAR_BLOWPIPE_ASSASSIN: return 1;
+		case CHAR_ASSASSIN: return 1;
 		case CHAR_WHAT_THE_BALL: return 100;
 		case CHAR_BOUNCING_BALL: return 100;
+		case CHAR_WEAK: return 100;
 
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -150,7 +153,7 @@ public class AvatarFactory {
 			avatar.addComponent(new UltimateAbilityComponent(UltimateType.SprayLava, 50));
 			break;
 
-		case CHAR_BLOWPIPE_ASSASSIN:
+		case CHAR_ASSASSIN:
 			weapon_type = WeaponSettingsComponent.BLOWPIPE;
 			avatar.addComponent(new SecondaryAbilityComponent(SecondaryAbilityType.Invisible_Mine, 20));
 			break;
@@ -171,9 +174,14 @@ public class AvatarFactory {
 			weapon_type = WeaponSettingsComponent.NONE;
 			break;
 			
+		case CHAR_WEAK:
+			weapon_type = WeaponSettingsComponent.WEAK_PISTOL;
+			break;
+			
 		default:
 			throw new RuntimeException("Unhandled character: " + hero_id);
 		}
+		
 
 		switch (weapon_type) {
 		case WeaponSettingsComponent.NONE:
@@ -232,6 +240,11 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.TOBLERONE_GUN:
+			weapon = new WeaponSettingsComponent(weapon_type, 700, 1500, 20, 100, 
+					50, 0, 0, null);
+			break;
+
+		case WeaponSettingsComponent.WEAK_PISTOL:
 			weapon = new WeaponSettingsComponent(weapon_type, 700, 1500, 20, 100, 
 					50, 0, 0, null);
 			break;

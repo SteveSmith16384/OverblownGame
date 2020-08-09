@@ -127,6 +127,11 @@ public class ShootingSystem extends AbstractSystem {
 				game.ecs.addEntity(g2);
 				break;
 
+			case WeaponSettingsComponent.WEAK_PISTOL:
+				AbstractEntity g3 = BulletEntityFactory.createTobleroneBullet(game, player, startPos, dir);
+				game.ecs.addEntity(g3);
+				break;
+
 			default:
 				throw new RuntimeException("Unknown weapon type: " + weapon.weapon_type);
 			}

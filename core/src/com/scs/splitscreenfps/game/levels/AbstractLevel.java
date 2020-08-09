@@ -34,11 +34,12 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_PIGGY = 4;
 	public static final int LEVEL_SHOOT_TAG = 5;
 	public static final int LEVEL_WHAT_THE_BALL = 6;
-	public static final int LEVEL_MAP_EDITOR = 7;
-	public static final int LEVEL_CITY = 8;
-	public static final int LEVEL_AI_TEST = 9;
+	public static final int LEVEL_CITY = 7;
+	public static final int LEVEL_LOOT_BOX = 8;
+	public static final int LEVEL_MAP_EDITOR = 9;
+	public static final int LEVEL_AI_TEST = 10;
 	
-	public static final int MAX_LEVEL_ID = 8;
+	public static final int MAX_LEVEL_ID = 9;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -56,36 +57,6 @@ public abstract class AbstractLevel {
 	}
 
 
-	
-	/*
-	public static final String getName(int i) {
-		switch (i) {
-		case LEVEL_FACTORY:
-			return "Factory - Deathmatch";
-		case LEVEL_CITY:
-			return "City - Deathmatch";
-		case LEVEL_VILLAGE:
-			return "Village - Control Point";
-		case LEVEL_TEMPLE_OF_THE_NOOBIES:
-			return "Temple of the Noobies - Deathmatch";
-		case LEVEL_BLOWPIPE_ASSASSINS:
-			return "The Assassins - Deathmatch";
-		case LEVEL_PIGGY:
-			return "Piggy";
-		case LEVEL_AI_TEST:
-			return "AI Test";
-		case LEVEL_MAP_EDITOR:
-			return "Map Editor";
-		case LEVEL_SHOOT_TAG:
-			return "Shoot-Tag";
-		case LEVEL_WHAT_THE_BALL:
-			return "What the Ball";
-		default:
-			throw new RuntimeException("Unknown level: " + i);
-		}
-	}
-*/
-
 	public static final AbstractLevel factory(int i) {
 		switch (i) {
 		case LEVEL_FACTORY:
@@ -95,7 +66,7 @@ public abstract class AbstractLevel {
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return new TempleOfTheNoobiesLevel();
 		case LEVEL_BLOWPIPE_ASSASSINS:
-			return new BlowpipeLevel();
+			return new AssassinsLevel();
 		case LEVEL_PIGGY:
 			return new PiggyLevel();
 		case LEVEL_AI_TEST:
@@ -108,6 +79,8 @@ public abstract class AbstractLevel {
 			return new MapEditorLevel();
 		case LEVEL_CITY:
 			return new CityLevel();
+		case LEVEL_LOOT_BOX:
+			return new LootBoxLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}

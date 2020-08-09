@@ -5,7 +5,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
-public class BlowpipeLevel extends AbstractLevel { // todo - rename
+public class LootBoxLevel extends AbstractLevel {
 
 	private ISystem deathmatchSystem;
 
@@ -19,7 +19,7 @@ public class BlowpipeLevel extends AbstractLevel { // todo - rename
 
 	@Override
 	public int[] getHeroSelection() {
-		return new int[]{AvatarFactory.CHAR_BLOWPIPE_ASSASSIN};
+		return new int[]{AvatarFactory.CHAR_WEAK};
 	}
 
 
@@ -42,7 +42,7 @@ public class BlowpipeLevel extends AbstractLevel { // todo - rename
 
 	@Override
 	public String getName() {
-		return "The Assassins";
+		return "Loot Box Level";
 	}
 
 
