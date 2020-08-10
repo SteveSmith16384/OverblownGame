@@ -231,9 +231,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 16.5,
+        "x": 17.5,
         "y": 0.75,
-        "z": 16.75
+        "z": 16.5
       },
       "rotation": {
         "x": 0.0,
@@ -1196,7 +1196,7 @@
       "id": 48,
       "type": "sphere",
       "name": "New sphere 100",
-      "tags": "playerstartposition",
+      "tags": "",
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
@@ -1221,7 +1221,7 @@
       "id": 49,
       "type": "sphere",
       "name": "New sphere 100_new",
-      "tags": "playerstartposition",
+      "tags": "",
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
@@ -1246,7 +1246,7 @@
       "id": 50,
       "type": "sphere",
       "name": "New sphere 2_new",
-      "tags": "playerstartposition",
+      "tags": "",
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
@@ -1271,7 +1271,7 @@
       "id": 51,
       "type": "sphere",
       "name": "New sphere 2",
-      "tags": "playerstartposition",
+      "tags": "",
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
@@ -1296,7 +1296,7 @@
       "id": 52,
       "type": "sphere",
       "name": "New sphere 2_new",
-      "tags": "playerstartposition",
+      "tags": "",
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
@@ -1309,31 +1309,6 @@
         "x": 7.0,
         "y": 1.75,
         "z": -2.75
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 0.0
-    },
-    {
-      "id": 53,
-      "type": "sphere",
-      "name": "New sphere 100_new",
-      "tags": "playerstartposition",
-      "texture_id": 0,
-      "model_filename": "",
-      "tiled": true,
-      "size": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "position": {
-        "x": 19.0,
-        "y": 0.75,
-        "z": 14.25
       },
       "rotation": {
         "x": 0.0,

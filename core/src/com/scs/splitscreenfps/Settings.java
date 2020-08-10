@@ -16,8 +16,8 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_LOOT_BOX;
-	public static final int NUM_AUTOSTART_CHARACTERS = 1;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_ASSASSINS;
+	public static final int NUM_AUTOSTART_CHARACTERS = 9;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_WEAK;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	
@@ -33,6 +33,7 @@ public class Settings {
 	public static final boolean STRICT = !RELEASE_MODE && true;
 
 	// Other settings
+	public static final int MAX_PLAYERS = 9;
 	public static final float MIN_AXIS = 0.1f;//0.2f; // Movement less than this is ignored
 	public static final float CAM_OFFSET = -0.05f;//-0.2f;//0.14f;
 	public static final String TITLE = "Overblown";
@@ -60,6 +61,16 @@ public class Settings {
 			return Color.RED;
 		case 3:
 			return Color.MAGENTA;
+		case 4:
+			return Color.BLUE;
+		case 5:
+			return Color.MAROON;
+		case 6:
+			return Color.WHITE;
+		case 7:
+			return Color.BLACK;
+		case 8:
+			return Color.ORANGE;
 		default:
 			throw new RuntimeException("Unknown side: " + idx);
 		}

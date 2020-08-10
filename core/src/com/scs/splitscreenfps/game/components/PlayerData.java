@@ -41,6 +41,16 @@ public class PlayerData {
 			return "RED";
 		case 3:
 			return "PURPLE";
+		case 4:
+			return "BLUE";
+		case 5:
+			return "PURPLE";
+		case 6:
+			return "WHITE";
+		case 7:
+			return "BLACK";
+		case 8:
+			return "ORANGE";
 		default:
 			throw new RuntimeException("Unknown side: " + p);
 		}

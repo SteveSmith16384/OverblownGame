@@ -30,7 +30,7 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_FACTORY = 0;
 	public static final int LEVEL_VILLAGE = 1;
 	public static final int LEVEL_TEMPLE_OF_THE_NOOBIES = 2;
-	public static final int LEVEL_BLOWPIPE_ASSASSINS = 3;
+	public static final int LEVEL_ASSASSINS = 3;
 	public static final int LEVEL_PIGGY = 4;
 	public static final int LEVEL_SHOOT_TAG = 5;
 	public static final int LEVEL_WHAT_THE_BALL = 6;
@@ -65,7 +65,7 @@ public abstract class AbstractLevel {
 			return new VillageLevel();
 		case LEVEL_TEMPLE_OF_THE_NOOBIES:
 			return new TempleOfTheNoobiesLevel();
-		case LEVEL_BLOWPIPE_ASSASSINS:
+		case LEVEL_ASSASSINS:
 			return new AssassinsLevel();
 		case LEVEL_PIGGY:
 			return new PiggyLevel();
@@ -97,6 +97,9 @@ public abstract class AbstractLevel {
 	public abstract void update();
 
 	public Vector3 getPlayerStartPoint(int idx) {
+		if (this.startPositions.size() <= idx) {
+			throw new RuntimeException("Not enough start positions; " + (idx+1) + " needed but only have " + this.startPositions.size());
+		}
 		return this.startPositions.get(idx);
 	}
 
@@ -122,7 +125,7 @@ public abstract class AbstractLevel {
 
 		String s = Gdx.files.internal(filename).readString();
 		mapdata = gson.fromJson(s, MapData.class);
-		mapdata.filename = filename;
+		//mapdata.filename = filename;
 
 		if (mapdata.textures == null) {
 			mapdata.textures = new HashMap<Integer, String>();
@@ -214,7 +217,7 @@ public abstract class AbstractLevel {
 	}
 
 
-	public void saveFile() throws JsonIOException, IOException {
+	public void saveFile(String filename) throws JsonIOException, IOException {
 		if (mapdata == null) {
 			mapdata = new MapData();
 		}
@@ -225,9 +228,9 @@ public abstract class AbstractLevel {
 		}
 
 		// backup old file
-		IOFunctions.copyFileUsingStream(mapdata.filename, mapdata.filename + "_old");
+		IOFunctions.copyFileUsingStream(filename, filename + "_old");
 
-		JsonWriter writer = new JsonWriter(new FileWriter(mapdata.filename));
+		JsonWriter writer = new JsonWriter(new FileWriter(filename));
 		writer.setIndent("  ");
 		Gson gson = new GsonBuilder().create();
 		gson.toJson(mapdata, MapData.class, writer);

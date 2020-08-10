@@ -7,6 +7,8 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 public class MapEditorLevel extends AbstractLevel {
 
+	public static final String filename = "maps/complex.json";
+	
 	public MapEditorSystem mapBuilderSystem;
 
 	public void getReadyForGame(Game game) {
@@ -23,11 +25,12 @@ public class MapEditorLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			super.loadJsonFile("maps/map_editor.json", true);
+			super.loadJsonFile(filename, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		game.appendToLog("Loaded " + filename);
 		game.appendToLog("Map editor ready");
 
 	}

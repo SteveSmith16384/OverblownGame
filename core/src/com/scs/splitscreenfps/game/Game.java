@@ -186,7 +186,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		spriteBatch = new SpriteBatch();
 		this.createECS();
 
-		viewports = new ViewportData[4];
+		viewports = new ViewportData[Settings.MAX_PLAYERS];
 
 		if (this.gameSelectionData.level == AbstractLevel.LEVEL_AI_TEST) {
 			// Add AI

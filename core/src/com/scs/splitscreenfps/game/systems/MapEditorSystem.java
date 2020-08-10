@@ -16,6 +16,7 @@ import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
+import com.scs.splitscreenfps.game.levels.MapEditorLevel;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
 
 import ssmith.lang.NumberFunctions;
@@ -527,11 +528,12 @@ public class MapEditorSystem extends AbstractSystem {
 				}
 			}
 
-			game.currentLevel.saveFile();
+			game.currentLevel.saveFile(MapEditorLevel.filename);
 			Settings.p("Map saved");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 
 }

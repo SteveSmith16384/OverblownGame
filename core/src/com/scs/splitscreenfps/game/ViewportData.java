@@ -21,7 +21,7 @@ public class ViewportData {
 
 	public ViewportData(int _idx, boolean full_screen, int total) {
 		idx = _idx;
-		
+
 		Rectangle d = this.getDimensions(idx, full_screen, total);
 
 		camera = new PerspectiveCamera(65, d.width, d.height);
@@ -37,7 +37,7 @@ public class ViewportData {
 
 
 	private Rectangle getDimensions(int idx, boolean full_screen, int total) {
-		int x, y, w, h;
+		int x=0, y=0, w=0, h=0;
 		if (total == 1) {
 			x = 0;
 			y = 0;
@@ -63,7 +63,7 @@ public class ViewportData {
 				w = Gdx.graphics.getWidth();
 				h = Gdx.graphics.getHeight()/2;
 			}
-		} else {
+		} else if (total == 3 || total == 4) {
 			if (full_screen) {
 				w = Gdx.graphics.getBackBufferWidth()/2;
 				h = Gdx.graphics.getBackBufferHeight()/2;
@@ -85,8 +85,50 @@ public class ViewportData {
 				x = 0;
 				y = h;
 			}
-			
+		} else if (total == 5 || total == 6) {
+			// todo
+		} else if (total == 7 || total == 8 || total == 9) {
+			if (full_screen) {
+				w = Gdx.graphics.getBackBufferWidth()/3;
+				h = Gdx.graphics.getBackBufferHeight()/3;
+			} else {
+				w = Gdx.graphics.getWidth()/3;
+				h = Gdx.graphics.getHeight()/3;
+			}
+
+			if (idx == 0) {
+				x = 0;
+				y = 0;
+			} else if (idx == 1) {
+				x = w;
+				y = 0;
+			} else if (idx == 2) {
+				x = w*2;
+				y = 0;
+			} else if (idx == 3) {
+				x = 0;
+				y = h;
+			} else if (idx == 4) {
+				x = w;
+				y = h;
+			} else if (idx == 5) {
+				x = w*2;
+				y = h;
+			} else if (idx == 6) {
+				x = 0;
+				y = h*2;
+			} else if (idx == 7) {
+				x = w;
+				y = h*2;
+			} else if (idx == 8) {
+				x = w*2;
+				y = h*2;
+			}
+
+		} else {
+			throw new RuntimeException("Cannot handle " + total + " viewports");
 		}
+
 		return new Rectangle(x, y, w, h);
 	}
 
