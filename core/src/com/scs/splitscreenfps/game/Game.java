@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -99,6 +100,7 @@ import com.scs.splitscreenfps.game.systems.dependencies.IGetCurrentViewport;
 import com.scs.splitscreenfps.pregame.SelectMapModule;
 
 import ssmith.lang.NumberFunctions;
+import ssmith.libgdx.GraphicsHelper;
 
 /**
  * This is the main game, where the players move about n'stuff.
@@ -462,7 +464,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 			// Draw HUD
 			if (Settings.USE_MAP_EDITOR == false) {
-				float yOff = font_med.getLineHeight() * 1f;
+				float yOff = font_small.getLineHeight() * 1f;
 				PlayerData playerData = (PlayerData)players[currentViewId].getComponent(PlayerData.class);
 				if (show_kills) {
 					drawText(this.font_small, "Kills: " + playerData.num_kills, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*6), false);
@@ -470,10 +472,10 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				if (show_damage) {
 					drawText(this.font_small, "Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
 				}
-				drawText(this.font_med, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
-				drawText(this.font_med, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
+				drawText(this.font_small, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
+				drawText(this.font_small, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
 				drawText(this.font_small, playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);
-				drawText(this.font_med, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
+				drawText(this.font_small, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
 			}
 
 			if (currentViewId == 0) {
@@ -568,6 +570,14 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		assetManager.finishLoading();
 		Texture tex = assetManager.get(tex_filename);
 		return tex;
+	}
+
+
+	public TextureRegion getTexture(String tex_filename, int numX, int numY, int getX, int getY) {
+		assetManager.load(tex_filename, Texture.class);
+		assetManager.finishLoading();
+		Texture tex = assetManager.get(tex_filename);
+		return GraphicsHelper.createSheet(tex, numX, numY)[getX][getY];
 	}
 
 

@@ -1,9 +1,12 @@
 package com.scs.splitscreenfps.game.levels;
 
+import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
+import com.scs.splitscreenfps.game.systems.CollectableSystem;
 
 public class LootBoxLevel extends AbstractLevel {
 
@@ -26,10 +29,13 @@ public class LootBoxLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			super.loadJsonFile("maps/complex.json", false);
+			super.loadJsonFile("maps/templeofthenoobies.json", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		AbstractEntity lootbox = EntityFactory.createLootBox(game,10, 10, 1, CollectableSystem.CollectableType.HealthPack);
+		game.ecs.addEntity(lootbox);
 
 	}
 

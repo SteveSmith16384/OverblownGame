@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -41,23 +42,6 @@ public class EntityFactory {
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = game.modelBuilder;
 
-		/*
-		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
-		modelBuilder.begin();
-		modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material)
-		.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
-		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
-		.rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
-		modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
-		.rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
-		modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
-		.rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
-		modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
-		.rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
-		modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
-		.rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
-		Model box_model = modelBuilder.end();
-*/
 		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
 		
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
@@ -320,6 +304,41 @@ public class EntityFactory {
 	}
 */
 
+
+	public static AbstractEntity createLootBox(Game game, float posX, float posY, float posZ, CollectableSystem.CollectableType type) {
+		AbstractEntity lootbox = new AbstractEntity(game.ecs, "LootBox");
+
+		float w = .5f;
+		float h = .5f;
+		float d = .5f;
+		
+		lootbox.addComponent(new IsCollectableComponent(type));
+
+		TextureRegion tex = game.getTexture("textures/spritesforyou.png", 8, 8, 0, 4);
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		ModelBuilder modelBuilder = game.modelBuilder;
+
+		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
+		
+		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
+
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		lootbox.addComponent(model);
+
+		lootbox.addComponent(new PositionComponent());
+
+		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
+		Vector3 local_inertia = new Vector3();
+		boxShape.calculateLocalInertia(1f, local_inertia);
+		btRigidBody groundObject = new btRigidBody(w*h*d, null, boxShape, local_inertia);
+		groundObject.userData = lootbox;
+		groundObject.setRestitution(.5f);
+		groundObject.setCollisionShape(boxShape);
+		groundObject.setWorldTransform(instance.transform);
+		lootbox.addComponent(new PhysicsComponent(groundObject));
+
+		return lootbox;
+	}
 
 
 }

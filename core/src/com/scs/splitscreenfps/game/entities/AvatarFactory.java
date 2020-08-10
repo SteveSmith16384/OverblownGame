@@ -245,8 +245,8 @@ public class AvatarFactory {
 			break;
 
 		case WeaponSettingsComponent.WEAK_PISTOL:
-			weapon = new WeaponSettingsComponent(weapon_type, 700, 1500, 20, 100, 
-					50, 0, 0, null);
+			weapon = new WeaponSettingsComponent(weapon_type, 1000, 1500, 10, 30, 
+					20, 0, 0, null);
 			break;
 
 		default:
