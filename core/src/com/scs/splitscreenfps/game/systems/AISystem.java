@@ -30,25 +30,43 @@ public class AISystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity ai_entity) {
+		if (game.game_stage != 0) {
+			return;
+		}
+		
 		HasAIComponent ai = (HasAIComponent)ai_entity.getComponent(HasAIComponent.class);
 		if (ai.target_entity == null) {
+			PositionComponent aiPosData = (PositionComponent)ai_entity.getComponent(PositionComponent.class);
+			float closest_dist = 9999f;
 			for(AbstractPlayersAvatar player : game.players) {
 				if (player != ai_entity) {
-					ai.target_entity = player;
-					break;
+					PlayerData targetPlayerData = (PlayerData)player.getComponent(PlayerData.class);
+					if (targetPlayerData.dead == false) {
+						PositionComponent targetPosData = (PositionComponent)player.getComponent(PositionComponent.class);
+						float dist = aiPosData.position.dst(targetPosData.position);
+						if (dist < closest_dist) {
+							ai.target_entity = player;
+							closest_dist = dist;
+						}
+					}
 				}
 			}
 		} else {
-			// todo - check if target is dead.
+			// check if target is dead.
+			PlayerData targetPlayerData = (PlayerData)ai.target_entity.getComponent(PlayerData.class);
+			if (targetPlayerData.dead) {
+				ai.target_entity = null;
+				return;
+			}
 			// todo - find closest enemy
-			
+
 			ai.ai_input.move_fwd = false;
 			ai.ai_input.turn_left = false;
 			ai.ai_input.turn_right = false;
 			ai.ai_input.look_up = false;
 			ai.ai_input.look_down = false;
 			ai.ai_input.shoot = false;
-			
+
 			PositionComponent aiPosData = (PositionComponent)ai_entity.getComponent(PositionComponent.class);
 			PositionComponent targetPosData = (PositionComponent)ai.target_entity.getComponent(PositionComponent.class);
 
@@ -56,7 +74,7 @@ public class AISystem extends AbstractSystem {
 			boolean can_see = this.canSee(ai.target_entity, aiPosData, targetPosData);
 
 			if (dist > 2 || can_see == false) {
-				//tod ai.ai_input.move_fwd = true;
+				ai.ai_input.move_fwd = true;
 			}
 			float x_diff = targetPosData.position.x - aiPosData.position.x;
 			float z_diff = targetPosData.position.z - aiPosData.position.z;
@@ -100,7 +118,7 @@ public class AISystem extends AbstractSystem {
 				//camera.direction.y = 0;
 				//camera.direction.nor();
 			}
-			
+
 			/*if (camera.up.y != 1) {
 				Settings.p("UP wrong!");
 			}*/

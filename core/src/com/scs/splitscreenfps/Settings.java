@@ -16,9 +16,9 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_ASSASSINS;
-	public static final int NUM_AUTOSTART_CHARACTERS = 9;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_WEAK;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_AI_TEST;
+	public static final int NUM_AUTOSTART_CHARACTERS = 1;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_ASSASSIN;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	
 	public static final boolean DISABLE_SHADOWS = !RELEASE_MODE && false;
@@ -33,7 +33,7 @@ public class Settings {
 	public static final boolean STRICT = !RELEASE_MODE && true;
 
 	// Other settings
-	public static final int MAX_PLAYERS = 9;
+	public static final int MAX_PLAYERS = 4;
 	public static final float MIN_AXIS = 0.1f;//0.2f; // Movement less than this is ignored
 	public static final float CAM_OFFSET = -0.05f;//-0.2f;//0.14f;
 	public static final String TITLE = "Overblown";

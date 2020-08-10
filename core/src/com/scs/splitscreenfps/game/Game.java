@@ -189,9 +189,11 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		viewports = new ViewportData[Settings.MAX_PLAYERS];
 
 		if (this.gameSelectionData.level == AbstractLevel.LEVEL_AI_TEST) {
-			// Add AI
-			this.inputs.add(new AIInputMethod());
-			this.gameSelectionData.selected_character_id[this.inputs.size()-1] = AvatarFactory.CHAR_BOOMFIST;
+			for (int i=this.inputs.size() ; i<Settings.MAX_PLAYERS ; i++) {
+				// Add AI
+				this.inputs.add(new AIInputMethod());
+				this.gameSelectionData.selected_character_id[i] = AvatarFactory.CHAR_WEAK;
+			}
 		}
 
 		players = new AbstractPlayersAvatar[inputs.size()];
@@ -387,7 +389,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 		this.ecs.getSystem(PlayerProcessSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
-		this.ecs.getSystem(AISystem.class).process();
 		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
 		this.ecs.getSystem(StickySystem.class).process();
 
@@ -397,6 +398,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				// This must be run after the player has made inputs, but before the systems that process collisions!
 				final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 				dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+
+				this.ecs.getSystem(AISystem.class).process();
 			}
 		}
 
