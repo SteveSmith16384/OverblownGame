@@ -34,7 +34,6 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.BloomEffect;
 import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.google.gson.Gson;
 import com.scs.basicecs.AbstractEntity;

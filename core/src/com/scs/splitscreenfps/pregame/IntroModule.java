@@ -1,16 +1,12 @@
 package com.scs.splitscreenfps.pregame;
 
-import java.awt.Rectangle;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
@@ -104,6 +100,8 @@ public class IntroModule extends AbstractSingleViewModule implements IModule, IG
 		
 		drawGuiSpritesSystem.process();
 		drawTextSystem.process();
+		
+		main.font_small.draw(this.spriteBatch,  "V " + Settings.VERSION, 10, main.font_small.getLineHeight());
 		
 		spriteBatch.end();
 

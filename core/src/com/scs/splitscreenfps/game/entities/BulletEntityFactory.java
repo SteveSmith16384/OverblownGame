@@ -587,7 +587,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(2f);
+		pc.force = dir.scl(3f);
 		e.addComponent(pc);
 
 		return e;
