@@ -139,10 +139,10 @@ public class ViewportData {
 		camera.viewportWidth = viewRect.width;
 		camera.viewportHeight = viewRect.height;
 
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
 		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 512, 512, true);
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 2048, 2048, true);
+		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
+		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, viewRect.width, viewRect.height, true);
+
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 	}
 

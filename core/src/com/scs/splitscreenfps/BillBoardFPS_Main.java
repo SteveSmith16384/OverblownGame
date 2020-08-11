@@ -35,7 +35,6 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 	
 	@Override
 	public void create() {
-		//Settings.init();
 		Bullet.init();
 
 		if (Settings.RELEASE_MODE) {
@@ -103,7 +102,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 				Gdx.graphics.setWindowedMode(w-20, h-20);
 				fullscreen = true;
 			}
-		} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+		//} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			//Gdx.app.exit();
 		}
 
@@ -151,7 +150,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 
 	@Override
 	public void resize(int width, int height) {
-		Settings.p("Resize() to " + width + "," + height);
+		//Settings.p("Resize() to " + width + "," + height);
 
 		generateFonts();
 

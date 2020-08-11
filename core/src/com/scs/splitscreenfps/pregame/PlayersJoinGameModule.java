@@ -31,7 +31,6 @@ public class PlayersJoinGameModule extends AbstractSingleViewModule implements I
 	private final SpriteBatch spriteBatch;
 	private BitmapFont font_small, font_large;
 	private List<String> log = new LinkedList<String>();
-	private FrameBuffer frameBuffer;
 	private Sprite logo;
 	private boolean keyboard_player_joined = false;
 
@@ -59,9 +58,6 @@ public class PlayersJoinGameModule extends AbstractSingleViewModule implements I
 		this.font_small = main.font_small;
 		this.font_large = main.font_large;
 		
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
-		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 	}
 
 

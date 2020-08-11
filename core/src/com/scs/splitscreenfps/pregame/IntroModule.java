@@ -28,7 +28,6 @@ public class IntroModule extends AbstractSingleViewModule implements IModule, IG
 
 	private final BasicECS ecs;
 	private final SpriteBatch spriteBatch;
-	private FrameBuffer frameBuffer;
 
 	private DrawGuiSpritesSystem drawGuiSpritesSystem;
 	private ChangeColourSystem colChangeSystem;
@@ -63,12 +62,7 @@ public class IntroModule extends AbstractSingleViewModule implements IModule, IG
 
 
 	private void loadAssetsForResize(int w, int h) {
-		//this.viewRect = new Rectangle(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-		this.viewRect = new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
-		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+		super.loadAssetsForResize();
 
 		drawGuiSpritesSystem.rescaleSprites();
 		drawTextSystem.rescaleText();
@@ -98,7 +92,10 @@ public class IntroModule extends AbstractSingleViewModule implements IModule, IG
 		ecs.addAndRemoveEntities();
 		colChangeSystem.process();
 		
-		Gdx.gl.glViewport(0, 0, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		// https://stackoverflow.com/a/9911880/1551685
+		//Gdx.gl.glViewport(0, 0, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
 		frameBuffer.begin();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);

@@ -38,7 +38,6 @@ public class SelectHeroModule extends AbstractSingleViewModule implements IModul
 	private final SpriteBatch spriteBatch;
 	private BitmapFont font_small, font_large;
 	private final List<String> log = new LinkedList<String>();
-	private FrameBuffer frameBuffer;
 	public List<IInputMethod> inputs;
 
 	private long earliest_input_time;
@@ -110,10 +109,6 @@ public class SelectHeroModule extends AbstractSingleViewModule implements IModul
 		//this.font_med = main.font_med;
 		this.font_large = main.font_large;
 
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS, true);
-		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-
 		Texture tex = getTexture("arrow_right_white.png");
 		arrows = new Sprite[this.inputs.size()];
 		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
@@ -174,7 +169,7 @@ public class SelectHeroModule extends AbstractSingleViewModule implements IModul
 		font_small.setColor(1,  1,  1,  1);
 
 		// Draw heroes
-		int x_pos = Settings.LOGICAL_SIZE_PIXELS/2;
+		int x_pos = Gdx.graphics.getWidth()/2;//Settings.LOGICAL_SIZE_PIXELS/2;
 		int y_pos = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
 		for (int i=0 ; i<this.available_heroes.length ; i++) {
 			font_small.draw(spriteBatch, AvatarFactory.getName(this.available_heroes[i]), x_pos, y_pos);
@@ -183,7 +178,7 @@ public class SelectHeroModule extends AbstractSingleViewModule implements IModul
 
 		// Draw arrows
 		for (int playerIdx=0 ; playerIdx<this.inputs.size() ; playerIdx++) {
-			x_pos = Settings.LOGICAL_SIZE_PIXELS/2 - ((playerIdx+1) * 35);
+			x_pos = (Gdx.graphics.getWidth()/2) - ((playerIdx+1) * 35);
 			//y_pos = y_pos + (30*playerIdx);
 			int y_pos_start = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
 			y_pos = y_pos_start - ((spacing_y) * (this.selected_hero_num[playerIdx]+1));

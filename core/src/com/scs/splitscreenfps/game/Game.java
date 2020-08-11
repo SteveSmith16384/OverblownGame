@@ -34,6 +34,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.BloomEffect;
 import com.crashinvaders.vfx.effects.LensFlareEffect;
 import com.google.gson.Gson;
 import com.scs.basicecs.AbstractEntity;
@@ -147,7 +148,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	public btDiscreteDynamicsWorld dynamicsWorld;
 	public static boolean physics_enabled = true;
 	private long startPhysicsTime;
-
 	private VfxManager vfxManager;
 	public GameConfig game_config;
 
@@ -226,9 +226,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			AbstractEntity crosshairs = GraphicsEntityFactory.createCrosshairs(ecs, this, i);
 			ecs.addEntity(crosshairs);
 
-			//AbstractEntity weapon = EntityFactory.createPlayersWeapon(this, i, "colours/red.png", cam);
-			//ecs.addEntity(weapon);
-
 			Vector3 start_pos = currentLevel.getPlayerStartPoint(i);
 
 			PhysicsComponent md = (PhysicsComponent)this.players[i].getComponent(PhysicsComponent.class);
@@ -246,7 +243,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		startPhysicsTime = System.currentTimeMillis() + 500; // Don't start physics straight away.
 
 		if (Settings.DISABLE_POST_EFFECTS == false) {
-			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
+			//vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
+			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			
 			//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
 			vfxManager.addEffect(new LensFlareEffect()); // Good
@@ -624,7 +623,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 		this.losers.clear();
 		this.losers.add(avatar);
-		loadWinLoseText();
+		scheduleRestart();
 	}
 
 
@@ -639,20 +638,11 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				this.losers.add(player);
 			}
 		}
-		loadWinLoseText();
+		scheduleRestart();
 	}
 
 
-	private void loadWinLoseText() {
-		/*for (int i=0 ; i<this.players.length ; i++) {
-			if (this.losers.contains(this.players[i])) {
-				TextEntity te = new TextEntity(ecs, "YOU HAVE LOST!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 0, 1, 1), i, 2);
-				ecs.addEntity(te);
-			} else {
-				TextEntity te = new TextEntity(ecs, "YOU HAVE WON!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 1, 0, 1), i, 1);
-				ecs.addEntity(te);
-			}
-		}*/
+	private void scheduleRestart() {
 		this.game_stage = 1;
 		this.restartTime = System.currentTimeMillis() + 4000;
 	}
