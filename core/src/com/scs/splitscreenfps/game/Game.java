@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game;
 
 
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -212,7 +214,11 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.currentLevel = AbstractLevel.factory(gameSelectionData.level);
 		this.currentLevel.getReadyForGame(this);
 
-		loadLevel();
+		try {
+			loadLevel();
+		} catch (IOException e) {
+			throw new RuntimeException("Error loading map file", e);
+		}
 
 		for (int i=0 ; i<players.length ; i++) {
 			int hero_id = this.gameSelectionData.selected_character_id[i];//this.currentLevel.getHeroSelection()[this.gameSelectionData.character[i]];
@@ -347,7 +353,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	}
 
 
-	private void loadLevel() {
+	private void loadLevel() throws IOException {
 		currentLevel.load();
 		ecs.addEntity(new SkyboxCube(this, "Skybox", "", 90, 90, 90));
 	}
@@ -578,6 +584,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		assetManager.load(tex_filename, Texture.class);
 		assetManager.finishLoading();
 		Texture tex = assetManager.get(tex_filename);
+		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		return GraphicsHelper.createSheet(tex, numX, numY)[getX][getY];
 	}
 

@@ -28,7 +28,7 @@ public class ShootTagLevel extends AbstractLevel {
 		try {
 			super.loadJsonFile("maps/complex.json", false);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("Error loading map file", e);
 		}
 
 	}

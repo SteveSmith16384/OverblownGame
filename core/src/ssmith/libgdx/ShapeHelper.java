@@ -3,6 +3,7 @@ package ssmith.libgdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -37,9 +38,14 @@ public class ShapeHelper {
 	}
 
 	
-	public static ModelInstance createRect(ModelBuilder modelBuilder, Texture tex, float w, float d) {
+	public static ModelInstance createRect(ModelBuilder modelBuilder, Texture tex, TextureRegion tex_region, float w, float d) {
 		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		Material material = new Material(TextureAttribute.createDiffuse(tex));		
+		Material black_material = null;
+		if (tex != null) {
+			black_material = new Material(TextureAttribute.createDiffuse(tex));
+		} else {
+			black_material = new Material(TextureAttribute.createDiffuse(tex_region));
+		}
 
 		//ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createRect(
@@ -49,7 +55,7 @@ public class ShapeHelper {
 				(float)-w/2, 0f,(float)-d/2,
 				
 				1f,1f,1f,
-				material,
+				black_material,
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 
 		Matrix3 mat = new Matrix3();
@@ -77,11 +83,17 @@ public class ShapeHelper {
 	}
 
 	
-	public static ModelInstance createCylinder(ModelBuilder modelBuilder, Texture tex, float x, float y, float z, float diam, float length) {
-		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
+	public static ModelInstance createCylinder(ModelBuilder modelBuilder, Texture tex, TextureRegion tex_region, float x, float y, float z, float diam, float length) {
+		//Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
+		Material black_material = null;
+		if (tex != null) {
+			black_material = new Material(TextureAttribute.createDiffuse(tex));
+		} else {
+			black_material = new Material(TextureAttribute.createDiffuse(tex_region));
+		}
 
-		//ModelBuilder modelBuilder = new ModelBuilder();
-		Model floor = modelBuilder.createCylinder(diam, length, diam, 8, white_material,
+
+		Model floor = modelBuilder.createCylinder(diam, length, diam, 8, black_material,
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 
 		Matrix3 mat = new Matrix3();

@@ -73,11 +73,11 @@ public class DrawModelSystem extends AbstractSystem {
 			shadowLight.begin(Vector3.Zero, cam.direction);
 			shadowBatch.begin(shadowLight.getCamera());
 
-				Iterator<AbstractEntity> it2 = entities.iterator();
-				while (it2.hasNext()) {
-					AbstractEntity entity = it2.next();
-					this.renderEntity(entity, shadowBatch, true);
-				}
+			Iterator<AbstractEntity> it2 = entities.iterator();
+			while (it2.hasNext()) {
+				AbstractEntity entity = it2.next();
+				this.renderEntity(entity, shadowBatch, true);
+			}
 
 			shadowBatch.end();
 			shadowLight.end();

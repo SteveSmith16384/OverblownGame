@@ -320,20 +320,6 @@ public class MapEditorSystem extends AbstractSystem {
 		game.appendToLog(block.name + " created");
 	}
 
-	/*
-	private void createNewPlane() {
-		MapBlockComponent block = new MapBlockComponent();
-		block.size = new Vector3(1, 1, 1);
-		block.position = new Vector3(0, 5, 0);
-		block.type = "plane";
-		block.name = "New plane " + NumberFunctions.rnd(1, 100);
-		block.mass = 0;
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
-		game.currentLevel.mapdata.blocks.add(block);
-		//this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
-		game.appendToLog(block.name + " created");
-	}
-	 */
 
 	private void createNewSphere() {
 		MapBlockComponent block = new MapBlockComponent();
@@ -439,7 +425,7 @@ public class MapEditorSystem extends AbstractSystem {
 		//this.setBlockDataFromPhysicsData(block);
 
 		int max = -1;
-		Iterator<Integer> it = game.currentLevel.mapdata.textures.keySet().iterator();
+		Iterator<Integer> it = game.currentLevel.mapdata.texture_data.keySet().iterator();
 		while (it.hasNext()) {
 			max = it.next();
 		}

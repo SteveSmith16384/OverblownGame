@@ -7,12 +7,12 @@ import java.util.List;
 public class MapData {
 
 	public String name;
-	//public String filename;
-	public HashMap<Integer, String> textures;
+	public HashMap<Integer, String> textures; // todo - delete
+	public HashMap<Integer, TextureData> texture_data;
 	public List<MapBlockComponent> blocks;
 	
 	public MapData() {
 		blocks = new ArrayList<MapBlockComponent>();
-		//this.filename = "maps/map_editor.json";
 	}
+	
 }

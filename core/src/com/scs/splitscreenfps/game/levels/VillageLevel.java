@@ -19,7 +19,7 @@ public class VillageLevel extends AbstractLevel {
 		try {
 			super.loadJsonFile("maps/village.json", false);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("Error loading map file", e);
 		}
 
 	}

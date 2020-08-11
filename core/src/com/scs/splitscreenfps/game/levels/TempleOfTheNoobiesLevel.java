@@ -20,7 +20,7 @@ public class TempleOfTheNoobiesLevel extends AbstractLevel {
 		try {
 			super.loadJsonFile("maps/templeofthenoobies.json", false);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("Error loading map file", e);
 		}
 
 	}

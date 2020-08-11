@@ -27,20 +27,20 @@ public class CityLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
 		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
- 		Wall floor = new Wall(game, "Floor", "textures/tones/brown1.png", floor_size/2, -0.1f, floor_size/2, 
+		Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), null, floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
 
-		for (int z=0 ; z<2 ; z++) {
-			for (int x=0 ; x<2 ; x++) {
-				try {
+		try {
+			for (int z=0 ; z<2 ; z++) {
+				for (int x=0 ; x<2 ; x++) {
 					//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
 					super.loadJsonFile("maps/skyscraper" + NumberFunctions.rnd(1, 2) + ".json", false, new Vector3(x*10+7, 0.05f, z*10+7), 1);
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
+		} catch (Exception e) {
+			throw new RuntimeException("Error loading map file", e);
 		}
 	}
 

@@ -31,7 +31,7 @@ public class LootBoxLevel extends AbstractLevel {
 		try {
 			super.loadJsonFile("maps/templeofthenoobies.json", false);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("Error loading map file", e);
 		}
 		
 		AbstractEntity lootbox = EntityFactory.createLootBox(game,10, 10, 1, CollectableSystem.CollectableType.HealthPack);

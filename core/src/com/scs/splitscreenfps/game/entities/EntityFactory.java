@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -65,12 +66,16 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createBall(Game game, String tex_filename, float posX, float posY, float posZ, float diam, float mass_pre) {
+	public static AbstractEntity createBall(Game game, Texture tex, TextureRegion tex_region, float posX, float posY, float posZ, float diam, float mass_pre) {
 		AbstractEntity ball = new AbstractEntity(game.ecs, "Ball");
 
-		Texture tex = game.getTexture(tex_filename);
-		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
-		//ModelBuilder modelBuilder = new ModelBuilder();
+		Material black_material = null;
+		if (tex != null) {
+			black_material = new Material(TextureAttribute.createDiffuse(tex));
+		} else {
+			black_material = new Material(TextureAttribute.createDiffuse(tex_region));
+		}
+
 		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
 
@@ -127,11 +132,10 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createCylinder(Game game, String tex_filename, float x, float y, float z, float diam, float length, float mass_pre) {
+	public static AbstractEntity createCylinder(Game game, Texture tex, TextureRegion tex_region, float x, float y, float z, float diam, float length, float mass_pre) {
 		AbstractEntity cylinder = new AbstractEntity(game.ecs, "Cylinder");
 
-		Texture tex = game.getTexture(tex_filename);
-		ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, tex, x, y, z, diam, length);
+		ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, tex, tex_region, x, y, z, diam, length);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, true);
 		cylinder.addComponent(model);
@@ -153,64 +157,20 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createPlane(Game game, String tex_filename, float x, float y, float z, float w, float d) {
+	public static AbstractEntity createPlane(Game game, Texture tex, TextureRegion tex_region, float x, float y, float z, float w, float d) {
 		AbstractEntity plane = new AbstractEntity(game.ecs, "Plane");
 
-		Texture tex = game.getTexture(tex_filename);
-		ModelInstance instance = ShapeHelper.createRect(game.modelBuilder, tex, w, d);
+		ModelInstance instance = ShapeHelper.createRect(game.modelBuilder, tex, tex_region, w, d);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, false);
 		plane.addComponent(model);
-		/*
-		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
-		Vector3 local_inertia = new Vector3();
-		float mass = (float)(Math.PI * (diam/2) * (diam/2) + length) * mass_pre;
-		cylinderShape.calculateLocalInertia(1f, local_inertia);
-		btRigidBody body = new btRigidBody(mass, null, cylinderShape, local_inertia);
-		body.userData = cylinder;
-		body.setRestitution(.5f);
-		body.setCollisionShape(cylinderShape);
-		body.setWorldTransform(instance.transform);
-		cylinder.addComponent(new PhysicsComponent(body));
-		 */
+
 		PositionComponent pos = new PositionComponent();
 		pos.position.set(x, y, z);
 		plane.addComponent(pos);
 
 		return plane;
 	}
-
-
-	/*
-	public static AbstractEntity playersWeapon(BasicECS ecs, AbstractEntity player) {
-		AbstractEntity weapon = new AbstractEntity(ecs, "PlayersWeapon");
-
-		PositionComponent pos = new PositionComponent();
-		pos.angle_x_degrees = 90;
-		weapon.addComponent(pos);
-
-		ModelInstance instance = ModelFunctions.loadModel("models/kenney/machinegun.g3db", false);
-		//ModelInstance instance = ShapeHelper.createCylinder("textures/set3_example_1.png", 0, 0, 0, .2f, 1f);
-		//instance.transform.rotate(Vector3.Z, 90);
-		//instance.transform.rotate(Vector3.X, 90);
-
-		HasModelComponent model = new HasModelComponent(instance);
-		model.always_draw = true;
-		//float scale = ModelFunctions.getScaleForHeight(instance, .8f);
-		//model.scale = 40;//scale;
-
-		PlayerData playerData = (PlayerData)player.getComponent(PlayerData.class);
-		model.onlyDrawInViewId = playerData.playerIdx;
-		weapon.addComponent(model);
-
-		PlayersWeaponComponent wep = new PlayersWeaponComponent(player);
-		weapon.addComponent(wep);
-
-
-		return weapon;
-	}
-
-	 */
 
 
 	// Note that the mass gets multiplied by the size
