@@ -15,20 +15,30 @@ import com.badlogic.gdx.math.Vector3;
 
 public class ShapeHelper {
 	
-	public static Model createCube(ModelBuilder modelBuilder, float w, float h, float d, Material black_material) {
+	public static Model createCube(ModelBuilder modelBuilder, float w, float h, float d, Material material) {
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 
-		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, black_material);
+		// Front
+		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, material);
+		/*if (tr != null) {
+			//mb.setUVRange(tr);
+			mb.setUVRange(0,  0,  .5f, .5f);
+		}*/
 		mb.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
+		// Back
 		//modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
 		mb.rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
+		// Bottom
 		//modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
 		mb.rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
+		// Top
 		//modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
 		mb.rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
+		// Left
 		//modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
 		mb.rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
+		// Right
 		//modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
 		mb.rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
 
@@ -38,14 +48,42 @@ public class ShapeHelper {
 	}
 
 	
-	public static ModelInstance createRect(ModelBuilder modelBuilder, Texture tex, TextureRegion tex_region, float w, float d) {
-		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		Material black_material = null;
-		if (tex != null) {
-			black_material = new Material(TextureAttribute.createDiffuse(tex));
-		} else {
-			black_material = new Material(TextureAttribute.createDiffuse(tex_region));
+	public static Model createCube(int todo, ModelBuilder modelBuilder, float w, float h, float d, Material material, TextureRegion tr) {
+		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
+		modelBuilder.begin();
+
+		// Front
+		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, material);
+		if (tr != null) {
+			//mb.setUVRange(tr);
+			mb.setUVRange(0,  0,  .5f, .5f);
 		}
+		mb.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
+		// Back
+		//modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
+		mb.rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
+		// Bottom
+		//modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
+		mb.rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
+		// Top
+		//modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
+		mb.rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
+		// Left
+		//modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
+		mb.rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
+		// Right
+		//modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
+		mb.rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
+
+		Model box_model = modelBuilder.end();
+
+		return box_model;
+	}
+
+	
+	public static ModelInstance createRect(ModelBuilder modelBuilder, Texture tex, float w, float d) {
+		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		Material black_material  = new Material(TextureAttribute.createDiffuse(tex));
 
 		//ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createRect(
@@ -83,15 +121,9 @@ public class ShapeHelper {
 	}
 
 	
-	public static ModelInstance createCylinder(ModelBuilder modelBuilder, Texture tex, TextureRegion tex_region, float x, float y, float z, float diam, float length) {
+	public static ModelInstance createCylinder(ModelBuilder modelBuilder, Texture tex, float x, float y, float z, float diam, float length) {
 		//Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
-		Material black_material = null;
-		if (tex != null) {
-			black_material = new Material(TextureAttribute.createDiffuse(tex));
-		} else {
-			black_material = new Material(TextureAttribute.createDiffuse(tex_region));
-		}
-
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 
 		Model floor = modelBuilder.createCylinder(diam, length, diam, 8, black_material,
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);

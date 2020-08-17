@@ -3,7 +3,6 @@ package com.scs.splitscreenfps.game.systems;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.HasRangeComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 

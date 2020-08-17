@@ -27,7 +27,7 @@ public class CityLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
 		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
-		Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), null, floor_size/2, -0.1f, floor_size/2, 
+		Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
 				0f, true, false);
 		game.ecs.addEntity(floor);

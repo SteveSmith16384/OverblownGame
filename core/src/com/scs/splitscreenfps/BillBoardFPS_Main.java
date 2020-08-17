@@ -41,7 +41,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 			this.setFullScreen();
 		}
 
-		controllerManager = new ControllerManager(this, 4);
+		controllerManager = new ControllerManager(this, Settings.MAX_PLAYERS);
 
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		generateFonts();

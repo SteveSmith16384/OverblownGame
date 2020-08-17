@@ -2,7 +2,6 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -66,15 +65,10 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createBall(Game game, Texture tex, TextureRegion tex_region, float posX, float posY, float posZ, float diam, float mass_pre) {
+	public static AbstractEntity createBall(Game game, Texture tex, float posX, float posY, float posZ, float diam, float mass_pre) {
 		AbstractEntity ball = new AbstractEntity(game.ecs, "Ball");
 
-		Material black_material = null;
-		if (tex != null) {
-			black_material = new Material(TextureAttribute.createDiffuse(tex));
-		} else {
-			black_material = new Material(TextureAttribute.createDiffuse(tex_region));
-		}
+		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 
 		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model, new Vector3(posX, posY, posZ));
@@ -132,10 +126,10 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createCylinder(Game game, Texture tex, TextureRegion tex_region, float x, float y, float z, float diam, float length, float mass_pre) {
+	public static AbstractEntity createCylinder(Game game, Texture tex, float x, float y, float z, float diam, float length, float mass_pre) {
 		AbstractEntity cylinder = new AbstractEntity(game.ecs, "Cylinder");
 
-		ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, tex, tex_region, x, y, z, diam, length);
+		ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, tex, x, y, z, diam, length);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, true);
 		cylinder.addComponent(model);
@@ -157,10 +151,10 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createPlane(Game game, Texture tex, TextureRegion tex_region, float x, float y, float z, float w, float d) {
+	public static AbstractEntity createPlane(Game game, Texture tex, float x, float y, float z, float w, float d) {
 		AbstractEntity plane = new AbstractEntity(game.ecs, "Plane");
 
-		ModelInstance instance = ShapeHelper.createRect(game.modelBuilder, tex, tex_region, w, d);
+		ModelInstance instance = ShapeHelper.createRect(game.modelBuilder, tex, w, d);
 
 		HasModelComponent model = new HasModelComponent(instance, 1, false);
 		plane.addComponent(model);
@@ -243,26 +237,6 @@ public class EntityFactory {
 
 		return e;
 	}
-
-/*
-	public static AbstractEntity createPlayersWeapon(Game game, int playerIdx, String tex_filename, Camera cam) {
-		AbstractEntity weapon = new AbstractEntity(game.ecs, "Weapon");
-
-		Texture tex = game.getTexture(tex_filename);
-		ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, tex, 1, 0, 0, .1f, .3f);
-
-		HasModelComponent model = new HasModelComponent(instance, 1, true);
-		model.always_draw = true;
-		model.onlyDrawInViewId = playerIdx;
-		weapon.addComponent(model);
-
-		weapon.addComponent(new PositionComponent());
-
-		weapon.addComponent(new PlayersWeaponComponent(cam));
-
-		return weapon;
-	}
-*/
 
 
 	public static AbstractEntity createLootBox(Game game, float posX, float posY, float posZ, CollectableSystem.CollectableType type) {

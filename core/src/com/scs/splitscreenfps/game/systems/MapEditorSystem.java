@@ -425,7 +425,7 @@ public class MapEditorSystem extends AbstractSystem {
 		//this.setBlockDataFromPhysicsData(block);
 
 		int max = -1;
-		Iterator<Integer> it = game.currentLevel.mapdata.texture_data.keySet().iterator();
+		Iterator<Integer> it = game.currentLevel.mapdata.textures.keySet().iterator();
 		while (it.hasNext()) {
 			max = it.next();
 		}

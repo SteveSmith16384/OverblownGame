@@ -5,11 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,7 +23,6 @@ import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
 import com.scs.splitscreenfps.game.mapdata.MapData;
-import com.scs.splitscreenfps.game.mapdata.TextureData;
 
 import ssmith.lang.IOFunctions;
 
@@ -130,20 +128,9 @@ public abstract class AbstractLevel {
 		mapdata = gson.fromJson(s, MapData.class);
 
 
-		if (mapdata.texture_data == null) {
-			mapdata.texture_data = new HashMap<Integer, TextureData>();
-			mapdata.texture_data.put(1, new TextureData("[texture filename]", 1, 1, 0, 0));
-		}
-
-		// Update texture data if required
-		if (this.mapdata.textures != null) {
-			Iterator<Integer> it = this.mapdata.textures.keySet().iterator();
-			while (it.hasNext()) {
-				int id = it.next();
-				String tex_filename = this.mapdata.textures.get(id);
-				this.mapdata.texture_data.put(id, new TextureData(tex_filename, 1, 1, 0, 0));
-			}
-			this.mapdata.textures = null;
+		if (mapdata.textures == null) {
+			mapdata.textures = new HashMap<Integer, String>();
+			mapdata.textures.put(1, "[texture filename]");
 		}
 
 		for (MapBlockComponent block : mapdata.blocks) {
@@ -201,29 +188,27 @@ public abstract class AbstractLevel {
 			game.ecs.addEntity(model);
 			return model;
 		} else {
-			//String tex = "textures/neon/tron_green_2x2.png"; // Default
-			//if (this.mapdata.textures.containsKey(block.texture_id)) {
-			TextureData tex_data = this.mapdata.texture_data.get(block.texture_id);
-			TextureRegion tex = null;
+			String tex_data = this.mapdata.textures.get(block.texture_id);
+			Texture tex = null;
 			if (tex_data != null) {
-				tex = game.getTexture(tex_data.filename, tex_data.max_x, tex_data.max_y, tex_data.x_pos, tex_data.y_pos);
+				tex = game.getTexture(tex_data);
 			} else {
-				tex = game.getTexture("textures/neon/tron_green_2x2.png", 1, 1, 0, 0);
+				// Use dummy tex
+				tex = game.getTexture("textures/neon/tron_green_2x2.png");
 			}
-			//}
 
 			AbstractEntity wall = null;
 			if (block.type == null || block.type.length() == 0 || block.type.equalsIgnoreCase("cube")) {
-				wall = new Wall(game, block.name, null, tex, block.position.x, block.position.y, block.position.z, 
+				wall = new Wall(game, block.name, tex, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
 						block.mass * mass_mult, // Hack to make walls heavier
 						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
 			} else if (block.type.equalsIgnoreCase("sphere")) {
-				wall = EntityFactory.createBall(game, null, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
+				wall = EntityFactory.createBall(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
 			} else if (block.type.equalsIgnoreCase("cylinder")) {
-				wall = EntityFactory.createCylinder(game, null, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.size.y, block.mass);
+				wall = EntityFactory.createCylinder(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.size.y, block.mass);
 			} else if (block.type.equalsIgnoreCase("plane")) {
-				wall = EntityFactory.createPlane(game, null, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.size.y);
+				wall = EntityFactory.createPlane(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.size.y);
 			} else {
 				throw new RuntimeException("Unknown type: " + block.type);
 			}

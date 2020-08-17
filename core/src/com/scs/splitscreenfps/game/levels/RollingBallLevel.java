@@ -34,12 +34,12 @@ public class RollingBallLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(3, 2f, 3));
 		this.startPositions.add(new Vector3(4, 2f, 4));
 
-		Wall floor = new Wall(game, "Floor", game.getTexture("textures/set3_example_1.png"), null, 5, -0.1f, 5, 
+		Wall floor = new Wall(game, "Floor", game.getTexture("textures/set3_example_1.png"), 5, -0.1f, 5, 
 				10f, .2f, 10f, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
 
-		Wall tilt = new Wall(game, "Tilt", game.getTexture("textures/set3_example_1.png"), null, 12.5f, 1.5f, 5, 
+		Wall tilt = new Wall(game, "Tilt", game.getTexture("textures/set3_example_1.png"), 12.5f, 1.5f, 5, 
 				6f, .2f, 10f, 
 				0f, 
 				0, 0, 25, true, false);
@@ -71,7 +71,7 @@ public class RollingBallLevel extends AbstractLevel {
 			this.last_ball_time = System.currentTimeMillis();
 			
 			float z = NumberFunctions.rndFloat(2,  8);
-			AbstractEntity ball = EntityFactory.createBall(game, game.getTexture("textures/set3_example_1.png"), null, 13, 10, z, 1.5f, 100);
+			AbstractEntity ball = EntityFactory.createBall(game, game.getTexture("textures/set3_example_1.png"), 13, 10, z, 1.5f, 100);
 			game.ecs.addEntity(ball);
 		}
 	}

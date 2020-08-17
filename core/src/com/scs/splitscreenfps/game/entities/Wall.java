@@ -2,12 +2,10 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -21,30 +19,23 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import ssmith.libgdx.ShapeHelper;
 
 public class Wall extends AbstractEntity {
-	
-	public Wall(Game game, String name, Texture tex, TextureRegion tex_region, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
-		this(game, name, tex, tex_region, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
+
+	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
+		this(game, name, tex, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
 	}
 
 
 	// Note that the mass gets multiplied by the size
 	// Positions are from the centre
-	public Wall(Game game, String name, Texture tex, TextureRegion tex_region, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
+	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
 		super(game.ecs, name);
 
 		Material material = null;
-		if (tex != null) {
-			tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-			material = new Material(TextureAttribute.createDiffuse(tex));
-		} else {
-			//tex_region.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-			material = new Material(TextureAttribute.createDiffuse(tex_region));
-		}
+		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		material = new Material(TextureAttribute.createDiffuse(tex));
 
-		ModelBuilder modelBuilder = game.modelBuilder;
+		Model box_model = ShapeHelper.createCube(game.modelBuilder, w, h, d, material);
 
-		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, material);
-		
 		if (tile) {
 			Matrix3 mat = new Matrix3();
 			float max2 = Math.max(w, h);

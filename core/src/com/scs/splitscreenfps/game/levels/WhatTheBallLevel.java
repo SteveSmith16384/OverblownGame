@@ -49,7 +49,7 @@ public class WhatTheBallLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
 		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
-		Wall floor = new Wall(game, "Floor", game.getTexture("colours/white.png"), null, floor_size/2, -0.1f, floor_size/2, 
+		Wall floor = new Wall(game, "Floor", game.getTexture("colours/white.png"), floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
@@ -64,7 +64,7 @@ public class WhatTheBallLevel extends AbstractLevel {
 	private void createBall() {
 		float col = NumberFunctions.rndFloat(2, floor_size);
 		float row = NumberFunctions.rndFloat(2, floor_size);
-		AbstractEntity ball = EntityFactory.createBall(game, game.getTexture("textures/set3_example_1.png"), null, col, 10, row, PlayerAvatar_Ball.DIAM, 1);
+		AbstractEntity ball = EntityFactory.createBall(game, game.getTexture("textures/set3_example_1.png"), col, 10, row, PlayerAvatar_Ball.DIAM, 1);
 		HasModelComponent hasModel = (HasModelComponent)ball.getComponent(HasModelComponent.class);
 		ModelInstance instance = hasModel.model;
 		ModelFunctions.setColour(instance, Color.WHITE);

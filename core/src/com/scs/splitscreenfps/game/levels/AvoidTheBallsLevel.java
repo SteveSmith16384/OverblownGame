@@ -36,7 +36,7 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, FLOOR_SIZE-2));
 		this.startPositions.add(new Vector3(FLOOR_SIZE-2, 2f, 1));
 
-		Wall floor = new Wall(game, "Floor", game.getTexture("colours/white.png"), null, FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
+		Wall floor = new Wall(game, "Floor", game.getTexture("colours/white.png"), FLOOR_SIZE/2, -0.1f, FLOOR_SIZE/2, 
 				FLOOR_SIZE, .2f, FLOOR_SIZE, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
@@ -57,7 +57,7 @@ public class AvoidTheBallsLevel extends AbstractLevel {
 			this.last_ball_time = System.currentTimeMillis();
 			
 			//float z = NumberFunctions.rndFloat(2,  8);
-			AbstractEntity ball = EntityFactory.createBall(game, game.getTexture("textures/neon/sun.jpg"), null, FLOOR_SIZE/2, 10, FLOOR_SIZE/2, 1.5f, 100);
+			AbstractEntity ball = EntityFactory.createBall(game, game.getTexture("textures/neon/sun.jpg"), FLOOR_SIZE/2, 10, FLOOR_SIZE/2, 1.5f, 100);
 			ball.addComponent(new HarmPlayerOnContactComponent(null, null, "sfx/electric_explosion5.wav", 10, 0, 0, false, 0));
 			game.ecs.addEntity(ball);
 		}
