@@ -1,10 +1,12 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
@@ -33,8 +35,9 @@ public class Wall extends AbstractEntity {
 		Material material = null;
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		material = new Material(TextureAttribute.createDiffuse(tex));
+		material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)); // scs new
 
-		Model box_model = ShapeHelper.createCube(game.modelBuilder, w, h, d, material);
+		Model box_model = ShapeHelper.createCube2(game.modelBuilder, w, h, d, material);
 
 		if (tile) {
 			Matrix3 mat = new Matrix3();

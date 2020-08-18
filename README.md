@@ -1,6 +1,6 @@
 # OVERBLOWN
 
-An Overwatch clone split-screen multiplayer FPS with physics.  I created this as an attempt to get my kids to play one of my games, so I've copied ideas from their favourite games, including Overwatch and Piggy (/Roblox).
+This is a split-screen multiplayer FPS with physics.  Originally this was an Overwatch spoof I created as an attempt to get my kids to play one of my games, so I copied ideas from their favourite games, including Overwatch and Piggy (/Roblox).  However, I've slowly added more and more game modes to it, so there's a bit of everything.
 
 A release can be downloaded from https://stephensmith.itch.io/overblown
 
@@ -96,4 +96,5 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Explosions and clang taken from https://opengameart.org/content/metal-clang-explosions-zing
 * Death sounds taken from https://opengameart.org/content/grunts-male-death-and-pain
 * Health collected sfx taken from https://opengameart.org/content/picked-coin-echo-2
+* Voxel textures taken from https://opengameart.org/content/16-%C3%97-16-pixel-art-textures
 

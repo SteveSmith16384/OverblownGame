@@ -19,12 +19,8 @@ public class ShapeHelper {
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 
-		// Front
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, material);
-		/*if (tr != null) {
-			//mb.setUVRange(tr);
-			mb.setUVRange(0,  0,  .5f, .5f);
-		}*/
+		// Front
 		mb.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
 		// Back
 		//modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
@@ -48,31 +44,37 @@ public class ShapeHelper {
 	}
 
 	
-	public static Model createCube(int todo, ModelBuilder modelBuilder, float w, float h, float d, Material material, TextureRegion tr) {
+	public static Model createCube2(ModelBuilder modelBuilder, float w, float h, float d, Material material) {
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 
+		float scale = 2f;
 		// Front
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, material);
-		if (tr != null) {
+		//if (tex_front != null) {
 			//mb.setUVRange(tr);
-			mb.setUVRange(0,  0,  .5f, .5f);
-		}
+			mb.setUVRange(0, 0, h*scale, w*scale);
+		//}
 		mb.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
 		// Back
-		//modelBuilder.part("back", GL20.GL_TRIANGLES, attr, black_material)
+		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, material);
+		mb.setUVRange(0,  0,  h*scale, w*scale);
 		mb.rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
 		// Bottom
-		//modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, black_material)
+		modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, material);
+		mb.setUVRange(0,  0,  d*scale, w*scale);
 		mb.rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
 		// Top
-		//modelBuilder.part("top", GL20.GL_TRIANGLES, attr, black_material)
+		modelBuilder.part("top", GL20.GL_TRIANGLES, attr, material);
+		mb.setUVRange(0,  0,  d*scale, w*scale);
 		mb.rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
 		// Left
-		//modelBuilder.part("left", GL20.GL_TRIANGLES, attr, black_material)
+		modelBuilder.part("left", GL20.GL_TRIANGLES, attr, material);
+		mb.setUVRange(0,  0,  h*scale, d*scale);
 		mb.rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
 		// Right
-		//modelBuilder.part("right", GL20.GL_TRIANGLES, attr, black_material)
+		modelBuilder.part("right", GL20.GL_TRIANGLES, attr, material);
+		mb.setUVRange(0,  0,  h*scale, d*scale);
 		mb.rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
 
 		Model box_model = modelBuilder.end();
