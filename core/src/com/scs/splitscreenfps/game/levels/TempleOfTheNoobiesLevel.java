@@ -1,8 +1,11 @@
 package com.scs.splitscreenfps.game.levels;
 
+import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
+import com.scs.splitscreenfps.game.systems.CollectableSystem;
 
 public class TempleOfTheNoobiesLevel extends AbstractLevel {
 
@@ -22,6 +25,9 @@ public class TempleOfTheNoobiesLevel extends AbstractLevel {
 		} catch (Exception e) {
 			throw new RuntimeException("Error loading map file", e);
 		}
+
+		//AbstractEntity lootbox = EntityFactory.createLootBox(game,10, 10, 1, CollectableSystem.CollectableType.HealthPack);
+		//game.ecs.addEntity(lootbox);
 
 	}
 

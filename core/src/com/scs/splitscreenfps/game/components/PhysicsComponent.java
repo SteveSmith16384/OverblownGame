@@ -13,12 +13,11 @@ public class PhysicsComponent {
 	public Vector3 force;
 	public boolean removeIfFallen = true;
 	public boolean physicsControlsRotation = true; // False for players
-	public boolean position_dity = true; // Objects with mass=0 only need position setting once
+	public boolean position_dirty = true; // Objects with mass=0 only need position setting once
 	public String sound_on_collision;
 	
 	// Temp vars
 	private Matrix4 mat = new Matrix4();
-	//private Vector3 vec = new Vector3();
 
 	public PhysicsComponent(btCollisionObject _body) {
 		body = _body;
@@ -39,6 +38,12 @@ public class PhysicsComponent {
 	
 	public boolean isRigidBody() {
 		return this.body instanceof btRigidBody;
+	}
+	
+	
+	public void getTranslation(Vector3 out) {
+		mat.set(body.getWorldTransform());
+		mat.getTranslation(out);
 	}
 
 }

@@ -42,7 +42,7 @@ You can modify a few game settings by editing the file "game.cfg".
 
 
 ## Map Editor
-The map editor is still in development, and will only work properly by running the game from source (so the data files can be written back).  The map editor will always edit the file "core/assets/maps/map_editor.json", so rename whatever map file you want to edit to that name.
+The map editor is still in development, and will only work properly by running the game from source (so the data files can be written back).
 
 To edit the available texures, manually edit the map json file.
 
@@ -52,7 +52,6 @@ To edit the available texures, manually edit the map json file.
 * 3 - Show our position
 * 4 - Select All Blocks mode
 * 5 - Show physics debug
-* 9 - TODO - Move all blocks relative to 0,0
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block
@@ -70,7 +69,7 @@ To edit the available texures, manually edit the map json file.
 
 
 ## Notes for other Developers
-* Development branch is the cutting edge but possibly broken branch.  Master is the most stable but out of date.
+* Development branch is the cutting edge but possibly buggy/broken.  Master is the most stable but out of date.
 * Gradle is a real pain to work with.  However, if you have trouble loading this project, I used Gradle v4.10.3.
 * The file Settings.java contains various settings that determine what game mode the game starts in.
 

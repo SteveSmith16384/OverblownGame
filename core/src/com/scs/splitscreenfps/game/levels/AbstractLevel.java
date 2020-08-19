@@ -36,7 +36,7 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_SHOOT_TAG = 5;
 	public static final int LEVEL_WHAT_THE_BALL = 6;
 	public static final int LEVEL_CITY = 7;
-	public static final int LEVEL_LOOT_BOX = 8;
+	public static final int LEVEL_MINECRAFT = 8;
 	public static final int LEVEL_MAP_EDITOR = 9;
 	public static final int LEVEL_AI_TEST = 10;
 
@@ -82,8 +82,8 @@ public abstract class AbstractLevel {
 			return new MapEditorLevel();
 		case LEVEL_CITY:
 			return new CityLevel();
-		case LEVEL_LOOT_BOX:
-			return new LootBoxLevel();
+		case LEVEL_MINECRAFT:
+			return new MinecraftLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
