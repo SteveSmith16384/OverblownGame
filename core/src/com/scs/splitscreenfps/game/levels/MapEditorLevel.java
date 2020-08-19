@@ -7,7 +7,7 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 public class MapEditorLevel extends AbstractLevel {
 
-	public static final String filename = "maps/minecraft.json";
+	public static final String filename = "maps/minecraft_house.json";
 	
 	public MapEditorSystem mapBuilderSystem;
 
