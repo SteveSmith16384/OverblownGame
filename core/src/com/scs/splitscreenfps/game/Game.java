@@ -88,7 +88,6 @@ import com.scs.splitscreenfps.game.systems.JunkratMineAbilitySystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
-import com.scs.splitscreenfps.game.systems.PositionPlayersWeaponSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RemoveOnContactSystem;
 import com.scs.splitscreenfps.game.systems.RespawnCollectableSystem;
@@ -316,7 +315,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	private void createECS() {
 		ecs = new BasicECS();
 		ecs.addSystem(new PlayerProcessSystem(this));
-		ecs.addSystem(new PositionPlayersWeaponSystem(this, ecs));
 		ecs.addSystem(new SpeechSystem());
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
@@ -393,7 +391,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 		this.ecs.getSystem(PlayerProcessSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
-		this.ecs.getSystem(PositionPlayersWeaponSystem.class).process();
 		this.ecs.getSystem(StickySystem.class).process();
 
 		this.ecs.events.clear();
