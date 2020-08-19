@@ -50,7 +50,9 @@ To edit the available texures, manually edit the map json file.
 * 1 - Save map
 * 2 - "Settle" position of selected entity
 * 3 - Show our position
+* 4 - Select All Blocks mode
 * 5 - Show physics debug
+* 9 - TODO - Move all blocks relative to 0,0
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block

@@ -38,6 +38,7 @@ public class MapEditorSystem extends AbstractSystem {
 	private Mode mode = Mode.POSITION;
 	private AbstractEntity selectedObject;
 	private MouseAndKeyboardInputMethod keyboard;
+	private boolean all_blocks_selected;
 
 	// Settle stats
 	private float mass_cache;
@@ -116,13 +117,14 @@ public class MapEditorSystem extends AbstractSystem {
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_3)) { // Show pos
 			game.appendToLog("Cam pos: " + player.camera.position);
+		} else if (keyboard.isKeyJustPressed(Keys.NUM_4)) {
+			all_blocks_selected = !all_blocks_selected;
+			game.appendToLog("All Blocks?: " + this.all_blocks_selected);
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_5)) { // Draw physics
 			Settings.DRAW_PHYSICS = !Settings.DRAW_PHYSICS;
+		//} else if (keyboard.isKeyJustPressed(Keys.NUM_9)) { // centre ALL blocks
+			//centreAllBlocks();
 		} else if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode or new Plane
-			/*if (mode == Mode.NEW_BLOCK) {
-				createNewPlane();
-				// drop stright into position mode
-			} */
 			mode = Mode.POSITION;
 			game.appendToLog("Position mode selected");
 			if (this.selectedObject != null) {
@@ -307,6 +309,11 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
+	private void centreAllBlocks() {
+		// todo
+	}
+
+
 	private void createNewBox() {
 		MapBlockComponent block = new MapBlockComponent();
 		block.size = new Vector3(1, 1, 1);
@@ -374,14 +381,30 @@ public class MapEditorSystem extends AbstractSystem {
 			off.scl(.1f);
 		}
 
-		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-		Matrix4 mat = this.setBlockDataFromPhysicsData(selectedObject, block);
-		PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
-		block.position.add(off);
-		mat.setTranslation(block.position);
-		md.body.setWorldTransform(mat);
-		md.body.activate();
-		game.appendToLog("New position: " + block.position);
+		if (this.all_blocks_selected == false) {
+			MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+			Matrix4 mat = this.setBlockDataFromPhysicsData(selectedObject, block);
+			PhysicsComponent md = (PhysicsComponent)selectedObject.getComponent(PhysicsComponent.class);
+			block.position.add(off);
+			mat.setTranslation(block.position);
+			md.body.setWorldTransform(mat);
+			md.body.activate();
+			game.appendToLog("New position: " + block.position);
+		} else {
+			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
+			while (it.hasNext()) {
+				AbstractEntity e = it.next();
+				MapBlockComponent block = (MapBlockComponent)e.getComponent(MapBlockComponent.class);
+				if (block != null) {
+						Matrix4 mat = this.setBlockDataFromPhysicsData(e, block);
+						PhysicsComponent md = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+						block.position.add(off);
+						mat.setTranslation(block.position);
+						md.body.setWorldTransform(mat);
+						md.body.activate();
+				}
+			}
+		}
 	}
 
 
@@ -484,7 +507,7 @@ public class MapEditorSystem extends AbstractSystem {
 		block.size.x -= FRAC;
 		block.size.y -= FRAC;
 		block.size.z -= FRAC;
-		
+
 		block.rotation.set(0, 0, 0);
 		this.selectedObject.remove();
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);

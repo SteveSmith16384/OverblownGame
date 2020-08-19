@@ -10,7 +10,7 @@ public class AbstractEntity {
 
 	public int entityId;
 	public String name;
-	public String tags;
+	public String tags; // todo - remove this
 	private HashMap<Class<?>, Object> components = new HashMap<Class<?>, Object>();
 	private HashMap<Class<?>, Object> hiddenComponents = new HashMap<Class<?>, Object>(); // For temporarily removing components, e.g. collision
 	private boolean markForRemoval = false;

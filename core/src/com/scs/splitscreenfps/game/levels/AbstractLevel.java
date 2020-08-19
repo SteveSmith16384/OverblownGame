@@ -45,6 +45,8 @@ public abstract class AbstractLevel {
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
 	public MapData mapdata;
+	
+	//public Vector3 min, max;
 
 	public void getReadyForGame(Game _game) {
 		game = _game;
@@ -123,7 +125,10 @@ public abstract class AbstractLevel {
 	 */
 	public void loadJsonFile(String filename, boolean for_map_editor, Vector3 offset, float mass_mult) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		Gson gson = new Gson();
-
+		
+		//min = new Vector3(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
+		//max = new Vector3(Float.MIN_VALUE, Float.MIN_VALUE, Float.MIN_VALUE);
+		
 		String s = Gdx.files.internal(filename).readString();
 		mapdata = gson.fromJson(s, MapData.class);
 
@@ -137,7 +142,7 @@ public abstract class AbstractLevel {
 			block.position.add(offset);
 
 			if (block.position.y < -4f) { // Skip any that have fallen off the edge
-				Settings.p("Ignoreing" + block.name + " as it is too low");
+				Settings.p("Ignoring" + block.name + " as it is too low");
 				continue;
 			}
 			if (block.tags.contains("playerstartposition")) {
