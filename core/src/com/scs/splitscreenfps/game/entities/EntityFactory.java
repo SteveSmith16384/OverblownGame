@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -272,6 +274,34 @@ public class EntityFactory {
 		lootbox.addComponent(new PhysicsComponent(groundObject));
 
 		return lootbox;
+	}
+
+
+	public static AbstractEntity createOriginMarker(Game game) {
+		AbstractEntity originMarker = new AbstractEntity(game.ecs, "OriginMarker");
+
+		Texture tex = game.getTexture("colours/yellow.png");
+		Material material = new Material(TextureAttribute.createDiffuse(tex));
+
+		//Model box_model = ShapeHelper.createLine(modelBuilder, new Vector3(), new Vector3(0, 1, 0), material);
+		
+		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
+		ModelBuilder modelBuilder = game.modelBuilder;
+		modelBuilder.begin();
+		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_LINES, attr, material);
+		mb.line(new Vector3(), new Vector3(0, 1, 0));
+		mb.line(new Vector3(), new Vector3(1, 0, 0));
+		mb.line(new Vector3(), new Vector3(0, 0, 1));
+		Model box_model = modelBuilder.end();
+
+		ModelInstance instance = new ModelInstance(box_model);
+
+		HasModelComponent model = new HasModelComponent(instance, 1f, false);
+		originMarker.addComponent(model);
+
+		originMarker.addComponent(new PositionComponent());
+
+		return originMarker;
 	}
 
 

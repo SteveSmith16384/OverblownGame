@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.levels;
 
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.systems.MapEditorSystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
@@ -29,6 +30,8 @@ public class MapEditorLevel extends AbstractLevel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game));
 		
 		game.appendToLog("Loaded " + filename);
 		game.appendToLog("Map editor ready");

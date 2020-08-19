@@ -57,7 +57,7 @@ public class ShapeHelper {
 		//}
 		mb.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
 		// Back
-		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, material);
+		modelBuilder.part("back", GL20.GL_TRIANGLES, attr, material); // todo - don;t start a new part of the scale is the same
 		mb.setUVRange(0,  0,  h*scale, w*scale);
 		mb.rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
 		// Bottom
@@ -139,6 +139,21 @@ public class ShapeHelper {
 
 		return instance;
 	}
+
+	
+	public static Model createLine(ModelBuilder modelBuilder, Vector3 start, Vector3 end, Material material) {
+		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
+		modelBuilder.begin();
+
+		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_LINES, attr, material);
+		// Front
+		mb.line(start, end);
+		Model box_model = modelBuilder.end();
+
+		return box_model;
+	}
+
+	
 
 
 }
