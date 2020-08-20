@@ -281,7 +281,7 @@ public class EntityFactory {
 	public static AbstractEntity createOriginMarker(Game game) {
 		AbstractEntity originMarker = new AbstractEntity(game.ecs, "OriginMarker");
 
-		Texture tex = game.getTexture("colours/yellow.png");
+		//Texture tex = game.getTexture("colours/yellow.png");
 		Material material = new Material();//TextureAttribute.createDiffuse(tex));
 
 		//Model box_model = ShapeHelper.createLine(modelBuilder, new Vector3(), new Vector3(0, 1, 0), material);

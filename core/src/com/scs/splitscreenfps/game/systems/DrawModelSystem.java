@@ -101,9 +101,13 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		if (wireframe_entity != null) {
-			wireframeBatch.begin(cam);
-			this.renderEntity(wireframe_entity, wireframeBatch, false);
-			wireframeBatch.end();
+			if (wireframe_entity.isMarkedForRemoval()) {
+				wireframe_entity = null;
+			} else {
+				wireframeBatch.begin(cam);
+				this.renderEntity(wireframe_entity, wireframeBatch, false);
+				wireframeBatch.end();
+			}
 		}
 
 		long duration = System.currentTimeMillis() - start;

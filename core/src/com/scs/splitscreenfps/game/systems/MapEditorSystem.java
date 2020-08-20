@@ -198,8 +198,7 @@ public class MapEditorSystem extends AbstractSystem {
 				}
 			} else if (keyboard.isKeyJustPressed(Keys.U)) { // Undo
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-				this.selectedObject.remove();
-				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+				this.recreateSelectedBlock(block);
 				game.appendToLog("Action undone");
 			} else if (keyboard.isKeyJustPressed(Keys.NUM_0)) { // Reset rotation/position/size
 				reAlignBlock();
@@ -373,13 +372,21 @@ public class MapEditorSystem extends AbstractSystem {
 		this.settle_end_time = System.currentTimeMillis() + 2000;
 		this.mass_cache = block.mass;
 		block.mass = 1;
-		this.selectedObject.remove();
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		this.recreateSelectedBlock(block);
 		settle_block = this.selectedObject;
 		game.appendToLog("Settling block...");
 	}
 
 
+	private void recreateSelectedBlock(MapBlockComponent block) {
+		this.selectedObject.remove();
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+
+		DrawModelSystem ds = (DrawModelSystem)game.ecs.getSystem(DrawModelSystem.class);
+		ds.wireframe_entity = this.selectedObject;
+	}
+	
+	
 	private void moveBlock(Vector3 off) {
 		if (keyboard.isKeyPressed(Keys.CONTROL_LEFT)) {
 			off.scl(.1f);
@@ -425,8 +432,7 @@ public class MapEditorSystem extends AbstractSystem {
 			// Only adjust one side
 			block.position.add(adj.scl(.5f));
 		}
-		this.selectedObject.remove();
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		this.recreateSelectedBlock(block);
 		game.appendToLog("New size: " + block.size);
 	}
 
@@ -440,8 +446,7 @@ public class MapEditorSystem extends AbstractSystem {
 		//this.setBlockDataFromPhysicsData(block);
 
 		block.rotation.add(adj);
-		this.selectedObject.remove();
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		this.recreateSelectedBlock(block);
 
 		game.appendToLog("New Rotation: " + block.rotation);
 	}
@@ -463,8 +468,7 @@ public class MapEditorSystem extends AbstractSystem {
 			block.texture_id = 0;
 		}
 		game.appendToLog("Texture " + block.texture_id + " selected");
-		this.selectedObject.remove();
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		this.recreateSelectedBlock(block);
 	}
 
 
@@ -473,8 +477,7 @@ public class MapEditorSystem extends AbstractSystem {
 
 		block.tiled = !block.tiled;
 
-		this.selectedObject.remove();
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		this.recreateSelectedBlock(block);
 	}
 
 
@@ -488,9 +491,7 @@ public class MapEditorSystem extends AbstractSystem {
 		}
 		game.appendToLog("Mass=" + block.mass);
 
-		// Recreate the block
-		this.selectedObject.remove();
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		this.recreateSelectedBlock(block);
 	}
 
 
@@ -513,8 +514,7 @@ public class MapEditorSystem extends AbstractSystem {
 		block.size.z -= FRAC;
 
 		block.rotation.set(0, 0, 0);
-		this.selectedObject.remove();
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		this.recreateSelectedBlock(block);
 	}
 
 
