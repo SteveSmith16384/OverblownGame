@@ -33,7 +33,6 @@ public class WireframeShader extends DefaultShader {
 
     @Override
     public void render(Renderable renderable) {
-    	//super.u_emissiveColor
         setPrimitiveType(renderable);
         super.render(renderable);
         restorePrimitiveType(renderable);

@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
@@ -281,14 +282,15 @@ public class EntityFactory {
 		AbstractEntity originMarker = new AbstractEntity(game.ecs, "OriginMarker");
 
 		Texture tex = game.getTexture("colours/yellow.png");
-		Material material = new Material(TextureAttribute.createDiffuse(tex));
+		Material material = new Material();//TextureAttribute.createDiffuse(tex));
 
 		//Model box_model = ShapeHelper.createLine(modelBuilder, new Vector3(), new Vector3(0, 1, 0), material);
 		
-		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
+		int attr = VertexAttributes.Usage.Position;// | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		ModelBuilder modelBuilder = game.modelBuilder;
 		modelBuilder.begin();
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_LINES, attr, material);
+		mb.setColor(Color.WHITE);
 		mb.line(new Vector3(), new Vector3(0, 100, 0));
 		mb.line(new Vector3(), new Vector3(100, 0, 0));
 		mb.line(new Vector3(), new Vector3(0, 0, 100));

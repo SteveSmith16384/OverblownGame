@@ -101,9 +101,7 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		if (wireframe_entity != null) {
-			//Gdx.gl.glBlendColor(1, 1, 1, 1);
 			wireframeBatch.begin(cam);
-			//wireframeBatch.render(renderables);
 			this.renderEntity(wireframe_entity, wireframeBatch, false);
 			wireframeBatch.end();
 		}
