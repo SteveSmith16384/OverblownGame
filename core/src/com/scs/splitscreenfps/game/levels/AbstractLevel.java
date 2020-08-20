@@ -46,8 +46,6 @@ public abstract class AbstractLevel {
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
 	public MapData mapdata;
 	
-	//public Vector3 min, max;
-
 	public void getReadyForGame(Game _game) {
 		game = _game;
 	}
@@ -126,9 +124,6 @@ public abstract class AbstractLevel {
 	public void loadJsonFile(String filename, boolean for_map_editor, Vector3 offset, float mass_mult) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		Gson gson = new Gson();
 		
-		//min = new Vector3(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
-		//max = new Vector3(Float.MIN_VALUE, Float.MIN_VALUE, Float.MIN_VALUE);
-		
 		String s = Gdx.files.internal(filename).readString();
 		mapdata = gson.fromJson(s, MapData.class);
 
@@ -166,7 +161,7 @@ public abstract class AbstractLevel {
 			while (this.startPositions.size() < 4) {
 				// Add default start positions
 				//game.appendToLog("Adding default start position");
-				this.startPositions.add(new Vector3(1, 2f, 1));
+				this.startPositions.add(new Vector3(1, 30f, 1)); // High we don't start inside any buildings
 			}
 
 		}

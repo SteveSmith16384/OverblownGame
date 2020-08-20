@@ -51,6 +51,17 @@ public class MinecraftLevel extends AbstractLevel {
 					e.remove();
 				}
 			}
+
+			// Remove entities with "skip"
+			game.ecs.addAndRemoveEntities();
+			it = game.ecs.getEntityIterator();
+			while (it.hasNext()) {
+				AbstractEntity e = it.next();
+				if (e.tags.contains("skip")) {
+					e.remove();
+				}
+			}
+
 		} catch (Exception e) {
 			throw new RuntimeException("Error loading map file", e);
 		}

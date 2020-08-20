@@ -289,9 +289,9 @@ public class EntityFactory {
 		ModelBuilder modelBuilder = game.modelBuilder;
 		modelBuilder.begin();
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_LINES, attr, material);
-		mb.line(new Vector3(), new Vector3(0, 1, 0));
-		mb.line(new Vector3(), new Vector3(1, 0, 0));
-		mb.line(new Vector3(), new Vector3(0, 0, 1));
+		mb.line(new Vector3(), new Vector3(0, 100, 0));
+		mb.line(new Vector3(), new Vector3(100, 0, 0));
+		mb.line(new Vector3(), new Vector3(0, 0, 100));
 		Model box_model = modelBuilder.end();
 
 		ModelInstance instance = new ModelInstance(box_model);

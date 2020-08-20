@@ -2,11 +2,16 @@ package com.scs.splitscreenfps.game.systems;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
+import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
@@ -21,10 +26,13 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
+import ssmith.libgdx.WireframeShader;
+
 public class DrawModelSystem extends AbstractSystem {
 
 	private Game game;
 	private ModelBatch modelBatch;
+	private ModelBatch wireframeBatch;
 	private Environment environment;
 
 	private Matrix4 tmpMat = new Matrix4();
@@ -32,6 +40,8 @@ public class DrawModelSystem extends AbstractSystem {
 
 	private DirectionalShadowLight shadowLight;
 	private ModelBatch shadowBatch;
+
+	public AbstractEntity wireframe_entity;
 
 	private int num_objects_drawn;
 	private BoundingBox tmpBB = new BoundingBox();
@@ -52,6 +62,13 @@ public class DrawModelSystem extends AbstractSystem {
 						1f, -.5f, 1f));
 		environment.shadowMap = shadowLight;
 		shadowBatch = new ModelBatch(new DepthShaderProvider());
+
+		wireframeBatch = new ModelBatch(new DefaultShaderProvider() {
+			@Override
+			protected Shader createShader(Renderable renderable) {
+				return new WireframeShader(renderable, config);
+			}
+		});
 	}
 
 
@@ -81,6 +98,14 @@ public class DrawModelSystem extends AbstractSystem {
 
 			shadowBatch.end();
 			shadowLight.end();
+		}
+
+		if (wireframe_entity != null) {
+			//Gdx.gl.glBlendColor(1, 1, 1, 1);
+			wireframeBatch.begin(cam);
+			//wireframeBatch.render(renderables);
+			this.renderEntity(wireframe_entity, wireframeBatch, false);
+			wireframeBatch.end();
 		}
 
 		long duration = System.currentTimeMillis() - start;

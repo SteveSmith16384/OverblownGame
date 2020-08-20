@@ -32,7 +32,7 @@ public class MapEditorSystem extends AbstractSystem {
 	private enum Mode {ROTATION, POSITION, SIZE, TEXTURE, MASS, NEW_BLOCK};
 
 	private float MOVE_INC = 0.25f;
-	private float FRAC = 0.001f;
+	private float FRAC = 0.01f;
 
 	private Game game;
 	private Mode mode = Mode.POSITION;
@@ -96,6 +96,10 @@ public class MapEditorSystem extends AbstractSystem {
 						if (block.tags != null && block.tags.length() > 0) {
 							game.appendToLog("Tags: " + block.tags);
 						}
+						
+						DrawModelSystem ds = (DrawModelSystem)game.ecs.getSystem(DrawModelSystem.class);
+						ds.wireframe_entity = this.selectedObject;
+						
 					} else {
 						game.appendToLog("Block not found");
 						selectedObject = null;
