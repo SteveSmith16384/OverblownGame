@@ -25,22 +25,25 @@ import ssmith.libgdx.ShapeHelper;
 public class Wall extends AbstractEntity {
 
 	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
-		this(game, name, tex, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
+		this(game, name, tex, null, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
 	}
 
 
 	// Note that the mass gets multiplied by the size
 	// Positions are from the centre
-	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
+	public Wall(Game game, String name, Texture tex, Color c, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
 		super(game.ecs, name);
 
-		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		Material material = new Material(TextureAttribute.createDiffuse(tex));
-		//Material material = new Material(ColorAttribute.createDiffuse(Color.RED));
-		//Material material = new Material(ColorAttribute.createReflection(Color.RED));
+		Material material = null;
+		if (tex != null) {
+			tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+			material = new Material(TextureAttribute.createDiffuse(tex));
+		} else {
+			material = new Material(ColorAttribute.createDiffuse(c));
+		}
 		//material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)); // Allow transparency
 
-		Model box_model = ShapeHelper.createCube2(game.modelBuilder, w, h, d, material);
+		Model box_model = ShapeHelper.createCube(game.modelBuilder, w, h, d, material);
 
 		if (tile) {
 			Matrix3 mat = new Matrix3();

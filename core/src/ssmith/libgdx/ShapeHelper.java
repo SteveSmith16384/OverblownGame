@@ -45,7 +45,16 @@ public class ShapeHelper {
 	}
 
 
-	public static Model createCube2(ModelBuilder modelBuilder, float w, float h, float d, Material material) {
+	/**
+	 * Use this if the textures of different sides of the cube need scaling to different dimensions.
+	 * @param modelBuilder
+	 * @param w
+	 * @param h
+	 * @param d
+	 * @param material
+	 * @return
+	 */
+	public static Model createCube_AdvancedScaling(ModelBuilder modelBuilder, float w, float h, float d, Material material) {
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 

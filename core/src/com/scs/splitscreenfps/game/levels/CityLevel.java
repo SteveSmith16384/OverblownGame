@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
@@ -33,12 +34,16 @@ public class CityLevel extends AbstractLevel {
 		game.ecs.addEntity(floor);
 
 		try {
+		if (Settings.TEST_VOX) {
+			loadVox("vox/castle.vox", new Vector3(5, 0, 5));
+		} else {
 			for (int z=0 ; z<2 ; z++) {
 				for (int x=0 ; x<2 ; x++) {
 					//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
 					super.loadJsonFile("maps/skyscraper" + NumberFunctions.rnd(1, 2) + ".json", false, new Vector3(x*10+7, 0.05f, z*10+7), 1);
 				}
 			}
+		}
 		} catch (Exception e) {
 			throw new RuntimeException("Error loading map file", e);
 		}

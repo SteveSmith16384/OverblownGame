@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.Gson;
@@ -24,6 +26,10 @@ import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
 import com.scs.splitscreenfps.game.mapdata.MapData;
 
+import me.lignum.jvox.VoxFile;
+import me.lignum.jvox.VoxModel;
+import me.lignum.jvox.VoxReader;
+import me.lignum.jvox.Voxel;
 import ssmith.lang.IOFunctions;
 
 public abstract class AbstractLevel {
@@ -199,7 +205,7 @@ public abstract class AbstractLevel {
 
 			AbstractEntity wall = null;
 			if (block.type == null || block.type.length() == 0 || block.type.equalsIgnoreCase("cube")) {
-				wall = new Wall(game, block.name, tex, block.position.x, block.position.y, block.position.z, 
+				wall = new Wall(game, block.name, tex, null, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
 						block.mass * mass_mult, // Hack to make walls heavier
 						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
@@ -241,6 +247,31 @@ public abstract class AbstractLevel {
 		gson.toJson(mapdata, MapData.class, writer);
 		writer.flush();
 		writer.close();
+
+	}
+	
+	
+	public void loadVox(String filename, Vector3 offset) {
+		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
+		    // VoxReader::read will never return null,
+		    // but it can throw an InvalidVoxException.
+			VoxFile  voxFile = reader.read();
+			for (VoxModel model : voxFile.getModels()) {
+				for (Voxel voxel : model.getVoxels()) {
+					int colid = voxel.getColourIndex();
+					int col = voxFile.getPalette()[colid];
+					// Note that y and z seem to be reversed
+					Wall wall = new Wall(game, "Voxel", null, Color.GREEN, voxel.getPosition().getX()+offset.x, voxel.getPosition().getZ()+offset.y, voxel.getPosition().getY()+offset.z, 
+							1, 1, 1, 
+							0,
+							0, 0, 0, false, false);
+					game.ecs.addEntity(wall);
+				}
+			}
+			Settings.p("Loaded");
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 
 	}
 }
