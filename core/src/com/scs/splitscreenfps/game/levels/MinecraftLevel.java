@@ -2,18 +2,12 @@ package com.scs.splitscreenfps.game.levels;
 
 import java.util.Iterator;
 
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
-import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
-import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
-
-import ssmith.lang.NumberFunctions;
 
 public class MinecraftLevel extends AbstractLevel {
 

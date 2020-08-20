@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
@@ -32,10 +34,11 @@ public class Wall extends AbstractEntity {
 	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
 		super(game.ecs, name);
 
-		Material material = null;
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		material = new Material(TextureAttribute.createDiffuse(tex));
-		material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)); // scs new
+		Material material = new Material(TextureAttribute.createDiffuse(tex));
+		//Material material = new Material(ColorAttribute.createDiffuse(Color.RED));
+		//Material material = new Material(ColorAttribute.createReflection(Color.RED));
+		//material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)); // Allow transparency
 
 		Model box_model = ShapeHelper.createCube2(game.modelBuilder, w, h, d, material);
 

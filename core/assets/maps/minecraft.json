@@ -15,7 +15,8 @@
     "13": "textures/pixel-textures/default_stone_brick.png",
     "14": "textures/pixel-textures/default_wood.png",
     "15": "textures/pixel-textures/default_tree.png",
-    "16": "textures/pixel-textures/default_leaves.png"
+    "16": "textures/pixel-textures/default_leaves.png",
+    "17": "textures/pixel-textures/default_water.png"
   },
   "blocks": [
     {
@@ -184,7 +185,7 @@
       "position": {
         "x": 9.5,
         "y": 0.25,
-        "z": -0.5
+        "z": 6.0
       },
       "rotation": {
         "x": 0.0,
@@ -194,82 +195,7 @@
       "mass": 0.0
     },
     {
-      "id": 36,
-      "type": "cube",
-      "name": "Crate_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 13,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
-      },
-      "position": {
-        "x": 9.241698,
-        "y": 0.24999987,
-        "z": 3.2467709
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 37,
-      "type": "cube",
-      "name": "Crate_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 6,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
-      },
-      "position": {
-        "x": 8.741967,
-        "y": 0.24999742,
-        "z": 3.2465425
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 17,
-      "type": "cube",
-      "name": "Crate_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 7,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
-      },
-      "position": {
-        "x": 8.241989,
-        "y": 0.24999301,
-        "z": 3.2466476
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 18,
+      "id": 20,
       "type": "cube",
       "name": "Crate_new_new_new_new_new_new",
       "tags": "",
@@ -278,13 +204,13 @@
       "tiled": false,
       "size": {
         "x": 0.5,
-        "y": 0.5,
+        "y": 2.0,
         "z": 0.5
       },
       "position": {
-        "x": 7.741985,
-        "y": 0.24999946,
-        "z": 3.2466471
+        "x": 9.992488,
+        "y": 1.0000017,
+        "z": 2.9969893
       },
       "rotation": {
         "x": 0.0,
@@ -294,7 +220,157 @@
       "mass": 1.0
     },
     {
-      "id": 19,
+      "id": 24,
+      "type": "cube",
+      "name": "beach",
+      "tags": "",
+      "texture_id": 6,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 30.25,
+        "y": 0.5,
+        "z": 31.75
+      },
+      "position": {
+        "x": 10.0,
+        "y": -0.5,
+        "z": 9.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 25,
+      "type": "cube",
+      "name": "sea",
+      "tags": "",
+      "texture_id": 17,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 40.25,
+        "y": 0.5,
+        "z": 41.75
+      },
+      "position": {
+        "x": 10.0,
+        "y": -0.75,
+        "z": 9.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 26,
+      "type": "sphere",
+      "name": "house_marker",
+      "tags": "house",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.5,
+        "y": 1.0,
+        "z": 1.25
+      },
+      "position": {
+        "x": 17.5,
+        "y": 0.25,
+        "z": 7.75
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 27,
+      "type": "sphere",
+      "name": "house_marker",
+      "tags": "house",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.5,
+        "y": 1.0,
+        "z": 1.25
+      },
+      "position": {
+        "x": 14.5,
+        "y": 0.25,
+        "z": -2.25
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 28,
+      "type": "sphere",
+      "name": "house_marker",
+      "tags": "house",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.5,
+        "y": 1.0,
+        "z": 1.25
+      },
+      "position": {
+        "x": 4.75,
+        "y": 0.25,
+        "z": -2.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 29,
+      "type": "cube",
+      "name": "road",
+      "tags": "",
+      "texture_id": 13,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 23.75,
+        "y": 0.25,
+        "z": 1.75
+      },
+      "position": {
+        "x": 9.991992,
+        "y": -0.05000554,
+        "z": 1.4967415
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 24,
       "type": "cube",
       "name": "Crate_new_new_new_new_new_new",
       "tags": "",
@@ -302,21 +378,121 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
+        "x": 6.25,
+        "y": 0.25,
+        "z": 11.25
       },
       "position": {
-        "x": 7.241947,
-        "y": 0.24999984,
-        "z": 3.2466447
+        "x": 3.24185,
+        "y": 0.124991395,
+        "z": 10.496812
       },
       "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
-      "mass": 1.0
+      "mass": 0.0
+    },
+    {
+      "id": 25,
+      "type": "cube",
+      "name": "Crate_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 9,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 4.75,
+        "y": 0.25,
+        "z": 7.75
+      },
+      "position": {
+        "x": 3.24185,
+        "y": 0.3749914,
+        "z": 10.496812
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 26,
+      "type": "cube",
+      "name": "Crate_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 9,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 3.0,
+        "y": 0.25,
+        "z": 5.5
+      },
+      "position": {
+        "x": 2.49185,
+        "y": 0.6249914,
+        "z": 11.496812
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 27,
+      "type": "sphere",
+      "name": "house_marker",
+      "tags": "house",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.5,
+        "y": 1.0,
+        "z": 1.25
+      },
+      "position": {
+        "x": 12.0,
+        "y": 0.25,
+        "z": 11.75
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 28,
+      "type": "cube",
+      "name": "Crate_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 9,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 1.75,
+        "y": 0.25,
+        "z": 3.5
+      },
+      "position": {
+        "x": 2.49185,
+        "y": 0.8749914,
+        "z": 11.496812
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
     },
     {
       "id": 20,
@@ -327,39 +503,64 @@
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 0.5,
+        "x": 5.5,
         "y": 0.5,
-        "z": 0.5
+        "z": 1.75
       },
       "position": {
-        "x": 9.741971,
-        "y": 0.24999125,
-        "z": 3.2468448
+        "x": -4.633022,
+        "y": -0.4000098,
+        "z": 1.4968407
       },
       "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
-      "mass": 1.0
+      "mass": 0.0
     },
     {
       "id": 21,
       "type": "cube",
       "name": "Crate_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 11,
+      "texture_id": 10,
       "model_filename": "",
       "tiled": false,
       "size": {
-        "x": 0.5,
+        "x": 5.5,
         "y": 0.5,
-        "z": 0.5
+        "z": 1.75
       },
       "position": {
-        "x": 10.241989,
-        "y": 0.24999699,
-        "z": 3.2467098
+        "x": 24.616978,
+        "y": -0.4000098,
+        "z": 1.4968407
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 22,
+      "type": "cube",
+      "name": "Crate_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 15,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.25,
+        "y": 2.25,
+        "z": 0.25
+      },
+      "position": {
+        "x": 9.742658,
+        "y": 1.1250105,
+        "z": -4.7530103
       },
       "rotation": {
         "x": 0.0,
@@ -369,22 +570,22 @@
       "mass": 1.0
     },
     {
-      "id": 22,
+      "id": 23,
       "type": "cube",
       "name": "Crate_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 12,
+      "texture_id": 15,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
+        "x": 0.25,
+        "y": 2.25,
+        "z": 0.25
       },
       "position": {
-        "x": 10.742012,
-        "y": 0.25000033,
-        "z": 3.2467504
+        "x": 9.000009,
+        "y": 1.1250091,
+        "z": -4.245925
       },
       "rotation": {
         "x": 0.0,
@@ -398,43 +599,18 @@
       "type": "cube",
       "name": "Crate_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 14,
+      "texture_id": 15,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
+        "x": 0.25,
+        "y": 2.25,
+        "z": 0.25
       },
       "position": {
-        "x": 11.242004,
-        "y": 0.25,
-        "z": 3.246774
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 25,
-      "type": "cube",
-      "name": "Crate_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 16,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
-      },
-      "position": {
-        "x": 7.241947,
-        "y": 0.7499998,
-        "z": 3.2466447
+        "x": 10.500066,
+        "y": 1.125008,
+        "z": -4.4959326
       },
       "rotation": {
         "x": 0.0,
@@ -450,16 +626,16 @@
       "tags": "",
       "texture_id": 15,
       "model_filename": "",
-      "tiled": false,
+      "tiled": true,
       "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
+        "x": 0.25,
+        "y": 2.25,
+        "z": 0.25
       },
       "position": {
-        "x": 14.492004,
-        "y": 0.25,
-        "z": 3.246774
+        "x": 8.241854,
+        "y": 1.1245782,
+        "z": -4.5032268
       },
       "rotation": {
         "x": 0.0,
@@ -473,18 +649,18 @@
       "type": "cube",
       "name": "Crate_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 15,
+      "texture_id": 8,
       "model_filename": "",
       "tiled": false,
       "size": {
         "x": 0.5,
-        "y": 0.5,
+        "y": 2.0,
         "z": 0.5
       },
       "position": {
-        "x": 14.492004,
-        "y": 0.75,
-        "z": 3.246774
+        "x": 9.992473,
+        "y": 1.0000025,
+        "z": -0.0030272137
       },
       "rotation": {
         "x": 0.0,
@@ -498,93 +674,18 @@
       "type": "cube",
       "name": "Crate_new_new_new_new_new_new",
       "tags": "",
-      "texture_id": 15,
+      "texture_id": 8,
       "model_filename": "",
       "tiled": false,
       "size": {
         "x": 0.5,
         "y": 0.5,
-        "z": 0.5
+        "z": 3.5
       },
       "position": {
-        "x": 14.492004,
-        "y": 1.25,
-        "z": 3.246774
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 29,
-      "type": "cube",
-      "name": "Crate_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 15,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
-      },
-      "position": {
-        "x": 14.492004,
-        "y": 1.75,
-        "z": 3.246774
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 30,
-      "type": "cube",
-      "name": "Crate_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 15,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 0.5,
-        "y": 0.5,
-        "z": 0.5
-      },
-      "position": {
-        "x": 14.492004,
+        "x": 9.991976,
         "y": 2.25,
-        "z": 3.246774
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "mass": 1.0
-    },
-    {
-      "id": 31,
-      "type": "cube",
-      "name": "Crate_new_new_new_new_new_new",
-      "tags": "",
-      "texture_id": 16,
-      "model_filename": "",
-      "tiled": false,
-      "size": {
-        "x": 2.25,
-        "y": 1.5,
-        "z": 1.75
-      },
-      "position": {
-        "x": 14.491947,
-        "y": 3.2499998,
-        "z": 3.2466447
+        "z": 1.4968407
       },
       "rotation": {
         "x": 0.0,
