@@ -86,8 +86,10 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Design and programming Stephen Carlyle-Smith (stephen.carlylesmith@googlemail.com, @stephencsmith)
 * Post-processing library: https://github.com/crashinvaders/gdx-vfx
 * Controller code: https://github.com/electronstudio/sdl2gdx/
+* Vox loading code from https://github.com/Lignum/JVox
+
+### Assets Credits
 * Music by Emma Andersson, taken from https://opengameart.org/content/megasong
-* Voice talent by my kids.
 * Alien model by Quaternius (https://www.patreon.com/quaternius)
 * Racer blink sfx by Iwan Gabovitch, taken from https://opengameart.org/content/racing-speed-boost-sound
 * Shooting sfx by Michel Baradari, taken from https://opengameart.org/content/4-projectile-launches

@@ -251,24 +251,27 @@ public abstract class AbstractLevel {
 	}
 	
 	
-	public void loadVox(String filename, Vector3 offset) {
+	public void loadVox(String filename, int mass, Vector3 offset) {//, int trunc) {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
-		    // VoxReader::read will never return null,
-		    // but it can throw an InvalidVoxException.
-			VoxFile  voxFile = reader.read();
+			VoxFile voxFile = reader.read();
+			int count = 0;
 			for (VoxModel model : voxFile.getModels()) {
 				for (Voxel voxel : model.getVoxels()) {
-					int colid = voxel.getColourIndex();
-					int col = voxFile.getPalette()[colid];
+					int colour_id = voxel.getColourIndex() & 0xff;
+					int colour = voxFile.getPalette()[colour_id];
 					// Note that y and z seem to be reversed
-					Wall wall = new Wall(game, "Voxel", null, Color.GREEN, voxel.getPosition().getX()+offset.x, voxel.getPosition().getZ()+offset.y, voxel.getPosition().getY()+offset.z, 
+					String hexColor = String.format("#%06X", (colour & 0xFFFFFF));
+					String hexColor2 = "#" + hexColor.substring(5) + hexColor.substring(3, 5) + hexColor.substring(1, 3);
+					Color c2 = Color.valueOf(hexColor2);
+					Wall wall = new Wall(game, "Voxel", null, c2, -voxel.getPosition().getX()+offset.x, voxel.getPosition().getZ()+offset.y, voxel.getPosition().getY()+offset.z, 
 							1, 1, 1, 
-							0,
-							0, 0, 0, false, false);
+							mass,
+							0, 0, 0, false, true);
 					game.ecs.addEntity(wall);
+					count++;
 				}
 			}
-			Settings.p("Loaded");
+			Settings.p(count + " voxels loaded");
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}

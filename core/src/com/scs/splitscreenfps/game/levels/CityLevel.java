@@ -35,7 +35,7 @@ public class CityLevel extends AbstractLevel {
 
 		try {
 		if (Settings.TEST_VOX) {
-			loadVox("vox/castle.vox", new Vector3(5, 0, 5));
+			loadVox("vox/house1.vox", 0, new Vector3(5, .5f, 5));
 		} else {
 			for (int z=0 ; z<2 ; z++) {
 				for (int x=0 ; x<2 ; x++) {
