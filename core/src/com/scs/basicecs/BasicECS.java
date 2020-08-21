@@ -210,6 +210,11 @@ public class BasicECS {
 				}
 			}
 		}
-
 	}
+	
+	
+	public int getNumEntities() {
+		return this.entities.size();
+	}
+
 }

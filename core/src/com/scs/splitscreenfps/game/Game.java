@@ -535,7 +535,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				font_small.setColor(Color.RED);
 			}
 			spriteBatch.begin();
-			font_small.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-100, font_small.getLineHeight()*2);
+			font_small.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getBackBufferWidth()-150, font_small.getLineHeight()*2);
+			font_small.draw(spriteBatch, "Ents: " + ecs.getNumEntities(), Gdx.graphics.getBackBufferWidth()-150, font_small.getLineHeight()*3);
 			spriteBatch.end();
 		}
 

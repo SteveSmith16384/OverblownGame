@@ -251,27 +251,58 @@ public abstract class AbstractLevel {
 	}
 	
 	
-	public void loadVox(String filename, int mass, Vector3 offset) {//, int trunc) {
+	public void loadVox(String filename, int mass, Vector3 offset, float scale) {//, int trunc) {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
 			int count = 0;
+			int num_removed = 0;
 			for (VoxModel model : voxFile.getModels()) {
+				
+				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (Voxel voxel : model.getVoxels()) {
+					exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = true;
+				}
+				
+				boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
+				for (int z=1 ; z<model.getSize().getZ()-1 ; z++) {
+					for (int y=1 ; y<model.getSize().getY()-1 ; y++) {
+						for (int x=1 ; x<model.getSize().getX()-1 ; x++) {
+							if (exists[x][y][z]) {
+								if (exists[x-1][y][z] && exists[x+1][y][z] && exists[x][y-1][z] && exists[x][y+1][z] && exists[x][y][z-1] && exists[x][y][z+1]) {
+									remove[x][y][z] = true;
+								}
+							}
+						}
+					}
+				}
+				
+				for (Voxel voxel : model.getVoxels()) {
+					// Remove any voxels if they are surrounded by other voxels
+					if (remove[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()]) {
+						exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = false;
+						num_removed++;
+						continue;
+					}
 					int colour_id = voxel.getColourIndex() & 0xff;
 					int colour = voxFile.getPalette()[colour_id];
 					// Note that y and z seem to be reversed
 					String hexColor = String.format("#%06X", (colour & 0xFFFFFF));
-					String hexColor2 = "#" + hexColor.substring(5) + hexColor.substring(3, 5) + hexColor.substring(1, 3);
-					Color c2 = Color.valueOf(hexColor2);
-					Wall wall = new Wall(game, "Voxel", null, c2, -voxel.getPosition().getX()+offset.x, voxel.getPosition().getZ()+offset.y, voxel.getPosition().getY()+offset.z, 
-							1, 1, 1, 
-							mass,
+					String hexColor_rev = "#" + hexColor.substring(5) + hexColor.substring(3, 5) + hexColor.substring(1, 3);
+					Color color = Color.valueOf(hexColor_rev);
+					int tmp_mass = 0;
+					if (voxel.getPosition().getZ() == 0 || exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()-1]) {
+						tmp_mass = mass; // Only give them mass if they are supported by another voxel
+					}
+					Wall wall = new Wall(game, "Voxel", null, color, (voxel.getPosition().getX() * scale)+offset.x, (voxel.getPosition().getZ()*scale)+offset.y, (voxel.getPosition().getY()*scale)+offset.z, 
+							scale-.001f, scale-.001f, scale-.001f, 
+							tmp_mass,
 							0, 0, 0, false, true);
 					game.ecs.addEntity(wall);
 					count++;
 				}
 			}
 			Settings.p(count + " voxels loaded");
+			Settings.p(num_removed + " voxels removed");
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}

@@ -11,7 +11,7 @@ import ssmith.lang.NumberFunctions;
 
 public class CityLevel extends AbstractLevel {
 
-	private float floor_size = 25f;
+	private float floor_size = 35f;
 
 	private ISystem deathmatchSystem;
 
@@ -34,16 +34,17 @@ public class CityLevel extends AbstractLevel {
 		game.ecs.addEntity(floor);
 
 		try {
-		if (Settings.TEST_VOX) {
-			loadVox("vox/house1.vox", 0, new Vector3(5, .5f, 5));
-		} else {
-			for (int z=0 ; z<2 ; z++) {
-				for (int x=0 ; x<2 ; x++) {
-					//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
-					super.loadJsonFile("maps/skyscraper" + NumberFunctions.rnd(1, 2) + ".json", false, new Vector3(x*10+7, 0.05f, z*10+7), 1);
+			if (Settings.TEST_VOX) {
+				//loadVox("vox/voxelbuildings/1.vox", 1, new Vector3(5, .1f, 5), .2f);
+				loadVox("vox/house1.vox", 1, new Vector3(5, .25f, 5), .5f);
+			} else {
+				for (int z=0 ; z<2 ; z++) {
+					for (int x=0 ; x<2 ; x++) {
+						//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
+						super.loadJsonFile("maps/skyscraper" + NumberFunctions.rnd(1, 2) + ".json", false, new Vector3(x*10+7, 0.05f, z*10+7), 1);
+					}
 				}
 			}
-		}
 		} catch (Exception e) {
 			throw new RuntimeException("Error loading map file", e);
 		}
