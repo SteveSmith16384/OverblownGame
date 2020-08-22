@@ -5,8 +5,10 @@ import java.util.Iterator;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class MinecraftLevel extends AbstractLevel {
@@ -56,6 +58,11 @@ public class MinecraftLevel extends AbstractLevel {
 				}
 			}
 
+			/*if (Settings.TEST_VOX) {
+				AbstractEntity castle = EntityFactory.createModel(game.ecs, "Castle", "vox/obj_house1.obj", 5, -1.2f, 5, 0);
+				game.ecs.addEntity(castle);
+			}*/
+			
 		} catch (Exception e) {
 			throw new RuntimeException("Error loading map file", e);
 		}

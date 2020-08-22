@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.levels;
 
+import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
@@ -33,6 +34,9 @@ public class MapEditorLevel extends AbstractLevel {
 		
 		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game));
 		
+		//AbstractEntity castle = EntityFactory.createModel(game.ecs, "Castle", "vox/obj_house1.obj", 5, -1.2f, 5, 0);
+		//game.ecs.addEntity(castle);
+
 		game.appendToLog("Loaded " + filename);
 		game.appendToLog("Map editor ready");
 

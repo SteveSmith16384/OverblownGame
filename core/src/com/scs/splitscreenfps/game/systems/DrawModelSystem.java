@@ -177,6 +177,7 @@ public class DrawModelSystem extends AbstractSystem {
 		}
 
 		if (pc == null) { // Non-physics entity
+			// Position model
 			if (model.keep_player_in_centre) { // i.e. a skybox
 				model.model.transform.setToTranslation(batch.getCamera().position);
 			} else {

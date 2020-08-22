@@ -126,8 +126,10 @@ public class MapEditorSystem extends AbstractSystem {
 			game.appendToLog("All Blocks?: " + this.all_blocks_selected);
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_5)) { // Draw physics
 			Settings.DRAW_PHYSICS = !Settings.DRAW_PHYSICS;
-		//} else if (keyboard.isKeyJustPressed(Keys.NUM_9)) { // centre ALL blocks
-			//centreAllBlocks();
+		} else if (keyboard.isKeyJustPressed(Keys.NUM_9)) {
+			if (Settings.TEST_VOX) {
+				this.createNewModel("vox/obj_house1.obj");
+			}
 		} else if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode or new Plane
 			mode = Mode.POSITION;
 			game.appendToLog("Position mode selected");
@@ -352,6 +354,21 @@ public class MapEditorSystem extends AbstractSystem {
 		block.type = "cylinder";
 		block.name = "New cylinder " + NumberFunctions.rnd(1, 100);
 		block.mass = 0;
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		game.currentLevel.mapdata.blocks.add(block);
+		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
+		game.appendToLog(block.name + " created");
+	}
+
+
+	private void createNewModel(String filename) {
+		MapBlockComponent block = new MapBlockComponent();
+		//block.size = new Vector3(1, 1, 1);
+		block.position = new Vector3(0, 5, 0);
+		block.type = "model";
+		block.name = "New Model " + NumberFunctions.rnd(1, 100);
+		block.mass = 0;
+		block.model_filename = filename;
 		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
 		game.currentLevel.mapdata.blocks.add(block);
 		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!

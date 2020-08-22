@@ -693,6 +693,56 @@
         "z": 0.0
       },
       "mass": 1.0
+    },
+    {
+      "id": 28,
+      "type": "cube",
+      "name": "Crate_new_new_new_new_new_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.25,
+        "y": 1.5,
+        "z": 3.5
+      },
+      "position": {
+        "x": 6.491976,
+        "y": 3.2999992,
+        "z": 1.7468407
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 29,
+      "type": "model",
+      "name": "New Model 45",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_house1.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": -1.5,
+        "y": -1.25,
+        "z": 16.25
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
     }
   ]
 }
