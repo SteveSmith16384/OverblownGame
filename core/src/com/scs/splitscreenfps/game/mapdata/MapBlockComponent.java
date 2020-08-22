@@ -36,6 +36,7 @@ public class MapBlockComponent {
 		tmp.rotation = new Vector3(this.rotation);
 		tmp.mass = this.mass;
 		tmp.tiled = this.tiled;
+		tmp.tags = this.tags;
 
 		tmp.position.y += tmp.size.y;
 

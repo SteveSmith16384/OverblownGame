@@ -103,8 +103,12 @@ public class EntityFactory {
 		AbstractEntity stairs = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
-
-		instance.transform.setTranslation(posX, posY, posZ);
+		
+		// Calc min on Y axis
+		BoundingBox tmpBB = new BoundingBox();
+		instance.calculateBoundingBox(tmpBB);
+		tmpBB.mul(instance.transform);
+		instance.transform.setTranslation(posX, posY-tmpBB.min.y, posZ);
 
 		/*if (axis != null) {
 			instance.transform.rotate(axis, degrees);

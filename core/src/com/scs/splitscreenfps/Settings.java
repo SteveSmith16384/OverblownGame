@@ -16,7 +16,7 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_MINECRAFT;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_CITY;
 	public static final int NUM_AUTOSTART_CHARACTERS = 1;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_PHARTAH;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
