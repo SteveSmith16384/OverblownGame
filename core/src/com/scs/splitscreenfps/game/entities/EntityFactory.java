@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject.CollisionFlags;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
+import com.badlogic.gdx.physics.bullet.collision.btCompoundShape;
 import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
 import com.badlogic.gdx.physics.bullet.collision.btGhostObject;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
@@ -98,9 +99,8 @@ public class EntityFactory {
 	}
 
 
-	// Note that the mass gets multiplied by the size
-	public static AbstractEntity createModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
-		AbstractEntity stairs = new AbstractEntity(ecs, name);
+	public static AbstractEntity createStaticModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
+		AbstractEntity entity = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
 		
@@ -115,23 +115,70 @@ public class EntityFactory {
 		}*/
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
-		stairs.addComponent(model);
+		entity.addComponent(model);
 
 		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
 		Vector3 local_inertia = new Vector3();
 		if (mass > 0) {
 			shape.calculateLocalInertia(mass, local_inertia);
 		}
-		btRigidBody groundObject = new btRigidBody(mass, null, shape, local_inertia);
-		groundObject.userData = stairs;
-		groundObject.setRestitution(.2f);
-		groundObject.setCollisionShape(shape);
-		groundObject.setWorldTransform(instance.transform);
-		stairs.addComponent(new PhysicsComponent(groundObject));
+		btRigidBody rigidBody = new btRigidBody(mass, null, shape, local_inertia);
+		rigidBody.userData = entity;
+		//rigidBody.setRestitution(.2f);
+		rigidBody.setCollisionShape(shape);
+		rigidBody.setWorldTransform(instance.transform);
+		entity.addComponent(new PhysicsComponent(rigidBody));
 
-		stairs.addComponent(new PositionComponent());
+		entity.addComponent(new PositionComponent());
 
-		return stairs;
+		return entity;
+	}
+
+
+	public static AbstractEntity createDynamicModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
+		AbstractEntity entity = new AbstractEntity(ecs, name);
+
+		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
+		
+		// Calc min on Y axis
+		BoundingBox tmpBB = new BoundingBox();
+		instance.calculateBoundingBox(tmpBB);
+		tmpBB.mul(instance.transform);
+		instance.transform.setTranslation(posX, posY-tmpBB.min.y, posZ);
+
+		/*if (axis != null) {
+			instance.transform.rotate(axis, degrees);
+		}*/
+
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		entity.addComponent(model);
+
+		//btCollisionShape shape = new btConvexHullShape(instance.model.meshes.get(0).getVerticesBuffer(), instance.model.meshes.get(0).getNumVertices());
+		Vector3 ext = new Vector3();//tmpBB.max);
+		tmpBB.getDimensions(ext);
+		ext.scl(.5f);
+		//btBoxShape shape = new btBoxShape(ext);
+
+		btCompoundShape shape = new btCompoundShape();
+		Matrix4 tmpMat = new Matrix4();
+		Vector3 offset = new Vector3(tmpBB.getCenterX(), tmpBB.getCenterY(), tmpBB.getCenterZ());
+		//offset.scl(-.5f);
+		tmpMat.setTranslation(offset);
+		shape.addChildShape(tmpMat, new btBoxShape(ext));
+		Vector3 local_inertia = new Vector3();
+		if (mass > 0) {
+			shape.calculateLocalInertia(mass, local_inertia);
+		}
+		btRigidBody rigidBody = new btRigidBody(mass, null, shape, local_inertia);
+		rigidBody.userData = entity;
+		//rigidBody.setRestitution(.2f);
+		rigidBody.setCollisionShape(shape);
+		rigidBody.setWorldTransform(instance.transform);
+		entity.addComponent(new PhysicsComponent(rigidBody));
+
+		entity.addComponent(new PositionComponent());
+
+		return entity;
 	}
 
 

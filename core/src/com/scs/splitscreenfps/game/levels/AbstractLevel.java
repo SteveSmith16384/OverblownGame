@@ -184,7 +184,7 @@ public abstract class AbstractLevel {
 			block.id = MapBlockComponent.next_id++;
 		}
 		if (block.model_filename != null && block.model_filename.length() > 0) {
-			AbstractEntity model = EntityFactory.createModel(game.ecs, block.name, block.model_filename, 
+			AbstractEntity model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
 					block.position.x, block.position.y, block.position.z, 
 					block.mass);
 			model.tags = block.tags;
