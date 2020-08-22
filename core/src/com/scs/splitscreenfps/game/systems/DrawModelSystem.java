@@ -193,7 +193,7 @@ public class DrawModelSystem extends AbstractSystem {
 				model.model.calculateBoundingBox(tmpBB);
 				tmpBB.mul(model.model.transform);
 				tmpBB.getDimensions(model.dimensions);
-				model.radius = model.dimensions.len() / 2;
+				model.radius = model.dimensions.len();// scs new - hack since models are not in the middle! / 2;
 			}
 			if (!batch.getCamera().frustum.sphereInFrustum(posData.position, model.radius)) {
 				return;

@@ -21,7 +21,7 @@ public class ModelFunctions {
 	}
 
 
-	public static ModelInstance loadModel(String filename, boolean removeMaterials, Vector3 adj, float scale) {
+	public static ModelInstance loadModel(String filename, boolean removeMaterials, float scale) {
 		Model model = null;
 		if (filename.endsWith(".obj")) {
 			ModelLoader loader = new ObjLoader();

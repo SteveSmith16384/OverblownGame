@@ -1,9 +1,11 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.math.Vector3;
+import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
@@ -36,7 +38,13 @@ public class CityLevel extends AbstractLevel {
 		try {
 			if (Settings.TEST_VOX) {
 				//loadVox("vox/voxelbuildings/1.vox", 1, new Vector3(5, .1f, 5), .2f);
-				loadVox("vox/house1.vox", 1, new Vector3(5, .25f, 5), .5f);
+				//loadVox("vox/skyscraper1.vox", 1, new Vector3(5, .25f, 5), .5f);
+				AbstractEntity castle = EntityFactory.createModel(game.ecs, "Castle", "vox/obj_house1.obj", 5, -1.2f, 5, 0);
+				game.ecs.addEntity(castle);
+				//castle = EntityFactory.createModel(game.ecs, "Castle", "vox/obj_house1.obj", 15, -1.2f, 5, 0);
+				//game.ecs.addEntity(castle);
+				//castle = EntityFactory.createModel(game.ecs, "Castle", "vox/obj_house1.obj", 5, -1.2f, 15, 0);
+				//game.ecs.addEntity(castle);
 			} else {
 				for (int z=0 ; z<2 ; z++) {
 					for (int x=0 ; x<2 ; x++) {

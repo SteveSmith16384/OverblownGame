@@ -99,10 +99,10 @@ public class EntityFactory {
 
 
 	// Note that the mass gets multiplied by the size
-	public static AbstractEntity createModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass, Vector3 adj) {
+	public static AbstractEntity createModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
 		AbstractEntity stairs = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, false, adj, 1f);
+		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
 
 		instance.transform.setTranslation(posX, posY, posZ);
 
@@ -124,6 +124,8 @@ public class EntityFactory {
 		groundObject.setCollisionShape(shape);
 		groundObject.setWorldTransform(instance.transform);
 		stairs.addComponent(new PhysicsComponent(groundObject));
+
+		stairs.addComponent(new PositionComponent());
 
 		return stairs;
 	}
@@ -171,10 +173,10 @@ public class EntityFactory {
 
 
 	// Note that the mass gets multiplied by the size
-	public static AbstractEntity createModelAndPhysicsBox(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, int rotYDegrees, float mass_pre, Vector3 adj, float mscale) {
+	public static AbstractEntity createModelAndPhysicsBox(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, int rotYDegrees, float mass_pre, float mscale) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, true, adj, mscale);
+		ModelInstance instance = ModelFunctions.loadModel(filename, true, mscale);
 
 		//float scale = ModelFunctions.getScaleForWidth(instance, 1f);
 		//instance.transform.scale(scale, scale, scale);

@@ -186,7 +186,7 @@ public abstract class AbstractLevel {
 		if (block.model_filename != null && block.model_filename.length() > 0) {
 			AbstractEntity model = EntityFactory.createModel(game.ecs, block.name, block.model_filename, 
 					block.position.x, block.position.y, block.position.z, 
-					block.mass, null);
+					block.mass);
 			model.tags = block.tags;
 			if (for_map_editor) {
 				model.addComponent(block);
@@ -258,12 +258,14 @@ public abstract class AbstractLevel {
 			int num_removed = 0;
 			for (VoxModel model : voxFile.getModels()) {
 				
+				int c = 0;
 				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (Voxel voxel : model.getVoxels()) {
 					exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = true;
+					c++;
 				}
 				
-				boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
+				/*boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (int z=1 ; z<model.getSize().getZ()-1 ; z++) {
 					for (int y=1 ; y<model.getSize().getY()-1 ; y++) {
 						for (int x=1 ; x<model.getSize().getX()-1 ; x++) {
@@ -274,24 +276,24 @@ public abstract class AbstractLevel {
 							}
 						}
 					}
-				}
+				}*/
 				
 				for (Voxel voxel : model.getVoxels()) {
 					// Remove any voxels if they are surrounded by other voxels
-					if (remove[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()]) {
+					/*if (remove[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()]) {
 						exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = false;
 						num_removed++;
 						continue;
-					}
+					}*/
 					int colour_id = voxel.getColourIndex() & 0xff;
 					int colour = voxFile.getPalette()[colour_id];
 					// Note that y and z seem to be reversed
 					String hexColor = String.format("#%06X", (colour & 0xFFFFFF));
 					String hexColor_rev = "#" + hexColor.substring(5) + hexColor.substring(3, 5) + hexColor.substring(1, 3);
 					Color color = Color.valueOf(hexColor_rev);
-					int tmp_mass = 0;
-					if (voxel.getPosition().getZ() == 0 || exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()-1]) {
-						tmp_mass = mass; // Only give them mass if they are supported by another voxel
+					int tmp_mass = mass;
+					if (voxel.getPosition().getZ() > 0 && exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()-1] == false) {
+						tmp_mass = 0; // Only give them mass if they are supported by another voxel
 					}
 					Wall wall = new Wall(game, "Voxel", null, color, (voxel.getPosition().getX() * scale)+offset.x, (voxel.getPosition().getZ()*scale)+offset.y, (voxel.getPosition().getY()*scale)+offset.z, 
 							scale-.001f, scale-.001f, scale-.001f, 
