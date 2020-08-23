@@ -9,8 +9,8 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 public class MapEditorLevel extends AbstractLevel {
 
 	public static final String MAP_FILENAME = "maps/voxel_town.json";
-	public static final String STATIC_MODEL_FILENAME = "vox/obj_house1.obj";
-	public static final String DYNAMIC_MODEL_FILENAME = "vox/obj_tree3.obj";
+	public static final String STATIC_MODEL_FILENAME = "vox/obj_store15.obj";
+	public static final String DYNAMIC_MODEL_FILENAME = "vox/obj_fence6.obj";
 	
 	public MapEditorSystem mapBuilderSystem;
 

@@ -96,10 +96,10 @@ public class MapEditorSystem extends AbstractSystem {
 						if (block.tags != null && block.tags.length() > 0) {
 							game.appendToLog("Tags: " + block.tags);
 						}
-						
+
 						DrawModelSystem ds = (DrawModelSystem)game.ecs.getSystem(DrawModelSystem.class);
 						ds.wireframe_entity = this.selectedObject;
-						
+
 					} else {
 						game.appendToLog("Block not found");
 						selectedObject = null;
@@ -152,7 +152,7 @@ public class MapEditorSystem extends AbstractSystem {
 			game.appendToLog("Rotation mode selected");
 			if (this.selectedObject != null) {
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-				game.appendToLog("Rotation: " + block.rotation);
+				game.appendToLog("Rotation: " + block.rotation_degs);
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.T)) { // Textures
 			mode = Mode.TEXTURE;
@@ -188,6 +188,7 @@ public class MapEditorSystem extends AbstractSystem {
 				MapBlockComponent new_block = block.clone();
 				this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(new_block);
 				game.currentLevel.mapdata.blocks.add(new_block);
+				game.appendToLog("Object cloned");
 			} else if (keyboard.isKeyJustPressed(Keys.X)) { // Remove
 				if (keyboard.isKeyPressed(Keys.SHIFT_LEFT)) {
 					MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
@@ -362,17 +363,22 @@ public class MapEditorSystem extends AbstractSystem {
 
 
 	private void createNewModel(String filename, int mass) {
-		MapBlockComponent block = new MapBlockComponent();
-		//block.size = new Vector3(1, 1, 1);
-		block.position = new Vector3(0, 5, 0);
-		block.type = "model";
-		block.name = "New Model " + NumberFunctions.rnd(1, 100);
-		block.mass = mass;
-		block.model_filename = filename;
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block, true, 1);
-		game.currentLevel.mapdata.blocks.add(block);
-		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
-		game.appendToLog(block.name + " created");
+		try {
+			MapBlockComponent block = new MapBlockComponent();
+			//block.size = new Vector3(1, 1, 1);
+			block.position = new Vector3(0, 5, 0);
+			block.type = "model";
+			block.name = "New Model " + NumberFunctions.rnd(1, 100);
+			block.mass = mass;
+			block.model_filename = filename;
+			this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block, true, 1);
+			game.currentLevel.mapdata.blocks.add(block);
+			this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
+			game.appendToLog(block.name + " created");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			game.appendToLog("Error: " + ex.getMessage());
+		}
 	}
 
 
@@ -402,8 +408,8 @@ public class MapEditorSystem extends AbstractSystem {
 		DrawModelSystem ds = (DrawModelSystem)game.ecs.getSystem(DrawModelSystem.class);
 		ds.wireframe_entity = this.selectedObject;
 	}
-	
-	
+
+
 	private void moveBlock(Vector3 off) {
 		if (keyboard.isKeyPressed(Keys.CONTROL_LEFT)) {
 			off.scl(.1f);
@@ -424,12 +430,12 @@ public class MapEditorSystem extends AbstractSystem {
 				AbstractEntity e = it.next();
 				MapBlockComponent block = (MapBlockComponent)e.getComponent(MapBlockComponent.class);
 				if (block != null) {
-						Matrix4 mat = this.setBlockDataFromPhysicsData(e, block);
-						PhysicsComponent md = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-						block.position.add(off);
-						mat.setTranslation(block.position);
-						md.body.setWorldTransform(mat);
-						md.body.activate();
+					Matrix4 mat = this.setBlockDataFromPhysicsData(e, block);
+					PhysicsComponent md = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+					block.position.add(off);
+					mat.setTranslation(block.position);
+					md.body.setWorldTransform(mat);
+					md.body.activate();
 				}
 			}
 		}
@@ -462,10 +468,10 @@ public class MapEditorSystem extends AbstractSystem {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		//this.setBlockDataFromPhysicsData(block);
 
-		block.rotation.add(adj);
+		block.rotation_degs.add(adj);
 		this.recreateSelectedBlock(block);
 
-		game.appendToLog("New Rotation: " + block.rotation);
+		game.appendToLog("New Rotation: " + block.rotation_degs);
 	}
 
 
@@ -530,7 +536,7 @@ public class MapEditorSystem extends AbstractSystem {
 		block.size.y -= FRAC;
 		block.size.z -= FRAC;
 
-		block.rotation.set(0, 0, 0);
+		block.rotation_degs.set(0, 0, 0);
 		this.recreateSelectedBlock(block);
 	}
 

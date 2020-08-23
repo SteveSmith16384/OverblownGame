@@ -65,6 +65,7 @@ public class Wall extends AbstractEntity {
 		HasModelComponent model = new HasModelComponent(instance, 1f, cast_shadow);
 		this.addComponent(model);
 
+		//if (mass_pre >= 0) {
 		float mass = mass_pre * w * h * d;
 		if (mass > 0 && mass < 1f) {
 			mass = 1; // Give a minimum mass for (e.g.) thin walls
@@ -81,6 +82,7 @@ public class Wall extends AbstractEntity {
 		body.setCollisionShape(boxShape);
 		body.setWorldTransform(instance.transform);
 		this.addComponent(new PhysicsComponent(body));
+		//}
 
 		this.addComponent(new PositionComponent());
 	}

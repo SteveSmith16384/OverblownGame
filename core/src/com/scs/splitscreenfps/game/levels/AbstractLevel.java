@@ -190,7 +190,7 @@ public abstract class AbstractLevel {
 			AbstractEntity model = null;
 			if (block.mass == 0) {
 				model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
-						block.position.x, block.position.y, block.position.z, 
+						block.position.x, block.position.y, block.position.z, block.rotation_degs.y,
 						block.mass, false);
 			} else {
 				model = EntityFactory.createDynamicModel(game.ecs, block.name, block.model_filename, 
@@ -218,7 +218,7 @@ public abstract class AbstractLevel {
 				wall = new Wall(game, block.name, tex, null, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
 						block.mass * mass_mult, // Hack to make walls heavier
-						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true);
+						block.rotation_degs.x, block.rotation_degs.y, block.rotation_degs.z, block.tiled, true);
 			} else if (block.type.equalsIgnoreCase("sphere")) {
 				wall = EntityFactory.createBall(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
 			} else if (block.type.equalsIgnoreCase("cylinder")) {
