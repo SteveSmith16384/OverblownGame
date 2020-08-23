@@ -188,14 +188,14 @@ public abstract class AbstractLevel {
 		}
 		if (block.model_filename != null && block.model_filename.length() > 0) {
 			AbstractEntity model = null;
-			if (mass_mult == 0) {
+			if (block.mass == 0) {
 				model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
 						block.position.x, block.position.y, block.position.z, 
-						block.mass);
+						block.mass, false);
 			} else {
 				model = EntityFactory.createDynamicModel(game.ecs, block.name, block.model_filename, 
 						block.position.x, block.position.y, block.position.z, 
-						block.mass);
+						block.mass, false);
 			}
 			model.tags = block.tags;
 			if (for_map_editor) {

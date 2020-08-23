@@ -47,7 +47,7 @@ public class EntityFactory {
 		ModelBuilder modelBuilder = game.modelBuilder;
 
 		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
-		
+
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
@@ -99,15 +99,17 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createStaticModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
+	public static AbstractEntity createStaticModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass, boolean alignToY) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
-		
+
 		// Calc min on Y axis
 		BoundingBox tmpBB = new BoundingBox();
-		instance.calculateBoundingBox(tmpBB);
-		tmpBB.mul(instance.transform);
+		if (alignToY) {
+			instance.calculateBoundingBox(tmpBB);
+			tmpBB.mul(instance.transform);
+		}
 		instance.transform.setTranslation(posX, posY-tmpBB.min.y, posZ);
 
 		/*if (axis != null) {
@@ -135,17 +137,20 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createDynamicModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass) {
+	public static AbstractEntity createDynamicModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass, boolean alignToY) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
-		
+
 		// Calc min on Y axis
 		BoundingBox tmpBB = new BoundingBox();
 		instance.calculateBoundingBox(tmpBB);
 		tmpBB.mul(instance.transform);
-		instance.transform.setTranslation(posX, posY-tmpBB.min.y, posZ);
-
+		if (alignToY) {
+			instance.transform.setTranslation(posX, posY-tmpBB.min.y, posZ);
+		} else {
+			instance.transform.setTranslation(posX, posY, posZ);
+		}
 		/*if (axis != null) {
 			instance.transform.rotate(axis, degrees);
 		}*/
@@ -301,7 +306,7 @@ public class EntityFactory {
 		float w = .5f;
 		float h = .5f;
 		float d = .5f;
-		
+
 		lootbox.addComponent(new IsCollectableComponent(type));
 
 		TextureRegion tex = game.getTexture("textures/spritesforyou.png", 8, 8, 0, 4);
@@ -309,7 +314,7 @@ public class EntityFactory {
 		ModelBuilder modelBuilder = game.modelBuilder;
 
 		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
-		
+
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
@@ -338,7 +343,7 @@ public class EntityFactory {
 		Material material = new Material();//TextureAttribute.createDiffuse(tex));
 
 		//Model box_model = ShapeHelper.createLine(modelBuilder, new Vector3(), new Vector3(0, 1, 0), material);
-		
+
 		int attr = VertexAttributes.Usage.Position;// | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		ModelBuilder modelBuilder = game.modelBuilder;
 		modelBuilder.begin();
