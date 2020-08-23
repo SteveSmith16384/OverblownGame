@@ -4,13 +4,8 @@
     "2": "colours/red.png",
     "3": "colours/brown.png",
     "4": "textures/blackborder/white.png",
-    "5": "textures/crate1.png",
-    "6": "textures/crate2.png",
-    "7": "textures/blackborder/grey1.png",
-    "8": "textures/blackborder/grey2.png",
-    "9": "textures/blackborder/grey3.png",
-    "10": "textures/blackborder/purple1.png",
-    "11": "textures/skyscraper.png"
+    "5": "textures/tones/lightgrey0.png",
+    "6": "colours/green.png"
   },
   "blocks": [
     {
@@ -18,7 +13,7 @@
       "type": "cube",
       "name": "New cube 58",
       "tags": "",
-      "texture_id": 7,
+      "texture_id": 1,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -31,7 +26,7 @@
         "y": -0.25,
         "z": 9.0
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -56,7 +51,7 @@
         "y": 0.5,
         "z": 2.5
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -81,7 +76,7 @@
         "y": 0.5,
         "z": 13.5
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -102,11 +97,11 @@
         "z": 1.0
       },
       "position": {
-        "x": 3.75,
+        "x": 0.5,
         "y": 0.75,
-        "z": 4.0
+        "z": 2.0
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -131,7 +126,7 @@
         "y": 0.75,
         "z": 17.5
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -156,7 +151,7 @@
         "y": 0.25,
         "z": 18.25
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -181,7 +176,7 @@
         "y": 0.25,
         "z": -0.5
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -204,9 +199,9 @@
       "position": {
         "x": 1.75,
         "y": -1.2,
-        "z": 3.75
+        "z": 5.75
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -227,16 +222,291 @@
         "z": 0.0
       },
       "position": {
-        "x": 6.2556314,
-        "y": -0.8000071,
-        "z": 9.499658
+        "x": 6.256018,
+        "y": -0.8000008,
+        "z": 9.499591
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
       "mass": 1.0
+    },
+    {
+      "id": 10,
+      "type": "model",
+      "name": "New Model 27",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_bench1.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 5.036392E-4,
+        "y": -1.1123166,
+        "z": 7.2473407
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 11,
+      "type": "model",
+      "name": "New Model 98",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_fence6.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 9.25,
+        "y": -0.41342175,
+        "z": 4.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 13,
+      "type": "model",
+      "name": "New Model 15",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_cone1.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 1.0013851,
+        "y": -0.304264,
+        "z": 3.9998085
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 14,
+      "type": "model",
+      "name": "New Model 22",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_container1.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 12.75,
+        "y": -0.70671093,
+        "z": 7.5
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 15,
+      "type": "model",
+      "name": "New Model 22",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_container2.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 12.75,
+        "y": 0.9085543,
+        "z": 7.5
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 16,
+      "type": "model",
+      "name": "New Model 22",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_container3.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 12.75,
+        "y": 2.5914452,
+        "z": 7.5
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 17,
+      "type": "model",
+      "name": "New Model 22",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_container4.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 12.75,
+        "y": 4.375,
+        "z": 7.5
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 17,
+      "type": "model",
+      "name": "New Model 60",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_fence2.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 8.5,
+        "y": -0.875,
+        "z": 9.0
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 18,
+      "type": "model",
+      "name": "New Model 47",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_fence4.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": -9.703313E-7,
+        "y": -0.39999872,
+        "z": 7.4993105
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 21,
+      "type": "model",
+      "name": "New Model 6",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_house6.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 11.5,
+        "y": -1.25,
+        "z": 17.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 23,
+      "type": "model",
+      "name": "New Model 66",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/obj_store15.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 5.25,
+        "y": -3.0,
+        "z": 14.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 180.0,
+        "z": 0.0
+      },
+      "mass": 0.0
     }
   ]
 }
