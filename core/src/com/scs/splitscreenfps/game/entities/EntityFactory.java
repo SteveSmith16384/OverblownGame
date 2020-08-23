@@ -1,7 +1,5 @@
 package com.scs.splitscreenfps.game.entities;
 
-import java.nio.FloatBuffer;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
@@ -25,6 +24,8 @@ import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
 import com.badlogic.gdx.physics.bullet.collision.btGhostObject;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
+import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
+import com.badlogic.gdx.physics.bullet.linearmath.btTransform;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
@@ -111,7 +112,7 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createDynamicModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float mass, boolean alignToY) {
+	public static AbstractEntity createDynamicModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, float mass, boolean alignToY) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
@@ -125,37 +126,41 @@ public class EntityFactory {
 		} else {
 			instance.transform.setTranslation(posX, posY, posZ);
 		}
-		/*if (axis != null) {
-			instance.transform.rotate(axis, degrees);
-		}*/
+
+		if (rot_y != 0) {
+			instance.transform.rotate(Vector3.Y, rot_y);
+		}
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		entity.addComponent(model);
 
-		//btCollisionShape shape = new btConvexHullShape(instance.model.meshes.get(0).getVerticesBuffer(), instance.model.meshes.get(0).getNumVertices());
-		Vector3 ext = new Vector3();//tmpBB.max);
+		Vector3 ext = new Vector3();
 		tmpBB.getDimensions(ext);
 		ext.scl(.5f);
-		//btBoxShape shape = new btBoxShape(ext);
 
 		btCompoundShape shape = new btCompoundShape();
 		Matrix4 tmpMat = new Matrix4();
 		Vector3 offset = new Vector3(tmpBB.getCenterX(), tmpBB.getCenterY(), tmpBB.getCenterZ());
-		//offset.scl(-.5f);
 		tmpMat.setTranslation(offset);
 		shape.addChildShape(tmpMat, new btBoxShape(ext));
-		//float[] tmp = {1f};
-		//FloatBuffer fb = new FloatBuffer(0, 0, 1, 1,tmp, 0);
-		//FloatBuffer samplePos = BufferUtils.createFloatBuffer(2);
-		//todo shape.calculatePrincipalAxisTransform(masses, principal, inertia);
+
 		Vector3 local_inertia = new Vector3();
 		if (mass > 0) {
 			shape.calculateLocalInertia(mass, local_inertia);
 		}
-		btRigidBody rigidBody = new btRigidBody(mass, null, shape, local_inertia);
+		/*FloatBuffer samplePos = BufferUtils.newFloatBuffer(1);
+		samplePos.put(mass);*/
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(new Vector3(offset).scl(10));
+		//shape.calculatePrincipalAxisTransform(samplePos, mat, local_inertia);
+
+		btDefaultMotionState ms = new btDefaultMotionState();
+		ms.setCenterOfMassOffset(new btTransform(new Quaternion(), offset));
+		btRigidBody rigidBody = new btRigidBody(mass, ms, shape, local_inertia);
 		rigidBody.userData = entity;
 		//rigidBody.setRestitution(.2f);
 		rigidBody.setCollisionShape(shape);
+		//rigidBody.setCenterOfMassTransform(mat);
 		rigidBody.setWorldTransform(instance.transform);
 		entity.addComponent(new PhysicsComponent(rigidBody));
 

@@ -195,6 +195,7 @@ public abstract class AbstractLevel {
 			} else {
 				model = EntityFactory.createDynamicModel(game.ecs, block.name, block.model_filename, 
 						block.position.x, block.position.y, block.position.z, 
+						block.rotation_degs.y,
 						block.mass, false);
 			}
 			model.tags = block.tags;

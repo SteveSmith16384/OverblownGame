@@ -41,7 +41,7 @@ public class Wall extends AbstractEntity {
 		}
 		//material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)); // Allow transparency, not currently required
 
-		Model box_model = ShapeHelper.createCube(game.modelBuilder, w, h, d, material);
+		Model box_model = ShapeHelper.createCube_AdvancedScaling(game.modelBuilder, w, h, d, material);
 
 		if (tile) {
 			Matrix3 mat = new Matrix3();
