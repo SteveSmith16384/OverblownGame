@@ -52,6 +52,8 @@ To edit the available texures, manually edit the map json file.
 * 3 - Show our position
 * 4 - Select All Blocks mode
 * 5 - Show physics debug
+* 8 - Add dynamic model - You need to edit the code to specify the filename
+* 9 - Add static model - You need to edit the code to specify the filename
 * 0 - Reset rotation
 * B - Size mode
 * C - Clone current block

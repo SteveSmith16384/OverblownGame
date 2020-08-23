@@ -4,13 +4,12 @@ import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
-public class TempleOfTheNoobiesLevel extends AbstractLevel {
+public class VoxelTownLevel extends AbstractLevel {
 
 	private ISystem deathmatchSystem;
-	
+
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
-
 		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
 	}
 
@@ -18,13 +17,10 @@ public class TempleOfTheNoobiesLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			super.loadJsonFile("maps/templeofthenoobies.json", false);
+			super.loadJsonFile("maps/voxel_town.json", false);
 		} catch (Exception e) {
 			throw new RuntimeException("Error loading map file", e);
 		}
-
-		//AbstractEntity lootbox = EntityFactory.createLootBox(game,10, 10, 1, CollectableSystem.CollectableType.HealthPack);
-		//game.ecs.addEntity(lootbox);
 
 	}
 
@@ -37,7 +33,7 @@ public class TempleOfTheNoobiesLevel extends AbstractLevel {
 
 	@Override
 	public String getName() {
-		return "Temple of the Noobies";
+		return "Voxel Town Deathmatch";
 	}
 
 

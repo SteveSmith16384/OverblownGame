@@ -41,17 +41,18 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_PIGGY = 4;
 	public static final int LEVEL_SHOOT_TAG = 5;
 	public static final int LEVEL_WHAT_THE_BALL = 6;
-	public static final int LEVEL_CITY = 7;
+	public static final int LEVEL_TOWER_BLOCKS = 7;
 	public static final int LEVEL_MINECRAFT = 8;
-	public static final int LEVEL_MAP_EDITOR = 9;
-	public static final int LEVEL_AI_TEST = 10;
+	public static final int LEVEL_VOXEL_TOWN = 9;
+	public static final int LEVEL_MAP_EDITOR = 10;
+	public static final int LEVEL_AI_TEST = 11;
 
 	public static final int MAX_LEVEL_ID = 9;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
 	public MapData mapdata;
-	
+
 	public void getReadyForGame(Game _game) {
 		game = _game;
 	}
@@ -84,10 +85,12 @@ public abstract class AbstractLevel {
 			return new WhatTheBallLevel();
 		case LEVEL_MAP_EDITOR:
 			return new MapEditorLevel();
-		case LEVEL_CITY:
-			return new CityLevel();
+		case LEVEL_TOWER_BLOCKS:
+			return new TowerBlocksLevel();
 		case LEVEL_MINECRAFT:
 			return new MinecraftLevel();
+		case LEVEL_VOXEL_TOWN:
+			return new VoxelTownLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
@@ -129,7 +132,7 @@ public abstract class AbstractLevel {
 	 */
 	public void loadJsonFile(String filename, boolean for_map_editor, Vector3 offset, float mass_mult) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		Gson gson = new Gson();
-		
+
 		String s = Gdx.files.internal(filename).readString();
 		mapdata = gson.fromJson(s, MapData.class);
 
@@ -184,9 +187,16 @@ public abstract class AbstractLevel {
 			block.id = MapBlockComponent.next_id++;
 		}
 		if (block.model_filename != null && block.model_filename.length() > 0) {
-			AbstractEntity model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
-					block.position.x, block.position.y, block.position.z, 
-					block.mass);
+			AbstractEntity model = null;
+			if (mass_mult == 0) {
+				model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
+						block.position.x, block.position.y, block.position.z, 
+						block.mass);
+			} else {
+				model = EntityFactory.createDynamicModel(game.ecs, block.name, block.model_filename, 
+						block.position.x, block.position.y, block.position.z, 
+						block.mass);
+			}
 			model.tags = block.tags;
 			if (for_map_editor) {
 				model.addComponent(block);
@@ -239,7 +249,7 @@ public abstract class AbstractLevel {
 		}
 
 		// backup old file
-		IOFunctions.copyFileUsingStream(filename, filename + "_old");
+		IOFunctions.copyFileUsingStream(filename, filename + ".bak");
 
 		JsonWriter writer = new JsonWriter(new FileWriter(filename));
 		writer.setIndent("  ");
@@ -249,22 +259,22 @@ public abstract class AbstractLevel {
 		writer.close();
 
 	}
-	
-	
+
+
 	public void loadVox(String filename, int mass, Vector3 offset, float scale) {//, int trunc) {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
 			int count = 0;
 			int num_removed = 0;
 			for (VoxModel model : voxFile.getModels()) {
-				
+
 				int c = 0;
 				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (Voxel voxel : model.getVoxels()) {
 					exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = true;
 					c++;
 				}
-				
+
 				/*boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (int z=1 ; z<model.getSize().getZ()-1 ; z++) {
 					for (int y=1 ; y<model.getSize().getY()-1 ; y++) {
@@ -277,7 +287,7 @@ public abstract class AbstractLevel {
 						}
 					}
 				}*/
-				
+
 				for (Voxel voxel : model.getVoxels()) {
 					// Remove any voxels if they are surrounded by other voxels
 					/*if (remove[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()]) {
@@ -306,7 +316,7 @@ public abstract class AbstractLevel {
 			Settings.p(count + " voxels loaded");
 			Settings.p(num_removed + " voxels removed");
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}

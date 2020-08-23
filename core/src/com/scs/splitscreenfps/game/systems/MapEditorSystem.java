@@ -126,10 +126,10 @@ public class MapEditorSystem extends AbstractSystem {
 			game.appendToLog("All Blocks?: " + this.all_blocks_selected);
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_5)) { // Draw physics
 			Settings.DRAW_PHYSICS = !Settings.DRAW_PHYSICS;
+		} else if (keyboard.isKeyJustPressed(Keys.NUM_8)) {
+			this.createNewModel(MapEditorLevel.DYNAMIC_MODEL_FILENAME, 1);
 		} else if (keyboard.isKeyJustPressed(Keys.NUM_9)) {
-			if (Settings.TEST_VOX) {
-				this.createNewModel("vox/obj_house1.obj");
-			}
+			this.createNewModel(MapEditorLevel.STATIC_MODEL_FILENAME, 0);
 		} else if (keyboard.isKeyJustPressed(Keys.P)) { // Position mode or new Plane
 			mode = Mode.POSITION;
 			game.appendToLog("Position mode selected");
@@ -361,15 +361,15 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
-	private void createNewModel(String filename) {
+	private void createNewModel(String filename, int mass) {
 		MapBlockComponent block = new MapBlockComponent();
 		//block.size = new Vector3(1, 1, 1);
 		block.position = new Vector3(0, 5, 0);
 		block.type = "model";
 		block.name = "New Model " + NumberFunctions.rnd(1, 100);
-		block.mass = 0;
+		block.mass = mass;
 		block.model_filename = filename;
-		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block);
+		this.selectedObject = game.currentLevel.createAndAddEntityFromBlockData(block, true, 1);
 		game.currentLevel.mapdata.blocks.add(block);
 		this.settleBlock(); // Need this to add it to the physics world, so it can be selected!
 		game.appendToLog(block.name + " created");
@@ -558,7 +558,7 @@ public class MapEditorSystem extends AbstractSystem {
 				}
 			}
 
-			game.currentLevel.saveFile(MapEditorLevel.filename);
+			game.currentLevel.saveFile(MapEditorLevel.MAP_FILENAME);
 			Settings.p("Map saved");
 		} catch (Exception e) {
 			e.printStackTrace();

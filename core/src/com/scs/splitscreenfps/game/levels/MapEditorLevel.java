@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.levels;
 
-import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
@@ -9,7 +8,9 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 public class MapEditorLevel extends AbstractLevel {
 
-	public static final String filename = "maps/minecraft.json";
+	public static final String MAP_FILENAME = "maps/voxel_town.json";
+	public static final String STATIC_MODEL_FILENAME = "vox/obj_house1.obj";
+	public static final String DYNAMIC_MODEL_FILENAME = "vox/obj_tree3.obj";
 	
 	public MapEditorSystem mapBuilderSystem;
 
@@ -27,17 +28,14 @@ public class MapEditorLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		try {
-			super.loadJsonFile(filename, true);
+			super.loadJsonFile(MAP_FILENAME, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game));
 		
-		//AbstractEntity castle = EntityFactory.createModel(game.ecs, "Castle", "vox/obj_house1.obj", 5, -1.2f, 5, 0);
-		//game.ecs.addEntity(castle);
-
-		game.appendToLog("Loaded " + filename);
+		game.appendToLog("Loaded " + MAP_FILENAME);
 		game.appendToLog("Map editor ready");
 
 	}

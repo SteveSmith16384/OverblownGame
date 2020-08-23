@@ -11,7 +11,7 @@ import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 import ssmith.lang.NumberFunctions;
 
-public class CityLevel extends AbstractLevel {
+public class TowerBlocksLevel extends AbstractLevel {
 
 	private float floor_size = 35f;
 
@@ -68,7 +68,7 @@ public class CityLevel extends AbstractLevel {
 
 	@Override
 	public String getName() {
-		return "City Deathmatch";
+		return "Tower Block Deathmatch";
 	}
 
 
