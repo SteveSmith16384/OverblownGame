@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
@@ -113,6 +114,67 @@ public class EntityFactory {
 
 
 	public static AbstractEntity createDynamicModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, float mass, boolean alignToY) {
+		AbstractEntity entity = new AbstractEntity(ecs, name);
+
+		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
+
+		// Calc min on Y axis
+		BoundingBox tmpBB = new BoundingBox();
+		instance.calculateBoundingBox(tmpBB);
+		tmpBB.mul(instance.transform);
+		if (alignToY) {
+			instance.transform.setTranslation(posX, posY-tmpBB.min.y, posZ);
+		} else {
+			instance.transform.setTranslation(posX, posY, posZ);
+		}
+
+		if (rot_y != 0) {
+			instance.transform.rotate(Vector3.Y, rot_y);
+		}
+		
+		/*for(Node n : instance.nodes) {
+			n.localTransform.setTranslation(-tmpBB.getCenterX(), -10, -tmpBB.getCenterZ());
+		}*/
+		
+		for (int i = 0; i < instance.nodes.size; i++) {
+            String id = instance.nodes.get(i).id;
+            Node node = instance.getNode(id);
+
+            //instance.transform.set(node.globalTransform);
+            node.translation.set(-tmpBB.getCenterX(), -tmpBB.getCenterY(), -tmpBB.getCenterZ());
+            node.scale.set(1,1,1);
+            node.rotation.idt();
+            instance.calculateTransforms();
+		}
+		
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		entity.addComponent(model);
+
+		Vector3 ext = new Vector3();
+		tmpBB.getDimensions(ext);
+		ext.scl(.5f);
+
+		btBoxShape shape = new btBoxShape(ext);
+
+		Vector3 local_inertia = new Vector3();
+		if (mass > 0) {
+			shape.calculateLocalInertia(mass, local_inertia);
+		}
+		btRigidBody rigidBody = new btRigidBody(mass, null, shape, local_inertia);
+		rigidBody.userData = entity;
+		//rigidBody.setRestitution(.2f);
+		rigidBody.setCollisionShape(shape);
+		//rigidBody.setCenterOfMassTransform(mat);
+		rigidBody.setWorldTransform(instance.transform);
+		entity.addComponent(new PhysicsComponent(rigidBody));
+
+		entity.addComponent(new PositionComponent());
+
+		return entity;
+	}
+
+
+	public static AbstractEntity createDynamicModel_ORIG(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, float mass, boolean alignToY) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);

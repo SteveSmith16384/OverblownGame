@@ -4,8 +4,9 @@
     "2": "colours/red.png",
     "3": "colours/brown.png",
     "4": "textures/blackborder/white.png",
-    "5": "textures/tones/lightgrey0.png",
-    "6": "colours/green.png"
+    "5": "textures/tones/grey0.png",
+    "6": "textures/tones/grey1.png",
+    "7": "colours/green.png"
   },
   "blocks": [
     {
@@ -13,7 +14,7 @@
       "type": "cube",
       "name": "New cube 58",
       "tags": "",
-      "texture_id": 1,
+      "texture_id": 5,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -223,7 +224,7 @@
       },
       "position": {
         "x": 6.256018,
-        "y": -0.8000008,
+        "y": 0.9499992,
         "z": 9.499591
       },
       "rotation_degs": {
@@ -247,8 +248,8 @@
         "z": 0.0
       },
       "position": {
-        "x": 5.036392E-4,
-        "y": -1.1123166,
+        "x": 2.7505035,
+        "y": 0.6376834,
         "z": 7.2473407
       },
       "rotation_degs": {
@@ -272,9 +273,9 @@
         "z": 0.0
       },
       "position": {
-        "x": 9.25,
-        "y": -0.41342175,
-        "z": 4.75
+        "x": 9.0,
+        "y": 0.58657825,
+        "z": 5.75
       },
       "rotation_degs": {
         "x": 0.0,
@@ -298,7 +299,7 @@
       },
       "position": {
         "x": 1.0013851,
-        "y": -0.304264,
+        "y": 0.445736,
         "z": 3.9998085
       },
       "rotation_degs": {
@@ -323,7 +324,7 @@
       },
       "position": {
         "x": 12.75,
-        "y": -0.70671093,
+        "y": 6.043289,
         "z": 7.5
       },
       "rotation_degs": {
@@ -423,7 +424,7 @@
       },
       "position": {
         "x": 8.5,
-        "y": -0.875,
+        "y": 0.875,
         "z": 9.0
       },
       "rotation_degs": {
@@ -448,7 +449,7 @@
       },
       "position": {
         "x": -9.703313E-7,
-        "y": -0.39999872,
+        "y": 0.35000128,
         "z": 7.4993105
       },
       "rotation_degs": {
