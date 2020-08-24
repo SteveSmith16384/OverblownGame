@@ -37,6 +37,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.LensFlareEffect;
+import com.crashinvaders.vfx.effects.OldTvEffect;
 import com.google.gson.Gson;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
@@ -250,6 +251,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 			//vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
 			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			
+			//vfxManager.addEffect(new ChromaticAberrationEffect(3)); // good but trippy
+			vfxManager.addEffect(new OldTvEffect());
+			//vfxManager.addEffect(new CrtEffect());
 			//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 			//vfxManager.addEffect(new FilmGrainEffect()); // No use
 			vfxManager.addEffect(new LensFlareEffect()); // Good
