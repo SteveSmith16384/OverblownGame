@@ -35,6 +35,7 @@ import com.scs.splitscreenfps.game.data.ExplosionData;
 
 import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GraphicsHelper;
+import ssmith.libgdx.ShapeHelper;
 
 public class BulletEntityFactory {
 
@@ -42,7 +43,7 @@ public class BulletEntityFactory {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Bullet");
 
 		float diam = 0.1f;//05f;
-		
+
 		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
@@ -50,7 +51,6 @@ public class BulletEntityFactory {
 
 		HasDecal hasDecal = new HasDecal();
 		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
-
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
@@ -95,12 +95,12 @@ public class BulletEntityFactory {
 		return e;
 	}
 
-	
+
 	public static AbstractEntity createBouncingBullet(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Bullet");
 
 		float diam = 0.1f;//05f;
-		
+
 		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
@@ -117,7 +117,7 @@ public class BulletEntityFactory {
 		//e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, .4f));
 		e.addComponent(new RemoveEntityAfterTimeComponent(4));
-		
+
 		// Add physics
 		btSphereShape shape = new btSphereShape(diam/2);//new Vector3(size/2, size/2, size/2));
 		btRigidBody body = new btRigidBody(.07f, null, shape);
@@ -152,32 +152,37 @@ public class BulletEntityFactory {
 		return e;
 	}
 
-	
+
 	private static Decal getBulletDecal(ITextureProvider texProvider, int side) {
 		Decal decal = GraphicsHelper.DecalHelper(texProvider.getTexture("particle.png"), 0.2f);
 		decal.setColor(Settings.getColourForSide(side));
 		return decal;
 	}
 
-	
+
 	public static AbstractEntity createRocket(Game game, AbstractEntity shooter, Vector3 start, Vector3 dir) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Rocket");
 
 		float size = .1f;
-		
+
 		e.addComponent(new PositionComponent());
 
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
-		HasDecal hasDecal = new HasDecal();
-		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
-		
-		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = true;
-		e.addComponent(hasDecal);
+		if (Settings.PROPER_BULLETS) {
+			ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, game.getTexture("textures/neon/robot_purple.png"), start.x, start.y, start.z, .05f, .2f);
+			HasModelComponent model = new HasModelComponent(instance, 1, true);
+			instance.transform.setToRotation(dir, Vector3.Y); // todo
+			e.addComponent(model);
+		} else {
+			HasDecal hasDecal = new HasDecal();
+			hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
+			hasDecal.faceCamera = true;
+			hasDecal.dontLockYAxis = true;
+			e.addComponent(hasDecal);
+		}
 
-		//e.addComponent(new IsBulletComponent(shooter, start, settings, true));
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, true, false, true));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
@@ -268,7 +273,7 @@ public class BulletEntityFactory {
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
 		e.addComponent(new ExplodeAfterTimeComponent(2500, settings.explData, shooter, false));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
-	
+
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f);
 		btRigidBody body = new btRigidBody(.1f, null, shape);
@@ -307,7 +312,7 @@ public class BulletEntityFactory {
 		e.addComponent(new RemoveOnContactComponent(shooter, true));
 		//e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
-	
+
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f);
 		btRigidBody body = new btRigidBody(.1f, null, shape);
@@ -344,7 +349,7 @@ public class BulletEntityFactory {
 		e.addComponent(new RemoveEntityAfterTimeComponent(20));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", 100, 0, 0, false, 0));
 
-		
+
 		float width = .5f;
 		float height = .1f;
 		Texture tex = game.getTexture("colours/yellow.png");
@@ -426,16 +431,16 @@ public class BulletEntityFactory {
 		start.x += shooter.camera.direction.x * 1.5f;
 		start.y += 20f;
 		start.z += shooter.camera.direction.z * 1.5f;
-		
+
 		float diam = 3f;
-		
+
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		Model sphere_model = game.modelBuilder.createSphere(diam,  diam,  diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
-		
+
 		e.addComponent(new PositionComponent());
 		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(4, 250, 5), shooter, true, false, false));
 
@@ -465,22 +470,22 @@ public class BulletEntityFactory {
 		start.x += NumberFunctions.rndFloat(-.5f,  .5f);
 		start.y += 1f;
 		start.z += NumberFunctions.rndFloat(-.5f,  .5f);
-		
+
 		float diam = .3f;
-		
+
 		Texture tex = game.getTexture("textures/sun.jpg");
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		Model sphere_model = game.modelBuilder.createSphere(diam, diam, diam, 10, 10, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
-		
+
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
-		
+
 		e.addComponent(new PositionComponent());
 		e.addComponent(new ExplodeOnContactComponent(new ExplosionData(.2f, 10, 3), shooter, false, true, false));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, null, "", 20, 0, 0, true, 0));
 		e.addComponent(new RemoveEntityAfterTimeComponent(20));
-		
+
 		// Add physics
 		float mass = .1f;
 		btSphereShape shape = new btSphereShape(diam/2); // This is a lot smaller so the sphere goes through the ground before exploding
@@ -494,7 +499,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setFriction(0.1f);
 		body.setWorldTransform(mat);
-		
+
 		PhysicsComponent pc = new PhysicsComponent(body);
 		e.addComponent(pc);
 
@@ -509,7 +514,7 @@ public class BulletEntityFactory {
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)shooter;
 		Vector3 dir = new Vector3(player.camera.direction);
-		
+
 		PositionComponent posData = (PositionComponent)shooter.getComponent(PositionComponent.class);
 		Vector3 start = new Vector3();
 		start.set(posData.position);
@@ -530,7 +535,7 @@ public class BulletEntityFactory {
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0));
 		e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
-	
+
 		// Add physics
 		btSphereShape shape = new btSphereShape(.1f);
 		btRigidBody body = new btRigidBody(.5f, null, shape);
@@ -554,7 +559,7 @@ public class BulletEntityFactory {
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)shooter;
 		Vector3 dir = new Vector3(player.camera.direction);
-		
+
 		PositionComponent posData = (PositionComponent)shooter.getComponent(PositionComponent.class);
 		Vector3 start = new Vector3();
 		start.set(posData.position);
@@ -568,7 +573,7 @@ public class BulletEntityFactory {
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		Model sphere_model = game.modelBuilder.createCylinder(width, height, width, 8, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
-		
+
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		e.addComponent(model);
 
@@ -599,7 +604,7 @@ public class BulletEntityFactory {
 
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)shooter;
 		Vector3 dir = new Vector3(player.camera.direction);
-		
+
 		PositionComponent posData = (PositionComponent)shooter.getComponent(PositionComponent.class);
 		Vector3 start = new Vector3();
 		start.set(posData.position);
@@ -615,7 +620,7 @@ public class BulletEntityFactory {
 		Material material = new Material(TextureAttribute.createDiffuse(tex));
 		Model sphere_model = game.modelBuilder.createCylinder(width, height, width, 8, material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 		ModelInstance instance = new ModelInstance(sphere_model);
-		
+
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		model.onlyDrawInViewId = playerData.playerIdx;
 		e.addComponent(model);
@@ -624,7 +629,7 @@ public class BulletEntityFactory {
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 2f));
 		//e.addComponent(new ExplodeAfterTimeComponent(1500, settings.explData, shooter, false));
 		//e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, false, true, false));
-	
+
 		// Add physics
 		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(width/2, height/2, width/2));
 		Vector3 local_inertia = new Vector3();
@@ -637,7 +642,7 @@ public class BulletEntityFactory {
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
-		
+
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.force = dir.scl(.7f);
 		pc.sound_on_collision = "sfx/clang1.wav";

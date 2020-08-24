@@ -13,20 +13,16 @@ import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject.CollisionFlags;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.badlogic.gdx.physics.bullet.collision.btCompoundShape;
 import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
 import com.badlogic.gdx.physics.bullet.collision.btGhostObject;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
-import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
-import com.badlogic.gdx.physics.bullet.linearmath.btTransform;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
@@ -174,6 +170,7 @@ public class EntityFactory {
 	}
 
 
+	/*
 	public static AbstractEntity createDynamicModel_ORIG(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, float mass, boolean alignToY) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
@@ -210,8 +207,6 @@ public class EntityFactory {
 		if (mass > 0) {
 			shape.calculateLocalInertia(mass, local_inertia);
 		}
-		/*FloatBuffer samplePos = BufferUtils.newFloatBuffer(1);
-		samplePos.put(mass);*/
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(new Vector3(offset).scl(10));
 		//shape.calculatePrincipalAxisTransform(samplePos, mat, local_inertia);
@@ -230,7 +225,7 @@ public class EntityFactory {
 
 		return entity;
 	}
-
+*/
 
 	public static AbstractEntity createCylinder(Game game, Texture tex, float x, float y, float z, float diam, float length, float mass_pre) {
 		AbstractEntity cylinder = new AbstractEntity(game.ecs, "Cylinder");

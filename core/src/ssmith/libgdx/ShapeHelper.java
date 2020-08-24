@@ -64,24 +64,24 @@ public class ShapeHelper {
 		mb.setUVRange(0, 0, h*scale, w*scale);
 		mb.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
 		// Back
-		//modelBuilder.part("back", GL20.GL_TRIANGLES, attr, material); // todo - don;t start a new part of the scale is the same
-		//mb.setUVRange(0,  0,  h*scale, w*scale);
 		mb.rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
+
 		// Bottom
-		modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, material);
-		mb.setUVRange(0,  0,  d*scale, w*scale);
+		if (h != d) {
+			modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, material);
+			mb.setUVRange(0,  0,  d*scale, w*scale);
+		}
 		mb.rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
 		// Top
-		//modelBuilder.part("top", GL20.GL_TRIANGLES, attr, material);
-		//mb.setUVRange(0,  0,  d*scale, w*scale);
 		mb.rect(-w/2,h/2,-d/2, -w/2,h/2,d/2,  w/2,h/2,d/2, w/2,h/2,-d/2, 0,1,0);
+
 		// Left
-		modelBuilder.part("left", GL20.GL_TRIANGLES, attr, material);
-		mb.setUVRange(0,  0,  h*scale, d*scale);
+		if (h != d || d != w) {
+			modelBuilder.part("left", GL20.GL_TRIANGLES, attr, material);
+			mb.setUVRange(0,  0,  h*scale, d*scale);
+		}
 		mb.rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
 		// Right
-		//modelBuilder.part("right", GL20.GL_TRIANGLES, attr, material);
-		//mb.setUVRange(0,  0,  h*scale, d*scale);
 		mb.rect(w/2,-h/2,-d/2, w/2,h/2,-d/2,  w/2,h/2,d/2, w/2,-h/2,d/2, 1,0,0);
 
 		Model box_model = modelBuilder.end();
@@ -131,18 +131,15 @@ public class ShapeHelper {
 
 
 	public static ModelInstance createCylinder(ModelBuilder modelBuilder, Texture tex, float x, float y, float z, float diam, float length) {
-		//Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
-		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		Material material = new Material(TextureAttribute.createDiffuse(tex));
 
-		Model floor = modelBuilder.createCylinder(diam, length, diam, 8, black_material,
+		Model floor = modelBuilder.createCylinder(diam, length, diam, 8, material,
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates | VertexAttributes.Usage.Normal);
 
 		Matrix3 mat = new Matrix3();
 		floor.meshes.get(0).transformUV(mat);
 
 		ModelInstance instance = new ModelInstance(floor, new Vector3(x, y, z));
-		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
-		//instance.calculateTransforms();
 
 		return instance;
 	}

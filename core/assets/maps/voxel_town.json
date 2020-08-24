@@ -6,7 +6,8 @@
     "4": "textures/blackborder/white.png",
     "5": "textures/tones/grey0.png",
     "6": "textures/tones/grey1.png",
-    "7": "colours/green.png"
+    "7": "colours/green.png",
+    "8": "textures/pixel-textures/default_water.png"
   },
   "blocks": [
     {
@@ -48,7 +49,7 @@
         "z": 1.0
       },
       "position": {
-        "x": 15.5,
+        "x": 32.0,
         "y": 0.5,
         "z": 2.5
       },
@@ -73,9 +74,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 6.25,
+        "x": 6.75,
         "y": 0.5,
-        "z": 13.5
+        "z": 27.75
       },
       "rotation_degs": {
         "x": 0.0,
@@ -123,9 +124,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 16.5,
+        "x": 34.25,
         "y": 0.75,
-        "z": 17.5
+        "z": 26.0
       },
       "rotation_degs": {
         "x": 0.0,
@@ -223,8 +224,8 @@
         "z": 0.0
       },
       "position": {
-        "x": 6.256018,
-        "y": 0.9499992,
+        "x": 6.256021,
+        "y": 0.7998093,
         "z": 9.499591
       },
       "rotation_degs": {
@@ -248,8 +249,8 @@
         "z": 0.0
       },
       "position": {
-        "x": 2.7505035,
-        "y": 0.6376834,
+        "x": 2.7505038,
+        "y": 0.39797404,
         "z": 7.2473407
       },
       "rotation_degs": {
@@ -273,9 +274,9 @@
         "z": 0.0
       },
       "position": {
-        "x": 9.0,
-        "y": 0.58657825,
-        "z": 5.75
+        "x": 24.764372,
+        "y": 0.46147838,
+        "z": 5.750241
       },
       "rotation_degs": {
         "x": 0.0,
@@ -298,9 +299,9 @@
         "z": 0.0
       },
       "position": {
-        "x": 1.0013851,
-        "y": 0.445736,
-        "z": 3.9998085
+        "x": 1.0014855,
+        "y": 0.34981483,
+        "z": 3.9998493
       },
       "rotation_degs": {
         "x": 0.0,
@@ -324,7 +325,7 @@
       },
       "position": {
         "x": 12.75,
-        "y": 6.043289,
+        "y": 5.340512,
         "z": 7.5
       },
       "rotation_degs": {
@@ -348,9 +349,9 @@
         "z": 0.0
       },
       "position": {
-        "x": 12.75,
-        "y": 0.9085543,
-        "z": 7.5
+        "x": 12.750747,
+        "y": 0.74729955,
+        "z": 7.498802
       },
       "rotation_degs": {
         "x": 0.0,
@@ -373,9 +374,9 @@
         "z": 0.0
       },
       "position": {
-        "x": 12.75,
-        "y": 2.5914452,
-        "z": 7.5
+        "x": 12.748872,
+        "y": 2.234044,
+        "z": 7.4945016
       },
       "rotation_degs": {
         "x": 0.0,
@@ -398,9 +399,9 @@
         "z": 0.0
       },
       "position": {
-        "x": 12.75,
-        "y": 4.375,
-        "z": 7.5
+        "x": 12.749537,
+        "y": 3.729841,
+        "z": 7.501293
       },
       "rotation_degs": {
         "x": 0.0,
@@ -423,9 +424,9 @@
         "z": 0.0
       },
       "position": {
-        "x": 8.5,
-        "y": 0.875,
-        "z": 9.0
+        "x": 8.499997,
+        "y": 0.8998156,
+        "z": 9.000018
       },
       "rotation_degs": {
         "x": 0.0,
@@ -448,9 +449,9 @@
         "z": 0.0
       },
       "position": {
-        "x": -9.703313E-7,
-        "y": 0.35000128,
-        "z": 7.4993105
+        "x": -5.479239E-6,
+        "y": 0.3996311,
+        "z": 7.499359
       },
       "rotation_degs": {
         "x": 0.0,
@@ -473,9 +474,9 @@
         "z": 0.0
       },
       "position": {
-        "x": 11.5,
+        "x": 27.5,
         "y": -1.25,
-        "z": 17.75
+        "z": 33.75
       },
       "rotation_degs": {
         "x": 0.0,
@@ -498,13 +499,238 @@
         "z": 0.0
       },
       "position": {
-        "x": 5.25,
+        "x": 6.75,
         "y": -3.0,
-        "z": 14.75
+        "z": 30.5
       },
       "rotation_degs": {
         "x": 0.0,
         "y": 180.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 21,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 5,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 20.5,
+        "y": 0.5,
+        "z": 19.5
+      },
+      "position": {
+        "x": 9.25,
+        "y": -0.25,
+        "z": 31.25
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 22,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 5,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 20.5,
+        "y": 0.5,
+        "z": 19.5
+      },
+      "position": {
+        "x": 32.75,
+        "y": -0.25,
+        "z": 9.0
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 23,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 5,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 20.5,
+        "y": 0.5,
+        "z": 19.5
+      },
+      "position": {
+        "x": 32.5,
+        "y": -0.25,
+        "z": 31.0
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 24,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 50.25,
+        "y": 0.5,
+        "z": 47.0
+      },
+      "position": {
+        "x": 20.5,
+        "y": -1.0,
+        "z": 19.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 25,
+      "type": "model",
+      "name": "New Model 28",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/veh_train3.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 27.25,
+        "y": 0.0,
+        "z": 8.5
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 26,
+      "type": "model",
+      "name": "New Model 87",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/veh_train2.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 25.25,
+        "y": -0.75,
+        "z": 15.25
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 28,
+      "type": "model",
+      "name": "New Model 64",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/veh_train.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 29.5,
+        "y": 0.0,
+        "z": 13.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 29,
+      "type": "model",
+      "name": "New Model 29",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/veh_bus.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": 24.5,
+        "y": 1.5,
+        "z": 25.0
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 31,
+      "type": "model",
+      "name": "New Model 24",
+      "tags": "",
+      "texture_id": 0,
+      "model_filename": "vox/scene_coffee.obj",
+      "tiled": true,
+      "size": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "position": {
+        "x": -1.5,
+        "y": -1.0,
+        "z": 29.5
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
         "z": 0.0
       },
       "mass": 0.0
