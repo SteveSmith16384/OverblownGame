@@ -25,21 +25,26 @@ public class TowerBlocksLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		this.startPositions.add(new Vector3(1, 2f, 1));
-		this.startPositions.add(new Vector3(floor_size-2, 2f, floor_size-2));
-		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
-		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
-
 		try {
 			if (Settings.TEST_VOX) {
+				this.startPositions.add(new Vector3(30, 10f, 30));
+				this.startPositions.add(new Vector3(20, 10f, 20));
+
 				//loadVox("vox/voxelbuildings/1.vox", 1, new Vector3(5, .1f, 5), .2f);
 				//loadVox("vox/skyscraper1.vox", 1, new Vector3(5, .25f, 5), .5f);
 				
-				EntityFactory.createStaticModelsForLargeModel(game.ecs, "Castle", "maps/Office/Office.g3db", 0, 4, 0, -90, 0);
+				//EntityFactory.createStaticModelsForLargeModel(game.ecs, "Castle", "maps/Dust2/Dust2.g3db", 50, -5, 50, -90, 0);
+				//EntityFactory.createStaticModelsForLargeModel(game.ecs, "Castle", "maps/Office/Office.g3db", 0, 4, 0, -90, 0);
 				
-				//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/monu10.obj", 5, 1, 5, 0, true);
-				//game.ecs.addEntity(model);
+				AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/monu1.obj", 5, 1, 5, 0, true);
+				game.ecs.addEntity(model);
+				//EntityFactory.createStaticModelsForLargeModel(game.ecs, "Castle", "vox/city/house ranche.obj", 0, 4, 0, 0, 0);
 			} else {
+				this.startPositions.add(new Vector3(1, 2f, 1));
+				this.startPositions.add(new Vector3(floor_size-2, 2f, floor_size-2));
+				this.startPositions.add(new Vector3(1, 2f, floor_size-2));
+				this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
+
 				Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), floor_size/2, -0.1f, floor_size/2, 
 						floor_size, .2f, floor_size, 
 						0f, true, false);

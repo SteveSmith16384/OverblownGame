@@ -44,10 +44,12 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_TOWER_BLOCKS = 7;
 	public static final int LEVEL_MINECRAFT = 8;
 	public static final int LEVEL_VOXEL_TOWN = 9;
-	public static final int LEVEL_MAP_EDITOR = 10;
-	public static final int LEVEL_AI_TEST = 11;
+	public static final int LEVEL_CSGO_DUST2 = 10;
+	public static final int LEVEL_CSGO_OFFICE = 11;
+	public static final int LEVEL_MAP_EDITOR = 12;
+	public static final int LEVEL_AI_TEST = 13;
 
-	public static final int MAX_LEVEL_ID = 9;
+	public static final int MAX_LEVEL_ID = 12;
 
 	public Game game;
 	protected List<Vector3> startPositions = new ArrayList<Vector3>();
@@ -91,6 +93,10 @@ public abstract class AbstractLevel {
 			return new MinecraftLevel();
 		case LEVEL_VOXEL_TOWN:
 			return new VoxelTownLevel();
+		case LEVEL_CSGO_DUST2:
+			return new Dust2Level();
+		case LEVEL_CSGO_OFFICE:
+			return new CSGOOfficeLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
@@ -102,7 +108,7 @@ public abstract class AbstractLevel {
 	}
 
 
-	public abstract void load() throws IOException; // todo - dopn't cvatch these in levels
+	public abstract void load() throws IOException; // todo - don't catch these in levels
 
 	public abstract void update();
 

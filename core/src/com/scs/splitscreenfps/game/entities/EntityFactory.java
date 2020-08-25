@@ -81,7 +81,7 @@ public class EntityFactory {
 			instance.calculateBoundingBox(tmpBB);
 			tmpBB.mul(instance.transform);
 		}
-		instance.transform.setTranslation(posX, posY-tmpBB.min.y, posZ);
+		instance.transform.setTranslation(posX-tmpBB.min.x, posY-tmpBB.min.y, posZ-tmpBB.min.z);
 
 		if (rot_y != 0) {
 			instance.transform.rotate(Vector3.Y, rot_y);
@@ -123,33 +123,37 @@ public class EntityFactory {
 		entity.addComponent(model);
 
 		PositionComponent posData = new PositionComponent();
+		posData.position.x = posX;
 		posData.position.y = posY;
+		posData.position.z = posZ;
 		posData.angle_x_degrees = rot_x;
 		entity.addComponent(posData);
 
 		ecs.addEntity(entity);
 
+		// Craete separate physics entity for each node.  Less chance of crashing out?
 		int count = 0;
 		for(Node node : instance.nodes) {
 			count++;
+			//Settings.p("id=" + node.id);
 			//if (count == 146) { // crashes?
-				//Settings.p("Adding e " + count);
+			//Settings.p("Adding e " + count);
 
-				entity = new AbstractEntity(ecs, name);
+			entity = new AbstractEntity(ecs, name);
 
-				btCollisionShape shape = Bullet.obtainStaticNodeShape(node, true);
-				btRigidBody rigidBody = new btRigidBody(0, null, shape, new Vector3());
-				rigidBody.userData = entity;
-				//rigidBody.setRestitution(.2f);
-				rigidBody.setCollisionShape(shape);
-				rigidBody.setWorldTransform(instance.transform); // todo - set from posdata!
-				entity.addComponent(new PhysicsComponent(rigidBody));
+			btCollisionShape shape = Bullet.obtainStaticNodeShape(node, false);
+			btRigidBody rigidBody = new btRigidBody(0, null, shape, new Vector3());
+			rigidBody.userData = entity;
+			//rigidBody.setRestitution(.2f);
+			rigidBody.setCollisionShape(shape);
+			rigidBody.setWorldTransform(instance.transform); // todo - set from posdata!
+			entity.addComponent(new PhysicsComponent(rigidBody));
 
-				entity.addComponent(new PositionComponent());
+			entity.addComponent(new PositionComponent());
 
-				ecs.addEntity(entity);
+			ecs.addEntity(entity);
 
-				//Settings.p("Added e " + count + "/" + instance.nodes.size);
+			//Settings.p("Added e " + count + "/" + instance.nodes.size);
 			//}
 		}
 	}

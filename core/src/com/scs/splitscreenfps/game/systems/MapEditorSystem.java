@@ -315,11 +315,6 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
-	private void centreAllBlocks() {
-		// todo
-	}
-
-
 	private void createNewBox() {
 		MapBlockComponent block = new MapBlockComponent();
 		block.size = new Vector3(1, 1, 1);

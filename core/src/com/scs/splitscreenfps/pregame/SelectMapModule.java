@@ -68,7 +68,7 @@ public class SelectMapModule extends AbstractSingleViewModule implements IModule
 		ecs.addEntity(entity);
 
 		// Text
-		TextEntity text = new TextEntity(ecs, "SELECT MAP", 50, 20, -1, Color.WHITE, 0, main.font_large, true);
+		TextEntity text = new TextEntity(ecs, "SELECT MAP", 50, 10, -1, Color.WHITE, 0, main.font_large, true);
 		text.addComponent(new ChangeColourComponent(Color.WHITE, Color.GRAY, 300));
 		ecs.addEntity(text);
 
@@ -145,7 +145,7 @@ public class SelectMapModule extends AbstractSingleViewModule implements IModule
 
 		// Draw levels
 		int x_pos = Gdx.graphics.getWidth()/2;//Settings.LOGICAL_SIZE_PIXELS/2;
-		int y_pos = (int)(Gdx.graphics.getBackBufferHeight() * .6f);
+		int y_pos = (int)(Gdx.graphics.getBackBufferHeight() * .7f);
 		for (int i=0 ; i<=AbstractLevel.MAX_LEVEL_ID ; i++) {
 			font_small.draw(spriteBatch, this.map_names.get(i), x_pos, y_pos);
 			y_pos -= spacing_y;
@@ -153,7 +153,7 @@ public class SelectMapModule extends AbstractSingleViewModule implements IModule
 
 		// Draw arrows
 		x_pos = (Gdx.graphics.getWidth()/2) - 50;
-		y_pos = (int)( Gdx.graphics.getBackBufferHeight() * .6f) - (gameSelectionData.level * spacing_y) - 20;
+		y_pos = (int)( Gdx.graphics.getBackBufferHeight() * .7f) - (gameSelectionData.level * spacing_y) - 20;
 		arrow.setBounds(x_pos,  y_pos , 30, 30);
 		arrow.draw(spriteBatch);
 

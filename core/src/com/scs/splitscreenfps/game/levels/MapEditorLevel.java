@@ -8,7 +8,7 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 public class MapEditorLevel extends AbstractLevel {
 
-	public static final String MAP_FILENAME = "maps/voxel_town.json";
+	public static final String MAP_FILENAME = "maps/empty.json";
 	public static final String STATIC_MODEL_FILENAME = "vox/scene_coffee.obj";
 	public static final String DYNAMIC_MODEL_FILENAME = "vox/veh_bus.obj";
 	
@@ -35,6 +35,8 @@ public class MapEditorLevel extends AbstractLevel {
 		
 		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game));
 		
+		//EntityFactory.createStaticModelsForLargeModel(game.ecs, "Castle", "maps/Office/Office.g3db", 0, 0, 0, -90, 0);
+
 		game.appendToLog("Loaded " + MAP_FILENAME);
 		game.appendToLog("Map editor ready");
 
