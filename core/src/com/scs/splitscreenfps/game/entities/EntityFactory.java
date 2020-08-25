@@ -25,6 +25,7 @@ import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
@@ -60,7 +61,7 @@ public class EntityFactory {
 		groundObject.userData = ball;
 		groundObject.setRestitution(.5f);
 		groundObject.setCollisionShape(sphere_shape);
-		groundObject.setWorldTransform(instance.transform);
+		groundObject.setWorldTransform(instance.transform); // todo - set from posdata!
 		ball.addComponent(new PhysicsComponent(groundObject));
 
 		ball.addComponent(new PositionComponent());
@@ -89,18 +90,68 @@ public class EntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		entity.addComponent(model);
 
-		//btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
-		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes.first(), true);
+		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
 		btRigidBody rigidBody = new btRigidBody(0, null, shape, new Vector3());
 		rigidBody.userData = entity;
 		//rigidBody.setRestitution(.2f);
 		rigidBody.setCollisionShape(shape);
-		rigidBody.setWorldTransform(instance.transform);
+		rigidBody.setWorldTransform(instance.transform); // todo - set from posdata!
 		entity.addComponent(new PhysicsComponent(rigidBody));
 
 		entity.addComponent(new PositionComponent());
 
 		return entity;
+	}
+
+
+	public static void createStaticModelsForLargeModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_x, float rot_y) {
+		AbstractEntity entity = new AbstractEntity(ecs, name);
+
+		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
+
+		// Calc min on Y axis
+		instance.transform.setTranslation(posX, posY, posZ);
+
+		if (rot_x != 0) {
+			instance.transform.rotate(Vector3.X, rot_x); // todo - I think this line does nothing since it gets changed by PositionComponent
+		}
+		if (rot_y != 0) {
+			instance.transform.rotate(Vector3.Y, rot_y); // todo - I think this line does nothing since it gets changed by PositionComponent
+		}
+
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		entity.addComponent(model);
+
+		PositionComponent posData = new PositionComponent();
+		posData.position.y = posY;
+		posData.angle_x_degrees = rot_x;
+		entity.addComponent(posData);
+
+		ecs.addEntity(entity);
+
+		int count = 0;
+		for(Node node : instance.nodes) {
+			count++;
+			//if (count == 146) { // crashes?
+				//Settings.p("Adding e " + count);
+
+				entity = new AbstractEntity(ecs, name);
+
+				btCollisionShape shape = Bullet.obtainStaticNodeShape(node, true);
+				btRigidBody rigidBody = new btRigidBody(0, null, shape, new Vector3());
+				rigidBody.userData = entity;
+				//rigidBody.setRestitution(.2f);
+				rigidBody.setCollisionShape(shape);
+				rigidBody.setWorldTransform(instance.transform); // todo - set from posdata!
+				entity.addComponent(new PhysicsComponent(rigidBody));
+
+				entity.addComponent(new PositionComponent());
+
+				ecs.addEntity(entity);
+
+				//Settings.p("Added e " + count + "/" + instance.nodes.size);
+			//}
+		}
 	}
 
 
@@ -122,21 +173,21 @@ public class EntityFactory {
 		if (rot_y != 0) {
 			instance.transform.rotate(Vector3.Y, rot_y);
 		}
-		
+
 		/*for(Node n : instance.nodes) {
 			n.localTransform.setTranslation(-tmpBB.getCenterX(), -10, -tmpBB.getCenterZ());
 		}*/
-		
-		for (int i = 0; i < instance.nodes.size; i++) {
-            String id = instance.nodes.get(i).id;
-            Node node = instance.getNode(id);
 
-            node.translation.set(-tmpBB.getCenterX(), -tmpBB.getCenterY(), -tmpBB.getCenterZ());
-            node.scale.set(1,1,1);
-            node.rotation.idt();
-            instance.calculateTransforms();
+		for (int i = 0; i < instance.nodes.size; i++) {
+			String id = instance.nodes.get(i).id;
+			Node node = instance.getNode(id);
+
+			node.translation.set(-tmpBB.getCenterX(), -tmpBB.getCenterY(), -tmpBB.getCenterZ());
+			node.scale.set(1,1,1);
+			node.rotation.idt();
+			instance.calculateTransforms();
 		}
-		
+
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		entity.addComponent(model);
 
@@ -154,7 +205,7 @@ public class EntityFactory {
 		rigidBody.userData = entity;
 		//rigidBody.setRestitution(.2f);
 		rigidBody.setCollisionShape(shape);
-		rigidBody.setWorldTransform(instance.transform);
+		rigidBody.setWorldTransform(instance.transform); // todo - set from posdata!
 		entity.addComponent(new PhysicsComponent(rigidBody));
 
 		entity.addComponent(new PositionComponent());
@@ -162,63 +213,6 @@ public class EntityFactory {
 		return entity;
 	}
 
-
-	/*
-	public static AbstractEntity createDynamicModel_ORIG(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, float mass, boolean alignToY) {
-		AbstractEntity entity = new AbstractEntity(ecs, name);
-
-		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
-
-		// Calc min on Y axis
-		BoundingBox tmpBB = new BoundingBox();
-		instance.calculateBoundingBox(tmpBB);
-		tmpBB.mul(instance.transform);
-		if (alignToY) {
-			instance.transform.setTranslation(posX, posY-tmpBB.min.y, posZ);
-		} else {
-			instance.transform.setTranslation(posX, posY, posZ);
-		}
-
-		if (rot_y != 0) {
-			instance.transform.rotate(Vector3.Y, rot_y);
-		}
-
-		HasModelComponent model = new HasModelComponent(instance, 1f, true);
-		entity.addComponent(model);
-
-		Vector3 ext = new Vector3();
-		tmpBB.getDimensions(ext);
-		ext.scl(.5f);
-
-		btCompoundShape shape = new btCompoundShape();
-		Matrix4 tmpMat = new Matrix4();
-		Vector3 offset = new Vector3(tmpBB.getCenterX(), tmpBB.getCenterY(), tmpBB.getCenterZ());
-		tmpMat.setTranslation(offset);
-		shape.addChildShape(tmpMat, new btBoxShape(ext));
-
-		Vector3 local_inertia = new Vector3();
-		if (mass > 0) {
-			shape.calculateLocalInertia(mass, local_inertia);
-		}
-		Matrix4 mat = new Matrix4();
-		mat.setTranslation(new Vector3(offset).scl(10));
-		//shape.calculatePrincipalAxisTransform(samplePos, mat, local_inertia);
-
-		btDefaultMotionState ms = new btDefaultMotionState();
-		ms.setCenterOfMassOffset(new btTransform(new Quaternion(), offset));
-		btRigidBody rigidBody = new btRigidBody(mass, ms, shape, local_inertia);
-		rigidBody.userData = entity;
-		//rigidBody.setRestitution(.2f);
-		rigidBody.setCollisionShape(shape);
-		//rigidBody.setCenterOfMassTransform(mat);
-		rigidBody.setWorldTransform(instance.transform);
-		entity.addComponent(new PhysicsComponent(rigidBody));
-
-		entity.addComponent(new PositionComponent());
-
-		return entity;
-	}
-*/
 
 	public static AbstractEntity createCylinder(Game game, Texture tex, float x, float y, float z, float diam, float length, float mass_pre) {
 		AbstractEntity cylinder = new AbstractEntity(game.ecs, "Cylinder");
@@ -237,7 +231,7 @@ public class EntityFactory {
 		body.userData = cylinder;
 		body.setRestitution(.5f);
 		body.setCollisionShape(cylinderShape);
-		body.setWorldTransform(instance.transform);
+		body.setWorldTransform(instance.transform); // todo - set from posdata!
 		cylinder.addComponent(new PhysicsComponent(body));
 		//}
 
@@ -263,51 +257,6 @@ public class EntityFactory {
 	}
 
 
-	// Note that the mass gets multiplied by the size
-	/*	public static AbstractEntity createModelAndPhysicsBox(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, int rotYDegrees, float mass_pre, float mscale) {
-		AbstractEntity entity = new AbstractEntity(ecs, name);
-
-		ModelInstance instance = ModelFunctions.loadModel(filename, true, mscale);
-
-		//float scale = ModelFunctions.getScaleForWidth(instance, 1f);
-		//instance.transform.scale(scale, scale, scale);
-
-		HasModelComponent hasModel = new HasModelComponent(instance, 1f, true);
-		//Vector3 origin = ModelFunctions.getOrigin(instance);
-		entity.addComponent(hasModel);
-
-		instance.transform.setTranslation(posX, posY, posZ); // Must be AFTER we've got the origin!
-
-		if (rotYDegrees != 0) {
-			instance.transform.rotate(Vector3.Y, rotYDegrees);
-		}
-
-		entity.addComponent(new PositionComponent());
-
-		//if (mass_pre >= 0) {
-			// Calc BB for physics box
-			BoundingBox bb = new BoundingBox();
-			instance.calculateBoundingBox(bb);
-			bb.mul(instance.transform);
-
-			btBoxShape boxShape = new btBoxShape(new Vector3(bb.getWidth()/2, bb.getHeight()/2, bb.getDepth()/2));
-			Vector3 local_inertia = new Vector3();
-			float mass = mass_pre * bb.getWidth() * bb.getHeight() * bb.getDepth();
-			if (mass > 0) {
-				boxShape.calculateLocalInertia(mass, local_inertia);
-			}
-			btRigidBody groundObject = new btRigidBody(mass, null, boxShape, local_inertia);
-			groundObject.userData = entity;
-			groundObject.setRestitution(.2f);
-			groundObject.setCollisionShape(boxShape);
-			groundObject.setWorldTransform(instance.transform);
-			entity.addComponent(new PhysicsComponent(groundObject));
-		//}
-
-		return entity;
-	}
-	 */
-
 	public static AbstractEntity createHealthPack(Game game, Vector3 start) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "HealthPack");
 
@@ -329,7 +278,7 @@ public class EntityFactory {
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
-		body.setWorldTransform(mat);
+		body.setWorldTransform(mat); // todo - set from posdata!
 		PhysicsComponent pc = new PhysicsComponent(body);
 		//pc.disable_gravity = true; Not available for ghost objects
 		e.addComponent(pc);
@@ -367,7 +316,7 @@ public class EntityFactory {
 		groundObject.userData = lootbox;
 		groundObject.setRestitution(.5f);
 		groundObject.setCollisionShape(boxShape);
-		groundObject.setWorldTransform(instance.transform);
+		groundObject.setWorldTransform(instance.transform); // todo - set from posdata!
 		lootbox.addComponent(new PhysicsComponent(groundObject));
 
 		return lootbox;

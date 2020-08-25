@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 public class PositionComponent {
 
 	public Vector3 position;
+	public float angle_x_degrees;  // 0-360
 	public float angle_y_degrees;  // 0-360
 
 	public PositionComponent() {
@@ -30,13 +31,4 @@ public class PositionComponent {
 		this(v.x, v.y, v.z);
 	}
 	
-	/*
-	public GridPoint2 getMapPos() {
-		float x = (position.x);
-		float y = position.z;
-		
-		return new GridPoint2((int)x, (int)y) ;
-
-	}
-	*/
 }

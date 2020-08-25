@@ -179,8 +179,10 @@ public class DrawModelSystem extends AbstractSystem {
 			if (model.keep_player_in_centre) { // i.e. a skybox
 				model.model.transform.setToTranslation(batch.getCamera().position);
 			} else {
+				// todo - if entity doesn't move, dont do this every time
 				model.model.transform.setToTranslation(posData.position);
 				model.model.transform.scl(model.scale);
+				model.model.transform.rotate(Vector3.X, posData.angle_x_degrees);
 				model.model.transform.rotate(Vector3.Y, posData.angle_y_degrees+model.angleYOffsetToFwds);
 			}
 		}

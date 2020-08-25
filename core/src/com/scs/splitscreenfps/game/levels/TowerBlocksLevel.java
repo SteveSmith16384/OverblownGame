@@ -30,18 +30,21 @@ public class TowerBlocksLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
 		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
-		Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), floor_size/2, -0.1f, floor_size/2, 
-				floor_size, .2f, floor_size, 
-				0f, true, false);
-		game.ecs.addEntity(floor);
-
 		try {
 			if (Settings.TEST_VOX) {
 				//loadVox("vox/voxelbuildings/1.vox", 1, new Vector3(5, .1f, 5), .2f);
 				//loadVox("vox/skyscraper1.vox", 1, new Vector3(5, .25f, 5), .5f);
-				AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "maps/Office/Office.obj", 5, 1, 5, 0, true);
-				game.ecs.addEntity(model);
+				
+				EntityFactory.createStaticModelsForLargeModel(game.ecs, "Castle", "maps/Office/Office.g3db", 0, 4, 0, -90, 0);
+				
+				//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/monu10.obj", 5, 1, 5, 0, true);
+				//game.ecs.addEntity(model);
 			} else {
+				Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), floor_size/2, -0.1f, floor_size/2, 
+						floor_size, .2f, floor_size, 
+						0f, true, false);
+				game.ecs.addEntity(floor);
+
 				for (int z=0 ; z<2 ; z++) {
 					for (int x=0 ; x<2 ; x++) {
 						//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);

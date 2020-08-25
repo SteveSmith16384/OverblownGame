@@ -45,7 +45,7 @@ public class PhysicsSystem extends AbstractSystem {
 		tmpMat.getTranslation(posData.position);
 
 		float height = posData.position.y;
-		if (height < -4) {
+		if (height < -8) {
 			if (pc.removeIfFallen && pc.body.isKinematicObject()) {
 				Settings.p("Removed " + e + " since it has fallen off");
 				e.remove();
