@@ -191,7 +191,7 @@ public abstract class AbstractLevel {
 			if (block.mass == 0) {
 				model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
 						block.position.x, block.position.y, block.position.z, block.rotation_degs.y,
-						block.mass, false);
+						false);
 			} else {
 				model = EntityFactory.createDynamicModel(game.ecs, block.name, block.model_filename, 
 						block.position.x, block.position.y, block.position.z, 

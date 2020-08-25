@@ -39,7 +39,7 @@ public class TowerBlocksLevel extends AbstractLevel {
 			if (Settings.TEST_VOX) {
 				//loadVox("vox/voxelbuildings/1.vox", 1, new Vector3(5, .1f, 5), .2f);
 				//loadVox("vox/skyscraper1.vox", 1, new Vector3(5, .25f, 5), .5f);
-				AbstractEntity model = EntityFactory.createDynamicModel(game.ecs, "Castle", "vox/obj_bench1.obj", 5, 1, 5, 0, 1f, true);
+				AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "maps/Office/Office.obj", 5, 1, 5, 0, true);
 				game.ecs.addEntity(model);
 			} else {
 				for (int z=0 ; z<2 ; z++) {

@@ -50,7 +50,6 @@ public class EntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		ball.addComponent(model);
 
-		//if (mass_pre >= 0) {
 		float volume = (float)((4/3) * Math.PI * ((diam/2) * (diam/2) * (diam/2)));
 		float mass = mass_pre * volume;
 
@@ -63,7 +62,6 @@ public class EntityFactory {
 		groundObject.setCollisionShape(sphere_shape);
 		groundObject.setWorldTransform(instance.transform);
 		ball.addComponent(new PhysicsComponent(groundObject));
-		//}
 
 		ball.addComponent(new PositionComponent());
 
@@ -71,7 +69,7 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createStaticModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, float mass, boolean alignToY) {
+	public static AbstractEntity createStaticModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, boolean alignToY) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
@@ -91,12 +89,9 @@ public class EntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		entity.addComponent(model);
 
-		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
-		Vector3 local_inertia = new Vector3();
-		if (mass > 0) {
-			shape.calculateLocalInertia(mass, local_inertia);
-		}
-		btRigidBody rigidBody = new btRigidBody(mass, null, shape, local_inertia);
+		//btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes);
+		btCollisionShape shape = Bullet.obtainStaticNodeShape(instance.nodes.first(), true);
+		btRigidBody rigidBody = new btRigidBody(0, null, shape, new Vector3());
 		rigidBody.userData = entity;
 		//rigidBody.setRestitution(.2f);
 		rigidBody.setCollisionShape(shape);
@@ -136,7 +131,6 @@ public class EntityFactory {
             String id = instance.nodes.get(i).id;
             Node node = instance.getNode(id);
 
-            //instance.transform.set(node.globalTransform);
             node.translation.set(-tmpBB.getCenterX(), -tmpBB.getCenterY(), -tmpBB.getCenterZ());
             node.scale.set(1,1,1);
             node.rotation.idt();
@@ -160,7 +154,6 @@ public class EntityFactory {
 		rigidBody.userData = entity;
 		//rigidBody.setRestitution(.2f);
 		rigidBody.setCollisionShape(shape);
-		//rigidBody.setCenterOfMassTransform(mat);
 		rigidBody.setWorldTransform(instance.transform);
 		entity.addComponent(new PhysicsComponent(rigidBody));
 

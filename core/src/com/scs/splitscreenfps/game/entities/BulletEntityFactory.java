@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -170,18 +171,12 @@ public class BulletEntityFactory {
 		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
 
-		if (Settings.PROPER_BULLETS) {
-			ModelInstance instance = ShapeHelper.createCylinder(game.modelBuilder, game.getTexture("textures/neon/robot_purple.png"), start.x, start.y, start.z, .05f, .2f);
-			HasModelComponent model = new HasModelComponent(instance, 1, true);
-			instance.transform.setToRotation(dir, Vector3.Y); // todo
-			e.addComponent(model);
-		} else {
-			HasDecal hasDecal = new HasDecal();
-			hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
-			hasDecal.faceCamera = true;
-			hasDecal.dontLockYAxis = true;
-			e.addComponent(hasDecal);
-		}
+
+		HasDecal hasDecal = new HasDecal();
+		hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = true;
+		e.addComponent(hasDecal);
 
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new ExplodeOnContactComponent(settings.explData, shooter, true, false, true));
@@ -191,15 +186,11 @@ public class BulletEntityFactory {
 		btBoxShape shape = new btBoxShape(new Vector3(size/2, size/2, size/2));
 		btRigidBody body = new btRigidBody(.1f, null, shape);
 		body.userData = e;
-		//body.setFriction(0);
-		//body.setRestitution(.9f);
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
+		//test mat.rotate(dir.x, dir.y, dir.z, 180);
 		body.setWorldTransform(mat);
-		//body.applyCentralForce(offset.scl(100));
-		//body.applyCentralImpulse(offset.scl(10));
-		//body.setGravity(new Vector3());
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
 		pc.force = dir.scl(1f);

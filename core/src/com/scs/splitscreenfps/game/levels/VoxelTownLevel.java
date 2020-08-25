@@ -1,16 +1,14 @@
 package com.scs.splitscreenfps.game.levels;
 
-import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class VoxelTownLevel extends AbstractLevel {
 
-	private ISystem deathmatchSystem;
+	//private ISystem deathmatchSystem;
 
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
-		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
+		//this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
 	}
 
 
@@ -27,7 +25,7 @@ public class VoxelTownLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		deathmatchSystem.process();
+		//deathmatchSystem.process();
 	}
 
 
