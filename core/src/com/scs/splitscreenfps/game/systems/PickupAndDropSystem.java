@@ -84,8 +84,14 @@ public class PickupAndDropSystem extends AbstractSystem {
 
 		PositionComponent ourPosData = (PositionComponent)player.getComponent(PositionComponent.class);
 		Vector3 newpos = new Vector3(ourPosData.position);
-		newpos.y += 2f;
-		
+		//newpos.y += 2f;
+
+		Vector3 dir = new Vector3();
+		dir.set(player.camera.direction);
+		dir.y = 0;
+		dir.nor();
+		newpos.add(dir);
+
 		// Set position
 		PhysicsComponent md = (PhysicsComponent)item.getComponent(PhysicsComponent.class);
 		Matrix4 mat = new Matrix4();
@@ -94,7 +100,7 @@ public class PickupAndDropSystem extends AbstractSystem {
 		md.body.activate();
 		md.getRigidBody().setAngularVelocity(Vector3.Zero);
 		md.getRigidBody().setLinearVelocity(Vector3.Zero);
-		
+
 		canCarry.carrying = null;
 
 		Settings.p(item + " dropped");
