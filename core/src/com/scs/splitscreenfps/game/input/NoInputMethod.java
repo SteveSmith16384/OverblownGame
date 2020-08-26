@@ -100,4 +100,9 @@ public class NoInputMethod implements IInputMethod {
 	public boolean isReloadPressed() {
 		return false;
 	}
+
+	@Override
+	public boolean isPickupPressed() {
+		return false;
+	}
 }

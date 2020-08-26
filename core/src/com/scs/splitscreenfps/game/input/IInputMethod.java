@@ -39,4 +39,6 @@ public interface IInputMethod {
 	boolean isAbility1Pressed();
 
 	boolean isUltimatePressed();
+
+	boolean isPickupPressed();
 }

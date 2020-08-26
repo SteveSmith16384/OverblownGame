@@ -38,6 +38,7 @@ public class RespawnPlayerSystem implements ISystem {
 			if (wrc.respawn_time < System.currentTimeMillis()) {
 				//Settings.p("Respawning " + e);
 				
+				// Set position
 				PhysicsComponent md = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 				Matrix4 mat = new Matrix4();
 				mat.setTranslation(wrc.respawnPoint);

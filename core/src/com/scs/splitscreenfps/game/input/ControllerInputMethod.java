@@ -151,4 +151,9 @@ public class ControllerInputMethod implements IInputMethod {
 	}
 
 
+	@Override
+	public boolean isPickupPressed() {
+		return this.controller.getButton(1); // todo - check
+	}
+
 }

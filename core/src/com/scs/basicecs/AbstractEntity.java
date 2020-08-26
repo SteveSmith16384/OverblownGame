@@ -38,6 +38,9 @@ public class AbstractEntity {
 
 	public void hideComponent(Class<?> clazz) {
 		Object component = this.components.remove(clazz);
+		if (component == null) {
+			System.err.println("Warning: component " + clazz + " not found");
+		}
 		this.hiddenComponents.put(clazz, component);
 		ecs.removeEntityFromSystems(this, clazz);
 	}
@@ -48,6 +51,8 @@ public class AbstractEntity {
 		if (component != null) { // Just in case the component doesn't exist
 			this.components.put(clazz, component);
 			ecs.addEntityToSystems(this, clazz);
+		} else {
+			System.err.println("Warning: component " + clazz + " not found");
 		}
 	}
 

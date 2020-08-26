@@ -6,6 +6,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.PlayerCameraController;
+import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PlayerData;
@@ -49,6 +50,8 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 		addComponent(new CanShoot());
 
 		this.addComponent(new PositionComponent());
+		
+		this.addComponent(new CanCarryComponent());
 	}
 
 

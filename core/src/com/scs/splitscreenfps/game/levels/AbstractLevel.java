@@ -48,6 +48,7 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_CSGO_OFFICE = 11;
 	public static final int LEVEL_MAP_EDITOR = 12;
 	public static final int LEVEL_AI_TEST = 13;
+	public static final int LEVEL_STARSHIP = 14;
 
 	public static final int MAX_LEVEL_ID = 12;
 
@@ -97,6 +98,8 @@ public abstract class AbstractLevel {
 			return new Dust2Level();
 		case LEVEL_CSGO_OFFICE:
 			return new CSGOOfficeLevel();
+		case LEVEL_STARSHIP:
+			return new StarshipLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
@@ -268,7 +271,10 @@ public abstract class AbstractLevel {
 	}
 
 
-	public void loadVox(String filename, int mass, Vector3 offset, float scale) {//, int trunc) {
+	/*
+	 * This will create a separate cube for each voxel.
+	 */
+	public void loadVox(String filename, int mass, Vector3 offset, float scale, boolean remove_surrounded) {//, int trunc) {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
 			int count = 0;
@@ -282,26 +288,31 @@ public abstract class AbstractLevel {
 					c++;
 				}
 
-				/*boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
-				for (int z=1 ; z<model.getSize().getZ()-1 ; z++) {
-					for (int y=1 ; y<model.getSize().getY()-1 ; y++) {
-						for (int x=1 ; x<model.getSize().getX()-1 ; x++) {
-							if (exists[x][y][z]) {
-								if (exists[x-1][y][z] && exists[x+1][y][z] && exists[x][y-1][z] && exists[x][y+1][z] && exists[x][y][z-1] && exists[x][y][z+1]) {
-									remove[x][y][z] = true;
+				boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
+				if (remove_surrounded) {
+					// Mark voxels for removal that are completely surrounded
+					for (int z=1 ; z<model.getSize().getZ()-1 ; z++) {
+						for (int y=1 ; y<model.getSize().getY()-1 ; y++) {
+							for (int x=1 ; x<model.getSize().getX()-1 ; x++) {
+								if (exists[x][y][z]) {
+									if (exists[x-1][y][z] && exists[x+1][y][z] && exists[x][y-1][z] && exists[x][y+1][z] && exists[x][y][z-1] && exists[x][y][z+1]) {
+										remove[x][y][z] = true;
+									}
 								}
 							}
 						}
 					}
-				}*/
+				}
 
 				for (Voxel voxel : model.getVoxels()) {
-					// Remove any voxels if they are surrounded by other voxels
-					/*if (remove[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()]) {
-						exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = false;
-						num_removed++;
-						continue;
-					}*/
+					if (remove_surrounded) {
+						// Remove any voxels if they are surrounded by other voxels
+						if (remove[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()]) {
+							exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = false;
+							num_removed++;
+							continue;
+						}
+					}
 					int colour_id = voxel.getColourIndex() & 0xff;
 					int colour = voxFile.getPalette()[colour_id];
 					// Note that y and z seem to be reversed

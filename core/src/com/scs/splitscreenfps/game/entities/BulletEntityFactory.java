@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
-import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -36,7 +35,6 @@ import com.scs.splitscreenfps.game.data.ExplosionData;
 
 import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GraphicsHelper;
-import ssmith.libgdx.ShapeHelper;
 
 public class BulletEntityFactory {
 

@@ -87,6 +87,7 @@ import com.scs.splitscreenfps.game.systems.ExplodeOnContactSystem;
 import com.scs.splitscreenfps.game.systems.HarmPlayerOnContactSystem;
 import com.scs.splitscreenfps.game.systems.JunkratMineAbilitySystem;
 import com.scs.splitscreenfps.game.systems.PhysicsSystem;
+import com.scs.splitscreenfps.game.systems.PickupAndDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerMovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerProcessSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
@@ -130,7 +131,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
-	private PhysicsSystem physicsSystem;
+	public PhysicsSystem physicsSystem;
 	private RespawnPlayerSystem respawnSystem;
 	public RespawnCollectableSystem respawnHealthPackSystem;
 	public AudioSystem2 audioSystem;
@@ -354,6 +355,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		audioSystem = new AudioSystem2(ecs);
 		ecs.addSystem(audioSystem);
 		ecs.addSystem(new StickySystem(ecs));
+		ecs.addSystem(new PickupAndDropSystem(this, ecs));
+		
 
 	}
 
@@ -398,6 +401,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 		this.ecs.getSystem(PlayerProcessSystem.class).process();
 		this.ecs.getSystem(PlayerMovementSystem.class).process();
+		this.ecs.getSystem(PickupAndDropSystem.class).process();
 		this.ecs.getSystem(StickySystem.class).process();
 
 		this.ecs.events.clear();

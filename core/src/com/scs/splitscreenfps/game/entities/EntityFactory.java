@@ -61,7 +61,7 @@ public class EntityFactory {
 		groundObject.userData = ball;
 		groundObject.setRestitution(.5f);
 		groundObject.setCollisionShape(sphere_shape);
-		groundObject.setWorldTransform(instance.transform); // todo - set from posdata!
+		groundObject.setWorldTransform(instance.transform);
 		ball.addComponent(new PhysicsComponent(groundObject));
 
 		ball.addComponent(new PositionComponent());
@@ -95,7 +95,7 @@ public class EntityFactory {
 		rigidBody.userData = entity;
 		//rigidBody.setRestitution(.2f);
 		rigidBody.setCollisionShape(shape);
-		rigidBody.setWorldTransform(instance.transform); // todo - set from posdata!
+		rigidBody.setWorldTransform(instance.transform);
 		entity.addComponent(new PhysicsComponent(rigidBody));
 
 		entity.addComponent(new PositionComponent());
@@ -104,6 +104,9 @@ public class EntityFactory {
 	}
 
 
+	/*
+	 * This method creates multiple entities for the model.  Might work better for larger models.
+	 */
 	public static void createStaticModelsForLargeModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_x, float rot_y) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
@@ -113,16 +116,16 @@ public class EntityFactory {
 		instance.transform.setTranslation(posX, posY, posZ);
 
 		if (rot_x != 0) {
-			instance.transform.rotate(Vector3.X, rot_x); // todo - I think this line does nothing since it gets changed by PositionComponent
+			instance.transform.rotate(Vector3.X, rot_x);
 		}
 		if (rot_y != 0) {
-			instance.transform.rotate(Vector3.Y, rot_y); // todo - I think this line does nothing since it gets changed by PositionComponent
+			instance.transform.rotate(Vector3.Y, rot_y);
 		}
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		entity.addComponent(model);
 
-		PositionComponent posData = new PositionComponent();
+		PositionComponent posData = new PositionComponent(); // Notice we set the position data because this entity has no physics component
 		posData.position.x = posX;
 		posData.position.y = posY;
 		posData.position.z = posZ;
@@ -146,7 +149,7 @@ public class EntityFactory {
 			rigidBody.userData = entity;
 			//rigidBody.setRestitution(.2f);
 			rigidBody.setCollisionShape(shape);
-			rigidBody.setWorldTransform(instance.transform); // todo - set from posdata!
+			rigidBody.setWorldTransform(instance.transform);
 			entity.addComponent(new PhysicsComponent(rigidBody));
 
 			entity.addComponent(new PositionComponent());
@@ -209,7 +212,7 @@ public class EntityFactory {
 		rigidBody.userData = entity;
 		//rigidBody.setRestitution(.2f);
 		rigidBody.setCollisionShape(shape);
-		rigidBody.setWorldTransform(instance.transform); // todo - set from posdata!
+		rigidBody.setWorldTransform(instance.transform);
 		entity.addComponent(new PhysicsComponent(rigidBody));
 
 		entity.addComponent(new PositionComponent());
@@ -226,7 +229,6 @@ public class EntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1, true);
 		cylinder.addComponent(model);
 
-		//if (mass_pre >= 0) {
 		btCylinderShape cylinderShape = new btCylinderShape(new Vector3(diam/2, length/2, diam/2));
 		Vector3 local_inertia = new Vector3();
 		float mass = (float)(Math.PI * (diam/2) * (diam/2) + length) * mass_pre;
@@ -235,9 +237,8 @@ public class EntityFactory {
 		body.userData = cylinder;
 		body.setRestitution(.5f);
 		body.setCollisionShape(cylinderShape);
-		body.setWorldTransform(instance.transform); // todo - set from posdata!
+		body.setWorldTransform(instance.transform);
 		cylinder.addComponent(new PhysicsComponent(body));
-		//}
 
 		cylinder.addComponent(new PositionComponent());
 
@@ -282,7 +283,7 @@ public class EntityFactory {
 		body.setCollisionShape(shape);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(start);
-		body.setWorldTransform(mat); // todo - set from posdata!
+		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
 		//pc.disable_gravity = true; Not available for ghost objects
 		e.addComponent(pc);
@@ -303,11 +304,8 @@ public class EntityFactory {
 		TextureRegion tex = game.getTexture("textures/spritesforyou.png", 8, 8, 0, 4);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = game.modelBuilder;
-
 		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
-
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
-
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		lootbox.addComponent(model);
 
@@ -320,7 +318,7 @@ public class EntityFactory {
 		groundObject.userData = lootbox;
 		groundObject.setRestitution(.5f);
 		groundObject.setCollisionShape(boxShape);
-		groundObject.setWorldTransform(instance.transform); // todo - set from posdata!
+		groundObject.setWorldTransform(instance.transform);
 		lootbox.addComponent(new PhysicsComponent(groundObject));
 
 		return lootbox;
