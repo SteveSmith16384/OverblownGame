@@ -5,13 +5,16 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EquipmentEntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 public class StarshipLevel extends AbstractLevel {
 
 	private float floor_size = 35f;
 
 	public void getReadyForGame(Game game) {
-		super.getReadyForGame(game);		
+		super.getReadyForGame(game);
+		
+		game.ecs.removeSystem(ShootingSystem.class);
 	}
 
 

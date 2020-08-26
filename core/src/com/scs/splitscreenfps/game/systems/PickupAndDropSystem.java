@@ -31,9 +31,24 @@ public class PickupAndDropSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
+		CanCarryComponent canCarry = (CanCarryComponent)entity.getComponent(CanCarryComponent.class);
+		if (canCarry.carrying != null) {
+			PositionComponent ourPosData = (PositionComponent)player.getComponent(PositionComponent.class);
+			PositionComponent itemPosData = (PositionComponent)canCarry.carrying.getComponent(PositionComponent.class);
+			
+			Vector3 newpos = new Vector3(ourPosData.position);
+			Vector3 dir = new Vector3(); // todo - cache
+			dir.set(player.camera.direction);
+			//dir.y = 0;
+			dir.nor();
+			dir.scl(.5f);
+			newpos.add(dir);
+			
+			newpos.y -= .1f;
+			itemPosData.position.set(newpos);
+		}
+		
 		if (player.inputMethod.isPickupPressed()) {
-			CanCarryComponent canCarry = (CanCarryComponent)entity.getComponent(CanCarryComponent.class);
-
 			if (canCarry.carrying == null) {
 				pickup(player, canCarry);
 			} else {
@@ -65,9 +80,9 @@ public class PickupAndDropSystem extends AbstractSystem {
 				float distance = posData.position.dst(ourPosData.position);
 				if (distance <= 1) {
 					canCarry.carrying = e;
-					e.hideComponent(HasModelComponent.class);
+					//e.hideComponent(HasModelComponent.class);
 					e.hideComponent(CanBeCarriedComponent.class);
-					// todo - hide physics?
+					e.hideComponent(PhysicsComponent.class);
 					Settings.p(e + " picked up");
 					return;
 				}
@@ -79,8 +94,9 @@ public class PickupAndDropSystem extends AbstractSystem {
 
 	private void drop(AbstractPlayersAvatar player, CanCarryComponent canCarry) {
 		AbstractEntity item = canCarry.carrying;
-		item.restoreComponent(HasModelComponent.class);
+		//item.restoreComponent(HasModelComponent.class);
 		item.restoreComponent(CanBeCarriedComponent.class);
+		item.restoreComponent(PhysicsComponent.class);
 
 		PositionComponent ourPosData = (PositionComponent)player.getComponent(PositionComponent.class);
 		Vector3 newpos = new Vector3(ourPosData.position);
