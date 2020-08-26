@@ -161,6 +161,10 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		main = _main;
 		inputs = _inputs;
 		gameSelectionData = _gameSelectionData;
+		
+		if (Settings.DISABLE_GRAVITY) {
+			this.physics_enabled = false;
+		}
 
 		this.game_config = new GameConfig();
 		try {
@@ -273,7 +277,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		BillBoardFPS_Main.audio.stopMusic();
 
 		if (Settings.USE_MAP_EDITOR == false) {
-
 			// Play airhorn
 			this.ecs.addEntity(AudioEntityFactory.createSfxEntityWithDelay(ecs, "sfx/airhorn.wav", .3f, WillRespawnComponent.RESPAWN_TIME));
 			for (int i=0 ; i<4 ; i++) {
