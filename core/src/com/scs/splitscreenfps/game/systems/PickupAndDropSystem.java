@@ -74,13 +74,11 @@ public class PickupAndDropSystem extends AbstractSystem {
 				continue;
 			}
 
-			//PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 			PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 			if (posData != null) {
 				float distance = posData.position.dst(ourPosData.position);
 				if (distance <= 1) {
 					canCarry.carrying = e;
-					//e.hideComponent(HasModelComponent.class);
 					e.hideComponent(CanBeCarriedComponent.class);
 					e.hideComponent(PhysicsComponent.class);
 					Settings.p(e + " picked up");

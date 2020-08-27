@@ -19,7 +19,9 @@ public class TowerBlocksLevel extends AbstractLevel {
 
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);		
-		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
+		if (Settings.TEST_VOX == false) {
+			this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
+		}
 	}
 
 
@@ -38,7 +40,7 @@ public class TowerBlocksLevel extends AbstractLevel {
 				//loadVox("vox/voxelbuildings/1.vox", 1, new Vector3(5, .1f, 5), .2f);
 				//loadVox("vox/skyscraper1.vox", 1, new Vector3(5, .25f, 5), .5f);
 				
-				AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/ThirstyCorridor.obj", 5, 0, 5, 0, true);
+				AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);
 				game.ecs.addEntity(model);
 			} else {
 				this.startPositions.add(new Vector3(1, 2f, 1));
@@ -61,7 +63,9 @@ public class TowerBlocksLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		deathmatchSystem.process();
+		if (Settings.TEST_VOX == false) {
+			deathmatchSystem.process();
+		}
 	}
 
 
