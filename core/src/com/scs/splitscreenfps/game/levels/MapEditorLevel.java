@@ -8,8 +8,8 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 public class MapEditorLevel extends AbstractLevel {
 
-	public static final String MAP_FILENAME = "maps/empty.json";
-	public static final String STATIC_MODEL_FILENAME = "vox/scene_coffee.obj";
+	public static final String MAP_FILENAME = "maps/starship.json";
+	public static final String STATIC_MODEL_FILENAME = "models/kenney/spacekit2/craft_speederB.obj";
 	public static final String DYNAMIC_MODEL_FILENAME = "vox/veh_bus.obj";
 	
 	public MapEditorSystem mapBuilderSystem;

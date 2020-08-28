@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -148,9 +147,6 @@ public class ShootingSystem extends AbstractSystem {
 			player.camera.rotate(tmp, 2);*/
 
 			if (cc.ammo <= 0) {
-				//playerData.ability1text = "Reloading...";
-				//BillBoardFPS_Main.audio.play("sfx/gun_reload_lock_or_click_sound.wav");
-				//cc.ammo = weapon.max_ammo;
 				cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
 				cc.reloading = true;
 			}
@@ -161,10 +157,8 @@ public class ShootingSystem extends AbstractSystem {
 			}
 		} else if (player.inputMethod.isReloadPressed()) {
 			if (cc.ammo < weapon.max_ammo) {
-				//cc.ammo = weapon.max_ammo;
 				cc.reloading = true;
 				cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
-				//playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
 				playerData.gunText = "Reloading...";
 			}
 		}

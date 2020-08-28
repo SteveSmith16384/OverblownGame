@@ -1,0 +1,318 @@
+{
+  "filename": "maps/map_editor.json",
+  "textures": {
+    "1": "colours/white.png",
+    "2": "colours/red.png",
+    "3": "colours/brown.png",
+    "4": "textures/blackborder/white.png",
+    "5": "textures/crate1.png",
+    "6": "textures/crate2.png",
+    "7": "textures/blackborder/grey1.png",
+    "8": "textures/blackborder/grey2.png",
+    "9": "textures/blackborder/grey3.png",
+    "10": "textures/blackborder/purple1.png",
+    "11": "textures/skyscraper.png"
+  },
+  "blocks": [
+    {
+      "id": 1,
+      "type": "",
+      "name": "Floor",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 5.255982,
+        "y": 0.49999988,
+        "z": 3.2444205
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 7,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 7,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 20.5,
+        "y": 0.5,
+        "z": 19.5
+      },
+      "position": {
+        "x": 9.25,
+        "y": -0.25,
+        "z": 9.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 38,
+      "type": "cylinder",
+      "name": "New cylinder 50_new",
+      "tags": "",
+      "texture_id": 7,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 4.014009,
+        "y": 0.50000066,
+        "z": 12.741772
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 39,
+      "type": "sphere",
+      "name": "New sphere 100",
+      "tags": "playerstartposition",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 15.5,
+        "y": 0.5,
+        "z": 2.5
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 40,
+      "type": "sphere",
+      "name": "New sphere 2",
+      "tags": "playerstartposition",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 6.25,
+        "y": 0.5,
+        "z": 13.5
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 41,
+      "type": "sphere",
+      "name": "New sphere 2_new",
+      "tags": "playerstartposition",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 3.75,
+        "y": 0.75,
+        "z": 4.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 42,
+      "type": "sphere",
+      "name": "New sphere 100_new",
+      "tags": "playerstartposition",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 16.5,
+        "y": 0.75,
+        "z": 17.5
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 89,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new",
+      "tags": "",
+      "texture_id": 7,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 12.25572,
+        "y": 0.4999767,
+        "z": 8.983464
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 94,
+      "type": "",
+      "name": "Floor_new",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 11.630978,
+        "y": 0.49999988,
+        "z": 4.869421
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 51,
+      "type": "",
+      "name": "Floor_new_new",
+      "tags": "",
+      "texture_id": 4,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 7.6308618,
+        "y": 0.49999988,
+        "z": 12.124069
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 52,
+      "type": "sphere",
+      "name": "healthpack_sphere1",
+      "tags": "healthpack",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.5,
+        "y": 1.0,
+        "z": 1.25
+      },
+      "position": {
+        "x": 9.5,
+        "y": 0.25,
+        "z": 18.25
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 53,
+      "type": "sphere",
+      "name": "healthpack_sphere2",
+      "tags": "healthpack",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 0.5,
+        "y": 1.0,
+        "z": 1.25
+      },
+      "position": {
+        "x": 9.5,
+        "y": 0.25,
+        "z": -0.5
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    }
+  ]
+}

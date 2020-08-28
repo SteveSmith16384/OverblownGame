@@ -26,10 +26,12 @@ public class StarshipLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
 		try {
-			Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), floor_size/2, -0.1f, floor_size/2, 
+			super.loadJsonFile("maps/starship.json", false);
+
+			/*Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), floor_size/2, -0.1f, floor_size/2, 
 					floor_size, .2f, floor_size, 
 					0f, true, false);
-			game.ecs.addEntity(floor);
+			game.ecs.addEntity(floor);*/
 			
 			AbstractEntity pickup = EquipmentEntityFactory.createPickup(game, 3, 3, 3);
 			game.ecs.addEntity(pickup);
