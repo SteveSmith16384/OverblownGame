@@ -16,14 +16,14 @@ public class Settings {
 
 	// Debugging Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_STARSHIP;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_SORTIT;
 	public static final int NUM_AUTOSTART_CHARACTERS = 1;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_PHARTAH;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	
 	public static final boolean DISABLE_GRAVITY = !RELEASE_MODE && false;
 	public static final boolean TEST_VOX = !RELEASE_MODE && false;
-	public static boolean DRAW_PHYSICS = !RELEASE_MODE && true;
+	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
 	public static final boolean DISABLE_SHADOWS = !RELEASE_MODE && false;
 	public static final boolean TEST_3RD_PERSON = !RELEASE_MODE && false;
 	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && false;

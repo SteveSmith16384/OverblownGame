@@ -1,5 +1,4 @@
 {
-  "filename": "maps/map_editor.json",
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
@@ -32,7 +31,7 @@
         "y": 0.49999988,
         "z": 3.2444205
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -46,18 +45,18 @@
       "tags": "",
       "texture_id": 7,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
-        "x": 20.5,
+        "x": 10.0,
         "y": 0.5,
-        "z": 19.5
+        "z": 10.0
       },
       "position": {
-        "x": 9.25,
+        "x": 4.5,
         "y": -0.25,
-        "z": 9.0
+        "z": 4.25
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -78,11 +77,11 @@
         "z": 1.0
       },
       "position": {
-        "x": 4.014009,
-        "y": 0.50000066,
-        "z": 12.741772
+        "x": 4.019608,
+        "y": 0.43679747,
+        "z": 12.75793
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -107,7 +106,7 @@
         "y": 0.5,
         "z": 2.5
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -132,7 +131,7 @@
         "y": 0.5,
         "z": 13.5
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -157,7 +156,7 @@
         "y": 0.75,
         "z": 4.0
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -182,7 +181,7 @@
         "y": 0.75,
         "z": 17.5
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -203,11 +202,11 @@
         "z": 1.0
       },
       "position": {
-        "x": 12.25572,
-        "y": 0.4999767,
-        "z": 8.983464
+        "x": 12.272557,
+        "y": 0.4158635,
+        "z": 8.9929285
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -228,11 +227,11 @@
         "z": 1.0
       },
       "position": {
-        "x": 11.630978,
-        "y": 0.49999988,
+        "x": 11.63098,
+        "y": 0.48707354,
         "z": 4.869421
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -253,11 +252,11 @@
         "z": 1.0
       },
       "position": {
-        "x": 7.6308618,
-        "y": 0.49999988,
-        "z": 12.124069
+        "x": 7.631047,
+        "y": 0.468094,
+        "z": 12.087929
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -265,24 +264,24 @@
       "mass": 1.0
     },
     {
-      "id": 52,
-      "type": "sphere",
-      "name": "healthpack_sphere1",
-      "tags": "healthpack",
-      "texture_id": 0,
+      "id": 13,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 7,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
-        "x": 0.5,
-        "y": 1.0,
-        "z": 1.25
+        "x": 10.0,
+        "y": 0.5,
+        "z": 10.0
       },
       "position": {
-        "x": 9.5,
-        "y": 0.25,
-        "z": 18.25
+        "x": 16.0,
+        "y": -0.25,
+        "z": 4.25
       },
-      "rotation": {
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -290,24 +289,149 @@
       "mass": 0.0
     },
     {
-      "id": 53,
+      "id": 14,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 7,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 10.0,
+        "y": 0.5,
+        "z": 10.0
+      },
+      "position": {
+        "x": 16.0,
+        "y": -0.25,
+        "z": 15.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 15,
+      "type": "cube",
+      "name": "New cube 58",
+      "tags": "",
+      "texture_id": 7,
+      "model_filename": "",
+      "tiled": false,
+      "size": {
+        "x": 10.0,
+        "y": 0.5,
+        "z": 10.0
+      },
+      "position": {
+        "x": 4.5,
+        "y": -0.25,
+        "z": 15.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 14,
       "type": "sphere",
-      "name": "healthpack_sphere2",
-      "tags": "healthpack",
+      "name": "New sphere 2_new",
+      "tags": "dispenser",
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
       "size": {
-        "x": 0.5,
+        "x": 1.0,
         "y": 1.0,
-        "z": 1.25
+        "z": 1.0
       },
       "position": {
-        "x": 9.5,
-        "y": 0.25,
-        "z": -0.5
+        "x": 6.75,
+        "y": 2.25,
+        "z": 4.75
       },
-      "rotation": {
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 15,
+      "type": "sphere",
+      "name": "New sphere 2_new",
+      "tags": "dispenser",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 15.0,
+        "y": 2.25,
+        "z": 5.0
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 16,
+      "type": "sphere",
+      "name": "New sphere 2_new",
+      "tags": "dispenser",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 15.0,
+        "y": 2.5,
+        "z": 14.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 17,
+      "type": "sphere",
+      "name": "New sphere 2_new",
+      "tags": "dispenser",
+      "texture_id": 0,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 5.75,
+        "y": 2.5,
+        "z": 14.75
+      },
+      "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0

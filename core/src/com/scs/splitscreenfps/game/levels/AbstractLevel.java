@@ -48,7 +48,7 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_CSGO_OFFICE = 11;
 	public static final int LEVEL_MAP_EDITOR = 12;
 	public static final int LEVEL_AI_TEST = 13;
-	public static final int LEVEL_STARSHIP = 14;
+	public static final int LEVEL_SORTIT = 14;
 
 	public static final int MAX_LEVEL_ID = 12;
 
@@ -98,8 +98,8 @@ public abstract class AbstractLevel {
 			return new Dust2Level();
 		case LEVEL_CSGO_OFFICE:
 			return new CSGOOfficeLevel();
-		case LEVEL_STARSHIP:
-			return new StarshipLevel();
+		case LEVEL_SORTIT:
+			return new SortItLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
