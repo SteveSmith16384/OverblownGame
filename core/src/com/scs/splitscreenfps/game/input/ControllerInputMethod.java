@@ -156,4 +156,10 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(1); // todo - check
 	}
 
+
+	@Override
+	public boolean isThrowPressed() {
+		return this.controller.getButton(8); // todo - check
+	}
+
 }

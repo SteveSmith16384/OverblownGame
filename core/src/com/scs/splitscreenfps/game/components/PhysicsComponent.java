@@ -10,7 +10,7 @@ public class PhysicsComponent {
 
 	public btCollisionObject body;
 	public boolean disable_gravity = false;
-	public Vector3 force;
+	public Vector3 initial_force; // Applied only when entity is added to the game
 	public boolean removeIfFallen = true; // False for players
 	public boolean physicsControlsRotation = true; // False for players
 	public boolean position_dirty = true; // Objects with mass=0 only need position setting once

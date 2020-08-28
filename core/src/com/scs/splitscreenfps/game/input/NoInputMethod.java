@@ -105,4 +105,9 @@ public class NoInputMethod implements IInputMethod {
 	public boolean isPickupPressed() {
 		return false;
 	}
+
+	@Override
+	public boolean isThrowPressed() {
+		return false;
+	}
 }

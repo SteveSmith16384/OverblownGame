@@ -71,7 +71,7 @@ public class BulletEntityFactory {
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
-		pc.force = new Vector3(dir).scl(.7f);
+		pc.initial_force = new Vector3(dir).scl(.7f);
 		e.addComponent(pc);
 
 		switch (settings.weapon_type) {
@@ -129,7 +129,7 @@ public class BulletEntityFactory {
 		body.setFriction(0);
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
-		pc.force = new Vector3(dir).scl(.8f);
+		pc.initial_force = new Vector3(dir).scl(.8f);
 		pc.sound_on_collision = "sfx/bump1.wav";
 		e.addComponent(pc);
 
@@ -191,7 +191,7 @@ public class BulletEntityFactory {
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
-		pc.force = dir.scl(1f);
+		pc.initial_force = dir.scl(1f);
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/launches/rlaunch.wav");
@@ -233,7 +233,7 @@ public class BulletEntityFactory {
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
 		pc.disable_gravity = true;
-		pc.force = dir.scl(100f);
+		pc.initial_force = dir.scl(100f);
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/punch.mp3");
@@ -274,7 +274,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(1f);
+		pc.initial_force = dir.scl(1f);
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
@@ -313,7 +313,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(2f);
+		pc.initial_force = dir.scl(2f);
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav");
@@ -363,7 +363,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(NumberFunctions.rndFloat(3f,  6f));//5f);
+		pc.initial_force = dir.scl(NumberFunctions.rndFloat(3f,  6f));//5f);
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/launches/iceball.wav"); // todo
@@ -403,7 +403,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(4f);
+		pc.initial_force = dir.scl(4f);
 		e.addComponent(pc);
 
 		BillBoardFPS_Main.audio.play("sfx/Futuristic Shotgun Single Shot.wav");
@@ -442,7 +442,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = new Vector3(0, -5, 0);
+		pc.initial_force = new Vector3(0, -5, 0);
 		e.addComponent(pc);
 
 		//No, we have a voice sfx  BillBoardFPS_Main.audio.play();
@@ -536,7 +536,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(2f);
+		pc.initial_force = dir.scl(2f);
 		e.addComponent(pc);
 
 		return e;
@@ -581,7 +581,7 @@ public class BulletEntityFactory {
 		mat.setTranslation(start);
 		body.setWorldTransform(mat);
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(3f);
+		pc.initial_force = dir.scl(3f);
 		e.addComponent(pc);
 
 		return e;
@@ -633,7 +633,7 @@ public class BulletEntityFactory {
 		body.setWorldTransform(mat);
 
 		PhysicsComponent pc = new PhysicsComponent(body);
-		pc.force = dir.scl(.7f);
+		pc.initial_force = dir.scl(.7f);
 		pc.sound_on_collision = "sfx/clang1.wav";
 		e.addComponent(pc);
 

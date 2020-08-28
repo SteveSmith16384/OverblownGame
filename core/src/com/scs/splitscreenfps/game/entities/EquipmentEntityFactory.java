@@ -43,7 +43,7 @@ public class EquipmentEntityFactory {
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
 		Vector3 local_inertia = new Vector3();
 		boxShape.calculateLocalInertia(1f, local_inertia);
-		btRigidBody groundObject = new btRigidBody(w*h*d, null, boxShape, local_inertia);
+		btRigidBody groundObject = new btRigidBody(1, null, boxShape, local_inertia);
 		groundObject.userData = pickup;
 		groundObject.setRestitution(.5f);
 		groundObject.setCollisionShape(boxShape);

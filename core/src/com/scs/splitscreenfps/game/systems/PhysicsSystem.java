@@ -78,9 +78,9 @@ public class PhysicsSystem extends AbstractSystem {
 		if (pc.disable_gravity) {
 			pc.getRigidBody().setGravity(new Vector3());
 		}
-		if (pc.force != null) {
+		if (pc.initial_force != null) {
 			//pc.body.applyCentralForce(pc.force.scl(1));
-			pc.getRigidBody().applyCentralImpulse(pc.force);
+			pc.getRigidBody().applyCentralImpulse(pc.initial_force);
 		}
 	}
 

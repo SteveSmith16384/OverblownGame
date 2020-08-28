@@ -41,4 +41,6 @@ public interface IInputMethod {
 	boolean isUltimatePressed();
 
 	boolean isPickupPressed();
+	
+	boolean isThrowPressed();
 }

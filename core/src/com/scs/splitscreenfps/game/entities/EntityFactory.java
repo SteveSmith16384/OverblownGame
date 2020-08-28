@@ -316,7 +316,7 @@ public class EntityFactory {
 		boxShape.calculateLocalInertia(1f, local_inertia);
 		btRigidBody groundObject = new btRigidBody(w*h*d, null, boxShape, local_inertia);
 		groundObject.userData = lootbox;
-		groundObject.setRestitution(.5f);
+		groundObject.setRestitution(.1f);
 		groundObject.setCollisionShape(boxShape);
 		groundObject.setWorldTransform(instance.transform);
 		lootbox.addComponent(new PhysicsComponent(groundObject));

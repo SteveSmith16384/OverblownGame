@@ -36,6 +36,12 @@ public class StarshipLevel extends AbstractLevel {
 			AbstractEntity pickup = EquipmentEntityFactory.createPickup(game, 3, 3, 3);
 			game.ecs.addEntity(pickup);
 
+			pickup = EquipmentEntityFactory.createPickup(game, 2, 3, 5);
+			game.ecs.addEntity(pickup);
+
+			pickup = EquipmentEntityFactory.createPickup(game, 3, 3, 7);
+			game.ecs.addEntity(pickup);
+
 		} catch (Exception e) {
 			throw new RuntimeException("Error loading map file", e);
 		}

@@ -35,7 +35,7 @@ public class PickupAndDropSystem extends AbstractSystem {
 		if (canCarry.carrying != null) {
 			PositionComponent ourPosData = (PositionComponent)player.getComponent(PositionComponent.class);
 			PositionComponent itemPosData = (PositionComponent)canCarry.carrying.getComponent(PositionComponent.class);
-			
+
 			Vector3 newpos = new Vector3(ourPosData.position);
 			Vector3 dir = new Vector3(); // todo - cache
 			dir.set(player.camera.direction);
@@ -43,16 +43,20 @@ public class PickupAndDropSystem extends AbstractSystem {
 			dir.nor();
 			dir.scl(.5f);
 			newpos.add(dir);
-			
+
 			newpos.y -= .1f;
 			itemPosData.position.set(newpos);
 		}
-		
+
 		if (player.inputMethod.isPickupPressed()) {
 			if (canCarry.carrying == null) {
 				pickup(player, canCarry);
 			} else {
-				drop(player, canCarry);
+				drop(player, canCarry, false);
+			}
+		} else if (player.inputMethod.isThrowPressed()) {
+			if (canCarry.carrying != null) {
+				drop(player, canCarry, true);
 			}
 		}
 	}
@@ -79,18 +83,24 @@ public class PickupAndDropSystem extends AbstractSystem {
 				float distance = posData.position.dst(ourPosData.position);
 				if (distance <= 1) {
 					canCarry.carrying = e;
+
+					//PhysicsComponent md = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+					//md.getRigidBody().setAngularVelocity(Vector3.Zero);
+					//md.getRigidBody().setLinearVelocity(Vector3.Zero);
+
 					e.hideComponent(CanBeCarriedComponent.class);
 					e.hideComponent(PhysicsComponent.class);
-					Settings.p(e + " picked up");
+					
+					//Settings.p(e + " picked up");
 					return;
 				}
 			}
 		}
-		Settings.p("No object found");
+		//Settings.p("No object found");
 	}
 
 
-	private void drop(AbstractPlayersAvatar player, CanCarryComponent canCarry) {
+	private void drop(AbstractPlayersAvatar player, CanCarryComponent canCarry, boolean throwIt) {
 		AbstractEntity item = canCarry.carrying;
 		//item.restoreComponent(HasModelComponent.class);
 		item.restoreComponent(CanBeCarriedComponent.class);
@@ -100,25 +110,29 @@ public class PickupAndDropSystem extends AbstractSystem {
 		Vector3 newpos = new Vector3(ourPosData.position);
 		//newpos.y += 2f;
 
-		Vector3 dir = new Vector3();
+		Vector3 dir = new Vector3(); // todo - cache
 		dir.set(player.camera.direction);
-		dir.y = 0;
+		if (throwIt == false || dir.y < 0) {
+			dir.y = 0;
+		}
 		dir.nor();
 		newpos.add(dir);
 
 		// Set position
-		PhysicsComponent md = (PhysicsComponent)item.getComponent(PhysicsComponent.class);
+		PhysicsComponent physics = (PhysicsComponent)item.getComponent(PhysicsComponent.class);
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(newpos);
-		md.body.setWorldTransform(mat);
-		md.body.activate();
-		md.getRigidBody().setAngularVelocity(Vector3.Zero);
-		md.getRigidBody().setLinearVelocity(Vector3.Zero);
+		physics.body.setWorldTransform(mat);
+		if (throwIt) {
+			physics.getRigidBody().applyCentralImpulse(dir.scl(4));
+			physics.body.activate();
+		} else {
+			physics.getRigidBody().setAngularVelocity(Vector3.Zero);
+			physics.getRigidBody().setLinearVelocity(Vector3.Zero);
+		}
 
 		canCarry.carrying = null;
 
-		Settings.p(item + " dropped");
-
-
+		//Settings.p(item + " dropped");
 	}
 }
