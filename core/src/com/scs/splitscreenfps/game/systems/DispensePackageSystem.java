@@ -30,7 +30,7 @@ public class DispensePackageSystem implements ISystem {
 	@Override
 	public void process() {
 		if (dispensers.size() == 0) {
-			// Find the control point entity - 
+			// Find the dispensers 
 			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
 			while (it.hasNext()) {
 				AbstractEntity e = it.next();

@@ -1,9 +1,8 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.math.Vector3;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.entities.EquipmentEntityFactory;
+import com.scs.splitscreenfps.game.systems.CollectPackageSystem;
 import com.scs.splitscreenfps.game.systems.DispensePackageSystem;
 import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
@@ -12,6 +11,7 @@ public class SortItLevel extends AbstractLevel {
 	private float floor_size = 35f;
 
 	private DispensePackageSystem dispenserSystem;
+	private CollectPackageSystem collectorSystem;
 
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
@@ -19,6 +19,7 @@ public class SortItLevel extends AbstractLevel {
 		game.ecs.removeSystem(ShootingSystem.class);
 
 		dispenserSystem = new DispensePackageSystem(game);
+		this.collectorSystem = new CollectPackageSystem(game, game.ecs);
 	}
 
 
@@ -56,6 +57,7 @@ public class SortItLevel extends AbstractLevel {
 	@Override
 	public void update() {
 		this.dispenserSystem.process();
+		this.collectorSystem.process();
 	}
 
 

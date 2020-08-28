@@ -1,5 +1,9 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileNotFoundException;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
@@ -8,7 +12,7 @@ import com.scs.splitscreenfps.game.systems.ShootingSystem;
 
 public class MapEditorLevel extends AbstractLevel {
 
-	public static final String MAP_FILENAME = "maps/starship.json";
+	public static final String MAP_FILENAME = "maps/sortit.json";
 	public static final String STATIC_MODEL_FILENAME = "models/kenney/spacekit2/craft_speederB.obj";
 	public static final String DYNAMIC_MODEL_FILENAME = "vox/veh_bus.obj";
 	
@@ -26,12 +30,8 @@ public class MapEditorLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() {
-		try {
+	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 			super.loadJsonFile(MAP_FILENAME, true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game));
 		

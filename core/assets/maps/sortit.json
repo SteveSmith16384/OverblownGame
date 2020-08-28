@@ -2,15 +2,14 @@
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
-    "3": "colours/brown.png",
-    "4": "textures/blackborder/white.png",
-    "5": "textures/crate1.png",
-    "6": "textures/crate2.png",
+    "3": "colours/yellow.png",
+    "4": "colours/green.png",
+    "5": "colours/magenta.png",
+    "6": "textures/blackborder/white.png",
     "7": "textures/blackborder/grey1.png",
     "8": "textures/blackborder/grey2.png",
     "9": "textures/blackborder/grey3.png",
-    "10": "textures/blackborder/purple1.png",
-    "11": "textures/skyscraper.png"
+    "10": "textures/blackborder/purple1.png"
   },
   "blocks": [
     {
@@ -18,7 +17,7 @@
       "type": "",
       "name": "Floor",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 9,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -27,9 +26,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 5.255982,
+        "x": 2.755982,
         "y": 0.49999988,
-        "z": 3.2444205
+        "z": 0.24442053
       },
       "rotation_degs": {
         "x": 0.0,
@@ -67,8 +66,8 @@
       "id": 38,
       "type": "cylinder",
       "name": "New cylinder 50_new",
-      "tags": "",
-      "texture_id": 7,
+      "tags": "collector2",
+      "texture_id": 4,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -77,16 +76,16 @@
         "z": 1.0
       },
       "position": {
-        "x": 4.019608,
-        "y": 0.43679747,
-        "z": 12.75793
+        "x": 3.7916877,
+        "y": 0.49999982,
+        "z": 14.510614
       },
       "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
-      "mass": 1.0
+      "mass": 0.0
     },
     {
       "id": 39,
@@ -192,8 +191,8 @@
       "id": 89,
       "type": "cylinder",
       "name": "New cylinder 50_new_new",
-      "tags": "",
-      "texture_id": 7,
+      "tags": "collector0",
+      "texture_id": 2,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -202,34 +201,34 @@
         "z": 1.0
       },
       "position": {
-        "x": 12.272557,
-        "y": 0.4158635,
-        "z": 8.9929285
+        "x": 16.815668,
+        "y": 0.4999999,
+        "z": 3.9671888
       },
       "rotation_degs": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
-      "mass": 1.0
+      "mass": 0.0
     },
     {
       "id": 94,
       "type": "",
       "name": "Floor_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 9,
       "model_filename": "",
-      "tiled": true,
+      "tiled": false,
       "size": {
         "x": 1.0,
         "y": 1.0,
         "z": 1.0
       },
       "position": {
-        "x": 11.63098,
-        "y": 0.48707354,
-        "z": 4.869421
+        "x": 13.63098,
+        "y": 0.49999988,
+        "z": 0.619421
       },
       "rotation_degs": {
         "x": 0.0,
@@ -243,7 +242,7 @@
       "type": "",
       "name": "Floor_new_new",
       "tags": "",
-      "texture_id": 4,
+      "texture_id": 8,
       "model_filename": "",
       "tiled": true,
       "size": {
@@ -252,9 +251,9 @@
         "z": 1.0
       },
       "position": {
-        "x": 7.631047,
-        "y": 0.468094,
-        "z": 12.087929
+        "x": 4.6310463,
+        "y": 0.49999985,
+        "z": 15.587929
       },
       "rotation_degs": {
         "x": 0.0,
@@ -430,6 +429,81 @@
         "x": 5.75,
         "y": 2.5,
         "z": 14.75
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 18,
+      "type": "",
+      "name": "Floor_new_new",
+      "tags": "",
+      "texture_id": 8,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 14.631046,
+        "y": 0.49999988,
+        "z": 15.337929
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 1.0
+    },
+    {
+      "id": 19,
+      "type": "cylinder",
+      "name": "New cylinder 50_new_new",
+      "tags": "collector1",
+      "texture_id": 3,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 16.807444,
+        "y": 0.4999847,
+        "z": 15.029593
+      },
+      "rotation_degs": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "mass": 0.0
+    },
+    {
+      "id": 20,
+      "type": "cylinder",
+      "name": "New cylinder 50_new",
+      "tags": "collector3",
+      "texture_id": 5,
+      "model_filename": "",
+      "tiled": true,
+      "size": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "position": {
+        "x": 4.791688,
+        "y": 0.49999976,
+        "z": 4.2606144
       },
       "rotation_degs": {
         "x": 0.0,
