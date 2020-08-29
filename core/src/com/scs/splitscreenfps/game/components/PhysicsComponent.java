@@ -15,6 +15,7 @@ public class PhysicsComponent {
 	public boolean physicsControlsRotation = true; // False for players
 	public boolean position_dirty = true; // Objects with mass=0 only need position setting once
 	public String sound_on_collision;
+	public boolean disable_physics = false; // todo - reverse logic
 	
 	// Temp vars
 	private Matrix4 mat = new Matrix4();

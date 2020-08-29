@@ -25,7 +25,7 @@ public class PhysicsSystem extends AbstractSystem {
 		game = _game;
 	}
 
-	
+
 	@Override
 	public void processEntity(AbstractEntity e) {
 		PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
@@ -40,23 +40,25 @@ public class PhysicsSystem extends AbstractSystem {
 
 		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 
-		pc.body.getWorldTransform(tmpMat);
-		// Set model position data based on physics data - regardless of whether we draw them
-		tmpMat.getTranslation(posData.position);
+		if (pc.disable_physics == false) {
+			// Set model position data based on physics data - regardless of whether we draw them
+			pc.body.getWorldTransform(tmpMat);
+			tmpMat.getTranslation(posData.position);
 
-		float height = posData.position.y;
-		if (height < -8) {
-			if (pc.removeIfFallen && pc.body.isKinematicObject()) {
-				Settings.p("Removed " + e + " since it has fallen off");
-				e.remove();
-				game.ecs.events.add(new FallenOffEdgeEvent(e));
-			} else {
-				// Is it a player?
-				PlayerData player = (PlayerData)e.getComponent(PlayerData.class);
-				if (player != null) {
-					if (player.dead == false) {
-						game.playerDied(e, player, null);
-						BillBoardFPS_Main.audio.play("sfx/deathscream1.wav");
+			float height = posData.position.y;
+			if (height < -8) {
+				if (pc.removeIfFallen && pc.body.isKinematicObject()) {
+					Settings.p("Removed " + e + " since it has fallen off");
+					e.remove();
+					game.ecs.events.add(new FallenOffEdgeEvent(e));
+				} else {
+					// Is it a player?
+					PlayerData player = (PlayerData)e.getComponent(PlayerData.class);
+					if (player != null) {
+						if (player.dead == false) {
+							game.playerDied(e, player, null);
+							BillBoardFPS_Main.audio.play("sfx/deathscream1.wav");
+						}
 					}
 				}
 			}

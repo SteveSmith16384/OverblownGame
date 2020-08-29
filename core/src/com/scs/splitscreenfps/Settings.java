@@ -21,6 +21,7 @@ public class Settings {
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_PHARTAH;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	
+	public static final boolean DEBUG_DISPENSER = !RELEASE_MODE && false;
 	public static final boolean DISABLE_GRAVITY = !RELEASE_MODE && false;
 	public static final boolean TEST_VOX = !RELEASE_MODE && false;
 	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;

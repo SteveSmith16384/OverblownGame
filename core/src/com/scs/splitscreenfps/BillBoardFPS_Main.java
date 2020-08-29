@@ -50,7 +50,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 
 		ecs = new BasicECS();
 		ecs.addSystem(new AudioSystem2(ecs));
-		ecs.addSystem(new AddComponentAfterTimeSystem(ecs));
+		//ecs.addSystem(new AddComponentAfterTimeSystem(ecs));
 	}
 
 
@@ -63,8 +63,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 			Gdx.input.setCursorCatched(false);
 		}
 
-		ecs.addAndRemoveEntities();
-		ecs.processSystem(AddComponentAfterTimeSystem.class);
+		//ecs.addAndRemoveEntities();
+		//ecs.processSystem(AddComponentAfterTimeSystem.class);
 		ecs.processSystem(AudioSystem2.class);
 
 		controllerManager.checkForControllers();
@@ -102,8 +102,6 @@ public class BillBoardFPS_Main extends ApplicationAdapter implements ControllerC
 				Gdx.graphics.setWindowedMode(w-20, h-20);
 				fullscreen = true;
 			}
-		//} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			//Gdx.app.exit();
 		}
 
 

@@ -82,10 +82,10 @@ public class EquipmentEntityFactory {
 			throw new RuntimeException("Todo");
 		}
 
-		Material black_material = new Material(TextureAttribute.createDiffuse(game.getTexture(tex)));
+		Material material = new Material(TextureAttribute.createDiffuse(game.getTexture(tex)));
 		ModelBuilder modelBuilder = game.modelBuilder;
 
-		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
+		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, material);
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		pkg.addComponent(model);

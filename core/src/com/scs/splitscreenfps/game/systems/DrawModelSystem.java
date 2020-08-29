@@ -130,7 +130,7 @@ public class DrawModelSystem extends AbstractSystem {
 		PhysicsComponent pc = (PhysicsComponent)entity.getComponent(PhysicsComponent.class);
 		if (game.currentViewId == 0 && drawing_shadows == false) {
 			// Calc position.  Only need to do this bit once per game loop!
-			if (pc != null) {
+			if (pc != null && pc.disable_physics == false) {
 				if (pc.position_dirty || pc.getRigidBody().getInvMass() != 0 || Settings.USE_MAP_EDITOR) {
 					pc.position_dirty = false;
 					pc.body.getWorldTransform(tmpMat);
@@ -174,7 +174,7 @@ public class DrawModelSystem extends AbstractSystem {
 			return;
 		}
 
-		if (pc == null) { // Non-physics entity
+		if (pc == null || pc.disable_physics) { // Non-physics entity
 			// Position model
 			if (model.keep_player_in_centre) { // i.e. a skybox
 				model.model.transform.setToTranslation(batch.getCamera().position);
