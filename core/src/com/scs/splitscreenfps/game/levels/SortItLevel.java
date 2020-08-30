@@ -1,7 +1,10 @@
 package com.scs.splitscreenfps.game.levels;
 
+import com.badlogic.gdx.graphics.Color;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
+import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.gamemodes.ScoreAndTimeLimitSystem;
 import com.scs.splitscreenfps.game.systems.CollectPackageSystem;
 import com.scs.splitscreenfps.game.systems.DispensePackageSystem;
@@ -20,7 +23,7 @@ public class SortItLevel extends AbstractLevel {
 		
 		game.show_health = false;
 
-		this.scoreSystem = new ScoreAndTimeLimitSystem(20, 60*1000);
+		this.scoreSystem = new ScoreAndTimeLimitSystem(game, 20, 60*1000);
 		dispenserSystem = new DispensePackageSystem(game);
 		this.collectorSystem = new CollectPackageSystem(game, game.ecs, scoreSystem);
 	}
@@ -55,8 +58,12 @@ public class SortItLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
+		if (game.game_stage != 0) {
+			return;
+		}
 		this.dispenserSystem.process();
 		this.collectorSystem.process();
+		scoreSystem.process();
 	}
 
 

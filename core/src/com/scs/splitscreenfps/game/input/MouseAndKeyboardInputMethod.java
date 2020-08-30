@@ -128,12 +128,12 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isPickupPressed() {
-		return Gdx.input.isKeyJustPressed(Keys.P) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT);
+		return Gdx.input.isKeyJustPressed(Keys.P) || Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT);
 	}
 	
 	@Override
 	public boolean isThrowPressed() {
-		return Gdx.input.isKeyJustPressed(Keys.T);
+		return Gdx.input.isKeyJustPressed(Keys.T) || this.isShootPressed();
 	}
 
 }

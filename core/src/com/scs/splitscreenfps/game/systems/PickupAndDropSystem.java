@@ -55,10 +55,8 @@ public class PickupAndDropSystem extends AbstractSystem {
 			} else {
 				drop(player, canCarry, false);
 			}
-		} else if (player.inputMethod.isThrowPressed() || player.inputMethod.isShootPressed()) {
-			if (canCarry.carrying != null) {
-				drop(player, canCarry, true);
-			}
+		} else if (player.inputMethod.isThrowPressed() && canCarry.carrying != null) {
+			drop(player, canCarry, true);
 		}
 	}
 
@@ -88,11 +86,11 @@ public class PickupAndDropSystem extends AbstractSystem {
 					PhysicsComponent physics = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 					physics.body.setActivationState(Collision.WANTS_DEACTIVATION);
 					physics.disable_physics = true;
-					
+
 					e.hideComponent(CanBeCarriedComponent.class);
 					//e.hideComponent(PhysicsComponent.class);
-					
-					//Settings.p(e + " picked up");
+
+					Settings.p(e + " picked up");
 					return;
 				}
 			}
@@ -136,6 +134,6 @@ public class PickupAndDropSystem extends AbstractSystem {
 
 		canCarry.carrying = null;
 
-		//Settings.p(item + " dropped");
+		Settings.p(item + " dropped");
 	}
 }
