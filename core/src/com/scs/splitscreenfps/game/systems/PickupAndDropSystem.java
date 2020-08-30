@@ -49,7 +49,7 @@ public class PickupAndDropSystem extends AbstractSystem {
 			itemPosData.position.set(newpos);
 		}
 
-		if (player.inputMethod.isPickupPressed()) {
+		if (player.inputMethod.isPickupDropPressed()) {
 			if (canCarry.carrying == null) {
 				pickup(player, canCarry);
 			} else {

@@ -10,6 +10,11 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 	}
 
 	@Override
+	public void process() {
+		
+	}
+	
+	@Override
 	public float getForwards() {
 		return Gdx.input.isKeyPressed(Keys.W) ? 1 : 0;
 	}
@@ -127,7 +132,7 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 
 
 	@Override
-	public boolean isPickupPressed() {
+	public boolean isPickupDropPressed() {
 		return Gdx.input.isKeyJustPressed(Keys.P) || Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT);
 	}
 	

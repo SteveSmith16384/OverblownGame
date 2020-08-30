@@ -5,10 +5,22 @@ import com.scs.splitscreenfps.Settings;
 
 public class ControllerInputMethod implements IInputMethod {
 
+	private static final int PICKUP_DROP_BUTTON = 2;
+
 	public Controller controller;
+	private boolean pickup_released = true;
 
 	public ControllerInputMethod(Controller _controller) {
 		controller = _controller;
+	}
+
+	@Override
+	public void process() {
+		if (pickup_released == false) {
+			if (this.controller.getButton(PICKUP_DROP_BUTTON) == false) {
+				this.pickup_released = true;
+			}
+		}
 	}
 
 	@Override
@@ -152,14 +164,22 @@ public class ControllerInputMethod implements IInputMethod {
 
 
 	@Override
-	public boolean isPickupPressed() {
+	public boolean isPickupDropPressed() {
 		/*for (int i=0 ; i<16 ; i++) {
 		if (this.controller.getButton(i)) {
 			Settings.p("Pressed! " + i);
 			break;
 		}
 	}*/
-		return this.controller.getButton(2); // Square
+		boolean b = this.pickup_released && this.controller.getButton(PICKUP_DROP_BUTTON); // Square
+		if (b) {
+		pickup_released = false;
+		}
+		/*this.pickup_released = !b;
+		if (!pickup_released) {
+			Settings.p("pickup_released=" + pickup_released);
+		}*/
+		return b;
 	}
 
 

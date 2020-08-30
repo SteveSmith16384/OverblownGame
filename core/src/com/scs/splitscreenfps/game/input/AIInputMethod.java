@@ -13,6 +13,13 @@ public class AIInputMethod implements IInputMethod {
 	public AIInputMethod() {
 	}
 
+
+	@Override
+	public void process() {
+		
+	}
+	
+
 	@Override
 	public float getForwards() {
 		return move_fwd ? 1 : 0;
@@ -111,7 +118,7 @@ public class AIInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isPickupPressed() {
+	public boolean isPickupDropPressed() {
 		return false;
 	}
 
@@ -120,5 +127,5 @@ public class AIInputMethod implements IInputMethod {
 	public boolean isThrowPressed() {
 		return false;
 	}
-	
+
 }

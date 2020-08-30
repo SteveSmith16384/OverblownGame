@@ -46,6 +46,8 @@ public class PlayerProcessSystem implements ISystem {
 
 
 	private void process(AbstractPlayersAvatar player) {
+		player.inputMethod.process();
+		
 		PhysicsComponent ourPhysics = (PhysicsComponent)player.getComponent(PhysicsComponent.class);
 		PlayerData ourPlayerData = (PlayerData)player.getComponent(PlayerData.class);
 

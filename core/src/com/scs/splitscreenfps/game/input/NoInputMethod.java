@@ -6,6 +6,11 @@ public class NoInputMethod implements IInputMethod {
 	}
 
 	@Override
+	public void process() {
+		
+	}
+	
+	@Override
 	public float getForwards() {
 		return 0;
 	}
@@ -102,7 +107,7 @@ public class NoInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isPickupPressed() {
+	public boolean isPickupDropPressed() {
 		return false;
 	}
 
