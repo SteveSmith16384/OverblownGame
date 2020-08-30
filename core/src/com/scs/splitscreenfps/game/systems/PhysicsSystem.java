@@ -47,7 +47,7 @@ public class PhysicsSystem extends AbstractSystem {
 
 			float height = posData.position.y;
 			if (height < -8) {
-				if (pc.removeIfFallen && pc.body.isKinematicObject()) {
+				if (pc.removeIfFallen && pc.body.isKinematicObject() == false) {
 					Settings.p("Removed " + e + " since it has fallen off");
 					e.remove();
 					game.ecs.events.add(new FallenOffEdgeEvent(e));

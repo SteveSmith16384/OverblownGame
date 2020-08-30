@@ -1,12 +1,11 @@
 package com.scs.splitscreenfps.game.systems;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -60,11 +59,17 @@ public class DispensePackageSystem implements ISystem {
 				}
 
 				Vector3 pos = this.dispensers[this.next_disp];
-				AbstractEntity pkg = EquipmentEntityFactory.createPackage(game, pos.x, pos.y, pos.z, NumberFunctions.rnd(0, game.players.length));
+				if (pos == null) {
+					throw new RuntimeException("Here");
+				}
+				int pkg_type = NumberFunctions.rnd(0, game.players.length);
+				AbstractEntity pkg = EquipmentEntityFactory.createPackage(game, pos.x, pos.y, pos.z, pkg_type);
 				game.ecs.addEntity(pkg);
 
+				BillBoardFPS_Main.audio.play("sfx/Menu_Navigate_00.mp3");
+
 				this.next_disp++;
-				if (this.next_disp >= this.dispensers.length) {
+				if (this.next_disp > game.players.length) {
 					this.next_disp = 0;
 				}
 

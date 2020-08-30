@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeCarriedComponent;
@@ -90,7 +91,9 @@ public class PickupAndDropSystem extends AbstractSystem {
 					e.hideComponent(CanBeCarriedComponent.class);
 					//e.hideComponent(PhysicsComponent.class);
 
-					Settings.p(e + " picked up");
+					BillBoardFPS_Main.audio.play("sfx/Craft_00.mp3");
+
+					//Settings.p(e + " picked up");
 					return;
 				}
 			}
@@ -127,13 +130,15 @@ public class PickupAndDropSystem extends AbstractSystem {
 		if (throwIt) {
 			physics.getRigidBody().applyCentralImpulse(dir.scl(4));
 			physics.body.activate();
+			BillBoardFPS_Main.audio.play("sfx/Hit_00.mp3");
 		} else {
 			physics.getRigidBody().setAngularVelocity(Vector3.Zero);
 			physics.getRigidBody().setLinearVelocity(Vector3.Zero);
+			BillBoardFPS_Main.audio.play("sfx/Hit_01.mp3");
 		}
 
 		canCarry.carrying = null;
 
-		Settings.p(item + " dropped");
+		//Settings.p(item + " dropped");
 	}
 }

@@ -7,6 +7,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CollectPackageComponent;
 import com.scs.splitscreenfps.game.components.IsPackageComponent;
@@ -67,6 +68,7 @@ public class CollectPackageSystem extends AbstractSystem {
 			if (collector.type == pkg.type) {
 				coll.entity2.remove();
 				scoreSystem.incScore(2);
+				BillBoardFPS_Main.audio.play("sfx/Jingle_Achievement_01.mp3");
 			}
 		}
 	}
