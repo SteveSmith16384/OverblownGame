@@ -11,19 +11,20 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CollectPackageComponent;
 import com.scs.splitscreenfps.game.components.IsPackageComponent;
 import com.scs.splitscreenfps.game.events.EventCollision;
+import com.scs.splitscreenfps.game.gamemodes.ScoreAndTimeLimitSystem;
 
 public class CollectPackageSystem extends AbstractSystem {
 
 	private Game game;
 
 	private boolean got_collectors = false;
+	private ScoreAndTimeLimitSystem scoreSystem;
 
-	public CollectPackageSystem(Game _game, BasicECS ecs) {
+	public CollectPackageSystem(Game _game, BasicECS ecs, ScoreAndTimeLimitSystem _scoreSystem) {
 		super(ecs, CollectPackageComponent.class);
 
 		game = _game;
-
-		// todo - 
+		scoreSystem = _scoreSystem;
 	}
 
 
@@ -60,7 +61,7 @@ public class CollectPackageSystem extends AbstractSystem {
 			
 			if (collector.type == pkg.type) {
 				coll.entity2.remove();
-				// todo - score
+				scoreSystem.incScore();
 			}
 		}
 	}

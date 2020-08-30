@@ -143,6 +143,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	private final ClosestRayResultCallback callback = new ClosestRayResultCallback(new Vector3(), new Vector3());
 	public ModelBuilder modelBuilder = new ModelBuilder();
 	public boolean show_kills, show_damage;
+	public boolean show_health;
 
 	private DebugDrawer debugDrawer;
 	private btBroadphaseInterface broadphase;
@@ -488,7 +489,9 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 					drawText(this.font_small, "Damage: " + playerData.damage_caused, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*5), false);
 				}
 				drawText(this.font_small, playerData.ultimateText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*4), playerData.ultimateReady);
-				drawText(this.font_small, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
+				if (show_health) {
+					drawText(this.font_small, "Health: " + (int)(playerData.health), viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*3), false);
+				}
 				drawText(this.font_small, playerData.gunText, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*2), false);
 				drawText(this.font_small, playerData.ability1text, viewportData.viewRect.x+10, viewportData.viewRect.y+(yOff*1), playerData.ability1Ready);
 			}

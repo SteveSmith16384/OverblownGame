@@ -153,13 +153,19 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isPickupPressed() {
-		return this.controller.getButton(1); // todo - check
+		/*for (int i=0 ; i<16 ; i++) {
+		if (this.controller.getButton(i)) {
+			Settings.p("Pressed! " + i);
+			break;
+		}
+	}*/
+		return this.controller.getButton(2); // Square
 	}
 
 
 	@Override
 	public boolean isThrowPressed() {
-		return this.controller.getButton(8); // todo - check
+		return this.isShootPressed();
 	}
 
 }

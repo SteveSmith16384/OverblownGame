@@ -26,8 +26,9 @@ public class AvatarFactory {
 	public static final int CHAR_WHAT_THE_BALL = 8;
 	public static final int CHAR_RUBBISHRODENT = 9;
 	public static final int CHAR_TOBLERONE = 10;
-	public static final int CHAR_BOUNCING_BALL = 11;
+	public static final int CHAR_BOUNCING_BALL = 11; // Todo - delete
 	public static final int CHAR_WEAK = 12;
+	public static final int CHAR_SORTIT = 13;
 
 	public static final int CHAR_WINSTON = 96;
 	public static final int CHAR_BASTION = 97;
@@ -73,6 +74,7 @@ public class AvatarFactory {
 		case CHAR_WHAT_THE_BALL: return 100;
 		case CHAR_BOUNCING_BALL: return 100;
 		case CHAR_WEAK: return 100;
+		case CHAR_SORTIT: return 1;
 
 		default:
 			throw new RuntimeException("Unhandled character id: " + id);
@@ -176,6 +178,10 @@ public class AvatarFactory {
 			
 		case CHAR_WEAK:
 			weapon_type = WeaponSettingsComponent.WEAK_PISTOL;
+			break;
+			
+		case CHAR_SORTIT:
+			weapon_type = WeaponSettingsComponent.NONE;
 			break;
 			
 		default:

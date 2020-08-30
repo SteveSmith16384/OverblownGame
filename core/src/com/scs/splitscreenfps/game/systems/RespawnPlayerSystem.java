@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -27,6 +28,8 @@ public class RespawnPlayerSystem implements ISystem {
 		// todo - check they aren't already in the list
 		e.addComponent(new WillRespawnComponent(spawnPoint));
 		this.entities.add(e);
+
+		Settings.p("Added " + e + " to respawn");
 	}	
 
 
@@ -35,9 +38,12 @@ public class RespawnPlayerSystem implements ISystem {
 		for (int i=this.entities.size()-1 ; i>= 0 ; i--) {
 			AbstractEntity e = this.entities.get(i);
 			WillRespawnComponent wrc = (WillRespawnComponent)e.getComponent(WillRespawnComponent.class);
+			if (wrc == null) {
+				Settings.p("Here!");
+			}
 			if (wrc.respawn_time < System.currentTimeMillis()) {
 				//Settings.p("Respawning " + e);
-				
+
 				// Set position
 				PhysicsComponent md = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 				Matrix4 mat = new Matrix4();
@@ -50,13 +56,13 @@ public class RespawnPlayerSystem implements ISystem {
 				CanShoot cc = (CanShoot)e.getComponent(CanShoot.class);
 				WeaponSettingsComponent weapon = (WeaponSettingsComponent)e.getComponent(WeaponSettingsComponent.class);
 				cc.ammo = weapon.max_ammo;
-				
+
 				// Reset health
 				PlayerData playerData = (PlayerData)e.getComponent(PlayerData.class);
 				playerData.health = playerData.max_health;
 				playerData.invincible_until = System.currentTimeMillis() + 4000;
 				playerData.dead = false;
-				
+
 				AbstractPlayersAvatar player = (AbstractPlayersAvatar)e;
 				Vector3 dir = new Vector3(15, 1, 15).sub(wrc.respawnPoint);
 				dir.y = 0;
@@ -66,16 +72,18 @@ public class RespawnPlayerSystem implements ISystem {
 				player.camera.up.y = 1;
 				player.camera.up.z = 0;
 				player.camera.update();
-				
+
 				HasModelComponent model = (HasModelComponent)player.getComponent(HasModelComponent.class);
 				model.dontDrawInViewId = playerData.playerIdx; // Since we changed it to draw the corpse
 				model.invisible = false;
-				
+
 				e.removeComponent(WillRespawnComponent.class);
 				this.entities.remove(i);
+
+				Settings.p(e + " respawned");
 			}
 		}
 	}
-	
-	
+
+
 }

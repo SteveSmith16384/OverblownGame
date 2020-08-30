@@ -92,7 +92,7 @@ public class PickupAndDropSystem extends AbstractSystem {
 					e.hideComponent(CanBeCarriedComponent.class);
 					//e.hideComponent(PhysicsComponent.class);
 					
-					Settings.p(e + " picked up");
+					//Settings.p(e + " picked up");
 					return;
 				}
 			}
@@ -136,6 +136,6 @@ public class PickupAndDropSystem extends AbstractSystem {
 
 		canCarry.carrying = null;
 
-		Settings.p(item + " dropped");
+		//Settings.p(item + " dropped");
 	}
 }
