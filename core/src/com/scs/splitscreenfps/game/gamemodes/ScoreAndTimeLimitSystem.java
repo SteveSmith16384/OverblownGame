@@ -22,13 +22,13 @@ public class ScoreAndTimeLimitSystem implements ISystem {
 	}
 
 
-	public void incScore() {
-		this.score++;
+	public void incScore(int amt) {
+		this.score += amt;
 
 		updateScore();
 
 		if (score >= this.score_required) {
-			// todo
+			game.playerHasWon(null);
 		}
 	}
 
@@ -48,7 +48,7 @@ public class ScoreAndTimeLimitSystem implements ISystem {
 		this.updateScore();
 
 		if (System.currentTimeMillis() > end_time) {
-			//todo
+			game.playerHasLost(null);
 		}
 	}
 

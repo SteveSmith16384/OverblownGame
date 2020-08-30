@@ -14,13 +14,13 @@ public class Settings {
 
 	public static final String VERSION = "1.13";
 
-	// Debugging Hacks
+	// Autostart Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_SORTIT;
 	public static final int NUM_AUTOSTART_CHARACTERS = 2;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_SORTIT;
-	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 	
+	// Debugging Hacks
 	public static final boolean DEBUG_DISPENSER = !RELEASE_MODE && false;
 	public static final boolean DISABLE_GRAVITY = !RELEASE_MODE && false;
 	public static final boolean TEST_VOX = !RELEASE_MODE && false;
@@ -34,6 +34,7 @@ public class Settings {
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	public static final boolean DISABLE_POST_EFFECTS = !RELEASE_MODE && false;
 	public static final boolean STRICT = !RELEASE_MODE && true;
+	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false; // todo - remove?
 
 	// Other settings
 	public static final int MAX_PLAYERS = 4;

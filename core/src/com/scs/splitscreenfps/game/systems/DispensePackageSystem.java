@@ -20,7 +20,7 @@ public class DispensePackageSystem implements ISystem {
 
 	private Game game;
 	private long next_dispense_time;
-	private List<Vector3> dispensers = new ArrayList<Vector3>();
+	private Vector3[] dispensers = new Vector3[4];
 	private int next_disp;
 
 	public DispensePackageSystem(Game _game) {
@@ -30,19 +30,22 @@ public class DispensePackageSystem implements ISystem {
 
 	@Override
 	public void process() {
-		if (dispensers.size() == 0) {
+		if (dispensers[0] == null) {
 			// Find the dispensers 
 			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
 			while (it.hasNext()) {
 				AbstractEntity e = it.next();
 				if (e.tags != null && e.tags.contains("dispenser")) {
-					PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
-					this.dispensers.add(new Vector3(posData.position));
+					int type = Integer.parseInt(e.tags.substring(e.tags.length()-1));
+					if (type <= game.players.length) { // One more dispensers than players
+						PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
+						this.dispensers[type] = new Vector3(posData.position);
+					}
 					e.remove();
 				}
 			}
 
-			if (this.dispensers.size() == 0) {
+			if (dispensers[0] == null) {
 				// We won't find it straight away, at least until the entities are loaded
 				return;
 			}
@@ -51,17 +54,22 @@ public class DispensePackageSystem implements ISystem {
 		if (this.next_dispense_time < System.currentTimeMillis()) {
 			this.next_dispense_time = System.currentTimeMillis() + INTERVAL;
 
-			if (Settings.DEBUG_DISPENSER) {
-				this.next_dispense_time = Long.MAX_VALUE;
-			}
-			
-			Vector3 pos = this.dispensers.get(this.next_disp);
-			AbstractEntity pkg = EquipmentEntityFactory.createPackage(game, pos.x, pos.y, pos.z, NumberFunctions.rnd(0, 3));
-			game.ecs.addEntity(pkg);
+			if (game.ecs.getNumEntities() < 100) { // Prevent too many
+				if (Settings.DEBUG_DISPENSER) {
+					this.next_dispense_time = Long.MAX_VALUE;
+				}
 
-			this.next_disp++;
-			if (this.next_disp >= this.dispensers.size()) {
-				this.next_disp = 0;
+				Vector3 pos = this.dispensers[this.next_disp];
+				AbstractEntity pkg = EquipmentEntityFactory.createPackage(game, pos.x, pos.y, pos.z, NumberFunctions.rnd(0, game.players.length));
+				game.ecs.addEntity(pkg);
+
+				this.next_disp++;
+				if (this.next_disp >= this.dispensers.length) {
+					this.next_disp = 0;
+				}
+
+			} else {
+				Settings.p("Too many entities to dispense package");
 			}
 
 		}

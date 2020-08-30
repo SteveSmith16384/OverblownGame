@@ -17,7 +17,7 @@ public class CollectPackageSystem extends AbstractSystem {
 
 	private Game game;
 
-	private boolean got_collectors = false;
+	private int num_collectors = 0;
 	private ScoreAndTimeLimitSystem scoreSystem;
 
 	public CollectPackageSystem(Game _game, BasicECS ecs, ScoreAndTimeLimitSystem _scoreSystem) {
@@ -31,16 +31,21 @@ public class CollectPackageSystem extends AbstractSystem {
 	@Override
 	public void process() {
 		super.process();
-		if (got_collectors == false) {
+
+		if (num_collectors == 0) {
 			// Find the collectors
 			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
 			while (it.hasNext()) {
 				AbstractEntity e = it.next();
-				if (e.tags != null && e.tags.contains("collector")) {
-					int type = Integer.parseInt(e.tags.substring(e.tags.length()-1));
-					e.addComponent(new CollectPackageComponent(type));
-					got_collectors = true;
-				}
+				//if (num_collectors <= game.players.length) { // One dispenser per player
+					if (e.tags != null && e.tags.contains("collector")) {
+						int type = Integer.parseInt(e.tags.substring(e.tags.length()-1));
+						e.addComponent(new CollectPackageComponent(type));
+						num_collectors++;
+					}
+				//} else {
+					//e.remove();
+				//}
 			}
 		}
 	}
@@ -49,19 +54,19 @@ public class CollectPackageSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		CollectPackageComponent collector = (CollectPackageComponent)entity.getComponent(CollectPackageComponent.class);
-		
+
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
-			
+
 			IsPackageComponent pkg = (IsPackageComponent)coll.entity2.getComponent(IsPackageComponent.class);
 			if (pkg == null) {
 				continue;
 			}
-			
+
 			if (collector.type == pkg.type) {
 				coll.entity2.remove();
-				scoreSystem.incScore();
+				scoreSystem.incScore(2);
 			}
 		}
 	}
