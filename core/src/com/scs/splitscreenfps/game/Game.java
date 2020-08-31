@@ -195,7 +195,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 		viewports = new ViewportData[Settings.MAX_PLAYERS];
 
-		if (this.gameSelectionData.level == AbstractLevel.LEVEL_AI_TEST) {
+		if (this.gameSelectionData.level_type == AbstractLevel.LEVEL_AI_TEST) {
 			for (int i=this.inputs.size() ; i<Settings.MAX_PLAYERS ; i++) {
 				// Add AI
 				this.inputs.add(new AIInputMethod());
@@ -217,7 +217,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 		new MyContactListener();
 
-		this.currentLevel = AbstractLevel.factory(gameSelectionData.level);
+		this.currentLevel = AbstractLevel.factory(gameSelectionData.level_type);
 		this.currentLevel.getReadyForGame(this);
 
 		try {
@@ -662,14 +662,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 	private void scheduleRestart() {
 		this.game_stage = 1;
-		this.restartTime = System.currentTimeMillis() + 4000;
-	}
-
-
-	public void startSpecificLevel(int level) {
-		this.game_stage = 1;
-		this.restartTime = 0;
-
+		this.restartTime = System.currentTimeMillis() + 5000;
 	}
 
 
@@ -975,6 +968,16 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	@Override
 	public Rectangle getCurrentViewportRect() {
 		return this.viewports[this.currentViewId].viewRect;
+	}
+
+	
+	public void nextLevel() {
+		this.gameSelectionData.level_num++;
+	}
+	
+	
+	public int getLevelNum() {
+		return this.gameSelectionData.level_num;
 	}
 
 }

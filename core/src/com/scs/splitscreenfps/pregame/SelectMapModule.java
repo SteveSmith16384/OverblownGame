@@ -153,7 +153,7 @@ public class SelectMapModule extends AbstractSingleViewModule implements IModule
 
 		// Draw arrows
 		x_pos = (Gdx.graphics.getWidth()/2) - 50;
-		y_pos = (int)( Gdx.graphics.getBackBufferHeight() * .7f) - (gameSelectionData.level * spacing_y) - 20;
+		y_pos = (int)( Gdx.graphics.getBackBufferHeight() * .7f) - (gameSelectionData.level_type * spacing_y) - 20;
 		arrow.setBounds(x_pos,  y_pos , 30, 30);
 		arrow.draw(spriteBatch);
 
@@ -172,15 +172,15 @@ public class SelectMapModule extends AbstractSingleViewModule implements IModule
 		IInputMethod input = this.inputs.get(0);
 		if (input.isMenuUpPressed()) {
 			main.audio.play("sfx/type2.mp3");
-			this.gameSelectionData.level--;
-			if (this.gameSelectionData.level < 0) {
-				this.gameSelectionData.level = AbstractLevel.MAX_LEVEL_ID;
+			this.gameSelectionData.level_type--;
+			if (this.gameSelectionData.level_type < 0) {
+				this.gameSelectionData.level_type = AbstractLevel.MAX_LEVEL_ID;
 			}
 		} else if (input.isMenuDownPressed()) {
 			main.audio.play("sfx/type2.mp3");
-			this.gameSelectionData.level++;
-			if (this.gameSelectionData.level > AbstractLevel.MAX_LEVEL_ID) {
-				this.gameSelectionData.level = 0;
+			this.gameSelectionData.level_type++;
+			if (this.gameSelectionData.level_type > AbstractLevel.MAX_LEVEL_ID) {
+				this.gameSelectionData.level_type = 0;
 			}
 		} else if (input.isMenuSelectPressed() || input.isShootPressed()) {
 			if (System.currentTimeMillis() > earliest_input_time) {

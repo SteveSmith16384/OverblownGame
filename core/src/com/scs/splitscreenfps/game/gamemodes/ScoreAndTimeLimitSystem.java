@@ -32,6 +32,8 @@ public class ScoreAndTimeLimitSystem implements ISystem {
 			this.time_text.remove();
 			TextEntity text = new TextEntity(game.ecs, "YOU HAVE WON!", 37, 52, -1, Color.GREEN, 0, game.font_large, true);
 			game.ecs.addEntity(text);
+
+			game.nextLevel();
 			game.playerHasWon(null);
 		}
 	}
@@ -55,7 +57,6 @@ public class ScoreAndTimeLimitSystem implements ISystem {
 			this.time_text.remove();
 			TextEntity text = new TextEntity(game.ecs, "YOU HAVE LOST!", 37, 52, -1, Color.RED, 0, game.font_large, true);
 			game.ecs.addEntity(text);
-
 			game.playerHasLost(null);
 		}
 	}

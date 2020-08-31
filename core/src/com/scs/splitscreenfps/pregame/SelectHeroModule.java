@@ -61,7 +61,7 @@ public class SelectHeroModule extends AbstractSingleViewModule implements IModul
 
 		this.gameSelectionData = _gameSelectionData;//new GameSelectionData(inputs.size());
 
-		AbstractLevel level = AbstractLevel.factory(this.gameSelectionData.level);
+		AbstractLevel level = AbstractLevel.factory(this.gameSelectionData.level_type);
 		this.available_heroes = level.getHeroSelection();
 		for (int i=0 ; i<this.gameSelectionData.has_selected_character.length ; i++) {
 			this.gameSelectionData.has_selected_character[i] = false;

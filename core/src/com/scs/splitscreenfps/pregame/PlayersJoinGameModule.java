@@ -79,7 +79,7 @@ public class PlayersJoinGameModule extends AbstractSingleViewModule implements I
 				}
 			}
 			GameSelectionData gameSelectionData = new GameSelectionData();//Settings.NUM_AUTOSTART_CHARACTERS);
-			gameSelectionData.level = Settings.AUTOSTART_LEVEL;
+			gameSelectionData.level_type = Settings.AUTOSTART_LEVEL;
 			//AbstractLevel level = AbstractLevel.factory(gameSelectionData.level);
 			for (int i=0 ; i<Settings.NUM_AUTOSTART_CHARACTERS ; i++) {
 				gameSelectionData.selected_character_id[i] = Settings.AUTOSTART_CHARACTER;

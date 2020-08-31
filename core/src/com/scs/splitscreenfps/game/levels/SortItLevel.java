@@ -22,7 +22,7 @@ public class SortItLevel extends AbstractLevel {
 		
 		game.show_health = false;
 
-		this.scoreSystem = new ScoreAndTimeLimitSystem(game, 40, 2*60*1000);
+		this.scoreSystem = new ScoreAndTimeLimitSystem(game, 15+(game.getLevelNum()*5), 2*60*1000);
 		dispenserSystem = new DispensePackageSystem(game);
 		this.collectorSystem = new CollectPackageSystem(game, game.ecs, scoreSystem);
 		this.fallenOffEdgeSystem = new PackagesFallenOffEdgeSystem(game.ecs, this.scoreSystem);
