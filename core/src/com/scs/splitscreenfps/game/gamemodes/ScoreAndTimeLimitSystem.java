@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.gamemodes;
 
 import com.badlogic.gdx.graphics.Color;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextComponent;
 import com.scs.splitscreenfps.game.entities.TextEntity;
@@ -28,6 +29,9 @@ public class ScoreAndTimeLimitSystem implements ISystem {
 		updateScore();
 
 		if (score >= this.score_required) {
+			this.time_text.remove();
+			TextEntity text = new TextEntity(game.ecs, "YOU HAVE WON!", 37, 52, -1, Color.GREEN, 0, game.font_large, true);
+			game.ecs.addEntity(text);
 			game.playerHasWon(null);
 		}
 	}
@@ -40,7 +44,7 @@ public class ScoreAndTimeLimitSystem implements ISystem {
 		if (setup == false) {
 			setup = true;
 
-			time_text = new TextEntity(game.ecs, "", 37, 52, -1, Color.GREEN, 0, game.font_med, true);
+			time_text = new TextEntity(game.ecs, "", 37, 52, -1, Color.YELLOW, 0, game.font_med, true);
 			game.ecs.addEntity(time_text);
 
 		}
@@ -48,6 +52,10 @@ public class ScoreAndTimeLimitSystem implements ISystem {
 		this.updateScore();
 
 		if (System.currentTimeMillis() > end_time) {
+			this.time_text.remove();
+			TextEntity text = new TextEntity(game.ecs, "YOU HAVE LOST!", 37, 52, -1, Color.RED, 0, game.font_large, true);
+			game.ecs.addEntity(text);
+
 			game.playerHasLost(null);
 		}
 	}

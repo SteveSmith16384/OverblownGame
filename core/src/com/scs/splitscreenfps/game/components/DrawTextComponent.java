@@ -10,7 +10,7 @@ public class DrawTextComponent {
 	public String text; // todo - set dirty = true if this changes
 	public boolean centre_x;
 	public Color colour;
-	public int drawOnViewId = -1;
+	public int drawOnViewId; // todo - x/y pcent needs to be relative to the viewport, unless viewportid is -1
 	public boolean dirty = true;
 	
 	public DrawTextComponent(BitmapFont _font, int _drawOnViewId) {
