@@ -1,5 +1,9 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileNotFoundException;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
@@ -15,13 +19,8 @@ public class FactoryLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() {
-		try {
-			super.loadJsonFile("maps/factory.json", false);
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
-		}
-
+	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		super.loadJsonFile("maps/factory.json", false);
 	}
 
 

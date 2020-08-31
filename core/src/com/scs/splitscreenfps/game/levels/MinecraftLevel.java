@@ -1,8 +1,11 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 
 import com.badlogic.gdx.math.Vector3;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
@@ -14,7 +17,7 @@ public class MinecraftLevel extends AbstractLevel {
 	private ISystem deathmatchSystem;
 
 	private Vector3 tmpVec = new Vector3();
-	
+
 	public void getReadyForGame(Game game) {
 		super.getReadyForGame(game);
 
@@ -23,39 +26,35 @@ public class MinecraftLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() {
-		try {
-			super.loadJsonFile("maps/minecraft.json", false);
-			game.ecs.addAndRemoveEntities();
-			Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
-			while (it.hasNext()) {
-				AbstractEntity e = it.next();
-				if (e.tags.contains("church")) {
-					e.remove();
-					PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-					pc.getTranslation(tmpVec);
-					super.loadJsonFile("maps/minecraft_church.json", false, tmpVec, 5);
-				} else if (e.tags.contains("house")) {
-					e.remove();
-					PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
-					pc.getTranslation(tmpVec);
-					super.loadJsonFile("maps/minecraft_house.json", false, tmpVec, 5);
-				} else if (e.tags.contains("skip")) {
-					e.remove();
-				}
+	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		super.loadJsonFile("maps/minecraft.json", false);
+		game.ecs.addAndRemoveEntities();
+		Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
+		while (it.hasNext()) {
+			AbstractEntity e = it.next();
+			if (e.tags.contains("church")) {
+				e.remove();
+				PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+				pc.getTranslation(tmpVec);
+				super.loadJsonFile("maps/minecraft_church.json", false, tmpVec, 5);
+			} else if (e.tags.contains("house")) {
+				e.remove();
+				PhysicsComponent pc = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
+				pc.getTranslation(tmpVec);
+				super.loadJsonFile("maps/minecraft_house.json", false, tmpVec, 5);
+			} else if (e.tags.contains("skip")) {
+				e.remove();
 			}
+		}
 
-			// Remove entities with "skip"
-			game.ecs.addAndRemoveEntities();
-			it = game.ecs.getEntityIterator();
-			while (it.hasNext()) {
-				AbstractEntity e = it.next();
-				if (e.tags.contains("skip")) {
-					e.remove();
-				}
+		// Remove entities with "skip"
+		game.ecs.addAndRemoveEntities();
+		it = game.ecs.getEntityIterator();
+		while (it.hasNext()) {
+			AbstractEntity e = it.next();
+			if (e.tags.contains("skip")) {
+				e.remove();
 			}
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
 		}
 	}
 

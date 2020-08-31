@@ -1,5 +1,9 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileNotFoundException;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
@@ -24,13 +28,8 @@ public class PiggyLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() {
-		try {
-			super.loadJsonFile("maps/complex.json", false);
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
-		}
-
+	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		super.loadJsonFile("maps/complex.json", false);
 	}
 
 

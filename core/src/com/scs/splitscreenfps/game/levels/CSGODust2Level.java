@@ -6,7 +6,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
-public class Dust2Level extends AbstractLevel {
+public class CSGODust2Level extends AbstractLevel {
 
 	private ISystem deathmatchSystem;
 
@@ -18,17 +18,12 @@ public class Dust2Level extends AbstractLevel {
 
 	@Override
 	public void load() {
-		try {
-			this.startPositions.add(new Vector3(9, 2f, 0));
-			this.startPositions.add(new Vector3(9, 2f, 0)); // todo
-			this.startPositions.add(new Vector3(9, 2f, 0)); // todo
-			this.startPositions.add(new Vector3(9, 2f, 0)); // todo
+		this.startPositions.add(new Vector3(9, 2f, 0));
+		this.startPositions.add(new Vector3(9, 2f, 0)); // todo
+		this.startPositions.add(new Vector3(9, 2f, 0)); // todo
+		this.startPositions.add(new Vector3(9, 2f, 0)); // todo
 
-			EntityFactory.createStaticModelsForLargeModel(game.ecs, "Dust2", "maps/Dust2/Dust2.g3db", 0, 0, 0, -90, 0);
-
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
-		}
+		EntityFactory.createStaticModelsForLargeModel(game.ecs, "Dust2", "maps/Dust2/Dust2.g3db", 0, 0, 0, -90, 0);
 	}
 
 

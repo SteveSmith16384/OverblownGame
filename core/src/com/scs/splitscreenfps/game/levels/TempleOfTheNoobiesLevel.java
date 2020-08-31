@@ -1,5 +1,9 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileNotFoundException;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
@@ -16,16 +20,8 @@ public class TempleOfTheNoobiesLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() {
-		try {
-			super.loadJsonFile("maps/templeofthenoobies.json", false);
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
-		}
-
-		//AbstractEntity lootbox = EntityFactory.createLootBox(game,10, 10, 1, CollectableSystem.CollectableType.HealthPack);
-		//game.ecs.addEntity(lootbox);
-
+	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		super.loadJsonFile("maps/templeofthenoobies.json", false);
 	}
 
 

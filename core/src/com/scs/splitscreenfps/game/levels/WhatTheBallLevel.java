@@ -102,5 +102,4 @@ public class WhatTheBallLevel extends AbstractLevel {
 		return "What the Ball?";
 	}
 
-
 }

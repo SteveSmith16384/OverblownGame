@@ -1,5 +1,9 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileNotFoundException;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.gamemodes.ScoreAndTimeLimitSystem;
@@ -36,23 +40,8 @@ public class SortItLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() {
-		try {
-			super.loadJsonFile("maps/sortit.json", false);
-
-			/*
-			AbstractEntity pickup = EquipmentEntityFactory.createPickup(game, 3, 3, 3);
-			game.ecs.addEntity(pickup);
-
-			pickup = EquipmentEntityFactory.createPickup(game, 2, 3, 5);
-			game.ecs.addEntity(pickup);
-
-			pickup = EquipmentEntityFactory.createPickup(game, 3, 3, 7);
-			game.ecs.addEntity(pickup);
-*/
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
-		}
+	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		super.loadJsonFile("maps/sortit.json", false);
 	}
 
 

@@ -2,7 +2,6 @@ package com.scs.splitscreenfps.game.systems;
 
 import java.util.List;
 
-import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;

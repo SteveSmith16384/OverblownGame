@@ -1,5 +1,9 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileNotFoundException;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.gamemodes.ControlPointScoreSystem;
 
@@ -15,13 +19,8 @@ public class VillageLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() {
-		try {
-			super.loadJsonFile("maps/village.json", false);
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
-		}
-
+	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		super.loadJsonFile("maps/village.json", false);
 	}
 
 

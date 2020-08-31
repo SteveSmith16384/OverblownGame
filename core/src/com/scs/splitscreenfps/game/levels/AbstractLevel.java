@@ -95,7 +95,7 @@ public abstract class AbstractLevel {
 		case LEVEL_VOXEL_TOWN:
 			return new VoxelTownLevel();
 		case LEVEL_CSGO_DUST2:
-			return new Dust2Level();
+			return new CSGODust2Level();
 		case LEVEL_CSGO_OFFICE:
 			return new CSGOOfficeLevel();
 		case LEVEL_SORTIT:

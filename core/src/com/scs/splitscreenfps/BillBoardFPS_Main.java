@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.systems.AddComponentAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.AudioSystem;
 import com.scs.splitscreenfps.game.systems.AudioSystem2;
 import com.scs.splitscreenfps.pregame.IntroModule;

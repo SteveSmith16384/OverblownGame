@@ -1,5 +1,9 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileNotFoundException;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.scs.splitscreenfps.game.Game;
 
 public class VoxelTownLevel extends AbstractLevel {
@@ -13,13 +17,8 @@ public class VoxelTownLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() {
-		try {
-			super.loadJsonFile("maps/voxel_town.json", false);
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
-		}
-
+	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		super.loadJsonFile("maps/voxel_town.json", false);
 	}
 
 
