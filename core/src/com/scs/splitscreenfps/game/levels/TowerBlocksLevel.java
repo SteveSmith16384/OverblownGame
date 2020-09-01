@@ -1,16 +1,13 @@
 package com.scs.splitscreenfps.game.levels;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 

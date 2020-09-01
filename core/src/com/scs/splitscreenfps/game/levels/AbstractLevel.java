@@ -360,26 +360,30 @@ public abstract class AbstractLevel {
 					exists[x][y][z] = true;
 					num_voxels++;
 				}
+				Settings.p(num_voxels + " voxels loaded");
 
 				// Add voxels if surrounded
 				int num_added = 0;
-				boolean new_voxel_map[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
-				for (int z=0 ; z<model.getSize().getZ()-1 ; z++) {
-					for (int y=0 ; y<model.getSize().getY()-1 ; y++) {
+				boolean new_voxel_map[][][] = new boolean[model.getSize().getX()][model.getSize().getZ()][model.getSize().getY()];
+				for (int z=0 ; z<model.getSize().getY()-1 ; z++) {
+					for (int y=0 ; y<model.getSize().getZ()-1 ; y++) {
 						for (int x=0 ; x<model.getSize().getX()-1 ; x++) {
+							if (x == 2 && y == 0 && z == 1) {
+								Settings.p("Here");
+							}
 							if (exists[x][y][z]) {
 								new_voxel_map[x][y][z] = true;
 							} else {
 								int adjcount = 0;
 								try {
-									if (exists[x-1][y][z]) adjcount++;
+									if (x>0 && exists[x-1][y][z]) adjcount++;
 									if (exists[x+1][y][z]) adjcount++;
-									if (exists[x][y-1][z]) adjcount++;
+									if (y>0 && exists[x][y-1][z]) adjcount++;
 									if (exists[x][y+1][z]) adjcount++;
-									if (exists[x][y][z-1]) adjcount++;
+									if (z>0 && exists[x][y][z-1]) adjcount++;
 									if (exists[x][y][z+1]) adjcount++;
 								} catch (ArrayIndexOutOfBoundsException ex) {
-									// do nothing
+									ex.printStackTrace();
 								}
 								if (adjcount >= 2) {
 									new_voxel_map[x][y][z] = true;
@@ -389,11 +393,14 @@ public abstract class AbstractLevel {
 						}
 					}
 				}
+				Settings.p(num_added + " voxels added");
 
+				exists = null; // Check we don't use it any more
+				
 				// Now build the model
 				int num_boxes = 0;
-				for (int z=0 ; z<model.getSize().getZ() ; z++) {
-					for (int y=0 ; y<model.getSize().getY() ; y++) {
+				for (int z=0 ; z<model.getSize().getY() ; z++) {
+					for (int y=0 ; y<model.getSize().getZ() ; y++) {
 						for (int x=0 ; x<model.getSize().getX() ; x++) {
 							if (new_voxel_map[x][y][z]) {
 								startBuildingCube(model, offset, new_voxel_map, x, y, z);
@@ -425,7 +432,7 @@ public abstract class AbstractLevel {
 
 		// Check y coord
 		outy:
-			for (y=sy ; y<model.getSize().getY()-1 ; y++) {
+			for (y=sy ; y<model.getSize().getZ()-1 ; y++) {
 				for (x=sx ; x<=ex ; x++) {
 					if (new_voxel_map[x][y][sz] == false) {
 						break outy;
@@ -436,7 +443,7 @@ public abstract class AbstractLevel {
 
 		// Check z coord
 		outz:
-			for (z=sz ; y<model.getSize().getZ()-1 ; z++) {
+			for (z=sz ; y<model.getSize().getY()-1 ; z++) {
 				for (y=sy ; y<=ey ; y++) {
 					for (x=sx ; x<=ex ; x++) {
 						if (new_voxel_map[x][y][z] == false) {
@@ -454,8 +461,11 @@ public abstract class AbstractLevel {
 		float w = ex-sx+1;
 		float h = ey-sy+1;
 		float d = ez-sz+1;
+		
 		AbstractEntity box = EntityFactory.createCollisionBox(game, xpos, ypos, zpos, w, h, d);
 		game.ecs.addEntity(box);
+		
+		Settings.p("Created box of size " + w + "," + h + "," + d);
 
 		// mark all new_voxel_map as used up
 		for (z=sz ; z<=ez ; z++) {
