@@ -360,9 +360,9 @@ public class EntityFactory {
 		collisionBox.addComponent(new PositionComponent());
 
 		Matrix4 mat = new Matrix4();
-		mat.setTranslation(posX,  posY,  posZ);
+		mat.setTranslation(posX, posY, posZ);
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
-		btRigidBody body = new btRigidBody(0, null, boxShape, null);
+		btRigidBody body = new btRigidBody(0, null, boxShape, new Vector3());
 		body.userData = collisionBox;
 		body.setRestitution(.1f);
 		body.setCollisionShape(boxShape);
