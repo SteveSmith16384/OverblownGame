@@ -283,15 +283,15 @@ public abstract class AbstractLevel {
 				int c = 0;
 				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (Voxel voxel : model.getVoxels()) {
-					try {
+					//try {
 						int x = voxel.getPosition().getX() & 0xff;
 						int y = voxel.getPosition().getY() & 0xff;
 						int z = voxel.getPosition().getZ() & 0xff;
-						exists[x][y][x] = true;
+						exists[x][y][z] = true;
 						c++;
-					} catch (ArrayIndexOutOfBoundsException ex) {
+					/*} catch (ArrayIndexOutOfBoundsException ex) {
 						throw ex;
-					}
+					}*/
 				}
 
 				boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
