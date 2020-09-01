@@ -41,8 +41,11 @@ public class TowerBlocksLevel extends AbstractLevel {
 			this.startPositions.add(new Vector3(0, 2f, 0));
 
 			//loadVox("vox/graveyard.vox", 0, new Vector3(5, .1f, 5), .2f, true, false);
-			super.createCollisionShapesFromVox("vox/skyscraper1.vox", new Vector3(5f, 0, 5f), .1f);
-			AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", "vox/skyscraper1.obj", new Vector3(5, 0, 5));
+
+			String filename = "vox/graveyard";
+			//String filename = "vox/skyscraper1";
+			super.createCollisionShapesFromVox(filename + ".vox", new Vector3(0f, 0, 0f), .1f);
+			AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", filename + ".obj", new Vector3(0, 0, 0));
 			game.ecs.addEntity(model);
 
 			//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);

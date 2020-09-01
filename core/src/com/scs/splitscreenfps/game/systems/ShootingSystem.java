@@ -156,7 +156,7 @@ public class ShootingSystem extends AbstractSystem {
 				playerData.gunText = "Ammo: " + cc.ammo + "/" + weapon.max_ammo;
 			}
 		} else if (player.inputMethod.isReloadPressed()) {
-			if (cc.ammo < weapon.max_ammo) {
+			if (cc.ammo < weapon.max_ammo && weapon.max_ammo > 0) {
 				cc.reloading = true;
 				cc.nextShotTime = System.currentTimeMillis() + weapon.reload_interval;
 				playerData.gunText = "Reloading...";
