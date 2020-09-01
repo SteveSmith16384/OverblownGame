@@ -228,7 +228,7 @@ public abstract class AbstractLevel {
 				wall = new Wall(game, block.name, tex, null, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
 						block.mass * mass_mult, // Hack to make walls heavier
-						block.rotation_degs.x, block.rotation_degs.y, block.rotation_degs.z, block.tiled, true);
+						block.rotation_degs.x, block.rotation_degs.y, block.rotation_degs.z, block.tiled, true, true);
 			} else if (block.type.equalsIgnoreCase("sphere")) {
 				wall = EntityFactory.createBall(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
 			} else if (block.type.equalsIgnoreCase("cylinder")) {
@@ -274,18 +274,24 @@ public abstract class AbstractLevel {
 	/*
 	 * This will create a separate cube for each voxel.
 	 */
-	public void loadVox(String filename, int mass, Vector3 offset, float scale, boolean remove_surrounded) {//, int trunc) {
+	public void loadVox(String filename, int mass, Vector3 offset, float scale, boolean remove_surrounded, boolean add_physics) {//, int trunc) {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
 			int count = 0;
 			int num_removed = 0;
 			for (VoxModel model : voxFile.getModels()) {
-
 				int c = 0;
 				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (Voxel voxel : model.getVoxels()) {
-					exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = true;
-					c++;
+					try {
+						int x = voxel.getPosition().getX() & 0xff;
+						int y = voxel.getPosition().getY() & 0xff;
+						int z = voxel.getPosition().getZ() & 0xff;
+						exists[x][y][x] = true;
+						c++;
+					} catch (ArrayIndexOutOfBoundsException ex) {
+						throw ex;
+					}
 				}
 
 				boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
@@ -305,10 +311,13 @@ public abstract class AbstractLevel {
 				}
 
 				for (Voxel voxel : model.getVoxels()) {
+					int x = voxel.getPosition().getX() & 0xff;
+					int y = voxel.getPosition().getY() & 0xff;
+					int z = voxel.getPosition().getZ() & 0xff;
 					if (remove_surrounded) {
 						// Remove any voxels if they are surrounded by other voxels
-						if (remove[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()]) {
-							exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()] = false;
+						if (remove[x][y][z]) {
+							exists[x][y][z] = false;
 							num_removed++;
 							continue;
 						}
@@ -320,13 +329,13 @@ public abstract class AbstractLevel {
 					String hexColor_rev = "#" + hexColor.substring(5) + hexColor.substring(3, 5) + hexColor.substring(1, 3);
 					Color color = Color.valueOf(hexColor_rev);
 					int tmp_mass = mass;
-					if (voxel.getPosition().getZ() > 0 && exists[voxel.getPosition().getX()][voxel.getPosition().getY()][voxel.getPosition().getZ()-1] == false) {
+					/*if (x > 0 && exists[x][y][z-1] == false) {
 						tmp_mass = 0; // Only give them mass if they are supported by another voxel
-					}
-					Wall wall = new Wall(game, "Voxel", null, color, (voxel.getPosition().getX() * scale)+offset.x, (voxel.getPosition().getZ()*scale)+offset.y, (voxel.getPosition().getY()*scale)+offset.z, 
+					}*/
+					Wall wall = new Wall(game, "Voxel", null, color, (x * scale)+offset.x, (z*scale)+offset.y, (y*scale)+offset.z, 
 							scale-.001f, scale-.001f, scale-.001f, 
 							tmp_mass,
-							0, 0, 0, false, true);
+							0, 0, 0, false, true, add_physics);
 					game.ecs.addEntity(wall);
 					count++;
 				}

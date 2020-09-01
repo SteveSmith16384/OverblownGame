@@ -40,11 +40,10 @@ public class TowerBlocksLevel extends AbstractLevel {
 			this.startPositions.add(new Vector3(0, 10f, 0));
 			this.startPositions.add(new Vector3(0, 10f, 0));
 
-			//loadVox("vox/voxelbuildings/1.vox", 1, new Vector3(5, .1f, 5), .2f);
-			//loadVox("vox/skyscraper1.vox", 1, new Vector3(5, .25f, 5), .5f);
+			loadVox("vox/skyscraper1.vox", 0, new Vector3(5, .1f, 5), .2f, true, true);
 
-			AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);
-			game.ecs.addEntity(model);
+			//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);
+			//game.ecs.addEntity(model);
 		} else {
 			this.startPositions.add(new Vector3(1, 2f, 1));
 			this.startPositions.add(new Vector3(floor_size-2, 2f, floor_size-2));

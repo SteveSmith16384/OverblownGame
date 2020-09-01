@@ -23,13 +23,13 @@ import ssmith.libgdx.ShapeHelper;
 public class Wall extends AbstractEntity {
 
 	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
-		this(game, name, tex, null, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow);
+		this(game, name, tex, null, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow, true);
 	}
 
 
 	// Note that the mass gets multiplied by the size
 	// Positions are from the centre
-	public Wall(Game game, String name, Texture tex, Color c, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow) {
+	public Wall(Game game, String name, Texture tex, Color c, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow, boolean add_physics) {
 		super(game.ecs, name);
 
 		Material material = null;
@@ -65,24 +65,25 @@ public class Wall extends AbstractEntity {
 		HasModelComponent model = new HasModelComponent(instance, 1f, cast_shadow);
 		this.addComponent(model);
 
-		//if (mass_pre >= 0) {
-		float mass = mass_pre * w * h * d;
-		if (mass > 0 && mass < 1f) {
-			mass = 1; // Give a minimum mass for (e.g.) thin walls
-		}
+		if (add_physics) {
+			//if (mass_pre >= 0) {
+			float mass = mass_pre * w * h * d;
+			if (mass > 0 && mass < 1f) {
+				mass = 1; // Give a minimum mass for (e.g.) thin walls
+			}
 
-		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
-		Vector3 local_inertia = new Vector3();
-		boxShape.calculateLocalInertia(mass, local_inertia);
-		btRigidBody body = new btRigidBody(mass, null, boxShape, local_inertia);
-		body.userData = this;
-		body.setRestitution(.2f);
-		body.setDamping(.5f, .5f);
-		//groundObject.setFriction(.1f);
-		body.setCollisionShape(boxShape);
-		body.setWorldTransform(instance.transform);
-		this.addComponent(new PhysicsComponent(body));
-		//}
+			btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
+			Vector3 local_inertia = new Vector3();
+			boxShape.calculateLocalInertia(mass, local_inertia);
+			btRigidBody body = new btRigidBody(mass, null, boxShape, local_inertia);
+			body.userData = this;
+			body.setRestitution(.2f);
+			body.setDamping(.5f, .5f);
+			//groundObject.setFriction(.1f);
+			body.setCollisionShape(boxShape);
+			body.setWorldTransform(instance.transform);
+			this.addComponent(new PhysicsComponent(body));
+		}
 
 		this.addComponent(new PositionComponent());
 	}

@@ -384,7 +384,6 @@ public class BulletEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		e.addComponent(hasDecal);
 
-		//e.addComponent(new IsBulletComponent(shooter, start, settings, false));
 		e.addComponent(new RemoveOnContactComponent(shooter, false));
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, true, 0.5f));
