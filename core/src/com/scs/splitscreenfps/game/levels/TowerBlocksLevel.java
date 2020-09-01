@@ -5,9 +5,11 @@ import java.io.IOException;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
@@ -35,11 +37,13 @@ public class TowerBlocksLevel extends AbstractLevel {
 		game.ecs.addEntity(floor);
 
 		if (Settings.TEST_VOX) {
-			this.startPositions.add(new Vector3(0, 10f, 0));
-			this.startPositions.add(new Vector3(0, 10f, 0));
+			this.startPositions.add(new Vector3(0, 2f, 0));
+			this.startPositions.add(new Vector3(0, 2f, 0));
 
 			//loadVox("vox/graveyard.vox", 0, new Vector3(5, .1f, 5), .2f, true, false);
-			super.createCollisionShapesFromVox("vox/skyscraper1.vox", new Vector3(5, .1f, 5), .2f);
+			super.createCollisionShapesFromVox("vox/skyscraper1.vox", new Vector3(5f, 0, 5f), .1f);
+			AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", "vox/skyscraper1.obj", new Vector3(5, 0, 5));
+			game.ecs.addEntity(model);
 
 			//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);
 			//game.ecs.addEntity(model);

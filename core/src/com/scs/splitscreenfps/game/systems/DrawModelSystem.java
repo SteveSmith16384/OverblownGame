@@ -197,7 +197,7 @@ public class DrawModelSystem extends AbstractSystem {
 				model.radius = model.dimensions.len();// scs new - hack since models are not in the middle! / 2;
 			}
 			if (!batch.getCamera().frustum.sphereInFrustum(posData.position, model.radius)) {
-				return;
+				//todo - what if model origin is nowehere near the actual model?   //treturn;
 			}
 		}
 

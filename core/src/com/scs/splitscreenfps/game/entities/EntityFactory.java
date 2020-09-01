@@ -357,7 +357,7 @@ public class EntityFactory {
 	public static AbstractEntity createCollisionBox(Game game, float posX, float posY, float posZ, float w, float h, float d) {
 		AbstractEntity collisionBox = new AbstractEntity(game.ecs, "CollisionBox");
 
-		collisionBox.addComponent(new PositionComponent());
+		collisionBox.addComponent(new PositionComponent(posX, posY, posZ));
 
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(posX, posY, posZ);
@@ -370,6 +370,32 @@ public class EntityFactory {
 		collisionBox.addComponent(new PhysicsComponent(body));
 
 		return collisionBox;
+	}
+
+
+	public static AbstractEntity createOnlyModel(BasicECS ecs, String name, String filename, Vector3 offset) {
+		AbstractEntity entity = new AbstractEntity(ecs, name);
+
+		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
+
+		// Calc min on Y axis
+		BoundingBox tmpBB = new BoundingBox();
+		//if (alignToY) {
+			instance.calculateBoundingBox(tmpBB);
+			tmpBB.mul(instance.transform);
+		//}
+		instance.transform.setTranslation(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z); // todo - remove this?
+
+		/*if (rot_y != 0) {
+			instance.transform.rotate(Vector3.Y, rot_y);
+		}*/
+
+		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		entity.addComponent(model);
+
+		entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));
+
+		return entity;
 	}
 
 

@@ -85,7 +85,7 @@ public class Wall extends AbstractEntity {
 			this.addComponent(new PhysicsComponent(body));
 		}
 
-		this.addComponent(new PositionComponent());
+		this.addComponent(new PositionComponent()); // todo - if no physics, set this position!
 	}
 
 }

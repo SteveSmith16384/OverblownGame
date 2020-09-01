@@ -403,7 +403,7 @@ public abstract class AbstractLevel {
 					for (int y=0 ; y<model.getSize().getZ() ; y++) {
 						for (int x=0 ; x<model.getSize().getX() ; x++) {
 							if (new_voxel_map[x][y][z]) {
-								startBuildingCube(model, offset, new_voxel_map, x, y, z);
+								startBuildingCube(model, offset, new_voxel_map, x, y, z, scale);
 								num_boxes++;
 							}
 						}
@@ -416,7 +416,7 @@ public abstract class AbstractLevel {
 	}
 
 
-	private void startBuildingCube(VoxModel model, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz) {
+	private void startBuildingCube(VoxModel model, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz, float scale) {
 		//Settings.p("Started");
 		
 		int x, y, z;
@@ -455,14 +455,14 @@ public abstract class AbstractLevel {
 		ez = z-1;
 
 		// create box
-		float xpos = offset.x+((ex-sx)/2); 
-		float ypos = offset.y+((ey-sy)/2); 
-		float zpos = offset.z+((ez-sz)/2); 
+		float xpos = offset.x + (((ex-sx+1)/2f)*scale); 
+		float ypos = offset.y + (((ey-sy+1)/2f)*scale); 
+		float zpos = offset.z + (((ez-sz+1)/2f)*scale); 
 		float w = ex-sx+1;
 		float h = ey-sy+1;
 		float d = ez-sz+1;
 		
-		AbstractEntity box = EntityFactory.createCollisionBox(game, xpos, ypos, zpos, w, h, d);
+		AbstractEntity box = EntityFactory.createCollisionBox(game, xpos, ypos, zpos, w*scale, h*scale, d*scale);
 		game.ecs.addEntity(box);
 		
 		Settings.p("Created box of size " + w + "," + h + "," + d);
