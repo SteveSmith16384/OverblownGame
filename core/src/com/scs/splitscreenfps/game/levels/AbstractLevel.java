@@ -274,7 +274,7 @@ public abstract class AbstractLevel {
 	/*
 	 * This will create a separate cube for each voxel.
 	 */
-	public void loadVox(String filename, int mass, Vector3 offset, float scale, boolean remove_surrounded, boolean add_physics) {//, int trunc) {
+	public void loadVox(String filename, int mass, Vector3 offset, float scale, boolean remove_surrounded, boolean add_physics) throws FileNotFoundException, IOException {//, int trunc) {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
 			int count = 0;
@@ -284,11 +284,11 @@ public abstract class AbstractLevel {
 				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (Voxel voxel : model.getVoxels()) {
 					//try {
-						int x = voxel.getPosition().getX() & 0xff;
-						int y = voxel.getPosition().getY() & 0xff;
-						int z = voxel.getPosition().getZ() & 0xff;
-						exists[x][y][z] = true;
-						c++;
+					int x = voxel.getPosition().getX() & 0xff;
+					int y = voxel.getPosition().getY() & 0xff;
+					int z = voxel.getPosition().getZ() & 0xff;
+					exists[x][y][z] = true;
+					c++;
 					/*} catch (ArrayIndexOutOfBoundsException ex) {
 						throw ex;
 					}*/
@@ -342,9 +342,121 @@ public abstract class AbstractLevel {
 			}
 			Settings.p(count + " voxels loaded");
 			Settings.p(num_removed + " voxels removed");
-		} catch (IOException e) {
-			e.printStackTrace();
+		}
+	}
+
+
+	public void createCollisionShapesFromVox(String filename, Vector3 offset, float scale) throws FileNotFoundException, IOException {
+		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
+			VoxFile voxFile = reader.read();
+			for (VoxModel model : voxFile.getModels()) {
+				int num_voxels = 0;
+				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
+				for (Voxel voxel : model.getVoxels()) {
+					int x = voxel.getPosition().getX() & 0xff;
+					int y = voxel.getPosition().getY() & 0xff;
+					int z = voxel.getPosition().getZ() & 0xff;
+					exists[x][y][z] = true;
+					num_voxels++;
+				}
+
+				// Add voxels if surrounded
+				boolean new_voxel_map[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
+				for (int z=1 ; z<model.getSize().getZ()-1 ; z++) {
+					for (int y=1 ; y<model.getSize().getY()-1 ; y++) {
+						for (int x=1 ; x<model.getSize().getX()-1 ; x++) {
+							if (exists[x][y][z]) {
+								new_voxel_map[x][y][z] = true;
+							} else {
+								int adjcount = 0;
+								if (exists[x-1][y][z]) adjcount++;
+								if (exists[x+1][y][z]) adjcount++;
+								if (exists[x][y-1][z]) adjcount++;
+								if (exists[x][y+1][z]) adjcount++;
+								if (exists[x][y][z-1]) adjcount++;
+								if (exists[x][y][z+1]) adjcount++;
+								if (adjcount >= 2) {
+									new_voxel_map[x][y][z] = true;
+								}
+							}
+						}
+					}
+				}
+
+				// Now build the model
+				int num_boxes = 0;
+				for (int z=1 ; z<model.getSize().getZ()-1 ; z++) {
+					for (int y=1 ; y<model.getSize().getY()-1 ; y++) {
+						for (int x=1 ; x<model.getSize().getX()-1 ; x++) {
+							if (new_voxel_map[x][y][z]) {
+								startBuildingCube(model, offset, new_voxel_map, x, y, z);
+								num_boxes++;
+							}
+						}
+					}
+				}
+				Settings.p(num_boxes + " boxes created");
+			}
 		}
 
 	}
+
+
+	private void startBuildingCube(VoxModel model, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz) {
+		int x, y, z;
+		int ex, ey, ez;
+		// Check x cord
+		for (x=sx ; x<model.getSize().getX()-1 ; x++) {
+			if (new_voxel_map[x][sy][sz] == false) {
+				break;
+			}
+		}
+		x--;
+		ex = x;
+
+		// Check y coord
+		outy:
+			for (y=sy ; y<model.getSize().getY()-1 ; y++) {
+				for (x=sx ; x<=ex ; x++) {
+					if (new_voxel_map[x][y][sz] == false) {
+						break outy;
+					}
+				}
+			}
+		ey = y-1;
+
+		// Check z coord
+		outz:
+			for (z=sz ; y<model.getSize().getZ()-1 ; z++) {
+				for (y=sy ; y<=ey ; y++) {
+					for (x=sx ; x<=ex ; x++) {
+						if (new_voxel_map[x][y][sz] == false) {
+							break outz;
+						}
+					}
+				}
+			}
+		ez = z-1;
+
+		// create box
+		float xpos = offset.x+((ex-sx)/2)+.5f; 
+		float ypos = offset.y+((ey-sy)/2)+.5f; 
+		float zpos = offset.z+((ez-sz)/2)+.5f; 
+		float w = sx-ex+1;
+		float h = sy-ey+1;
+		float d = sz-ez+1;
+		AbstractEntity box = EntityFactory.createCollisionBox(game, xpos, ypos, zpos, w, h, d);
+		game.ecs.addEntity(box);
+
+		// mark all new_voxel_map as used up
+		for (z=sz ; z<=ez ; z++) {
+			for (y=sy ; y<=ey ; y++) {
+				for (x=sx ; x<=ex ; x++) {
+					new_voxel_map[x][y][z] = false;
+				}
+			}
+		}
+	}
+
+
 }

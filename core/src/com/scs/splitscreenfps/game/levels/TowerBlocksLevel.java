@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.levels;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.JsonIOException;
@@ -30,7 +31,7 @@ public class TowerBlocksLevel extends AbstractLevel {
 
 
 	@Override
-	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+	public void load() throws JsonSyntaxException, JsonIOException, IOException {
 		Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/brown1.png"), floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
 				0f, true, false);
@@ -40,7 +41,8 @@ public class TowerBlocksLevel extends AbstractLevel {
 			this.startPositions.add(new Vector3(0, 10f, 0));
 			this.startPositions.add(new Vector3(0, 10f, 0));
 
-			loadVox("vox/graveyard.vox", 0, new Vector3(5, .1f, 5), .2f, true, false);
+			//loadVox("vox/graveyard.vox", 0, new Vector3(5, .1f, 5), .2f, true, false);
+			super.createCollisionShapesFromVox("vox/skyscraper1.vox", new Vector3(5, .1f, 5), .2f);
 
 			//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);
 			//game.ecs.addEntity(model);

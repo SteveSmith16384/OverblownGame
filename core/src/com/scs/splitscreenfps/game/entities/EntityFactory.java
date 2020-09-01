@@ -302,9 +302,9 @@ public class EntityFactory {
 		lootbox.addComponent(new IsCollectableComponent(type));
 
 		TextureRegion tex = game.getTexture("textures/spritesforyou.png", 8, 8, 0, 4);
-		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
+		Material material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = game.modelBuilder;
-		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, black_material);
+		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, material);
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		lootbox.addComponent(model);
@@ -314,12 +314,12 @@ public class EntityFactory {
 		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
 		Vector3 local_inertia = new Vector3();
 		boxShape.calculateLocalInertia(1f, local_inertia);
-		btRigidBody groundObject = new btRigidBody(w*h*d, null, boxShape, local_inertia);
-		groundObject.userData = lootbox;
-		groundObject.setRestitution(.1f);
-		groundObject.setCollisionShape(boxShape);
-		groundObject.setWorldTransform(instance.transform);
-		lootbox.addComponent(new PhysicsComponent(groundObject));
+		btRigidBody body = new btRigidBody(w*h*d, null, boxShape, local_inertia);
+		body.userData = lootbox;
+		body.setRestitution(.1f);
+		body.setCollisionShape(boxShape);
+		body.setWorldTransform(instance.transform);
+		lootbox.addComponent(new PhysicsComponent(body));
 
 		return lootbox;
 	}
@@ -351,6 +351,25 @@ public class EntityFactory {
 		originMarker.addComponent(new PositionComponent());
 
 		return originMarker;
+	}
+
+
+	public static AbstractEntity createCollisionBox(Game game, float posX, float posY, float posZ, float w, float h, float d) {
+		AbstractEntity collisionBox = new AbstractEntity(game.ecs, "CollisionBox");
+
+		collisionBox.addComponent(new PositionComponent());
+
+		Matrix4 mat = new Matrix4();
+		mat.setTranslation(posX,  posY,  posZ);
+		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
+		btRigidBody body = new btRigidBody(0, null, boxShape, null);
+		body.userData = collisionBox;
+		body.setRestitution(.1f);
+		body.setCollisionShape(boxShape);
+		body.setWorldTransform(mat);
+		collisionBox.addComponent(new PhysicsComponent(body));
+
+		return collisionBox;
 	}
 
 
