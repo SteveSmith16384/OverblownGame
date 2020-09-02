@@ -11,6 +11,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.GridPoint3;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -346,60 +347,84 @@ public abstract class AbstractLevel {
 		}
 	}
 
-	// todo - store posiution and size in vector so y=z
+
 	public void createCollisionShapesFromVox(String filename, Vector3 offset, float scale) throws FileNotFoundException, IOException {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
 			for (VoxModel model : voxFile.getModels()) {
+				GridPoint3 size = new GridPoint3(model.getSize().getX(), model.getSize().getZ(), model.getSize().getY());
+
 				int num_voxels = 0;
-				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getZ()][model.getSize().getY()];
+				int max_z = 0;
+				boolean exists[][][] = new boolean[size.x][size.y][size.z];
 				for (Voxel voxel : model.getVoxels()) {
 					int x = voxel.getPosition().getX() & 0xff;
-					int z = voxel.getPosition().getY() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					int y = voxel.getPosition().getZ() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
+					int z = voxel.getPosition().getY() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					exists[x][y][z] = true;
 					num_voxels++;
+					if (z > max_z) {
+						max_z = z;
+					}
 				}
 				Settings.p(num_voxels + " voxels loaded");
 
 				// Add voxels if surrounded
 				int num_added = 0;
-				boolean new_voxel_map[][][] = new boolean[model.getSize().getX()][model.getSize().getZ()][model.getSize().getY()];
-				for (int z=0 ; z<model.getSize().getY() ; z++) {
-					for (int y=0 ; y<model.getSize().getZ() ; y++) {
-						for (int x=0 ; x<model.getSize().getX() ; x++) {
-							if (x == 2 && y == 0 && z == 1) {
-								//Settings.p("Here");
-							}
+				boolean new_voxel_map[][][] = new boolean[size.x][size.y][size.z];
+				for (int z=0 ; z<size.z ; z++) {
+					for (int y=0 ; y<size.y ; y++) {
+						for (int x=0 ; x<size.x ; x++) {
+							//if (x == 2 && y == 0 && z == 1) {
+							//Settings.p("Here");
+							//}
+							// Notice we reverse the X-coord here
 							if (exists[x][y][z]) {
-								new_voxel_map[x][y][z] = true;
+								new_voxel_map[x][y][max_z-z] = true; //max_x-
 							} else {
-								//int adjcount = 0;
-								//try {
-								/*if (x>0 && exists[x-1][y][z]) adjcount++;
-									if (x<model.getSize().getX()-1 && exists[x+1][y][z]) adjcount++;
-									if (y>0 && exists[x][y-1][z]) adjcount++;
-									if (y<model.getSize().getZ()-1 && exists[x][y+1][z]) adjcount++;
-									if (z>0 && exists[x][y][z-1]) adjcount++;
-									if (z<model.getSize().getY()-1 && exists[x][y][z+1]) adjcount++;
-								} catch (ArrayIndexOutOfBoundsException ex) {
-									ex.printStackTrace();
-								}
-								if (adjcount >= 2) {
-									new_voxel_map[x][y][z] = true;
-									Settings.p("Adding block at " + x + ", " + y + ", " + z);
-									num_added++;
-								}*/
 								boolean add = false;
-								if (x>0 && exists[x-1][y][z] && x<model.getSize().getX()-1 && exists[x+1][y][z]) {
+								
+								// This one is quite slow
+								/*int num_blocks_x = 0;
+								int num_blocks_y = 0;
+								int num_blocks_z = 0;
+								for (int off=-2 ; off<=2 ; off++) {
+									try {
+										if (exists[x+off][y][z]) {
+											num_blocks_x++;
+										}
+									} catch (ArrayIndexOutOfBoundsException ex) {
+
+									}
+									try {
+										if (exists[x][y+off][z]) {
+											num_blocks_y++;
+										}
+									} catch (ArrayIndexOutOfBoundsException ex) {
+
+									}
+									try {
+										if (exists[x][y][z+off]) {
+											num_blocks_z++;
+										}
+									} catch (ArrayIndexOutOfBoundsException ex) {
+
+									}
+								}
+								if (num_blocks_x >= 3 || num_blocks_y >= 3 || num_blocks_z >= 3) {
 									add = true;
-								} else if (y>0 && exists[x][y-1][z] && y<model.getSize().getZ()-1 && exists[x][y+1][z]) {
+								}*/
+								
+								if (x>0 && exists[x-1][y][z] && x<size.x-1 && exists[x+1][y][z]) {
 									add = true;
-								} else if (z>0 && exists[x][y][z-1] && z<model.getSize().getY()-1 && exists[x][y][z+1]) {
+								} else if (y>0 && exists[x][y-1][z] && y<size.y-1 && exists[x][y+1][z]) {
+									add = true;
+								} else if (z>0 && exists[x][y][z-1] && z<size.z-1 && exists[x][y][z+1]) {
 									add = true;
 								}
+								
 								if (add) {
-									new_voxel_map[x][y][z] = true;
+									new_voxel_map[x][y][max_z-z] = true; // max_x-
 									//Settings.p("Adding block at " + x + ", " + y + ", " + z);
 									num_added++;
 								}
@@ -413,11 +438,11 @@ public abstract class AbstractLevel {
 
 				// Now build the model
 				int num_boxes = 0;
-				for (int z=0 ; z<model.getSize().getY() ; z++) {
-					for (int y=0 ; y<model.getSize().getZ() ; y++) {
-						for (int x=0 ; x<model.getSize().getX() ; x++) {
+				for (int z=0 ; z<size.z ; z++) {
+					for (int y=0 ; y<size.y ; y++) {
+						for (int x=0 ; x<size.x ; x++) {
 							if (new_voxel_map[x][y][z]) {
-								startBuildingCube(model, offset, new_voxel_map, x, y, z, scale);
+								startBuildingCube(model, size, offset, new_voxel_map, x, y, z, scale);
 								num_boxes++;
 							}
 						}
@@ -430,13 +455,13 @@ public abstract class AbstractLevel {
 	}
 
 
-	private void startBuildingCube(VoxModel model, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz, float scale) {
+	private void startBuildingCube(VoxModel model, GridPoint3 size, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz, float scale) {
 		//Settings.p("Started");
 
 		int x, y, z;
 		int ex, ey, ez;
 		// Check x cord
-		for (x=sx ; x<model.getSize().getX()-1 ; x++) {
+		for (x=sx ; x<size.x-1 ; x++) {
 			if (new_voxel_map[x][sy][sz] == false) {
 				break;
 			}
@@ -446,7 +471,7 @@ public abstract class AbstractLevel {
 
 		// Check y coord
 		outy:
-			for (y=sy ; y<model.getSize().getZ()-1 ; y++) {
+			for (y=sy ; y<size.y-1 ; y++) {
 				for (x=sx ; x<=ex ; x++) {
 					if (new_voxel_map[x][y][sz] == false) {
 						break outy;
@@ -457,13 +482,13 @@ public abstract class AbstractLevel {
 
 		// Check z coord
 		outz:
-			for (z=sz ; z<model.getSize().getY()-1 ; z++) {
+			for (z=sz ; z<size.z-1 ; z++) {
 				for (y=sy ; y<=ey ; y++) {
 					for (x=sx ; x<=ex ; x++) {
 						//try {
-							if (new_voxel_map[x][y][z] == false) {
-								break outz;
-							}
+						if (new_voxel_map[x][y][z] == false) {
+							break outz;
+						}
 						/*} catch (ArrayIndexOutOfBoundsException ex2) {
 							ex2.printStackTrace();
 						}*/
@@ -485,7 +510,7 @@ public abstract class AbstractLevel {
 
 		//Settings.p("Created box of size " + w + "," + h + "," + d);
 
-		// mark all new_voxel_map as used up
+		// mark all new_voxel_map as processed
 		for (z=sz ; z<=ez ; z++) {
 			for (y=sy ; y<=ey ; y++) {
 				for (x=sx ; x<=ex ; x++) {
