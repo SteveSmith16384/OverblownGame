@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.levels;
 
 import java.io.FileNotFoundException;
 
+import com.badlogic.gdx.math.Vector3;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.scs.splitscreenfps.Settings;
@@ -33,7 +34,7 @@ public class MapEditorLevel extends AbstractLevel {
 	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		super.loadJsonFile(MAP_FILENAME, true);
 
-		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game));
+		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game, new Vector3()));
 
 		game.appendToLog("Loaded " + MAP_FILENAME);
 		game.appendToLog("Map editor ready");

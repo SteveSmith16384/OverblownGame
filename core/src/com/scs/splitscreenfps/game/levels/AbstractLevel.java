@@ -23,6 +23,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
+import com.scs.splitscreenfps.game.entities.EquipmentEntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.mapdata.MapBlockComponent;
 import com.scs.splitscreenfps.game.mapdata.MapData;
@@ -168,7 +169,7 @@ public abstract class AbstractLevel {
 					continue; // Don't add player start sphere!
 				}
 			} else if (for_map_editor == false && block.tags.contains("healthpack")) {
-				AbstractEntity health = EntityFactory.createHealthPack(game, block.position);
+				AbstractEntity health = EquipmentEntityFactory.createHealthPack(game, block.position);
 				game.ecs.addEntity(health);
 				continue;
 			}
@@ -460,6 +461,7 @@ public abstract class AbstractLevel {
 
 		int x, y, z;
 		int ex, ey, ez;
+
 		// Check x cord
 		for (x=sx ; x<size.x-1 ; x++) {
 			if (new_voxel_map[x][sy][sz] == false) {
@@ -485,22 +487,18 @@ public abstract class AbstractLevel {
 			for (z=sz ; z<size.z-1 ; z++) {
 				for (y=sy ; y<=ey ; y++) {
 					for (x=sx ; x<=ex ; x++) {
-						//try {
 						if (new_voxel_map[x][y][z] == false) {
 							break outz;
 						}
-						/*} catch (ArrayIndexOutOfBoundsException ex2) {
-							ex2.printStackTrace();
-						}*/
 					}
 				}
 			}
 		ez = z-1;
 
 		// create box
-		float xpos = offset.x + ((((ex-sx+1)/2f)+sx)*scale); 
-		float ypos = offset.y + ((((ey-sy+1)/2f)+sy)*scale); 
-		float zpos = offset.z + ((((ez-sz+1)/2f)+sz)*scale); 
+		float xpos = offset.x + ((((ex-sx+1)/2f)-sx)*scale);
+		float ypos = offset.y + ((((ey-sy+1)/2f)-sy)*scale); 
+		float zpos = offset.z + ((((ez-sz+1)/2f)-sz)*scale); 
 		float w = (ex-sx+1)*scale;
 		float h = (ey-sy+1)*scale;
 		float d = (ez-sz+1)*scale;
@@ -508,7 +506,7 @@ public abstract class AbstractLevel {
 		AbstractEntity box = EntityFactory.createCollisionBox(game, xpos, ypos, zpos, w, h, d);
 		game.ecs.addEntity(box);
 
-		//Settings.p("Created box of size " + w + "," + h + "," + d);
+		Settings.p("Created box at " + xpos + "," + ypos + "," + zpos +  " of size " + w + "," + h + "," + d);
 
 		// mark all new_voxel_map as processed
 		for (z=sz ; z<=ez ; z++) {

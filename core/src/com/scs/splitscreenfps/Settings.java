@@ -41,7 +41,7 @@ public class Settings {
 	public static final float MIN_AXIS = 0.1f;//0.2f; // Movement less than this is ignored
 	public static final float CAM_OFFSET = -0.05f;//-0.2f;//0.14f;
 	public static final String TITLE = "Overblown";
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 256;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 	public static float DEF_MOVE_SPEED = 15;
 

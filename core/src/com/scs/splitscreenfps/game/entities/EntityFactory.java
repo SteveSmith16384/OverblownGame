@@ -25,7 +25,6 @@ import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
@@ -262,85 +261,19 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createHealthPack(Game game, Vector3 start) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "HealthPack");
-
-		e.addComponent(new IsCollectableComponent(CollectableSystem.CollectableType.HealthPack));
-
-		e.addComponent(new PositionComponent());
-
-		HasDecal hasDecal = new HasDecal();
-		hasDecal.decal = GraphicsHelper.DecalHelper(game.getTexture("textures/PowerUp/PowerUp_06.png"), 0.4f);
-		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = true;
-		e.addComponent(hasDecal);
-
-		// Add physics
-		btBoxShape shape = new btBoxShape(new Vector3(.1f, .1f, .1f));
-		btGhostObject body = new btGhostObject();//0, null, shape);
-		body.setCollisionFlags(CollisionFlags.CF_NO_CONTACT_RESPONSE);
-		body.userData = e;
-		body.setCollisionShape(shape);
-		Matrix4 mat = new Matrix4();
-		mat.setTranslation(start);
-		body.setWorldTransform(mat);
-		PhysicsComponent pc = new PhysicsComponent(body);
-		//pc.disable_gravity = true; Not available for ghost objects
-		e.addComponent(pc);
-
-		return e;
-	}
-
-
-	public static AbstractEntity createLootBox(Game game, float posX, float posY, float posZ, CollectableSystem.CollectableType type) {
-		AbstractEntity lootbox = new AbstractEntity(game.ecs, "LootBox");
-
-		float w = .5f;
-		float h = .5f;
-		float d = .5f;
-
-		lootbox.addComponent(new IsCollectableComponent(type));
-
-		TextureRegion tex = game.getTexture("textures/spritesforyou.png", 8, 8, 0, 4);
-		Material material = new Material(TextureAttribute.createDiffuse(tex));
-		ModelBuilder modelBuilder = game.modelBuilder;
-		Model box_model = ShapeHelper.createCube(modelBuilder, w, h, d, material);
-		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
-		HasModelComponent model = new HasModelComponent(instance, 1f, true);
-		lootbox.addComponent(model);
-
-		lootbox.addComponent(new PositionComponent());
-
-		btBoxShape boxShape = new btBoxShape(new Vector3(w/2, h/2, d/2));
-		Vector3 local_inertia = new Vector3();
-		boxShape.calculateLocalInertia(1f, local_inertia);
-		btRigidBody body = new btRigidBody(w*h*d, null, boxShape, local_inertia);
-		body.userData = lootbox;
-		body.setRestitution(.1f);
-		body.setCollisionShape(boxShape);
-		body.setWorldTransform(instance.transform);
-		lootbox.addComponent(new PhysicsComponent(body));
-
-		return lootbox;
-	}
-
-
-	public static AbstractEntity createOriginMarker(Game game) {
+	public static AbstractEntity createOriginMarker(Game game, Vector3 pos) {
 		AbstractEntity originMarker = new AbstractEntity(game.ecs, "OriginMarker");
 
-		//Texture tex = game.getTexture("colours/yellow.png");
-		Material material = new Material();//TextureAttribute.createDiffuse(tex));
+		Material material = new Material();
 
-		//Model box_model = ShapeHelper.createLine(modelBuilder, new Vector3(), new Vector3(0, 1, 0), material);
-
-		int attr = VertexAttributes.Usage.Position;// | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
+		int attr = VertexAttributes.Usage.Position;
 		ModelBuilder modelBuilder = game.modelBuilder;
 		modelBuilder.begin();
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_LINES, attr, material);
 		mb.setColor(Color.WHITE);
-		mb.line(new Vector3(), new Vector3(0, 100, 0));
-		mb.line(new Vector3(), new Vector3(100, 0, 0));
-		mb.line(new Vector3(), new Vector3(0, 0, 100));
+		mb.line(new Vector3(pos), new Vector3(0, 100, 0).add(pos));
+		mb.line(new Vector3(pos), new Vector3(100, 0, 0).add(pos));
+		mb.line(new Vector3(pos), new Vector3(0, 0, 100).add(pos));
 		Model box_model = modelBuilder.end();
 
 		ModelInstance instance = new ModelInstance(box_model);
@@ -381,10 +314,10 @@ public class EntityFactory {
 		// Calc min on Y axis
 		BoundingBox tmpBB = new BoundingBox();
 		//if (alignToY) {
-			instance.calculateBoundingBox(tmpBB);
-			tmpBB.mul(instance.transform);
+		instance.calculateBoundingBox(tmpBB);
+		tmpBB.mul(instance.transform);
 		//}
-		instance.transform.setTranslation(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z); // todo - remove this?
+		//instance.transform.setTranslation(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z); // todo - remove this?
 
 		/*if (rot_y != 0) {
 			instance.transform.rotate(Vector3.Y, rot_y);
