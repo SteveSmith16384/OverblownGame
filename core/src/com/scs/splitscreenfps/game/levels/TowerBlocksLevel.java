@@ -50,15 +50,15 @@ public class TowerBlocksLevel extends AbstractLevel {
 			//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);
 			//game.ecs.addEntity(model);
 
-			// todo -try offset skyscraper, ensure xollision box is correct, then model
+			// todo - try offset skyscraper, ensure collision box is correct, then model
 			
 			//String filename = "vox/monu1";
 			//String filename = "vox/graveyard";
 			String filename = "vox/skyscraper_offset";
-			super.createCollisionShapesFromVox(filename + ".vox", model_pos, .1f);
+			//super.createCollisionShapesFromVox(filename + ".vox", model_pos, .1f);
 
-			//AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", filename + ".obj", model_pos);
-			//game.ecs.addEntity(model);
+			AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", filename + ".obj", model_pos);
+			game.ecs.addEntity(model);
 			//PositionComponent posData = (PositionComponent)model.getComponent(PositionComponent.class);
 			//Settings.p("Created model at " + posData.position.x + "," + posData.position.y + "," + posData.position.z);
 

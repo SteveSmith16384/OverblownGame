@@ -326,7 +326,8 @@ public class EntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		entity.addComponent(model);
 
-		entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));
+		//entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));
+		entity.addComponent(new PositionComponent(offset.x-tmpBB.getCenterX(), offset.y-tmpBB.getCenterY(), offset.z-tmpBB.getCenterZ()));
 
 		return entity;
 	}
