@@ -179,7 +179,6 @@ public class DrawModelSystem extends AbstractSystem {
 			if (model.keep_player_in_centre) { // i.e. a skybox
 				model.model.transform.setToTranslation(batch.getCamera().position);
 			} else {
-				// todo - if entity doesn't move, dont do this every time
 				model.model.transform.setToTranslation(posData.position);
 				model.model.transform.scl(model.scale);
 				model.model.transform.rotate(Vector3.X, posData.angle_x_degrees);
@@ -197,7 +196,7 @@ public class DrawModelSystem extends AbstractSystem {
 				model.radius = model.dimensions.len();// scs new - hack since models are not in the middle! / 2;
 			}
 			if (!batch.getCamera().frustum.sphereInFrustum(posData.position, model.radius)) {
-				//todo - what if model origin is nowehere near the actual model?   //treturn;
+				//todo - what if model origin is nowhere near the actual model?   //return;
 			}
 		}
 

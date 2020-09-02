@@ -113,7 +113,7 @@ public abstract class AbstractLevel {
 	}
 
 
-	public abstract void load() throws IOException; // todo - don't catch these in levels
+	public abstract void load() throws IOException;
 
 	public abstract void update();
 
@@ -357,15 +357,22 @@ public abstract class AbstractLevel {
 
 				int num_voxels = 0;
 				int max_z = 0;
+				int min_z = Integer.MAX_VALUE;
 				boolean exists[][][] = new boolean[size.x][size.y][size.z];
 				for (Voxel voxel : model.getVoxels()) {
 					int x = voxel.getPosition().getX() & 0xff;
 					int y = voxel.getPosition().getZ() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					int z = voxel.getPosition().getY() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					exists[x][y][z] = true;
+					if (y == 0) {
+						//Settings.p("Added vox at " + x + "," + y + "," + z);
+					}
 					num_voxels++;
 					if (z > max_z) {
 						max_z = z;
+					}
+					if (z < min_z) {
+						min_z = z;
 					}
 				}
 				Settings.p(num_voxels + " voxels loaded");
@@ -381,7 +388,8 @@ public abstract class AbstractLevel {
 							//}
 							// Notice we reverse the X-coord here
 							if (exists[x][y][z]) {
-								new_voxel_map[x][y][max_z-z] = true; //max_x-
+								int actual_z = max_z-z+min_z;
+								new_voxel_map[x][y][actual_z] = true;
 							} else {
 								boolean add = false;
 								
@@ -425,7 +433,7 @@ public abstract class AbstractLevel {
 								}
 								
 								if (add) {
-									new_voxel_map[x][y][max_z-z] = true; // max_x-
+									new_voxel_map[x][y][max_z-z+min_z] = true;
 									//Settings.p("Adding block at " + x + ", " + y + ", " + z);
 									num_added++;
 								}

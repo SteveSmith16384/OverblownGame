@@ -149,7 +149,7 @@ public class EquipmentEntityFactory {
 			tex = "colours/magenta.png"; 
 			break;
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown type: " + type);
 		}
 
 		Material material = new Material(TextureAttribute.createDiffuse(game.getTexture(tex)));

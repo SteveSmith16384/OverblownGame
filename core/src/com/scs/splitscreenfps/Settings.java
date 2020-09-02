@@ -34,14 +34,14 @@ public class Settings {
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	public static final boolean DISABLE_POST_EFFECTS = !RELEASE_MODE && false;
 	public static final boolean STRICT = !RELEASE_MODE && true;
-	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false; // todo - remove?
+	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 
 	// Other settings
 	public static final int MAX_PLAYERS = 4;
 	public static final float MIN_AXIS = 0.1f;//0.2f; // Movement less than this is ignored
 	public static final float CAM_OFFSET = -0.05f;//-0.2f;//0.14f;
 	public static final String TITLE = "Overblown";
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 256;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 	public static float DEF_MOVE_SPEED = 15;
 
