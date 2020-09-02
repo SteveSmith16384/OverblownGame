@@ -317,7 +317,7 @@ public class EntityFactory {
 		instance.calculateBoundingBox(tmpBB);
 		tmpBB.mul(instance.transform);
 		//}
-		//instance.transform.setTranslation(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z); // todo - remove this?
+		//instance.transform.setTranslation(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z);
 
 		/*if (rot_y != 0) {
 			instance.transform.rotate(Vector3.Y, rot_y);
@@ -327,7 +327,8 @@ public class EntityFactory {
 		entity.addComponent(model);
 
 		//entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));
-		entity.addComponent(new PositionComponent(offset.x-tmpBB.getCenterX(), offset.y-tmpBB.getCenterY(), offset.z-tmpBB.getCenterZ()));
+		// Notice we treat Y diff, so it can be specified as 0 for on the floor
+		entity.addComponent(new PositionComponent(offset.x-tmpBB.getCenterX(), offset.y-tmpBB.min.y, offset.z-tmpBB.getCenterZ()));
 
 		return entity;
 	}

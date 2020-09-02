@@ -54,7 +54,7 @@ public class TowerBlocksLevel extends AbstractLevel {
 			
 			//String filename = "vox/monu1";
 			//String filename = "vox/graveyard";
-			String filename = "vox/skyscraper_offset";
+			String filename = "vox/house1";
 			//super.createCollisionShapesFromVox(filename + ".vox", model_pos, .1f);
 
 			AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", filename + ".obj", model_pos);
