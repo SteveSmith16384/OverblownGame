@@ -20,7 +20,7 @@ public class PlayerCameraController {
 		camera = cam;
 	}
 
-	
+
 	public void update(IInputMethod input) {
 		float dt = Gdx.graphics.getDeltaTime();
 
@@ -30,23 +30,27 @@ public class PlayerCameraController {
 				float ry = Gdx.input.getDeltaY();
 
 				tmp.set(camera.direction).crs(camera.up).nor();
-				if (Settings.USE_MAP_EDITOR || ((ry>0 && camera.direction.y>-0.95) || (ry<0 && camera.direction.y < 0.95))) {
-					camera.rotate(tmp, -mouseTurnSpeed * ry * dt);
+				if (Settings.TEST_3RD_PERSON == false) {
+					if (Settings.USE_MAP_EDITOR || ((ry>0 && camera.direction.y>-0.95) || (ry<0 && camera.direction.y < 0.95))) {
+						camera.rotate(tmp, -mouseTurnSpeed * ry * dt);
+					}
 				}
 				camera.rotate(Vector3.Y, -mouseTurnSpeed * rx * dt);
 			}
-		} else {
+		} else { // Not mouse
 			//Rotation
-			if (input.getLookUp() > Settings.MIN_AXIS) {
-				if(camera.direction.y < 0.95) {
-					tmp.set(camera.direction).crs(camera.up).nor();
-					camera.rotate(tmp, rotSpeedY * input.getLookUp() * dt);
-				}
+			if (Settings.TEST_3RD_PERSON == false) {
+				if (input.getLookUp() > Settings.MIN_AXIS) {
+					if(camera.direction.y < 0.95) {
+						tmp.set(camera.direction).crs(camera.up).nor();
+						camera.rotate(tmp, rotSpeedY * input.getLookUp() * dt);
+					}
 
-			} else if (input.getLookDown() > Settings.MIN_AXIS) {
-				if(camera.direction.y>-0.95) {
-					tmp.set(camera.direction).crs(camera.up).nor();
-					camera.rotate(tmp, -rotSpeedY * input.getLookDown() * dt);
+				} else if (input.getLookDown() > Settings.MIN_AXIS) {
+					if(camera.direction.y>-0.95) {
+						tmp.set(camera.direction).crs(camera.up).nor();
+						camera.rotate(tmp, -rotSpeedY * input.getLookDown() * dt);
+					}
 				}
 			}
 			if (input.getLookLeft() > Settings.MIN_AXIS) {

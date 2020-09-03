@@ -130,17 +130,18 @@ public class PlayerProcessSystem implements ISystem {
 				if (Settings.TEST_3RD_PERSON == false) {
 					player.camera.position.set(posData.position.x, posData.position.y + (PlayerAvatar_Person.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 				} else {
-					float dist = 2f;
-					float x = posData.position.x - ((float)Math.sin(Math.toRadians(posData.angle_y_degrees+90))*dist);//, 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
-					float z = posData.position.z - ((float)Math.cos(Math.toRadians(posData.angle_y_degrees+90))*dist);//, 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
-					player.camera.position.set(x, posData.position.y + 1f, z);
+					// Set camera position
+					float xz_dist = 1f;
+					float y_dist = 3f;
+					float x = posData.position.x - ((float)Math.sin(Math.toRadians(posData.angle_y_degrees+90))*xz_dist);//, 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
+					float z = posData.position.z - ((float)Math.cos(Math.toRadians(posData.angle_y_degrees+90))*xz_dist);//, 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
+					player.camera.position.set(x, posData.position.y + y_dist, z);
+					player.camera.lookAt(posData.position);
 				}
 			} else {
 				// Show player's death from above
 				player.camera.position.set(posData.position.x, posData.position.y + 4, posData.position.z-1);
-				//player.camera.update();
 				tmpVector.set(posData.position).sub(player.camera.position).nor();
-				//player.camera.lookAt(posData.position);
 				player.camera.direction.set(tmpVector);
 				player.camera.up.x = 0;
 				player.camera.up.y = 1;

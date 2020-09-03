@@ -16,21 +16,20 @@ public class Settings {
 
 	// Autostart Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_TOWER_BLOCKS;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_FACTORY;
 	public static final int NUM_AUTOSTART_CHARACTERS = 1;
-	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_SORTIT;
+	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_PHARTAH;
 	
 	// Debugging Hacks
 	public static final boolean TEST_VOX = !RELEASE_MODE && true;
+	public static final boolean TEST_3RD_PERSON = !RELEASE_MODE && false;
 	public static final boolean SHOW_PLAYER_COORDS = !RELEASE_MODE && false;
 	public static boolean DRAW_PHYSICS = !RELEASE_MODE && true; // Really slows it down
 	public static final boolean DEBUG_DISPENSER = !RELEASE_MODE && false;
 	public static final boolean DISABLE_GRAVITY = !RELEASE_MODE && false;
 	public static final boolean DISABLE_SHADOWS = !RELEASE_MODE && false;
-	public static final boolean TEST_3RD_PERSON_ = !RELEASE_MODE && false;
 	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && false;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;
-	public static final boolean DEBUG_PUNCH = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	public static final boolean DISABLE_POST_EFFECTS = !RELEASE_MODE && false;

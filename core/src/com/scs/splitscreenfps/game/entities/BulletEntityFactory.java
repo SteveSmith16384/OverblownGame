@@ -205,16 +205,7 @@ public class BulletEntityFactory {
 
 		e.addComponent(new PositionComponent());
 
-		PlayerData playerData = (PlayerData)shooter.getComponent(PlayerData.class);
 		WeaponSettingsComponent settings = (WeaponSettingsComponent)shooter.getComponent(WeaponSettingsComponent.class);
-
-		if (Settings.DEBUG_PUNCH) {
-			HasDecal hasDecal = new HasDecal();
-			hasDecal.decal = getBulletDecal(game, playerData.playerIdx);
-			hasDecal.faceCamera = true;
-			hasDecal.dontLockYAxis = true;
-			e.addComponent(hasDecal);
-		}
 
 		e.addComponent(new HasRangeComponent(start, settings.range));
 		e.addComponent(new HarmPlayerOnContactComponent(shooter, start, "", settings.damage, settings.dropff_start, settings.dropoff_per_metre, false, 0.3f));

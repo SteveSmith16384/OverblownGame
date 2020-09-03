@@ -9,6 +9,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeCarriedComponent;
 import com.scs.splitscreenfps.game.components.CanCarryComponent;
@@ -107,11 +108,15 @@ public class PickupAndDropSystem extends AbstractSystem {
 		PositionComponent ourPosData = (PositionComponent)player.getComponent(PositionComponent.class);
 		Vector3 newpos = new Vector3(ourPosData.position);
 
-		tmpVec.set(player.camera.direction);
-		if (throwIt == false) {// || dir.y < 0) {
+		if (Settings.TEST_3RD_PERSON == false) {
+			tmpVec.set(player.camera.direction);
+		} else {
+			tmpVec.set((float)Math.sin(Math.toRadians(ourPosData.angle_y_degrees+90)), 0, (float)Math.cos(Math.toRadians(ourPosData.angle_y_degrees+90)));
+		}
+		if (throwIt == false) {
 			tmpVec.y = 0;
 		} else {
-			tmpVec.y = 0.2f; // Throw upwards
+			tmpVec.y = 0.2f; // Throw slightly upwards
 		}
 		tmpVec.nor();
 		newpos.add(tmpVec);

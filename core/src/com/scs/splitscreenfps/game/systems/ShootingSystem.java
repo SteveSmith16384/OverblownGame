@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanShoot;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
@@ -51,7 +52,7 @@ public class ShootingSystem extends AbstractSystem {
 			cc.nextShotTime = System.currentTimeMillis() + weapon.shot_interval;
 			Vector3 dir = new Vector3();
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-			if (cc.shootInCameraDirection) {
+			if (cc.shootInCameraDirection && Settings.TEST_3RD_PERSON == false) {
 				dir.set(player.camera.direction);
 			} else {
 				dir.set((float)Math.sin(Math.toRadians(posData.angle_y_degrees+90)), 0, (float)Math.cos(Math.toRadians(posData.angle_y_degrees+90)));
