@@ -59,9 +59,6 @@ public class DispensePackageSystem implements ISystem {
 				}
 
 				Vector3 pos = this.dispensers[this.next_disp];
-				if (pos == null) {
-					throw new RuntimeException("Here");
-				}
 				int pkg_type = NumberFunctions.rnd(0, Math.min(game.players.length, 3));
 				AbstractEntity pkg = EquipmentEntityFactory.createPackage(game, pos.x, pos.y, pos.z, pkg_type);
 				game.ecs.addEntity(pkg);

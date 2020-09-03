@@ -354,7 +354,9 @@ public abstract class AbstractLevel {
 
 
 	// This will [efficiently] create collision boxes for a voxel model.
-	public void createCollisionShapesFromVox(String filename, Vector3 offset, float scale) throws FileNotFoundException, IOException {
+	public void createCollisionShapesFromVox(String filename, Vector3 offset) throws FileNotFoundException, IOException {
+		float scale = .1f;// Scale for models exported by .vox.
+		
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
 
@@ -376,21 +378,30 @@ public abstract class AbstractLevel {
 				mins.z = Integer.MAX_VALUE;
 				boolean exists[][][] = new boolean[vox_world_size.x][vox_world_size.y][vox_world_size.z];
 				for (Voxel voxel : model.getVoxels()) {
-					int x = voxel.getPosition().getX() & 0xff;
-					int y = voxel.getPosition().getZ() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
-					int z = voxel.getPosition().getY() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					
 					// Limit - todo - remove this
-					int limit = 12;
-					if (x > limit || y > limit || z > limit) {
+					int limit = Byte.MAX_VALUE;
+					if (voxel.getPosition().getX() > limit || voxel.getPosition().getZ() > limit || voxel.getPosition().getY() > limit) {
+						//Settings.p("Skipping voxels...");
+						continue;
+					}
+					if (voxel.getPosition().getX() < 0 || voxel.getPosition().getZ() < 0|| voxel.getPosition().getY() < 0) {
 						//Settings.p("Skipping voxels...");
 						continue;
 					}
 					
-					exists[x][y][z] = true;
-					if (y == 0) {
-						//Settings.p("Added vox at " + x + "," + y + "," + z);
+					//Settings.p("Added vox at " + voxel.getPosition().getX() + "," + voxel.getPosition().getZ() + "," + voxel.getPosition().getY());
+
+					int x = voxel.getPosition().getX();// todo - re-add? & 0xff;
+					int y = voxel.getPosition().getZ();// todo - re-add?  & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
+					int z = voxel.getPosition().getY();// todo - re-add?  & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
+					
+					if (Settings.STRICT) {
+						if (exists[x][y][z]) {
+							Settings.p("Here!");
+						}
 					}
+					exists[x][y][z] = true;
 					num_voxels++;
 					if (x > maxs.x) {
 						maxs.x = x;
@@ -413,17 +424,16 @@ public abstract class AbstractLevel {
 				}
 				Settings.p(num_voxels + " voxels loaded");
 
-				// Add voxels if surrounded
 				int num_added = 0;
 				boolean new_voxel_map[][][] = new boolean[vox_world_size.x][vox_world_size.y][vox_world_size.z];
 				for (int z=0 ; z<vox_world_size.z ; z++) {
 					for (int y=0 ; y<vox_world_size.y ; y++) {
 						for (int x=0 ; x<vox_world_size.x ; x++) {
-							// Notice we reverse the Z-coord here
 							if (exists[x][y][z]) {
 								int actual_z = maxs.z-z+mins.z;
 								new_voxel_map[x][y][actual_z] = true;
 							} else {
+								// Add voxels if surrounded
 								boolean add = false;
 								
 								// This one is quite slow
@@ -483,11 +493,6 @@ public abstract class AbstractLevel {
 				for (int z=0 ; z<vox_world_size.z ; z++) {
 					for (int y=0 ; y<vox_world_size.y ; y++) {
 						for (int x=0 ; x<vox_world_size.x ; x++) {
-							
-							if (x == 20 && y == 20 && z == 20) {
-								Settings.p("Here");
-							}
-							
 							if (new_voxel_map[x][y][z]) {
 								startBuildingCube(model, vox_world_size, offset, new_voxel_map, x, y, z, scale, mins);
 								num_boxes++;
@@ -505,9 +510,8 @@ public abstract class AbstractLevel {
 	private void startBuildingCube(VoxModel model, GridPoint3 size, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz, float scale, GridPoint3 mins) {
 		//Settings.p("Started");
 
-		int x;
-
 		// Check x cord
+		int x;
 		for (x=sx ; x<size.x ; x++) {
 			if (new_voxel_map[x][sy][sz] == false) {
 				break;

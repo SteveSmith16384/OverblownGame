@@ -31,25 +31,20 @@ public class GraveyardLevel extends AbstractLevel {
 
 		//loadVox("vox/graveyard.vox", 0, new Vector3(5, .1f, 5), .2f, true, false);
 
-		//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);
-		//game.ecs.addEntity(model);
-
 		//String filename = "vox/block"; // works for both
 		//String filename = "vox/skyscraper1"; // works for both
 		//String filename = "vox/blocks2"; // works for both
 		//String filename = "vox/skyscraper1"; // works for both
 		//String filename = "vox/skyscraper_offset"; // works for both
 		//String filename = "vox/monu1"; // works for both
-		//String filename = "vox/blocks3"; // works for both
-		
+		//String filename = "vox/blocks3"; // works for both		
 		//String filename = "vox/castle"; // works for both
-		//String filename = "vox/monu10"; // works for both
-		
-		String filename = "vox/graveyard"; // doesn't work yet
+		String filename = "vox/monu10"; // works for both
+		//String filename = "vox/graveyard"; // doesn't work yet
 
-		super.createCollisionShapesFromVox(filename + ".vox", model_pos, .1f);
+		super.createCollisionShapesFromVox(filename + ".vox", model_pos);
 
-		AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", filename + ".obj", model_pos);
+		AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "VoxModel", filename + ".obj", model_pos);
 		game.ecs.addEntity(model);
 
 		//PositionComponent posData = (PositionComponent)model.getComponent(PositionComponent.class);

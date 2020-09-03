@@ -919,7 +919,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 		@Override
 		public void onContactProcessed (int userValue0, int userValue1) {
-			//Settings.p("Here");
 		}
 
 	}
