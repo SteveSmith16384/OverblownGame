@@ -38,9 +38,9 @@ public class GraveyardLevel extends AbstractLevel {
 		//String filename = "vox/skyscraper1"; // works for both
 		//String filename = "vox/skyscraper_offset"; // works for both
 		//String filename = "vox/monu1"; // works for both
-
-		String filename = "vox/blocks3"; // not quite?
-		//String filename = "vox/castle"; // not quite?
+		//String filename = "vox/blocks3"; // works for both
+		
+		String filename = "vox/castle"; // not quite?
 		//String filename = "vox/monu10"; // not quite?
 		//String filename = "vox/graveyard"; // doesn't work yet
 

@@ -285,19 +285,20 @@ public abstract class AbstractLevel {
 			VoxFile voxFile = reader.read();
 			int count = 0;
 			int num_removed = 0;
+			
+			if (voxFile.getModels().length > 1) {
+				Settings.p("There are " + voxFile.getModels().length + " models in this .vox file");
+			}
+			
 			for (VoxModel model : voxFile.getModels()) {
 				int c = 0;
 				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
 				for (Voxel voxel : model.getVoxels()) {
-					//try {
 					int x = voxel.getPosition().getX() & 0xff;
 					int y = voxel.getPosition().getY() & 0xff;
 					int z = voxel.getPosition().getZ() & 0xff;
 					exists[x][y][z] = true;
 					c++;
-					/*} catch (ArrayIndexOutOfBoundsException ex) {
-						throw ex;
-					}*/
 				}
 
 				boolean remove[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
@@ -356,11 +357,19 @@ public abstract class AbstractLevel {
 	public void createCollisionShapesFromVox(String filename, Vector3 offset, float scale) throws FileNotFoundException, IOException {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
+
+			if (voxFile.getModels().length > 1) {
+				Settings.p("There are " + voxFile.getModels().length + " models in this .vox file");
+			}
+			
 			for (VoxModel model : voxFile.getModels()) {
 				GridPoint3 size = new GridPoint3(model.getSize().getX(), model.getSize().getZ(), model.getSize().getY());
 
 				int num_voxels = 0;
-				int max_z = 0;
+				GridPoint3 maxs = new GridPoint3();
+				maxs.x = Integer.MIN_VALUE;
+				maxs.y = Integer.MIN_VALUE;
+				maxs.z = Integer.MIN_VALUE;
 				GridPoint3 mins = new GridPoint3();
 				mins.x = Integer.MAX_VALUE;
 				mins.y = Integer.MAX_VALUE;
@@ -383,8 +392,14 @@ public abstract class AbstractLevel {
 						//Settings.p("Added vox at " + x + "," + y + "," + z);
 					}
 					num_voxels++;
-					if (z > max_z) {
-						max_z = z;
+					if (x > maxs.x) {
+						maxs.x = x;
+					}
+					if (y > maxs.y) {
+						maxs.y = y;
+					}
+					if (z > maxs.z) {
+						maxs.z = z;
 					}
 					if (x < mins.x) {
 						mins.x = x;
@@ -404,12 +419,9 @@ public abstract class AbstractLevel {
 				for (int z=0 ; z<size.z ; z++) {
 					for (int y=0 ; y<size.y ; y++) {
 						for (int x=0 ; x<size.x ; x++) {
-							//if (x == 2 && y == 0 && z == 1) {
-							//Settings.p("Here");
-							//}
-							// Notice we reverse the X-coord here
+							// Notice we reverse the Z-coord here
 							if (exists[x][y][z]) {
-								int actual_z = max_z-z+mins.z;
+								int actual_z = maxs.z-z+mins.z;
 								new_voxel_map[x][y][actual_z] = true;
 							} else {
 								boolean add = false;
@@ -454,7 +466,7 @@ public abstract class AbstractLevel {
 								}
 								
 								if (add) {
-									//todo - re-add new_voxel_map[x][y][max_z-z+mins.z] = true;
+									//todo - re-add new_voxel_map[x][y][maxs.z-z+mins.z] = true;
 									//Settings.p("Adding block at " + x + ", " + y + ", " + z);
 									num_added++;
 								}
