@@ -46,7 +46,7 @@ public class PlayerMovementSystem extends AbstractSystem {
 		boolean on_floor = false;
 		Matrix4 mat = physics.body.getWorldTransform();
 		mat.getTranslation(tmpVec);
-		ClosestRayResultCallback results = game.rayTestByDir(tmpVec, V_DOWN, PlayerAvatar_Person.PLAYER_HEIGHT + 0.2f); // todo - only check every so often
+		ClosestRayResultCallback results = game.rayTestByDir(tmpVec, V_DOWN, PlayerAvatar_Person.PLAYER_HEIGHT + 0.2f);
 		if (results != null) {
 			btCollisionObject obj = results.getCollisionObject();
 			on_floor = (obj != null);

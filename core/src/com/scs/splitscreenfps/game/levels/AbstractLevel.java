@@ -381,9 +381,9 @@ public abstract class AbstractLevel {
 					int z = voxel.getPosition().getY() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					
 					// Limit - todo - remove this
-					int limit = 126;
+					int limit = 12;
 					if (x > limit || y > limit || z > limit) {
-						Settings.p("Skipping voxels...");
+						//Settings.p("Skipping voxels...");
 						continue;
 					}
 					

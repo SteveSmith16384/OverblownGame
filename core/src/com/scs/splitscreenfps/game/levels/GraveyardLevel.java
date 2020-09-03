@@ -25,7 +25,7 @@ public class GraveyardLevel extends AbstractLevel {
 				0f, true, false);
 		game.ecs.addEntity(floor);
 
-		Vector3 model_pos = new Vector3(5f, 0, 5f);
+		Vector3 model_pos = new Vector3(2f, 0, 2f);
 
 		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game, model_pos));
 
@@ -42,11 +42,12 @@ public class GraveyardLevel extends AbstractLevel {
 		//String filename = "vox/monu1"; // works for both
 		//String filename = "vox/blocks3"; // works for both
 		
-		String filename = "vox/castle"; // not quite?
-		//String filename = "vox/monu10"; // not quite?
-		//String filename = "vox/graveyard"; // doesn't work yet
+		//String filename = "vox/castle"; // works for both
+		//String filename = "vox/monu10"; // works for both
+		
+		String filename = "vox/graveyard"; // doesn't work yet
 
-		super.createCollisionShapesFromVox(filename + ".vox", model_pos, 1f); // todo - set scale to 0.1f
+		super.createCollisionShapesFromVox(filename + ".vox", model_pos, .1f);
 
 		AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", filename + ".obj", model_pos);
 		game.ecs.addEntity(model);
@@ -55,7 +56,7 @@ public class GraveyardLevel extends AbstractLevel {
 		//Settings.p("Created model at " + posData.position.x + "," + posData.position.y + "," + posData.position.z);
 
 		// todo - night sky
-		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
+		//game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 	}
 
 
