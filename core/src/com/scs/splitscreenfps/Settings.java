@@ -22,7 +22,8 @@ public class Settings {
 	
 	// Debugging Hacks
 	public static final boolean TEST_VOX = !RELEASE_MODE && true;
-	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false; // Really slows it down
+	public static final boolean SHOW_PLAYER_COORDS = !RELEASE_MODE && false;
+	public static boolean DRAW_PHYSICS = !RELEASE_MODE && true; // Really slows it down
 	public static final boolean DEBUG_DISPENSER = !RELEASE_MODE && false;
 	public static final boolean DISABLE_GRAVITY = !RELEASE_MODE && false;
 	public static final boolean DISABLE_SHADOWS = !RELEASE_MODE && false;

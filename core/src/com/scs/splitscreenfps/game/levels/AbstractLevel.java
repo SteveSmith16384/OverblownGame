@@ -504,9 +504,9 @@ public abstract class AbstractLevel {
 		ez = z-1;
 
 		// create box
-		float xpos = offset.x + ((((ex-sx+1)/2f)-sx)*scale);
-		float ypos = offset.y + ((((ey-sy+1)/2f)-sy)*scale); 
-		float zpos = offset.z + ((((ez-sz+1)/2f)-sz)*scale); 
+		float xpos = offset.x + ((((ex-sx+1)/2f)+sx)*scale);
+		float ypos = offset.y + ((((ey-sy+1)/2f)+sy)*scale); 
+		float zpos = offset.z + ((((ez-sz+1)/2f)+sz)*scale); 
 		float w = (ex-sx+1)*scale;
 		float h = (ey-sy+1)*scale;
 		float d = (ez-sz+1)*scale;

@@ -271,9 +271,9 @@ public class EntityFactory {
 		modelBuilder.begin();
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_LINES, attr, material);
 		mb.setColor(Color.WHITE);
-		mb.line(new Vector3(pos), new Vector3(0, 100, 0).add(pos));
-		mb.line(new Vector3(pos), new Vector3(100, 0, 0).add(pos));
-		mb.line(new Vector3(pos), new Vector3(0, 0, 100).add(pos));
+		mb.line(new Vector3(pos), new Vector3(100, 0, 0).add(pos)); // x axis
+		mb.line(new Vector3(pos), new Vector3(0, 100, 0).add(pos)); // y axis
+		mb.line(new Vector3(pos), new Vector3(0, 0, 100).add(pos)); // z axis
 		Model box_model = modelBuilder.end();
 
 		ModelInstance instance = new ModelInstance(box_model);
@@ -326,9 +326,9 @@ public class EntityFactory {
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		entity.addComponent(model);
 
-		//entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));
+		entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));
 		// Notice we treat Y diff, so it can be specified as 0 for on the floor
-		entity.addComponent(new PositionComponent(offset.x-tmpBB.getCenterX(), offset.y-tmpBB.min.y, offset.z-tmpBB.getCenterZ()));
+		//entity.addComponent(new PositionComponent(offset.x-tmpBB.getCenterX(), offset.y-tmpBB.min.y, offset.z-tmpBB.getCenterZ()));
 
 		return entity;
 	}

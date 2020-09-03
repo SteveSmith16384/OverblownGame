@@ -113,6 +113,9 @@ public class PlayerProcessSystem implements ISystem {
 		// Position camera
 		if (Game.physics_enabled) { // Else free roaming camera
 			PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+			if (Settings.SHOW_PLAYER_COORDS) {
+				Settings.p("Player=" + posData.position);
+			}
 			if (ourPlayerData.health > 0) {
 				// Set rotation based on camera
 				tmpVec2.set(player.camera.direction.x, player.camera.direction.z);
