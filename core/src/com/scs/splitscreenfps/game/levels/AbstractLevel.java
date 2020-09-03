@@ -204,12 +204,12 @@ public abstract class AbstractLevel {
 			AbstractEntity model = null;
 			if (block.mass == 0) {
 				model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
-						block.position.x, block.position.y, block.position.z, block.rotation_degs.y,
+						block.position.x, block.position.y, block.position.z, block.rotation.y,
 						false);
 			} else {
 				model = EntityFactory.createDynamicModel(game.ecs, block.name, block.model_filename, 
 						block.position.x, block.position.y, block.position.z, 
-						block.rotation_degs.y,
+						block.rotation.y,
 						block.mass, false);
 			}
 			model.tags = block.tags;
@@ -233,7 +233,7 @@ public abstract class AbstractLevel {
 				wall = new Wall(game, block.name, tex, null, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
 						block.mass * mass_mult, // Hack to make walls heavier
-						block.rotation_degs.x, block.rotation_degs.y, block.rotation_degs.z, block.tiled, true, true);
+						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true, true);
 			} else if (block.type.equalsIgnoreCase("sphere")) {
 				wall = EntityFactory.createBall(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
 			} else if (block.type.equalsIgnoreCase("cylinder")) {
@@ -372,8 +372,9 @@ public abstract class AbstractLevel {
 					int z = voxel.getPosition().getY() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					
 					// Limit - todo - remove this
-					int limit = 32;
+					int limit = 126;
 					if (x > limit || y > limit || z > limit) {
+						Settings.p("Skipping voxels...");
 						continue;
 					}
 					
@@ -534,7 +535,7 @@ public abstract class AbstractLevel {
 		AbstractEntity box = EntityFactory.createCollisionBox(game, xpos, ypos, zpos, w, h, d);
 		game.ecs.addEntity(box);
 
-		Settings.p("Created box at " + xpos + "," + ypos + "," + zpos +  " of size " + w + "," + h + "," + d);
+		//Settings.p("Created box at " + xpos + "," + ypos + "," + zpos +  " of size " + w + "," + h + "," + d);
 
 		// mark all new_voxel_map as processed
 		for (z=sz ; z<=ez ; z++) {

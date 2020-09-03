@@ -152,7 +152,7 @@ public class MapEditorSystem extends AbstractSystem {
 			game.appendToLog("Rotation mode selected");
 			if (this.selectedObject != null) {
 				MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
-				game.appendToLog("Rotation: " + block.rotation_degs);
+				game.appendToLog("Rotation: " + block.rotation);
 			}
 		} else if (keyboard.isKeyJustPressed(Keys.T)) { // Textures
 			mode = Mode.TEXTURE;
@@ -463,10 +463,10 @@ public class MapEditorSystem extends AbstractSystem {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 		//this.setBlockDataFromPhysicsData(block);
 
-		block.rotation_degs.add(adj);
+		block.rotation.add(adj);
 		this.recreateSelectedBlock(block);
 
-		game.appendToLog("New Rotation: " + block.rotation_degs);
+		game.appendToLog("New Rotation: " + block.rotation);
 	}
 
 
@@ -531,7 +531,7 @@ public class MapEditorSystem extends AbstractSystem {
 		block.size.y -= FRAC;
 		block.size.z -= FRAC;
 
-		block.rotation_degs.set(0, 0, 0);
+		block.rotation.set(0, 0, 0);
 		this.recreateSelectedBlock(block);
 	}
 

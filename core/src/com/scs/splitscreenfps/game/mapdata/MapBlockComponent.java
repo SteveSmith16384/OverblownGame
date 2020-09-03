@@ -2,6 +2,9 @@ package com.scs.splitscreenfps.game.mapdata;
 
 import com.badlogic.gdx.math.Vector3;
 
+/*
+ * DO NOT RENAME ANY OF THESE VARS!  THEY ARE READ IN FROM A JSON FILE!!
+ */
 public class MapBlockComponent {
 
 	public static int next_id = 1;
@@ -16,7 +19,7 @@ public class MapBlockComponent {
 	
 	public Vector3 size = new Vector3();
 	public Vector3 position = new Vector3();
-	public Vector3 rotation_degs = new Vector3();
+	public Vector3 rotation = new Vector3();
 	
 	public float mass = 0;
 
@@ -33,7 +36,7 @@ public class MapBlockComponent {
 		tmp.model_filename = this.model_filename;
 		tmp.size = new Vector3(this.size);
 		tmp.position = new Vector3(this.position);
-		tmp.rotation_degs = new Vector3(this.rotation_degs);
+		tmp.rotation = new Vector3(this.rotation);
 		tmp.mass = this.mass;
 		tmp.tiled = this.tiled;
 		tmp.tags = this.tags;

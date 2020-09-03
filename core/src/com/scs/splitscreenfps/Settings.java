@@ -21,7 +21,7 @@ public class Settings {
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_SORTIT;
 	
 	// Debugging Hacks
-	public static boolean DRAW_PHYSICS = !RELEASE_MODE && true; // Really slows it down
+	public static boolean DRAW_PHYSICS = !RELEASE_MODE && true;
 	public static final boolean TEST_3RD_PERSON = !RELEASE_MODE && false;
 	public static final boolean SHOW_PLAYER_COORDS = !RELEASE_MODE && false;
 	public static final boolean DEBUG_DISPENSER = !RELEASE_MODE && false;

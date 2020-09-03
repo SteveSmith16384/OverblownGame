@@ -17,7 +17,7 @@
     {
       "id": 1,
       "type": "",
-      "name": "Floor",
+      "name": "Box",
       "tags": "",
       "texture_id": 4,
       "model_filename": "",
@@ -42,7 +42,7 @@
     {
       "id": 2,
       "type": "",
-      "name": "Floor_new",
+      "name": "Box2",
       "tags": "",
       "texture_id": 4,
       "model_filename": "",
@@ -142,7 +142,7 @@
     {
       "id": 7,
       "type": "",
-      "name": "Floor_new",
+      "name": "Box3",
       "tags": "",
       "texture_id": 10,
       "model_filename": "",
@@ -167,7 +167,7 @@
     {
       "id": 7,
       "type": "cube",
-      "name": "New cube 58",
+      "name": "Floor",
       "tags": "",
       "texture_id": 7,
       "model_filename": "",
@@ -1217,7 +1217,7 @@
     {
       "id": 94,
       "type": "",
-      "name": "Floor_new",
+      "name": "box4",
       "tags": "",
       "texture_id": 4,
       "model_filename": "",
@@ -1242,7 +1242,7 @@
     {
       "id": 51,
       "type": "",
-      "name": "Floor_new_new",
+      "name": "box5",
       "tags": "",
       "texture_id": 4,
       "model_filename": "",
