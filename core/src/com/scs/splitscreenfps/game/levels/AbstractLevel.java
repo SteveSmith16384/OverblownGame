@@ -51,6 +51,7 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_MAP_EDITOR = 12;
 	public static final int LEVEL_AI_TEST = 13;
 	public static final int LEVEL_SORTIT = 14;
+	public static final int LEVEL_GRAVEYARD = 15;
 
 	public static final int MAX_LEVEL_ID = 12;
 
@@ -102,6 +103,8 @@ public abstract class AbstractLevel {
 			return new CSGOOfficeLevel();
 		case LEVEL_SORTIT:
 			return new SortItLevel();
+		case LEVEL_GRAVEYARD:
+			return new GraveyardLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}
@@ -349,6 +352,7 @@ public abstract class AbstractLevel {
 	}
 
 
+	// This will [efficiently] create collision boxes for a voxel model.
 	public void createCollisionShapesFromVox(String filename, Vector3 offset, float scale) throws FileNotFoundException, IOException {
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
@@ -366,6 +370,13 @@ public abstract class AbstractLevel {
 					int x = voxel.getPosition().getX() & 0xff;
 					int y = voxel.getPosition().getZ() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					int z = voxel.getPosition().getY() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
+					
+					// Limit - todo - remove this
+					int limit = 32;
+					if (x > limit || y > limit || z > limit) {
+						continue;
+					}
+					
 					exists[x][y][z] = true;
 					if (y == 0) {
 						//Settings.p("Added vox at " + x + "," + y + "," + z);
@@ -442,7 +453,7 @@ public abstract class AbstractLevel {
 								}
 								
 								if (add) {
-									new_voxel_map[x][y][max_z-z+mins.z] = true;
+									//todo - re-add new_voxel_map[x][y][max_z-z+mins.z] = true;
 									//Settings.p("Adding block at " + x + ", " + y + ", " + z);
 									num_added++;
 								}

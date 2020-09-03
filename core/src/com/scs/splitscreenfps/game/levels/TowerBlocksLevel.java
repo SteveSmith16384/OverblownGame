@@ -5,12 +5,8 @@ import java.io.IOException;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
@@ -23,10 +19,8 @@ public class TowerBlocksLevel extends AbstractLevel {
 	private ISystem deathmatchSystem;
 
 	public void getReadyForGame(Game game) {
-		super.getReadyForGame(game);		
-		if (Settings.TEST_VOX == false) {
-			this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
-		}
+		super.getReadyForGame(game);
+		this.deathmatchSystem = new DeathmatchSystem(game, game.ecs, true);
 	}
 
 
@@ -37,47 +31,16 @@ public class TowerBlocksLevel extends AbstractLevel {
 				0f, true, false);
 		game.ecs.addEntity(floor);
 
-		if (Settings.TEST_VOX) {
-			this.startPositions.add(new Vector3(2, 2f, 2));
-			this.startPositions.add(new Vector3(2, 2f, 2));
 
-			Vector3 model_pos = new Vector3(5f, 0, 5f);
+		this.startPositions.add(new Vector3(1, 2f, 1));
+		this.startPositions.add(new Vector3(floor_size-2, 2f, floor_size-2));
+		this.startPositions.add(new Vector3(1, 2f, floor_size-2));
+		this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
 
-			this.game.ecs.addEntity(EntityFactory.createOriginMarker(game, model_pos));
-
-			//loadVox("vox/graveyard.vox", 0, new Vector3(5, .1f, 5), .2f, true, false);
-
-			//AbstractEntity model = EntityFactory.createStaticModel(game.ecs, "Castle", "vox/graveyard.obj", 5, 0, 5, 0, true);
-			//game.ecs.addEntity(model);
-
-			//String filename = "vox/block"; // works for both
-			//String filename = "vox/skyscraper1"; // works for both
-			//String filename = "vox/blocks2"; // works for both
-			//String filename = "vox/skyscraper1"; // works for both
-			//String filename = "vox/skyscraper_offset"; // works for both
-			//String filename = "vox/monu1"; // works for both
-			String filename = "vox/monu10"; // not quite?
-			//String filename = "vox/graveyard"; // doesn't work yet
-
-			super.createCollisionShapesFromVox(filename + ".vox", model_pos, .1f);
-			// todo - make list of all the issues!
-			AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", filename + ".obj", model_pos);
-			game.ecs.addEntity(model);
-			
-			//PositionComponent posData = (PositionComponent)model.getComponent(PositionComponent.class);
-			//Settings.p("Created model at " + posData.position.x + "," + posData.position.y + "," + posData.position.z);
-
-		} else {
-			this.startPositions.add(new Vector3(1, 2f, 1));
-			this.startPositions.add(new Vector3(floor_size-2, 2f, floor_size-2));
-			this.startPositions.add(new Vector3(1, 2f, floor_size-2));
-			this.startPositions.add(new Vector3(floor_size-2, 2f, 1));
-
-			for (int z=0 ; z<2 ; z++) {
-				for (int x=0 ; x<2 ; x++) {
-					//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
-					super.loadJsonFile("maps/skyscraper" + NumberFunctions.rnd(1, 2) + ".json", false, new Vector3(x*10+7, 0.05f, z*10+7), 1);
-				}
+		for (int z=0 ; z<2 ; z++) {
+			for (int x=0 ; x<2 ; x++) {
+				//super.loadJsonFile("maps/map_editor.json", false, new Vector3(x*8+4, 0, z*8+4), 2);
+				super.loadJsonFile("maps/skyscraper" + NumberFunctions.rnd(1, 2) + ".json", false, new Vector3(x*10+7, 0.05f, z*10+7), 1);
 			}
 		}
 	}
@@ -85,9 +48,7 @@ public class TowerBlocksLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		if (Settings.TEST_VOX == false) {
-			deathmatchSystem.process();
-		}
+		deathmatchSystem.process();
 	}
 
 
