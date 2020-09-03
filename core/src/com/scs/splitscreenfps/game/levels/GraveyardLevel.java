@@ -2,11 +2,13 @@ package com.scs.splitscreenfps.game.levels;
 
 import java.io.IOException;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class GraveyardLevel extends AbstractLevel {
@@ -44,13 +46,21 @@ public class GraveyardLevel extends AbstractLevel {
 		//String filename = "vox/monu10"; // not quite?
 		//String filename = "vox/graveyard"; // doesn't work yet
 
-		super.createCollisionShapesFromVox(filename + ".vox", model_pos, .1f);
-		// todo - make list of all the issues!
+		super.createCollisionShapesFromVox(filename + ".vox", model_pos, 1f); // todo - set scale to 0.1f
+
 		AbstractEntity model = EntityFactory.createOnlyModel(game.ecs, "Castle", filename + ".obj", model_pos);
 		game.ecs.addEntity(model);
 
 		//PositionComponent posData = (PositionComponent)model.getComponent(PositionComponent.class);
 		//Settings.p("Created model at " + posData.position.x + "," + posData.position.y + "," + posData.position.z);
+
+		// todo - night sky
+		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
+	}
+
+
+	public void setBackgroundColour() {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 
 

@@ -339,7 +339,7 @@ public abstract class AbstractLevel {
 					/*if (x > 0 && exists[x][y][z-1] == false) {
 						tmp_mass = 0; // Only give them mass if they are supported by another voxel
 					}*/
-					Wall wall = new Wall(game, "Voxel", null, color, (x * scale)+offset.x, (z*scale)+offset.y, (y*scale)+offset.z, 
+					Wall wall = new Wall(game, "Voxel", null, color, (x*scale)+offset.x, (z*scale)+offset.y, (y*scale)+offset.z, 
 							scale-.001f, scale-.001f, scale-.001f, 
 							tmp_mass,
 							0, 0, 0, false, true, add_physics);
@@ -363,7 +363,7 @@ public abstract class AbstractLevel {
 			}
 			
 			for (VoxModel model : voxFile.getModels()) {
-				GridPoint3 size = new GridPoint3(model.getSize().getX(), model.getSize().getZ(), model.getSize().getY());
+				GridPoint3 vox_world_size = new GridPoint3(model.getSize().getX(), model.getSize().getZ(), model.getSize().getY());
 
 				int num_voxels = 0;
 				GridPoint3 maxs = new GridPoint3();
@@ -374,7 +374,7 @@ public abstract class AbstractLevel {
 				mins.x = Integer.MAX_VALUE;
 				mins.y = Integer.MAX_VALUE;
 				mins.z = Integer.MAX_VALUE;
-				boolean exists[][][] = new boolean[size.x][size.y][size.z];
+				boolean exists[][][] = new boolean[vox_world_size.x][vox_world_size.y][vox_world_size.z];
 				for (Voxel voxel : model.getVoxels()) {
 					int x = voxel.getPosition().getX() & 0xff;
 					int y = voxel.getPosition().getZ() & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
@@ -415,10 +415,10 @@ public abstract class AbstractLevel {
 
 				// Add voxels if surrounded
 				int num_added = 0;
-				boolean new_voxel_map[][][] = new boolean[size.x][size.y][size.z];
-				for (int z=0 ; z<size.z ; z++) {
-					for (int y=0 ; y<size.y ; y++) {
-						for (int x=0 ; x<size.x ; x++) {
+				boolean new_voxel_map[][][] = new boolean[vox_world_size.x][vox_world_size.y][vox_world_size.z];
+				for (int z=0 ; z<vox_world_size.z ; z++) {
+					for (int y=0 ; y<vox_world_size.y ; y++) {
+						for (int x=0 ; x<vox_world_size.x ; x++) {
 							// Notice we reverse the Z-coord here
 							if (exists[x][y][z]) {
 								int actual_z = maxs.z-z+mins.z;
@@ -457,11 +457,11 @@ public abstract class AbstractLevel {
 									add = true;
 								}*/
 								
-								if (x>0 && exists[x-1][y][z] && x<size.x-1 && exists[x+1][y][z]) {
+								if (x>0 && exists[x-1][y][z] && x<vox_world_size.x-1 && exists[x+1][y][z]) {
 									add = true;
-								} else if (y>0 && exists[x][y-1][z] && y<size.y-1 && exists[x][y+1][z]) {
+								} else if (y>0 && exists[x][y-1][z] && y<vox_world_size.y-1 && exists[x][y+1][z]) {
 									add = true;
-								} else if (z>0 && exists[x][y][z-1] && z<size.z-1 && exists[x][y][z+1]) {
+								} else if (z>0 && exists[x][y][z-1] && z<vox_world_size.z-1 && exists[x][y][z+1]) {
 									add = true;
 								}
 								
@@ -480,11 +480,16 @@ public abstract class AbstractLevel {
 
 				// Now build the model
 				int num_boxes = 0;
-				for (int z=0 ; z<size.z ; z++) {
-					for (int y=0 ; y<size.y ; y++) {
-						for (int x=0 ; x<size.x ; x++) {
+				for (int z=0 ; z<vox_world_size.z ; z++) {
+					for (int y=0 ; y<vox_world_size.y ; y++) {
+						for (int x=0 ; x<vox_world_size.x ; x++) {
+							
+							if (x == 20 && y == 20 && z == 20) {
+								Settings.p("Here");
+							}
+							
 							if (new_voxel_map[x][y][z]) {
-								startBuildingCube(model, size, offset, new_voxel_map, x, y, z, scale, mins);
+								startBuildingCube(model, vox_world_size, offset, new_voxel_map, x, y, z, scale, mins);
 								num_boxes++;
 							}
 						}
@@ -500,32 +505,33 @@ public abstract class AbstractLevel {
 	private void startBuildingCube(VoxModel model, GridPoint3 size, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz, float scale, GridPoint3 mins) {
 		//Settings.p("Started");
 
-		int x, y, z;
-		int ex, ey, ez;
+		int x;
 
 		// Check x cord
-		for (x=sx ; x<size.x-1 ; x++) {
+		for (x=sx ; x<size.x ; x++) {
 			if (new_voxel_map[x][sy][sz] == false) {
 				break;
 			}
 		}
 		x--;
-		ex = x;
+		int ex = x;
 
 		// Check y coord
+		int y;
 		outy:
-			for (y=sy ; y<size.y-1 ; y++) {
+			for (y=sy ; y<size.y ; y++) {
 				for (x=sx ; x<=ex ; x++) {
 					if (new_voxel_map[x][y][sz] == false) {
 						break outy;
 					}
 				}
 			}
-		ey = y-1;
+		int ey = y-1;
 
 		// Check z coord
+		int z;
 		outz:
-			for (z=sz ; z<size.z-1 ; z++) {
+			for (z=sz ; z<size.z ; z++) {
 				for (y=sy ; y<=ey ; y++) {
 					for (x=sx ; x<=ex ; x++) {
 						if (new_voxel_map[x][y][z] == false) {
@@ -534,7 +540,7 @@ public abstract class AbstractLevel {
 					}
 				}
 			}
-		ez = z-1;
+		int ez = z-1;
 
 		// create box
 		float xpos = offset.x + ((((ex-sx+1)/2f)+sx-mins.x)*scale);

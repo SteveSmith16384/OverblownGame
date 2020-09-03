@@ -22,7 +22,7 @@ public class SkyboxCube extends AbstractEntity {
 		super(game.ecs, name);
 
 		//Texture tex = new Texture(tex_filename);
-		Texture tex = game.getTexture("textures/sky3.jpg");// new Texture("textures/sky3.jpg");
+		Texture tex = game.getTexture(tex_filename);// new Texture("textures/sky3.jpg");
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material black_material = new Material(TextureAttribute.createDiffuse(tex));
 		ModelBuilder modelBuilder = game.modelBuilder;//new ModelBuilder();

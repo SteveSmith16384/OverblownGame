@@ -364,7 +364,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 
 	private void loadLevel() throws IOException {
 		currentLevel.load();
-		ecs.addEntity(new SkyboxCube(this, "Skybox", "", 90, 90, 90));
 	}
 
 

@@ -6,6 +6,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class FactoryLevel extends AbstractLevel {
@@ -21,6 +22,7 @@ public class FactoryLevel extends AbstractLevel {
 	@Override
 	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		super.loadJsonFile("maps/factory.json", false);
+		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 	}
 
 

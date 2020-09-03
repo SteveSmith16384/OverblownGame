@@ -10,6 +10,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class MinecraftLevel extends AbstractLevel {
@@ -56,6 +57,8 @@ public class MinecraftLevel extends AbstractLevel {
 				e.remove();
 			}
 		}
+
+		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 	}
 
 

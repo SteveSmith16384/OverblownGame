@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
 public class CSGODust2Level extends AbstractLevel {
@@ -25,6 +26,8 @@ public class CSGODust2Level extends AbstractLevel {
 		this.startPositions.add(new Vector3(9, 2f, 0));
 
 		EntityFactory.createStaticModelsForLargeModel(game.ecs, "Dust2", "maps/Dust2/Dust2.g3db", 0, 0, 0, -90, 0);
+
+		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 	}
 
 

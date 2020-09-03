@@ -12,6 +12,7 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.PlayerAvatar_Ball;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
@@ -57,6 +58,7 @@ public class WhatTheBallLevel extends AbstractLevel {
 		for (int i=0 ; i<20 ; i++) {
 			this.createBall();
 		}
+		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 
 	}
 

@@ -7,6 +7,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.gamemodes.DeathmatchSystem;
 
@@ -43,6 +44,7 @@ public class TowerBlocksLevel extends AbstractLevel {
 				super.loadJsonFile("maps/skyscraper" + NumberFunctions.rnd(1, 2) + ".json", false, new Vector3(x*10+7, 0.05f, z*10+7), 1);
 			}
 		}
+		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 	}
 
 

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.gamemodes.ControlPointScoreSystem;
 
 public class VillageLevel extends AbstractLevel {
@@ -21,6 +22,7 @@ public class VillageLevel extends AbstractLevel {
 	@Override
 	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		super.loadJsonFile("maps/village.json", false);
+		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 	}
 
 

@@ -281,6 +281,10 @@ public class EntityFactory {
 
 
 	public static AbstractEntity createCollisionBox(Game game, float posX, float posY, float posZ, float w, float h, float d) {
+		if (w <= 0 || h <= 0 || d <= 0) {
+			throw new RuntimeException("Invalid size for collision box");
+		}
+		
 		AbstractEntity collisionBox = new AbstractEntity(game.ecs, "CollisionBox");
 
 		collisionBox.addComponent(new PositionComponent(posX, posY, posZ));

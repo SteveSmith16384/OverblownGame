@@ -6,6 +6,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
+import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.gamemodes.ScoreAndTimeLimitSystem;
 import com.scs.splitscreenfps.game.systems.CollectPackageSystem;
 import com.scs.splitscreenfps.game.systems.DispensePackageSystem;
@@ -42,6 +43,7 @@ public class SortItLevel extends AbstractLevel {
 	@Override
 	public void load() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		super.loadJsonFile("maps/sortit.json", false);
+		game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 	}
 
 
