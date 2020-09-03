@@ -21,7 +21,7 @@ public class Settings {
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_SORTIT;
 	
 	// Debugging Hacks
-	public static boolean DRAW_PHYSICS = !RELEASE_MODE && true;
+	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
 	public static final boolean TEST_3RD_PERSON = !RELEASE_MODE && false;
 	public static final boolean SHOW_PLAYER_COORDS = !RELEASE_MODE && false;
 	public static final boolean DEBUG_DISPENSER = !RELEASE_MODE && false;
@@ -40,7 +40,7 @@ public class Settings {
 	public static final float MIN_AXIS = 0.1f;//0.2f; // Movement less than this is ignored
 	public static final float CAM_OFFSET = -0.05f;//-0.2f;//0.14f;
 	public static final String TITLE = "Overblown";
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 	public static float DEF_MOVE_SPEED = 15;
 

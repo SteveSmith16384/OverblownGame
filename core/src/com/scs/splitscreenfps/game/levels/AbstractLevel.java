@@ -354,6 +354,7 @@ public abstract class AbstractLevel {
 
 
 	// This will [efficiently] create collision boxes for a voxel model.
+	// Todo - add to separate library
 	public void createCollisionShapesFromVox(String filename, Vector3 offset) throws FileNotFoundException, IOException {
 		float scale = .1f;// Scale for models exported by .vox.
 		
@@ -378,29 +379,12 @@ public abstract class AbstractLevel {
 				mins.z = Integer.MAX_VALUE;
 				boolean exists[][][] = new boolean[vox_world_size.x][vox_world_size.y][vox_world_size.z];
 				for (Voxel voxel : model.getVoxels()) {
-					
-					// Limit - todo - remove this
-					int limit = Byte.MAX_VALUE;
-					if (voxel.getPosition().getX() > limit || voxel.getPosition().getZ() > limit || voxel.getPosition().getY() > limit) {
-						//Settings.p("Skipping voxels...");
-						continue;
-					}
-					if (voxel.getPosition().getX() < 0 || voxel.getPosition().getZ() < 0|| voxel.getPosition().getY() < 0) {
-						//Settings.p("Skipping voxels...");
-						continue;
-					}
-					
 					//Settings.p("Added vox at " + voxel.getPosition().getX() + "," + voxel.getPosition().getZ() + "," + voxel.getPosition().getY());
 
 					int x = voxel.getPosition().getX();// todo - re-add? & 0xff;
 					int y = voxel.getPosition().getZ();// todo - re-add?  & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					int z = voxel.getPosition().getY();// todo - re-add?  & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
 					
-					if (Settings.STRICT) {
-						if (exists[x][y][z]) {
-							Settings.p("Here!");
-						}
-					}
 					exists[x][y][z] = true;
 					num_voxels++;
 					if (x > maxs.x) {

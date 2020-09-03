@@ -20,14 +20,14 @@ public class GraveyardLevel extends AbstractLevel {
 		this.startPositions.add(new Vector3(2, 2f, 2));
 		this.startPositions.add(new Vector3(2, 2f, 2));
 
-		Wall floor = new Wall(game, "Floor", game.getTexture("colours/black.png"), floor_size/2, -0.1f, floor_size/2, 
+		Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/grey1.png"), floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
 				0f, true, false);
 		game.ecs.addEntity(floor);
 
 		Vector3 model_pos = new Vector3(2f, 0, 2f);
 
-		this.game.ecs.addEntity(EntityFactory.createOriginMarker(game, model_pos));
+		//this.game.ecs.addEntity(EntityFactory.createOriginMarker(game, model_pos));
 
 		//loadVox("vox/graveyard.vox", 0, new Vector3(5, .1f, 5), .2f, true, false);
 
@@ -39,8 +39,8 @@ public class GraveyardLevel extends AbstractLevel {
 		//String filename = "vox/monu1"; // works for both
 		//String filename = "vox/blocks3"; // works for both		
 		//String filename = "vox/castle"; // works for both
-		String filename = "vox/monu10"; // works for both
-		//String filename = "vox/graveyard"; // doesn't work yet
+		//String filename = "vox/monu10"; // works for both
+		String filename = "vox/graveyard"; // works for both
 
 		super.createCollisionShapesFromVox(filename + ".vox", model_pos);
 
