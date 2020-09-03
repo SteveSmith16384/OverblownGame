@@ -56,9 +56,10 @@ public class TowerBlocksLevel extends AbstractLevel {
 			//String filename = "vox/skyscraper1"; // works for both
 			//String filename = "vox/blocks2"; // works for both
 			//String filename = "vox/skyscraper1"; // works for both
-			String filename = "vox/skyscraper_offset"; // todo!  collision b ox out by 1
-			//String filename = "vox/monu1";
-			//String filename = "vox/graveyard";
+			//String filename = "vox/skyscraper_offset"; // works for both
+			//String filename = "vox/monu1"; // works for both
+			String filename = "vox/monu10"; // not quite?
+			//String filename = "vox/graveyard"; // doesn't work yet
 
 			super.createCollisionShapesFromVox(filename + ".vox", model_pos, .1f);
 			// todo - make list of all the issues!

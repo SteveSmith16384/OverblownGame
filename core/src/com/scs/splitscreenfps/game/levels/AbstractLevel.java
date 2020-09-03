@@ -357,7 +357,10 @@ public abstract class AbstractLevel {
 
 				int num_voxels = 0;
 				int max_z = 0;
-				int min_z = Integer.MAX_VALUE;
+				GridPoint3 mins = new GridPoint3();
+				mins.x = Integer.MAX_VALUE;
+				mins.y = Integer.MAX_VALUE;
+				mins.z = Integer.MAX_VALUE;
 				boolean exists[][][] = new boolean[size.x][size.y][size.z];
 				for (Voxel voxel : model.getVoxels()) {
 					int x = voxel.getPosition().getX() & 0xff;
@@ -371,8 +374,14 @@ public abstract class AbstractLevel {
 					if (z > max_z) {
 						max_z = z;
 					}
-					if (z < min_z) {
-						min_z = z;
+					if (x < mins.x) {
+						mins.x = x;
+					}
+					if (y < mins.y) {
+						mins.y = y;
+					}
+					if (z < mins.z) {
+						mins.z = z;
 					}
 				}
 				Settings.p(num_voxels + " voxels loaded");
@@ -388,7 +397,7 @@ public abstract class AbstractLevel {
 							//}
 							// Notice we reverse the X-coord here
 							if (exists[x][y][z]) {
-								int actual_z = max_z-z+min_z;
+								int actual_z = max_z-z+mins.z;
 								new_voxel_map[x][y][actual_z] = true;
 							} else {
 								boolean add = false;
@@ -433,7 +442,7 @@ public abstract class AbstractLevel {
 								}
 								
 								if (add) {
-									new_voxel_map[x][y][max_z-z+min_z] = true;
+									new_voxel_map[x][y][max_z-z+mins.z] = true;
 									//Settings.p("Adding block at " + x + ", " + y + ", " + z);
 									num_added++;
 								}
@@ -451,7 +460,7 @@ public abstract class AbstractLevel {
 					for (int y=0 ; y<size.y ; y++) {
 						for (int x=0 ; x<size.x ; x++) {
 							if (new_voxel_map[x][y][z]) {
-								startBuildingCube(model, size, offset, new_voxel_map, x, y, z, scale);
+								startBuildingCube(model, size, offset, new_voxel_map, x, y, z, scale, mins);
 								num_boxes++;
 							}
 						}
@@ -464,7 +473,7 @@ public abstract class AbstractLevel {
 	}
 
 
-	private void startBuildingCube(VoxModel model, GridPoint3 size, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz, float scale) {
+	private void startBuildingCube(VoxModel model, GridPoint3 size, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz, float scale, GridPoint3 mins) {
 		//Settings.p("Started");
 
 		int x, y, z;
@@ -504,9 +513,9 @@ public abstract class AbstractLevel {
 		ez = z-1;
 
 		// create box
-		float xpos = offset.x + ((((ex-sx+1)/2f)+sx)*scale);
-		float ypos = offset.y + ((((ey-sy+1)/2f)+sy)*scale); 
-		float zpos = offset.z + ((((ez-sz+1)/2f)+sz)*scale); 
+		float xpos = offset.x + ((((ex-sx+1)/2f)+sx-mins.x)*scale);
+		float ypos = offset.y + ((((ey-sy+1)/2f)+sy-mins.y)*scale); 
+		float zpos = offset.z + ((((ez-sz+1)/2f)+sz-mins.z)*scale); 
 		float w = (ex-sx+1)*scale;
 		float h = (ey-sy+1)*scale;
 		float d = (ez-sz+1)*scale;
