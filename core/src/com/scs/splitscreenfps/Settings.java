@@ -27,7 +27,7 @@ public class Settings {
 	public static final boolean DEBUG_DISPENSER = !RELEASE_MODE && false;
 	public static final boolean DISABLE_GRAVITY = !RELEASE_MODE && false;
 	public static final boolean DISABLE_SHADOWS = !RELEASE_MODE && false;
-	public static final boolean TEST_3RD_PERSON = !RELEASE_MODE && false;
+	public static final boolean TEST_3RD_PERSON_ = !RELEASE_MODE && false;
 	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && false;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;
 	public static final boolean DEBUG_PUNCH = !RELEASE_MODE && false;

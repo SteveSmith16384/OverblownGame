@@ -18,10 +18,11 @@ public class CSGODust2Level extends AbstractLevel {
 
 	@Override
 	public void load() {
+		// todo - improve these
 		this.startPositions.add(new Vector3(9, 2f, 0));
-		this.startPositions.add(new Vector3(9, 2f, 0)); // todo
-		this.startPositions.add(new Vector3(9, 2f, 0)); // todo
-		this.startPositions.add(new Vector3(9, 2f, 0)); // todo
+		this.startPositions.add(new Vector3(9, 2f, 0));
+		this.startPositions.add(new Vector3(9, 2f, 0));
+		this.startPositions.add(new Vector3(9, 2f, 0));
 
 		EntityFactory.createStaticModelsForLargeModel(game.ecs, "Dust2", "maps/Dust2/Dust2.g3db", 0, 0, 0, -90, 0);
 	}

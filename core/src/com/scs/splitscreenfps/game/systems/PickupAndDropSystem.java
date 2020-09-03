@@ -19,7 +19,8 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 public class PickupAndDropSystem extends AbstractSystem {
 
 	private Game game;
-
+	private Vector3 tmpVec = new Vector3();
+	
 	public PickupAndDropSystem(Game _game, BasicECS ecs) {
 		super(ecs, CanCarryComponent.class);
 
@@ -37,11 +38,10 @@ public class PickupAndDropSystem extends AbstractSystem {
 			PositionComponent itemPosData = (PositionComponent)canCarry.carrying.getComponent(PositionComponent.class);
 
 			Vector3 newpos = new Vector3(ourPosData.position);
-			Vector3 dir = new Vector3(); // todo - cache
-			dir.set(player.camera.direction);
-			dir.nor();
-			dir.scl(.5f);
-			newpos.add(dir);
+			tmpVec.set(player.camera.direction);
+			tmpVec.nor();
+			tmpVec.scl(.5f);
+			newpos.add(tmpVec);
 
 			newpos.y -= .1f;
 			itemPosData.position.set(newpos);
@@ -83,7 +83,7 @@ public class PickupAndDropSystem extends AbstractSystem {
 
 					PhysicsComponent physics = (PhysicsComponent)e.getComponent(PhysicsComponent.class);
 					physics.body.setActivationState(Collision.WANTS_DEACTIVATION);
-					physics.disable_physics = true;
+					physics.enable_physics = false;
 
 					e.hideComponent(CanBeCarriedComponent.class);
 					//e.hideComponent(PhysicsComponent.class);
@@ -107,25 +107,24 @@ public class PickupAndDropSystem extends AbstractSystem {
 		PositionComponent ourPosData = (PositionComponent)player.getComponent(PositionComponent.class);
 		Vector3 newpos = new Vector3(ourPosData.position);
 
-		Vector3 dir = new Vector3(); // todo - cache
-		dir.set(player.camera.direction);
+		tmpVec.set(player.camera.direction);
 		if (throwIt == false) {// || dir.y < 0) {
-			dir.y = 0;
+			tmpVec.y = 0;
 		} else {
-			dir.y = 0.2f; // Throw upwards
+			tmpVec.y = 0.2f; // Throw upwards
 		}
-		dir.nor();
-		newpos.add(dir);
+		tmpVec.nor();
+		newpos.add(tmpVec);
 
 		// Set position
 		PhysicsComponent physics = (PhysicsComponent)item.getComponent(PhysicsComponent.class);
 		physics.body.setActivationState(Collision.ACTIVE_TAG);
-		physics.disable_physics = false;
+		physics.enable_physics = true;
 		Matrix4 mat = new Matrix4();
 		mat.setTranslation(newpos);
 		physics.body.setWorldTransform(mat);
 		if (throwIt) {
-			physics.getRigidBody().applyCentralImpulse(dir.scl(4));
+			physics.getRigidBody().applyCentralImpulse(tmpVec.scl(4));
 			physics.body.activate();
 			BillBoardFPS_Main.audio.play("sfx/Hit_00.mp3");
 		} else {

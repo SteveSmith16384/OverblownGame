@@ -40,7 +40,7 @@ public class PhysicsSystem extends AbstractSystem {
 
 		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 
-		if (pc.disable_physics == false) {
+		if (pc.enable_physics) {
 			// Set model position data based on physics data - regardless of whether we draw them
 			pc.body.getWorldTransform(tmpMat);
 			tmpMat.getTranslation(posData.position);

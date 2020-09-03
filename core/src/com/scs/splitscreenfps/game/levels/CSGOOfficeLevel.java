@@ -18,17 +18,13 @@ public class CSGOOfficeLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		try {
-			this.startPositions.add(new Vector3(6, 3f, 13));
-			this.startPositions.add(new Vector3(6, 3f, 13)); // todo
-			this.startPositions.add(new Vector3(6, 3f, 13)); // todo
-			this.startPositions.add(new Vector3(6, 3f, 13)); // todo
+		// todo - improve these
+		this.startPositions.add(new Vector3(6, 3f, 13));
+		this.startPositions.add(new Vector3(6, 3f, 13));
+		this.startPositions.add(new Vector3(6, 3f, 13));
+		this.startPositions.add(new Vector3(6, 3f, 13));
 
-			EntityFactory.createStaticModelsForLargeModel(game.ecs, "Office", "maps/Office/Office.g3db", 0, 4, 0, -90, 0);
-
-		} catch (Exception e) {
-			throw new RuntimeException("Error loading map file", e);
-		}
+		EntityFactory.createStaticModelsForLargeModel(game.ecs, "Office", "maps/Office/Office.g3db", 0, 4, 0, -90, 0);
 	}
 
 
