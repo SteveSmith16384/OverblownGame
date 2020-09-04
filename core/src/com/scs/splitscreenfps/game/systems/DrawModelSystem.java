@@ -3,6 +3,7 @@ package com.scs.splitscreenfps.game.systems;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.Renderable;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.procedural.world.PBRSadherTexture;
+import com.procedural.world.PBRShader;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -44,6 +47,9 @@ public class DrawModelSystem extends AbstractSystem {
 	private int num_objects_drawn;
 	private BoundingBox tmpBB = new BoundingBox();
 
+	public static PBRShader pbrShader; // For if no materials
+	public static PBRSadherTexture pbrSadherTexture; // Requires materials!
+
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
 		game = _game;
@@ -54,6 +60,12 @@ public class DrawModelSystem extends AbstractSystem {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.6f, 0.6f, 0.6f, 1f));
 		//environment.set(new ColorAttribute(ColorAttribute.Diffuse, 0.6f, 0.6f, 0.6f, 1f));
 		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.5f, -1f));
+
+		pbrShader = new PBRShader();
+		pbrShader.init();
+
+		pbrSadherTexture = new PBRSadherTexture();
+		pbrSadherTexture.init();
 
 		environment.add((shadowLight = new DirectionalShadowLight(1024, 1024, 15, 15, 1f, 100f))
 				.set(0.9f, 0.8f, 0.8f, 
@@ -67,12 +79,19 @@ public class DrawModelSystem extends AbstractSystem {
 				return new WireframeShader(renderable, config);
 			}
 		});
+
 	}
 
 
 	//@Override
 	public void process(Camera cam, boolean shadows) {
 		long start = System.currentTimeMillis();
+
+		pbrShader.albedoColor = new Vector3(.1f, .1f, .1f); // base colour
+		pbrShader.ambientOcclusionValue = 0.5f;// corner weather effect
+		pbrShader.metallicValue = .5f;
+		pbrShader.rougness = 0.5f;
+
 		num_objects_drawn = 0;
 
 		if (!shadows) {
@@ -200,7 +219,7 @@ public class DrawModelSystem extends AbstractSystem {
 			}
 		}
 
-		batch.render(model.model, environment);
+		batch.render(model.model, environment, model.shader);//, this.pbrSadherTexture);
 
 		if (drawing_shadows == false) {
 			num_objects_drawn++;
@@ -212,6 +231,8 @@ public class DrawModelSystem extends AbstractSystem {
 	public void dispose() {
 		this.modelBatch.dispose();
 		this.shadowBatch.dispose();
+		pbrShader.dispose();
+		pbrSadherTexture.dispose();
 	}
 
 }

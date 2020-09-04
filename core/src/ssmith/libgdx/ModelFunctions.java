@@ -38,7 +38,7 @@ public class ModelFunctions {
 		}
 		
 		ModelInstance instance = new ModelInstance(model);
-
+		
 		if (removeMaterials) {
 			for (Material mat : instance.materials) {
 				mat.remove(BlendingAttribute.Type);

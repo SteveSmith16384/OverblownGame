@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.components;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.Settings;
 
@@ -21,6 +22,8 @@ public class HasModelComponent {
 
 	public Vector3 dimensions; // For checking if in frustum
 	public float radius;
+	
+	public Shader shader;
 	
 	public HasModelComponent(ModelInstance _model, float scale, boolean cast_shadow) {
 		this(_model, 0f, 0, scale, cast_shadow);

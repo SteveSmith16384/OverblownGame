@@ -15,23 +15,23 @@ public class Settings {
 	public static final String VERSION = "1.13";
 
 	// Autostart Hacks
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_FACTORY;
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_GRAVEYARD;
 	public static final int NUM_AUTOSTART_CHARACTERS = 1;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_SORTIT;
 	
 	// Debugging Hacks
+	public static final boolean DISABLE_POST_EFFECTS = !RELEASE_MODE && true;
+	public static final boolean DISABLE_SHADOWS = !RELEASE_MODE && true;
 	public static boolean DRAW_PHYSICS = !RELEASE_MODE && false;
 	public static final boolean TEST_3RD_PERSON = !RELEASE_MODE && false;
 	public static final boolean SHOW_PLAYER_COORDS = !RELEASE_MODE && false;
 	public static final boolean DEBUG_DISPENSER = !RELEASE_MODE && false;
 	public static final boolean DISABLE_GRAVITY = !RELEASE_MODE && false;
-	public static final boolean DISABLE_SHADOWS = !RELEASE_MODE && false;
 	public static final boolean DEBUG_ULTIMATES = !RELEASE_MODE && false;
 	public static boolean DEBUG_GUI_SPRITES = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
-	public static final boolean DISABLE_POST_EFFECTS = !RELEASE_MODE && false;
 	public static final boolean STRICT = !RELEASE_MODE && true;
 	public static boolean USE_MAP_EDITOR = !RELEASE_MODE && false;
 
@@ -40,7 +40,7 @@ public class Settings {
 	public static final float MIN_AXIS = 0.1f;//0.2f; // Movement less than this is ignored
 	public static final float CAM_OFFSET = -0.05f;//-0.2f;//0.14f;
 	public static final String TITLE = "Overblown";
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 	public static float DEF_MOVE_SPEED = 15;
 

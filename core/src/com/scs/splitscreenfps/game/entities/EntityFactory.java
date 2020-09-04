@@ -1,5 +1,8 @@
 package com.scs.splitscreenfps.game.entities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,12 +23,14 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
+import com.procedural.world.PBRTextureAttribute;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 
 import ssmith.libgdx.ModelFunctions;
 import ssmith.libgdx.ShapeHelper;
@@ -321,6 +326,7 @@ public class EntityFactory {
 		}*/
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
+		model.shader = DrawModelSystem.pbrShader;
 		entity.addComponent(model);
 
 		entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));

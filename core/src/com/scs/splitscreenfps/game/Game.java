@@ -64,7 +64,6 @@ import com.scs.splitscreenfps.game.entities.AudioEntityFactory;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
-import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
@@ -163,7 +162,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		main = _main;
 		inputs = _inputs;
 		gameSelectionData = _gameSelectionData;
-		
+
 		if (Settings.DISABLE_GRAVITY) {
 			this.physics_enabled = false;
 		}
@@ -256,7 +255,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		if (Settings.DISABLE_POST_EFFECTS == false) {
 			//vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
 			vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			
+
 			//vfxManager.addEffect(new ChromaticAberrationEffect(3)); // good but trippy
 			vfxManager.addEffect(new OldTvEffect());
 			//vfxManager.addEffect(new CrtEffect());
@@ -305,6 +304,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				ecs.addEntity(countdown);
 			}
 		}
+
 	}
 
 
@@ -357,7 +357,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		ecs.addSystem(audioSystem);
 		ecs.addSystem(new StickySystem(ecs));
 		ecs.addSystem(new PickupAndDropSystem(this, ecs));
-		
+
 
 	}
 
@@ -375,7 +375,6 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				Gdx.app.exit();
 				return;
 			}
-			//this.main.next_module = new SelectHeroModule(main, this.inputs, this.gameSelectionData); No as it comes straight back if there are no heroes to select
 			this.main.next_module = new SelectMapModule(main, this.inputs);
 			return;
 		}
@@ -533,9 +532,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		}
 
 		// Now draw text, which may pverlap the individual player screens
-
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			spriteBatch.begin();
 			this.ecs.getSystem(DrawTextSystem.class).process();
@@ -968,12 +965,12 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		return this.viewports[this.currentViewId].viewRect;
 	}
 
-	
+
 	public void nextLevel() {
 		this.gameSelectionData.level_num++;
 	}
-	
-	
+
+
 	public int getLevelNum() {
 		return this.gameSelectionData.level_num;
 	}

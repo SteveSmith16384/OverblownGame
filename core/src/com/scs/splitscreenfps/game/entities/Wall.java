@@ -1,5 +1,8 @@
 package com.scs.splitscreenfps.game.entities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
@@ -12,16 +15,44 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
+import com.procedural.world.PBRTextureAttribute;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PhysicsComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 
 import ssmith.libgdx.ShapeHelper;
 
 public class Wall extends AbstractEntity {
 
+	private static Map<String,Material> materials=new HashMap<String, Material>();
+/*
+	static {
+		materials.put("Generic", null);
+		materials.put("Rough Rock", createMaterial("roughrockface4"));
+		materials.put("Bricks", createMaterial("mybricks3"));
+		materials.put("Rusted Iron", createMaterial("rustediron-streaks"));
+		materials.put("Carved Stone", createMaterial("carvedlimestoneground1"));
+		materials.put("Grass", createMaterial("grass1"));
+		materials.put("Floor", createMaterial("cavefloor1"));
+
+	}*/
+
+	private static Material createMaterial(String materialName){
+		Material material=new Material();
+		material.set(PBRTextureAttribute.createAlbedo(new Texture("materials/" + materialName + "_Base_Color.png")));
+		material.set(PBRTextureAttribute.createMetallic(new Texture("materials/" + materialName + "_Metallic.png")));
+		material.set(PBRTextureAttribute.createRoughness(new Texture("materials/" + materialName + "_Roughness.png")));
+		material.set(PBRTextureAttribute.createAmbientOcclusion(new Texture("materials/" + materialName + "_Ambient_Occlusion.png")));
+		material.set(PBRTextureAttribute.createHeight(new Texture("materials/" + materialName + "_Height.png")));
+		material.set(PBRTextureAttribute.createNormal(new Texture("materials/" + materialName + "_Normal.png")));
+
+		return material;
+	}
+	
+	
 	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
 		this(game, name, tex, null, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow, true);
 	}
@@ -32,12 +63,12 @@ public class Wall extends AbstractEntity {
 	public Wall(Game game, String name, Texture tex, Color c, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow, boolean add_physics) {
 		super(game.ecs, name);
 
-		Material material = null;
+		Material material = createMaterial("mybricks3");
 		if (tex != null) {
 			tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-			material = new Material(TextureAttribute.createDiffuse(tex));
+			material.set(TextureAttribute.createDiffuse(tex));
 		} else {
-			material = new Material(ColorAttribute.createDiffuse(c));
+			//material = new Material(ColorAttribute.createDiffuse(c));
 		}
 		//material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)); // Allow transparency, not currently required
 
@@ -52,7 +83,7 @@ public class Wall extends AbstractEntity {
 		} else {
 			box_model = ShapeHelper.createCube_AdvancedScaling(game.modelBuilder, w, h, d, material);
 		}
-		
+	
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		if (degreesX != 0) {
 			instance.transform.rotate(Vector3.X, degreesX);
@@ -65,6 +96,7 @@ public class Wall extends AbstractEntity {
 		}
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, cast_shadow);
+		model.shader = DrawModelSystem.pbrSadherTexture;
 		this.addComponent(model);
 
 		if (add_physics) {
