@@ -353,8 +353,7 @@ public abstract class AbstractLevel {
 	}
 
 
-	// This will [efficiently] create collision boxes for a voxel model.
-	// Todo - add to separate library
+	// This will create collision boxes for a voxel model.
 	public void createCollisionShapesFromVox(String filename, Vector3 offset) throws FileNotFoundException, IOException {
 		float scale = .1f;// Scale for models exported by .vox.
 		
@@ -381,9 +380,9 @@ public abstract class AbstractLevel {
 				for (Voxel voxel : model.getVoxels()) {
 					//Settings.p("Added vox at " + voxel.getPosition().getX() + "," + voxel.getPosition().getZ() + "," + voxel.getPosition().getY());
 
-					int x = voxel.getPosition().getX();// todo - re-add? & 0xff;
-					int y = voxel.getPosition().getZ();// todo - re-add?  & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
-					int z = voxel.getPosition().getY();// todo - re-add?  & 0xff;// Note that when reading in a .vox file, y and z axis are the other way round!
+					int x = voxel.getPosition().getX();
+					int y = voxel.getPosition().getZ(); // Note that when reading in a .vox file, y and z axis are the other way round!
+					int z = voxel.getPosition().getY(); // Note that when reading in a .vox file, y and z axis are the other way round!
 					
 					exists[x][y][z] = true;
 					num_voxels++;
@@ -420,6 +419,7 @@ public abstract class AbstractLevel {
 								// Add voxels if surrounded
 								boolean add = false;
 								
+								// Add voxels between any voxels with 2 spaces between them
 								// This one is quite slow
 								/*int num_blocks_x = 0;
 								int num_blocks_y = 0;
@@ -451,7 +451,8 @@ public abstract class AbstractLevel {
 									add = true;
 								}*/
 								
-								if (x>0 && exists[x-1][y][z] && x<vox_world_size.x-1 && exists[x+1][y][z]) {
+								// Add voxels with only one space between them
+								/*if (x>0 && exists[x-1][y][z] && x<vox_world_size.x-1 && exists[x+1][y][z]) {
 									add = true;
 								} else if (y>0 && exists[x][y-1][z] && y<vox_world_size.y-1 && exists[x][y+1][z]) {
 									add = true;
@@ -460,10 +461,10 @@ public abstract class AbstractLevel {
 								}
 								
 								if (add) {
-									//todo - re-add new_voxel_map[x][y][maxs.z-z+mins.z] = true;
+									new_voxel_map[x][y][maxs.z-z+mins.z] = true;
 									//Settings.p("Adding block at " + x + ", " + y + ", " + z);
 									num_added++;
-								}
+								}*/
 							}
 						}
 					}
@@ -492,8 +493,6 @@ public abstract class AbstractLevel {
 
 
 	private void startBuildingCube(VoxModel model, GridPoint3 size, Vector3 offset, boolean new_voxel_map[][][], int sx, int sy, int sz, float scale, GridPoint3 mins) {
-		//Settings.p("Started");
-
 		// Check x cord
 		int x;
 		for (x=sx ; x<size.x ; x++) {
