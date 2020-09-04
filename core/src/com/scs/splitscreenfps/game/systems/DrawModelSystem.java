@@ -47,8 +47,8 @@ public class DrawModelSystem extends AbstractSystem {
 	private int num_objects_drawn;
 	private BoundingBox tmpBB = new BoundingBox();
 
-	public static PBRShader pbrShader; // For if no materials
-	public static PBRSadherTexture pbrSadherTexture; // Requires materials!
+	public static PBRShader pbrShader; // For if no materials.  todo - make not static
+	public static PBRSadherTexture pbrSadherTexture; // Requires special material attributes! todo - make not static
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs, HasModelComponent.class);
@@ -87,10 +87,11 @@ public class DrawModelSystem extends AbstractSystem {
 	public void process(Camera cam, boolean shadows) {
 		long start = System.currentTimeMillis();
 
+		// todo - remove this when no longer needed
 		pbrShader.albedoColor = new Vector3(.1f, .1f, .1f); // base colour
 		pbrShader.ambientOcclusionValue = 0.5f;// corner weather effect
 		pbrShader.metallicValue = .5f;
-		pbrShader.rougness = 0.5f;
+		pbrShader.rougness = 0.9f;
 
 		num_objects_drawn = 0;
 

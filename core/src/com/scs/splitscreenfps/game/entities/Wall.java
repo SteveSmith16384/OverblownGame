@@ -63,12 +63,13 @@ public class Wall extends AbstractEntity {
 	public Wall(Game game, String name, Texture tex, Color c, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow, boolean add_physics) {
 		super(game.ecs, name);
 
-		Material material = createMaterial("mybricks3");
+		Material material = null;//createMaterial("mybricks3");
 		if (tex != null) {
 			tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-			material.set(TextureAttribute.createDiffuse(tex));
+			material = new Material(TextureAttribute.createDiffuse(tex));
+			//material.set(TextureAttribute.createDiffuse(tex));
 		} else {
-			//material = new Material(ColorAttribute.createDiffuse(c));
+			material = new Material(ColorAttribute.createDiffuse(c));
 		}
 		//material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)); // Allow transparency, not currently required
 
@@ -81,7 +82,7 @@ public class Wall extends AbstractEntity {
 			mat.scl(max);
 			box_model.meshes.get(0).transformUV(mat);
 		} else {
-			box_model = ShapeHelper.createCube_AdvancedScaling(game.modelBuilder, w, h, d, material);
+			box_model = ShapeHelper.createCube_AdvancedScaling(game.modelBuilder, w, h, d, material, 2f); // todo - tex scale param
 		}
 	
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
@@ -96,7 +97,7 @@ public class Wall extends AbstractEntity {
 		}
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, cast_shadow);
-		model.shader = DrawModelSystem.pbrSadherTexture;
+		//model.shader = DrawModelSystem.pbrSadherTexture;
 		this.addComponent(model);
 
 		if (add_physics) {

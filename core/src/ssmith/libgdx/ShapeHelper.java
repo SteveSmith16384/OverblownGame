@@ -53,15 +53,15 @@ public class ShapeHelper {
 	 * @param material
 	 * @return
 	 */
-	public static Model createCube_AdvancedScaling(ModelBuilder modelBuilder, float w, float h, float d, Material material) {
+	public static Model createCube_AdvancedScaling(ModelBuilder modelBuilder, float w, float h, float d, Material material, float tex_per_1_unit) {
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 
-		float scale = 2f;
+		//float scale = 2f;
 		// Front
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, material);
 		mb.setColor(Color.WHITE);
-		mb.setUVRange(0, 0, h*scale, w*scale);
+		mb.setUVRange(0, 0, h*tex_per_1_unit, w*tex_per_1_unit);
 		mb.rect(-w/2,-h/2,-d/2, -w/2,h/2,-d/2,  w/2,h/2,-d/2, w/2,-h/2,-d/2, 0,0,-1);
 		// Back
 		mb.rect(-w/2,h/2,d/2, -w/2,-h/2,d/2,  w/2,-h/2,d/2, w/2,h/2,d/2, 0,0,1);
@@ -69,7 +69,7 @@ public class ShapeHelper {
 		// Bottom
 		if (h != d) {
 			modelBuilder.part("bottom", GL20.GL_TRIANGLES, attr, material);
-			mb.setUVRange(0,  0,  d*scale, w*scale);
+			mb.setUVRange(0,  0,  d*tex_per_1_unit, w*tex_per_1_unit);
 		}
 		mb.rect(-w/2,-h/2,d/2, -w/2,-h/2,-d/2,  w/2,-h/2,-d/2, w/2,-h/2,d/2, 0,-1,0);
 		// Top
@@ -78,7 +78,7 @@ public class ShapeHelper {
 		// Left
 		if (h != d || d != w) {
 			modelBuilder.part("left", GL20.GL_TRIANGLES, attr, material);
-			mb.setUVRange(0,  0,  h*scale, d*scale);
+			mb.setUVRange(0,  0,  h*tex_per_1_unit, d*tex_per_1_unit);
 		}
 		mb.rect(-w/2,-h/2,d/2, -w/2,h/2,d/2,  -w/2,h/2,-d/2, -w/2,-h/2,-d/2, -1,0,0);
 		// Right

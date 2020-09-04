@@ -326,7 +326,7 @@ public class EntityFactory {
 		}*/
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
-		model.shader = DrawModelSystem.pbrShader;
+		//model.shader = DrawModelSystem.pbrShader;
 		entity.addComponent(model);
 
 		entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));
