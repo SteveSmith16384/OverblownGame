@@ -34,7 +34,7 @@ public class DrawModelSystem extends AbstractSystem {
 	private Environment environment;
 
 	private Matrix4 tmpMat = new Matrix4();
-	private Vector3 tmpOffset = new Vector3();
+	private Vector3 tmpVec = new Vector3();
 
 	private DirectionalShadowLight shadowLight;
 	private ModelBatch shadowBatch;
@@ -138,9 +138,9 @@ public class DrawModelSystem extends AbstractSystem {
 					if (model.scale == 1f) {
 						model.model.transform.set(tmpMat);
 					} else {
-						tmpMat.getTranslation(tmpOffset);
-						tmpOffset.y += model.yOff;
-						model.model.transform.setToTranslation(tmpOffset);
+						tmpMat.getTranslation(tmpVec);
+						tmpVec.y += model.yOff;
+						model.model.transform.setToTranslation(tmpVec);
 						model.model.transform.scl(model.scale);
 
 						// Set rotation
@@ -188,15 +188,19 @@ public class DrawModelSystem extends AbstractSystem {
 
 		// Only draw if in frustum 
 		if (model.always_draw == false) {
-			if (model.dimensions == null) {
-				model.dimensions = new Vector3();
+			if (model.centre == null) {
+				Vector3 dimensions = new Vector3();
 				model.model.calculateBoundingBox(tmpBB);
 				tmpBB.mul(model.model.transform);
-				tmpBB.getDimensions(model.dimensions);
-				model.radius = model.dimensions.len();// scs new - hack since models are not in the middle! / 2;
+				tmpBB.getDimensions(dimensions);
+				model.radius = dimensions.len();
+				model.centre = new Vector3();
+				tmpBB.getCenter(model.centre);
 			}
-			if (!batch.getCamera().frustum.sphereInFrustum(posData.position, model.radius)) {
-				//todo - what if model origin is nowhere near the actual model? Add centre.  //return;
+			tmpVec.set(model.centre);
+			tmpVec.add(posData.position);
+			if (!batch.getCamera().frustum.sphereInFrustum(tmpVec, model.radius)) {
+				return;
 			}
 		}
 

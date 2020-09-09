@@ -8,7 +8,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
-import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class GraveyardLevel extends AbstractLevel {

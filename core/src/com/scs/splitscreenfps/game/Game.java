@@ -64,7 +64,6 @@ import com.scs.splitscreenfps.game.entities.AudioEntityFactory;
 import com.scs.splitscreenfps.game.entities.AvatarFactory;
 import com.scs.splitscreenfps.game.entities.BulletEntityFactory;
 import com.scs.splitscreenfps.game.entities.GraphicsEntityFactory;
-import com.scs.splitscreenfps.game.entities.SkyboxCube;
 import com.scs.splitscreenfps.game.events.EventCollision;
 import com.scs.splitscreenfps.game.input.AIInputMethod;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;

@@ -417,7 +417,7 @@ public abstract class AbstractLevel {
 								new_voxel_map[x][y][actual_z] = true;
 							} else {
 								// Add voxels if surrounded
-								boolean add = false;
+								//boolean add = false;
 								
 								// Add voxels between any voxels with 2 spaces between them
 								// This one is quite slow

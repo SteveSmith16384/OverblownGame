@@ -21,7 +21,7 @@ public class ModelFunctions {
 	}
 
 
-	public static ModelInstance loadModel(String filename, boolean removeMaterials, float scale) {
+	public static ModelInstance loadModel(String filename, boolean removeMaterials) {
 		if (filename.indexOf(" ") > 0) {
 			System.err.println("Warning:" + filename + " has a space in it; this may cause problems!");
 		}

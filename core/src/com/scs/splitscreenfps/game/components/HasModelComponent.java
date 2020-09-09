@@ -19,7 +19,7 @@ public class HasModelComponent {
 	public boolean keep_player_in_centre = false; // For skybox
 	public boolean invisible = false;
 
-	public Vector3 dimensions; // For checking if in frustum
+	public Vector3 centre;//dimensions_; // For checking if in frustum
 	public float radius;
 	
 	public HasModelComponent(ModelInstance _model, float scale, boolean cast_shadow) {

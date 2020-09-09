@@ -65,7 +65,7 @@ public class EntityFactory {
 	public static AbstractEntity createStaticModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, boolean alignToY) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
+		ModelInstance instance = ModelFunctions.loadModel(filename, false);
 
 		// Calc min on Y axis
 		BoundingBox tmpBB = new BoundingBox();
@@ -102,7 +102,7 @@ public class EntityFactory {
 	public static void createStaticModelsForLargeModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_x, float rot_y) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
+		ModelInstance instance = ModelFunctions.loadModel(filename, false);
 
 		// Calc min on Y axis
 		instance.transform.setTranslation(posX, posY, posZ);
@@ -157,7 +157,7 @@ public class EntityFactory {
 	public static AbstractEntity createDynamicModel(BasicECS ecs, String name, String filename, float posX, float posY, float posZ, float rot_y, float mass, boolean alignToY) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
+		ModelInstance instance = ModelFunctions.loadModel(filename, false);
 
 		// Calc min on Y axis
 		BoundingBox tmpBB = new BoundingBox();
@@ -306,7 +306,7 @@ public class EntityFactory {
 	public static AbstractEntity createOnlyModel(BasicECS ecs, String name, String filename, Vector3 offset) {
 		AbstractEntity entity = new AbstractEntity(ecs, name);
 
-		ModelInstance instance = ModelFunctions.loadModel(filename, false, 1f);
+		ModelInstance instance = ModelFunctions.loadModel(filename, false);
 
 		// Calc min on Y axis
 		BoundingBox tmpBB = new BoundingBox();
