@@ -238,7 +238,7 @@ public class MapEditorSystem extends AbstractSystem {
 					this.changeMass(1);
 					break;
 				case TEXTURE:
-					this.toggleTiled();
+					this.changeTextureScale(1);
 					break;
 				default:
 					game.appendToLog("Unknown mode: " + mode);
@@ -275,7 +275,7 @@ public class MapEditorSystem extends AbstractSystem {
 					this.changeMass(-1);
 					break;
 				case TEXTURE:
-					this.toggleTiled();
+					this.changeTextureScale(-1);
 					break;
 				default:
 					game.appendToLog("Unknown mode: " + mode);
@@ -490,14 +490,28 @@ public class MapEditorSystem extends AbstractSystem {
 	}
 
 
-	private void toggleTiled() {
+	private void changeTextureScale(int off) {
+		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
+
+		block.texture_id += off;
+		if (block.tiles_per_unit < 0) {
+			block.tiles_per_unit = 0;
+		//} else if (block.texture_id > max) {
+		//	block.texture_id = 0;
+		}
+		game.appendToLog("Texture now has " + block.tiles_per_unit + " tiles_per_unit");
+		this.recreateSelectedBlock(block);
+	}
+
+
+/*	private void toggleTiled() {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 
 		block.tiled = !block.tiled;
 
 		this.recreateSelectedBlock(block);
 	}
-
+*/
 
 	private void changeMass(int off) {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);

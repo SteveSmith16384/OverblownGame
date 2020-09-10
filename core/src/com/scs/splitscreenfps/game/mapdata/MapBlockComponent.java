@@ -15,7 +15,8 @@ public class MapBlockComponent {
 	public String tags = ""; // For codes etc...
 	public int texture_id;
 	public String model_filename = "";
-	public boolean tiled = true;
+	public boolean tiled = true; // todo - remove
+	public int tiles_per_unit = -1;
 	
 	public Vector3 size = new Vector3();
 	public Vector3 position = new Vector3();

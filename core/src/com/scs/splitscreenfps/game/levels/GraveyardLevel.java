@@ -21,7 +21,7 @@ public class GraveyardLevel extends AbstractLevel {
 
 		Wall floor = new Wall(game, "Floor", game.getTexture("textures/tones/grey1.png"), floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
-				0f, true, false);
+				0f, 0, false);
 		game.ecs.addEntity(floor);
 
 		Vector3 model_pos = new Vector3(2f, 0, 2f);

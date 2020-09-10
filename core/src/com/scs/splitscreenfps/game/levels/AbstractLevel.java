@@ -200,18 +200,45 @@ public abstract class AbstractLevel {
 		if (block.id == 0) {
 			block.id = MapBlockComponent.next_id++;
 		}
-		if (block.model_filename != null && block.model_filename.length() > 0) {
+		if (block.model_filename != null && block.model_filename.length() > 0) { // todo - remove this while "if" once all map data has been "upgraded"
 			AbstractEntity model = null;
 			if (block.mass == 0) {
 				model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
 						block.position.x, block.position.y, block.position.z, block.rotation.y,
 						false);
+				if (block.type == "") {
+					block.type = "StaticModel";
+				}
 			} else {
 				model = EntityFactory.createDynamicModel(game.ecs, block.name, block.model_filename, 
 						block.position.x, block.position.y, block.position.z, 
 						block.rotation.y,
 						block.mass, false);
+				if (block.type == "") {
+					block.type = "DynamicModel";
+				}
 			}
+			model.tags = block.tags;
+			if (for_map_editor) {
+				model.addComponent(block);
+			}
+			game.ecs.addEntity(model);
+			return model;
+		} else if (block.type == "StaticModel") {
+			AbstractEntity model = EntityFactory.createStaticModel(game.ecs, block.name, block.model_filename, 
+					block.position.x, block.position.y, block.position.z, block.rotation.y,
+					false);
+			model.tags = block.tags;
+			if (for_map_editor) {
+				model.addComponent(block);
+			}
+			game.ecs.addEntity(model);
+			return model;
+		} else if (block.type == "DynamicModel") {
+			AbstractEntity model = EntityFactory.createDynamicModel(game.ecs, block.name, block.model_filename, 
+					block.position.x, block.position.y, block.position.z, 
+					block.rotation.y,
+					block.mass, false);
 			model.tags = block.tags;
 			if (for_map_editor) {
 				model.addComponent(block);
@@ -228,12 +255,21 @@ public abstract class AbstractLevel {
 				tex = game.getTexture("textures/neon/tron_green_2x2.png");
 			}
 
+			if (block.tiles_per_unit < 0) {
+				if (block.tiled) {
+					block.tiles_per_unit = 0;
+				} else {
+					block.tiles_per_unit = 2;
+				}
+			}
+
+
 			AbstractEntity wall = null;
 			if (block.type == null || block.type.length() == 0 || block.type.equalsIgnoreCase("cube")) {
 				wall = new Wall(game, block.name, tex, null, block.position.x, block.position.y, block.position.z, 
 						block.size.x, block.size.y, block.size.z, 
 						block.mass * mass_mult, // Hack to make walls heavier
-						block.rotation.x, block.rotation.y, block.rotation.z, block.tiled, true, true);
+						block.rotation.x, block.rotation.y, block.rotation.z, block.tiles_per_unit, true, true);
 			} else if (block.type.equalsIgnoreCase("sphere")) {
 				wall = EntityFactory.createBall(game, tex, block.position.x, block.position.y, block.position.z, block.size.x, block.mass);
 			} else if (block.type.equalsIgnoreCase("cylinder")) {
@@ -285,11 +321,11 @@ public abstract class AbstractLevel {
 			VoxFile voxFile = reader.read();
 			int count = 0;
 			int num_removed = 0;
-			
+
 			if (voxFile.getModels().length > 1) {
 				Settings.p("There are " + voxFile.getModels().length + " models in this .vox file");
 			}
-			
+
 			for (VoxModel model : voxFile.getModels()) {
 				int c = 0;
 				boolean exists[][][] = new boolean[model.getSize().getX()][model.getSize().getY()][model.getSize().getZ()];
@@ -342,7 +378,7 @@ public abstract class AbstractLevel {
 					Wall wall = new Wall(game, "Voxel", null, color, (x*scale)+offset.x, (z*scale)+offset.y, (y*scale)+offset.z, 
 							scale-.001f, scale-.001f, scale-.001f, 
 							tmp_mass,
-							0, 0, 0, false, true, add_physics);
+							0, 0, 0, 0, true, add_physics);
 					game.ecs.addEntity(wall);
 					count++;
 				}
@@ -356,14 +392,14 @@ public abstract class AbstractLevel {
 	// This will create collision boxes for a voxel model.
 	public void createCollisionShapesFromVox(String filename, Vector3 offset) throws FileNotFoundException, IOException {
 		float scale = .1f;// Scale for models exported by .vox.
-		
+
 		try (VoxReader reader = new VoxReader(new FileInputStream(filename))) {
 			VoxFile voxFile = reader.read();
 
 			if (voxFile.getModels().length > 1) {
 				Settings.p("There are " + voxFile.getModels().length + " models in this .vox file");
 			}
-			
+
 			for (VoxModel model : voxFile.getModels()) {
 				GridPoint3 vox_world_size = new GridPoint3(model.getSize().getX(), model.getSize().getZ(), model.getSize().getY());
 
@@ -383,7 +419,7 @@ public abstract class AbstractLevel {
 					int x = voxel.getPosition().getX();
 					int y = voxel.getPosition().getZ(); // Note that when reading in a .vox file, y and z axis are the other way round!
 					int z = voxel.getPosition().getY(); // Note that when reading in a .vox file, y and z axis are the other way round!
-					
+
 					exists[x][y][z] = true;
 					num_voxels++;
 					if (x > maxs.x) {
@@ -418,7 +454,7 @@ public abstract class AbstractLevel {
 							} else {
 								// Add voxels if surrounded
 								//boolean add = false;
-								
+
 								// Add voxels between any voxels with 2 spaces between them
 								// This one is quite slow
 								/*int num_blocks_x = 0;
@@ -450,7 +486,7 @@ public abstract class AbstractLevel {
 								if (num_blocks_x >= 3 || num_blocks_y >= 3 || num_blocks_z >= 3) {
 									add = true;
 								}*/
-								
+
 								// Add voxels with only one space between them
 								/*if (x>0 && exists[x-1][y][z] && x<vox_world_size.x-1 && exists[x+1][y][z]) {
 									add = true;
@@ -459,7 +495,7 @@ public abstract class AbstractLevel {
 								} else if (z>0 && exists[x][y][z-1] && z<vox_world_size.z-1 && exists[x][y][z+1]) {
 									add = true;
 								}
-								
+
 								if (add) {
 									new_voxel_map[x][y][maxs.z-z+mins.z] = true;
 									//Settings.p("Adding block at " + x + ", " + y + ", " + z);

@@ -22,14 +22,14 @@ import ssmith.libgdx.ShapeHelper;
 
 public class Wall extends AbstractEntity {
 
-	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, boolean tile, boolean cast_shadow) {
-		this(game, name, tex, null, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tile, cast_shadow, true);
+	public Wall(Game game, String name, Texture tex, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, int tiles_per_unit, boolean cast_shadow) {
+		this(game, name, tex, null, posX, posY, posZ, w, h, d, mass_pre, 0, 0, 0, tiles_per_unit, cast_shadow, true);
 	}
 
 
 	// Note that the mass gets multiplied by the size
 	// Positions are from the centre
-	public Wall(Game game, String name, Texture tex, Color c, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, boolean tile, boolean cast_shadow, boolean add_physics) {
+	public Wall(Game game, String name, Texture tex, Color c, float posX, float posY, float posZ, float w, float h, float d, float mass_pre, float degreesX, float degreesY, float degreesZ, int tiles_per_unit, boolean cast_shadow, boolean add_physics) {
 		super(game.ecs, name);
 
 		Material material = null;
@@ -42,7 +42,7 @@ public class Wall extends AbstractEntity {
 		//material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)); // Allow transparency, not currently required
 
 		Model box_model = null;
-		if (tile) {
+		if (tiles_per_unit == 0) {
 			box_model = ShapeHelper.createCube(game.modelBuilder, w, h, d, material);
 			Matrix3 mat = new Matrix3();
 			float max2 = Math.max(w, h);
@@ -50,7 +50,7 @@ public class Wall extends AbstractEntity {
 			mat.scl(max);
 			box_model.meshes.get(0).transformUV(mat);
 		} else {
-			box_model = ShapeHelper.createCube_AdvancedScaling(game.modelBuilder, w, h, d, material);
+			box_model = ShapeHelper.createCube_AdvancedScaling(game.modelBuilder, w, h, d, material, (float)tiles_per_unit);
 		}
 		
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));

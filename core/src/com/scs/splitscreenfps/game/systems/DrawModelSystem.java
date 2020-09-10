@@ -197,10 +197,10 @@ public class DrawModelSystem extends AbstractSystem {
 				model.centre = new Vector3();
 				tmpBB.getCenter(model.centre);
 			}
-			tmpVec.set(model.centre);
-			tmpVec.add(posData.position);
+			tmpVec.set(posData.position);
+			tmpVec.sub(model.centre);
 			if (!batch.getCamera().frustum.sphereInFrustum(tmpVec, model.radius)) {
-				return;
+				//todo return;
 			}
 		}
 

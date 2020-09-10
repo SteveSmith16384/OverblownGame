@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
+import com.scs.splitscreenfps.Settings;
 
 public class ShapeHelper {
 
@@ -53,11 +54,13 @@ public class ShapeHelper {
 	 * @param material
 	 * @return
 	 */
-	public static Model createCube_AdvancedScaling(ModelBuilder modelBuilder, float w, float h, float d, Material material) {
+	public static Model createCube_AdvancedScaling(ModelBuilder modelBuilder, float w, float h, float d, Material material, float tiles_per_unit) {
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 
-		float scale = 2f;
+		//Settings.p("tiles_per_unit=" + tiles_per_unit); // todo - remove
+		
+		float scale = tiles_per_unit;//2f;
 		// Front
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, material);
 		mb.setColor(Color.WHITE);

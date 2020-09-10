@@ -52,7 +52,7 @@ public class WhatTheBallLevel extends AbstractLevel {
 
 		Wall floor = new Wall(game, "Floor", game.getTexture("colours/white.png"), floor_size/2, -0.1f, floor_size/2, 
 				floor_size, .2f, floor_size, 
-				0f, true, false);
+				0f, 0, false);
 		game.ecs.addEntity(floor);
 
 		for (int i=0 ; i<20 ; i++) {
