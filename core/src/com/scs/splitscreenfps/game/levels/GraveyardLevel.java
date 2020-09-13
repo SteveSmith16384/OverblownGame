@@ -48,9 +48,6 @@ public class GraveyardLevel extends AbstractLevel {
 
 		//PositionComponent posData = (PositionComponent)model.getComponent(PositionComponent.class);
 		//Settings.p("Created model at " + posData.position.x + "," + posData.position.y + "," + posData.position.z);
-
-		// todo - night sky
-		//game.ecs.addEntity(new SkyboxCube(game, "Skybox", "textures/sky3.jpg", 90, 90, 90));
 	}
 
 

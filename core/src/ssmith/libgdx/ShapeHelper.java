@@ -58,8 +58,6 @@ public class ShapeHelper {
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		modelBuilder.begin();
 
-		//Settings.p("tiles_per_unit=" + tiles_per_unit); // todo - remove
-		
 		float scale = tiles_per_unit;//2f;
 		// Front
 		MeshPartBuilder mb = modelBuilder.part("front", GL20.GL_TRIANGLES, attr, material);

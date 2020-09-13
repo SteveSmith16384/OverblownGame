@@ -932,7 +932,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 					player.inputMethod = new ControllerInputMethod(controller);
 					//player.cameraController = new PersonCameraController(player.camera, player.inputMethod);
 					player.controlled_connected = true;
-					this.appendToLog(player.name + " reconnected"); // todo - show player name
+					this.appendToLog(player.name + " reconnected");
 					break;
 				}
 			}
@@ -947,7 +947,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 				ControllerInputMethod c = (ControllerInputMethod)player.inputMethod;
 				if (c.controller.hashCode() == controller.hashCode()) {
 					player.controlled_connected = false;
-					this.appendToLog(player.name + " has DISCONNECTED!"); // todo - show player name
+					this.appendToLog(player.name + " has DISCONNECTED!");
 					break;
 				}
 			}

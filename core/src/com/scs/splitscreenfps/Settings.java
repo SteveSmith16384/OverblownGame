@@ -16,7 +16,7 @@ public class Settings {
 
 	// Autostart Hacks
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
-	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_MAP_EDITOR;
+	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_FACTORY;
 	public static final int NUM_AUTOSTART_CHARACTERS = 1;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_SORTIT;
 	
