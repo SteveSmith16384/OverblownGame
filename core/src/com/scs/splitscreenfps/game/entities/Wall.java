@@ -48,7 +48,7 @@ public class Wall extends AbstractEntity {
 			float max2 = Math.max(w, h);
 			float max = Math.max(max2, d);
 			mat.scl(max);
-			box_model.meshes.get(0).transformUV(mat);
+			//box_model.meshes.get(0).transformUV(mat);
 		} else {
 			box_model = ShapeHelper.createCube_AdvancedScaling(game.modelBuilder, w, h, d, material, (float)tiles_per_unit);
 		}

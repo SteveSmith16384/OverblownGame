@@ -1,5 +1,4 @@
 {
-  "filename": "maps/map_editor.json",
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
@@ -22,6 +21,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -47,6 +47,7 @@
       "texture_id": 7,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 7.999,
         "y": 0.499,
@@ -72,6 +73,7 @@
       "texture_id": 7,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -97,6 +99,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -122,6 +125,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -147,6 +151,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -172,6 +177,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -197,6 +203,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -222,6 +229,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -247,6 +255,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -272,6 +281,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -297,6 +307,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -322,6 +333,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -347,6 +359,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -372,6 +385,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -397,6 +411,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -422,6 +437,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -447,6 +463,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -472,6 +489,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -497,6 +515,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -522,6 +541,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -547,6 +567,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -572,6 +593,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -597,6 +619,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -622,6 +645,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -647,6 +671,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -672,6 +697,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -697,6 +723,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -722,6 +749,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -747,6 +775,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -772,6 +801,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -797,6 +827,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -822,6 +853,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -847,6 +879,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -872,6 +905,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -897,6 +931,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -922,6 +957,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -947,6 +983,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -972,6 +1009,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -997,6 +1035,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1022,6 +1061,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1047,6 +1087,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1072,6 +1113,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1097,6 +1139,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1122,6 +1165,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1147,6 +1191,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1172,6 +1217,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1197,6 +1243,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1222,6 +1269,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1247,6 +1295,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1272,6 +1321,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1297,6 +1347,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1322,6 +1373,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1347,6 +1399,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1372,6 +1425,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1397,6 +1451,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1422,6 +1477,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1447,6 +1503,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1472,6 +1529,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1497,6 +1555,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1522,6 +1581,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -1547,6 +1607,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,

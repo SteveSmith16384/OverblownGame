@@ -18,6 +18,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 20.5,
         "y": 0.5,
@@ -28,7 +29,7 @@
         "y": -0.25,
         "z": 9.0
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -43,6 +44,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -53,7 +55,7 @@
         "y": 0.5,
         "z": 2.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -68,6 +70,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -78,7 +81,7 @@
         "y": 0.5,
         "z": 27.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -93,6 +96,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -103,7 +107,7 @@
         "y": 0.75,
         "z": 2.0
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -118,6 +122,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -128,7 +133,7 @@
         "y": 0.75,
         "z": 26.0
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -143,6 +148,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 1.0,
@@ -153,7 +159,7 @@
         "y": 0.25,
         "z": 18.25
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -168,6 +174,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 1.0,
@@ -178,7 +185,7 @@
         "y": 0.25,
         "z": -0.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -193,6 +200,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_house1.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -203,7 +211,7 @@
         "y": -1.2,
         "z": 5.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -218,6 +226,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_tree3.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -228,7 +237,7 @@
         "y": 0.7998093,
         "z": 9.499591
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -243,6 +252,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_bench1.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -253,7 +263,7 @@
         "y": 0.39797404,
         "z": 7.2473407
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -268,6 +278,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_fence6.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -278,7 +289,7 @@
         "y": 0.46147838,
         "z": 5.750241
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -293,6 +304,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_cone1.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -303,7 +315,7 @@
         "y": 0.34981483,
         "z": 3.9998493
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -318,6 +330,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_container1.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -328,7 +341,7 @@
         "y": 5.340512,
         "z": 7.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -343,6 +356,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_container2.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -353,7 +367,7 @@
         "y": 0.74729955,
         "z": 7.498802
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -368,6 +382,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_container3.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -378,7 +393,7 @@
         "y": 2.234044,
         "z": 7.4945016
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -393,6 +408,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_container4.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -403,7 +419,7 @@
         "y": 3.729841,
         "z": 7.501293
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -418,6 +434,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_fence2.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -428,7 +445,7 @@
         "y": 0.8998156,
         "z": 9.000018
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -443,6 +460,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_fence4.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -453,7 +471,7 @@
         "y": 0.3996311,
         "z": 7.499359
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -468,6 +486,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_house6.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -478,7 +497,7 @@
         "y": -1.25,
         "z": 33.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -493,6 +512,7 @@
       "texture_id": 0,
       "model_filename": "vox/obj_store15.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -503,9 +523,9 @@
         "y": -3.0,
         "z": 30.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
-        "y": 180.0,
+        "y": 0.0,
         "z": 0.0
       },
       "mass": 0.0
@@ -518,6 +538,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 20.5,
         "y": 0.5,
@@ -528,7 +549,7 @@
         "y": -0.25,
         "z": 31.25
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -543,6 +564,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 20.5,
         "y": 0.5,
@@ -553,7 +575,7 @@
         "y": -0.25,
         "z": 9.0
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -568,6 +590,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 20.5,
         "y": 0.5,
@@ -578,7 +601,7 @@
         "y": -0.25,
         "z": 31.0
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -593,6 +616,7 @@
       "texture_id": 8,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 1,
       "size": {
         "x": 50.25,
         "y": 0.5,
@@ -603,7 +627,7 @@
         "y": -1.0,
         "z": 19.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -618,6 +642,7 @@
       "texture_id": 0,
       "model_filename": "vox/veh_train3.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -628,7 +653,7 @@
         "y": 0.0,
         "z": 8.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -643,6 +668,7 @@
       "texture_id": 0,
       "model_filename": "vox/veh_train2.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -653,7 +679,7 @@
         "y": -0.75,
         "z": 15.25
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -668,6 +694,7 @@
       "texture_id": 0,
       "model_filename": "vox/veh_train.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -678,7 +705,7 @@
         "y": 0.0,
         "z": 13.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -693,6 +720,7 @@
       "texture_id": 0,
       "model_filename": "vox/veh_bus.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -703,7 +731,7 @@
         "y": 1.5,
         "z": 25.0
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -718,6 +746,7 @@
       "texture_id": 0,
       "model_filename": "vox/scene_coffee.obj",
       "tiled": true,
+      "tiles_per_unit": -1,
       "size": {
         "x": 0.0,
         "y": 0.0,
@@ -728,7 +757,7 @@
         "y": -1.0,
         "z": 29.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0

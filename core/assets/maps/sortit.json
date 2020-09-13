@@ -20,6 +20,7 @@
       "texture_id": 9,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -30,7 +31,7 @@
         "y": 0.49999988,
         "z": 0.24442053
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -45,6 +46,7 @@
       "texture_id": 7,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 1,
       "size": {
         "x": 10.0,
         "y": 0.5,
@@ -55,7 +57,7 @@
         "y": -0.25,
         "z": 4.25
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -70,6 +72,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -80,7 +83,7 @@
         "y": 0.49999982,
         "z": 14.510614
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -95,6 +98,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -105,7 +109,7 @@
         "y": 0.75,
         "z": 2.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -120,6 +124,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -130,7 +135,7 @@
         "y": 0.75,
         "z": 17.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -145,6 +150,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -155,7 +161,7 @@
         "y": 0.75,
         "z": 4.0
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -170,6 +176,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -180,7 +187,7 @@
         "y": 0.75,
         "z": 17.5
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -195,6 +202,7 @@
       "texture_id": 2,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -205,7 +213,7 @@
         "y": 0.4999999,
         "z": 3.9671888
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -220,6 +228,7 @@
       "texture_id": 9,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -230,7 +239,7 @@
         "y": 0.49999988,
         "z": 0.619421
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -245,6 +254,7 @@
       "texture_id": 8,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -255,7 +265,7 @@
         "y": 0.49999985,
         "z": 15.587929
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -270,6 +280,7 @@
       "texture_id": 7,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 1,
       "size": {
         "x": 10.0,
         "y": 0.5,
@@ -280,7 +291,7 @@
         "y": -0.25,
         "z": 4.25
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -295,6 +306,7 @@
       "texture_id": 7,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 1,
       "size": {
         "x": 10.0,
         "y": 0.5,
@@ -305,7 +317,7 @@
         "y": -0.25,
         "z": 15.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -320,6 +332,7 @@
       "texture_id": 7,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 1,
       "size": {
         "x": 10.0,
         "y": 0.5,
@@ -330,7 +343,7 @@
         "y": -0.25,
         "z": 15.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -345,6 +358,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -355,7 +369,7 @@
         "y": 2.25,
         "z": 4.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -370,6 +384,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -380,7 +395,7 @@
         "y": 2.25,
         "z": 5.0
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -395,6 +410,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -405,7 +421,7 @@
         "y": 2.5,
         "z": 14.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -420,6 +436,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -430,7 +447,7 @@
         "y": 2.5,
         "z": 14.75
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -445,6 +462,7 @@
       "texture_id": 8,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -455,7 +473,7 @@
         "y": 0.49999988,
         "z": 15.337929
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -470,6 +488,7 @@
       "texture_id": 3,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -480,7 +499,7 @@
         "y": 0.4999847,
         "z": 15.029593
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
@@ -495,6 +514,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -505,7 +525,7 @@
         "y": 0.49999976,
         "z": 4.2606144
       },
-      "rotation_degs": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0

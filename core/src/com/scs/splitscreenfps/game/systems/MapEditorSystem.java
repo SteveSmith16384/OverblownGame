@@ -493,7 +493,7 @@ public class MapEditorSystem extends AbstractSystem {
 	private void changeTextureScale(int off) {
 		MapBlockComponent block = (MapBlockComponent)this.selectedObject.getComponent(MapBlockComponent.class);
 
-		block.texture_id += off;
+		block.tiles_per_unit += off;
 		if (block.tiles_per_unit < 0) {
 			block.tiles_per_unit = 0;
 		//} else if (block.texture_id > max) {

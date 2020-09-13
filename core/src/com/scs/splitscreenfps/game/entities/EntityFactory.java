@@ -173,10 +173,6 @@ public class EntityFactory {
 			instance.transform.rotate(Vector3.Y, rot_y);
 		}
 
-		/*for(Node n : instance.nodes) {
-			n.localTransform.setTranslation(-tmpBB.getCenterX(), -10, -tmpBB.getCenterZ());
-		}*/
-
 		for (int i = 0; i < instance.nodes.size; i++) {
 			String id = instance.nodes.get(i).id;
 			Node node = instance.getNode(id);
@@ -308,24 +304,14 @@ public class EntityFactory {
 
 		ModelInstance instance = ModelFunctions.loadModel(filename, false);
 
-		// Calc min on Y axis
 		BoundingBox tmpBB = new BoundingBox();
-		//if (alignToY) {
 		instance.calculateBoundingBox(tmpBB);
 		tmpBB.mul(instance.transform);
-		//}
-		//instance.transform.setTranslation(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z);
-
-		/*if (rot_y != 0) {
-			instance.transform.rotate(Vector3.Y, rot_y);
-		}*/
 
 		HasModelComponent model = new HasModelComponent(instance, 1f, true);
 		entity.addComponent(model);
 
 		entity.addComponent(new PositionComponent(offset.x-tmpBB.min.x, offset.y-tmpBB.min.y, offset.z-tmpBB.min.z));
-		// Notice we treat Y diff, so it can be specified as 0 for on the floor
-		//entity.addComponent(new PositionComponent(offset.x-tmpBB.getCenterX(), offset.y-tmpBB.min.y, offset.z-tmpBB.getCenterZ()));
 
 		return entity;
 	}

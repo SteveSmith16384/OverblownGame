@@ -1,5 +1,4 @@
 {
-  "filename": "maps/map_editor.json",
   "textures": {
     "1": "colours/white.png",
     "2": "textures/tones/brown0.png",
@@ -17,6 +16,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -42,6 +42,7 @@
       "texture_id": 2,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 7.999,
         "y": 0.499,
@@ -67,6 +68,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -92,6 +94,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -117,6 +120,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -142,6 +146,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -167,6 +172,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -192,6 +198,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -217,6 +224,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -242,6 +250,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -267,6 +276,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -292,6 +302,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 3.999,
         "y": 0.249,
@@ -317,6 +328,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -342,6 +354,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -367,6 +380,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -392,6 +406,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -417,6 +432,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -442,6 +458,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -467,6 +484,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -492,6 +510,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -517,6 +536,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -542,6 +562,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -567,6 +588,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -592,6 +614,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -617,6 +640,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -642,6 +666,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -667,6 +692,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -692,6 +718,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -717,6 +744,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -742,6 +770,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -767,6 +796,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -792,6 +822,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.999,
         "y": 0.999,
@@ -817,6 +848,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 3.999,
         "y": 0.249,
@@ -842,6 +874,7 @@
       "texture_id": 4,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 3.999,
         "y": 0.249,

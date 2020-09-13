@@ -255,7 +255,7 @@ public abstract class AbstractLevel {
 				tex = game.getTexture("textures/neon/tron_green_2x2.png");
 			}
 
-			if (block.tiles_per_unit < 0) {
+			if (block.tiles_per_unit < 0) { // todo - remove this later
 				if (block.tiled) {
 					block.tiles_per_unit = 0;
 				} else {

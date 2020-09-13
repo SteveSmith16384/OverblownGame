@@ -1,5 +1,4 @@
 {
-  "filename": "maps/map_editor.json",
   "textures": {
     "1": "colours/white.png",
     "2": "colours/red.png",
@@ -26,6 +25,7 @@
       "texture_id": 15,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 3.75,
         "y": 4.75,
@@ -51,6 +51,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 3.7250009,
         "y": 4.75,
@@ -76,6 +77,7 @@
       "texture_id": 16,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 1,
       "size": {
         "x": 24.0,
         "y": 0.5,
@@ -101,6 +103,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 0.5,
@@ -126,6 +129,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.75,
         "y": 0.5,
@@ -151,6 +155,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.75,
         "y": 0.5,
@@ -176,6 +181,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -201,6 +207,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -226,6 +233,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -251,6 +259,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -276,6 +285,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -301,6 +311,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 1.0,
@@ -326,6 +337,7 @@
       "texture_id": 0,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 1.0,
@@ -351,6 +363,7 @@
       "texture_id": 16,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 3.75,
         "y": 6.5,
@@ -376,6 +389,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 3.75,
         "y": 6.0,
@@ -401,6 +415,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 1,
       "size": {
         "x": 7.5,
         "y": 1.75,
@@ -426,6 +441,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -451,6 +467,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -476,6 +493,7 @@
       "texture_id": 10,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 6.75,
         "y": 0.25,
@@ -501,6 +519,7 @@
       "texture_id": 13,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 6.75,
         "y": 0.25,
@@ -526,6 +545,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 0.5,
@@ -551,6 +571,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 0.5,
@@ -576,6 +597,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 12.75,
         "y": 5.5,
@@ -601,6 +623,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 5.5,
@@ -626,6 +649,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 5.5,
@@ -651,6 +675,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 20.75,
         "y": 5.5,
@@ -676,6 +701,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.25,
         "y": 5.5,
@@ -701,6 +727,7 @@
       "texture_id": 15,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.2250009,
         "y": 1.75,
@@ -726,6 +753,7 @@
       "texture_id": 15,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.2250009,
         "y": 1.75,
@@ -751,6 +779,7 @@
       "texture_id": 16,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 3.4750009,
         "y": 1.75,
@@ -776,6 +805,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 4.5750012,
         "y": 1.75,
@@ -801,6 +831,7 @@
       "texture_id": 13,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.5,
         "y": 0.5,
@@ -826,6 +857,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -851,6 +883,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -876,6 +909,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -901,6 +935,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -926,6 +961,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -951,6 +987,7 @@
       "texture_id": 13,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.75,
         "y": 0.5,
@@ -976,6 +1013,7 @@
       "texture_id": 13,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.4750009,
         "y": 1.25,
@@ -1001,6 +1039,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 0.5,
@@ -1026,6 +1065,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 0.5,
@@ -1051,6 +1091,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 0.5,
@@ -1076,6 +1117,7 @@
       "texture_id": 5,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 0.5,
         "y": 0.5,
@@ -1101,6 +1143,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 0.5,
@@ -1126,6 +1169,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": true,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -1151,6 +1195,7 @@
       "texture_id": 14,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 5.0,
         "y": 5.0,
@@ -1176,6 +1221,7 @@
       "texture_id": 16,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 4.225001,
         "y": 0.5,
@@ -1201,6 +1247,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -1226,6 +1273,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -1251,6 +1299,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -1276,6 +1325,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -1301,6 +1351,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
@@ -1326,6 +1377,7 @@
       "texture_id": 11,
       "model_filename": "",
       "tiled": false,
+      "tiles_per_unit": 0,
       "size": {
         "x": 1.0,
         "y": 1.0,
