@@ -139,7 +139,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	private AssetManager assetManager = new AssetManager();
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btSequentialImpulseConstraintSolver constraintSolver;
-	private final ClosestRayResultCallback callback = new ClosestRayResultCallback(new Vector3(), new Vector3());
+	//private final ClosestRayResultCallback callback = new ClosestRayResultCallback(new Vector3(), new Vector3());
 	public ModelBuilder modelBuilder = new ModelBuilder();
 	public boolean show_kills, show_damage;
 	public boolean show_health;
@@ -848,6 +848,8 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 	public ClosestRayResultCallback rayTestByDir(Vector3 ray_from, Vector3 dir, float range) {
 		tmp_to.set(ray_from).mulAdd(dir, range);
 
+		ClosestRayResultCallback callback = new ClosestRayResultCallback(ray_from, tmp_to);
+		
 		callback.setCollisionObject(null);
 		callback.setClosestHitFraction(1f);
 
