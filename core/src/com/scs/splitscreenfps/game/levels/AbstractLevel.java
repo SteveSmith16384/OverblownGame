@@ -51,7 +51,6 @@ public abstract class AbstractLevel {
 	public static final int LEVEL_MAP_EDITOR = 12;
 	public static final int LEVEL_AI_TEST = 13;
 	public static final int LEVEL_SORTIT = 14;
-	public static final int LEVEL_GRAVEYARD = 15;
 
 	public static final int MAX_LEVEL_ID = 12;
 
@@ -103,8 +102,6 @@ public abstract class AbstractLevel {
 			return new CSGOOfficeLevel();
 		case LEVEL_SORTIT:
 			return new SortItLevel();
-		case LEVEL_GRAVEYARD:
-			return new GraveyardLevel();
 		default:
 			throw new RuntimeException("Unknown level: " + i);
 		}

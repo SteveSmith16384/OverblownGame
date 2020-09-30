@@ -170,7 +170,7 @@ public class Game implements IModule, ITextureProvider, IGetCurrentViewport {
 		this.game_config = new GameConfig();
 		try {
 			String filename = "game.cfg";
-			FileHandle file = Gdx.files.local("../../" + filename);
+			FileHandle file = Gdx.files.local(filename);
 			Settings.p("Looking for settings file " + file.file().getAbsolutePath());
 			if (file.exists()) {
 				Gson gson = new Gson();
