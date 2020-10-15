@@ -15,7 +15,7 @@ public class Settings {
 	public static final String VERSION = "1.13";
 
 	// Autostart Hacks
-	public static final boolean AUTO_START = !RELEASE_MODE && true;
+	public static final boolean AUTO_START = !RELEASE_MODE && false;
 	public static final int AUTOSTART_LEVEL = AbstractLevel.LEVEL_FACTORY;
 	public static final int NUM_AUTOSTART_CHARACTERS = 1;
 	public static final int AUTOSTART_CHARACTER = AvatarFactory.CHAR_SORTIT;
